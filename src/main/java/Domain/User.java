@@ -1,16 +1,22 @@
 package Domain;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 
 
-@Entity(name="User")
+@Entity(name = "User")
+//@Table(name = "User")
 public class User {
 
     //region Fields
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name="Profile_Id", nullable = false)
+    private User user;
     private Profile profile;
     private String username;
     private HashSet<Role> roles = new HashSet<Role>();
@@ -23,11 +29,11 @@ public class User {
     //endregion
 
     //region Getters and Setters
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -86,5 +92,5 @@ public class User {
     public void setMentions(HashSet<Kweet> mentions) {
         this.mentions = mentions;
     }
-    //endregion
+    //endregion=
 }

@@ -11,10 +11,6 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name="User_Id", nullable = false)
-    private User user;
-
     //@Column(name = "Name", nullable = false)
     private String name;
     //@Column(name = "Image")
@@ -27,20 +23,18 @@ public class Profile {
     private String website;
     //endregion
 
+    public Profile() { }
+
+    public Profile(String name) {
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getName() {
