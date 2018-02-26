@@ -1,6 +1,7 @@
 package Domain;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 
 public class User {
 
@@ -88,29 +89,73 @@ public class User {
     }
     //endregion
 
-    public Profile createProfile(String username) {
+    /**
+     * Creates profile for this user.
+     * If the user already has a profile, the current profile will be updated.
+     *
+     * @param profileName publicly visible name of the profile. This name consist of max. 50 characters.
+     *                    If the max. gets exceeded an IllegalArgumentException will be thrown.
+     * @return created profile
+     */
+    public Profile createProfile(String profileName) {
         // To Do
         return null;
     }
 
-    public Kweet createKweet(String message) {
+    /**
+     * Creates a new kweet with this user as a sender.
+     *
+     * @param message the message of the kweet with max. 140 characters.
+     *                If the max. gets exceeded an IllegalArgumentException will be thrown.
+     * @return created kweet
+     */
+    public Kweet createKweet(String message) throws IllegalArgumentException {
         return createKweet(message, new HashSet<String>());
     }
 
-    public Kweet createKweet(String message, HashSet<String> mentions) {
+    /**
+     * Creates a new kweet with this user as a sender.
+     *
+     * @param message the message of the kweet with max. 140 characters.
+     *                If the max. gets exceeded an IllegalArgumentException will be thrown.
+     * @param mentions the mentions of this kweet (@{username}).
+     *                 The users that get mentioned in the kweet will receive this kweet in their 'mention-view'.
+     *
+     * @return created kweet
+     */
+    public Kweet createKweet(String message, HashSet<String> mentions)  throws IllegalArgumentException {
         // To Do
         return null;
     }
 
-    public void removeKweet(Kweet kweet) {
+    /**
+     * Removes an existing kweet sent by this user.
+     * If the kweet does not exist, a NoSuchElementException will be thrown.
+     *
+     * @param kweet the kweet that will be removed
+     */
+    public void removeKweet(Kweet kweet) throws NoSuchElementException {
+        // To Do
+        kweets.remove(kweet);
+    }
+
+    /**
+     * Adds a new user that this user will follow.
+     * If this user already follows the 'following' user, an IllegalArgumentException will be thrown.
+     *
+     * @param following the user that this user will follow
+     */
+    public void addFollowing(User following) throws IllegalArgumentException {
         // To Do
     }
 
-    public void addFollowing(User following) {
-        // To Do
-    }
-
-    public void removeFollowing(User following) {
+    /**
+     * Removes an existing user that this user follows.
+     * If the 'following' user does not exist, a NoSuchElementException will be thrown
+     *
+     * @param following the user that this user will follow
+     */
+    public void removeFollowing(User following) throws NoSuchElementException {
         // To Do
     }
 }
