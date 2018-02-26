@@ -1,30 +1,37 @@
 package Domain;
 
+import javax.persistence.*;
+
+@Entity(name = "Post")
+//@Table(name = "Post")
 public class Profile {
 
-    // Unique identifier of this profile
-    private int id;
+    //region Fields
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name="User_Id", nullable = false)
     private User user;
-    private String profileName;
 
-    // Base64
-    private String profileImage;
-
+    //@Column(name = "Name", nullable = false)
+    private String name;
+    //@Column(name = "Image")
+    private String image;
+    //@Column(name = "Biography")
     private String biography;
+    //@Column(name = "Location")
     private String location;
+    //@Column(name = "Website")
     private String website;
+    //endregion
 
-    public Profile(User user, String profileName) {
-        this.user = user;
-        this.profileName = profileName;
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -36,20 +43,20 @@ public class Profile {
         this.user = user;
     }
 
-    public String getProfileName() {
-        return profileName;
+    public String getName() {
+        return name;
     }
 
-    public void setProfileName(String profileName) {
-        this.profileName = profileName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getProfileImage() {
-        return profileImage;
+    public String getImage() {
+        return image;
     }
 
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getBiography() {
