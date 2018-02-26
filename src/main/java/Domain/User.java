@@ -1,34 +1,60 @@
 package Domain;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.NoSuchElementException;
-
 
 @Entity(name = "User")
 //@Table(name = "User")
 public class User {
 
-    //region Fields
+    // region Fields
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Column(name = "ID")
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name="Profile_Id", nullable = false)
-    private User user;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
     private Profile profile;
+
+    //@Column(name = "Username", nullable = false)
     private String username;
-    private HashSet<Role> roles = new HashSet<Role>();
 
-    private HashSet<User> following = new HashSet<User>();
-    private HashSet<User> followers = new HashSet<User>();
+    @ManyToMany
+    //@JoinTable(name = "UserRole",
+    //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
+    //        inverseJoinColumns = @JoinColumn(name="Role_ID", referencedColumnName = "ID", nullable = false))
+    private Collection<Role> roles = new HashSet<Role>();
 
-    private HashSet<Kweet> kweets = new HashSet<Kweet>();
-    private HashSet<Kweet> mentions = new HashSet<Kweet>();
-    //endregion
+    @ManyToMany
+    //@JoinTable(name = "Following",
+    //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
+    //        inverseJoinColumns = @JoinColumn(name="Following_ID", referencedColumnName = "ID", nullable = false))
+    private Collection<User> following = new HashSet<User>();
 
-    //region Getters and Setters
+    @ManyToMany(mappedBy = "following")
+    private Collection<User> followers = new HashSet<User>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
+    private Collection<Kweet> kweets = new HashSet<Kweet>();
+
+    @ManyToMany
+    //@JoinTable(name = "Following",
+    //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
+    //        inverseJoinColumns = @JoinColumn(name="Kweet_ID", referencedColumnName = "ID", nullable = false))
+    private Collection<Kweet> mentions = new HashSet<Kweet>();
+
+    // endregion
+
+    public User() { }
+
+    public User(String username) {
+        this.username = username;
+    }
+
+    // region Getters and Setters
+
     public long getId() {
         return id;
     }
@@ -53,7 +79,7 @@ public class User {
         this.username = username;
     }
 
-    public HashSet<Role> getRoles() {
+    public Collection<Role> getRoles() {
         return roles;
     }
 
@@ -61,7 +87,7 @@ public class User {
         this.roles = roles;
     }
 
-    public HashSet<User> getFollowing() {
+    public Collection<User> getFollowing() {
         return following;
     }
 
@@ -69,7 +95,7 @@ public class User {
         this.following = following;
     }
 
-    public HashSet<User> getFollowers() {
+    public Collection<User> getFollowers() {
         return followers;
     }
 
@@ -77,7 +103,7 @@ public class User {
         this.followers = followers;
     }
 
-    public HashSet<Kweet> getKweets() {
+    public Collection<Kweet> getKweets() {
         return kweets;
     }
 
@@ -85,12 +111,13 @@ public class User {
         this.kweets = kweets;
     }
 
-    public HashSet<Kweet> getMentions() {
+    public Collection<Kweet> getMentions() {
         return mentions;
     }
 
     public void setMentions(HashSet<Kweet> mentions) {
         this.mentions = mentions;
     }
-    //endregion=
+
+    // endregion
 }

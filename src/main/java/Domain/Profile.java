@@ -6,28 +6,42 @@ import javax.persistence.*;
 //@Table(name = "Post")
 public class Profile {
 
-    //region Fields
+    // region Fields
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Column(name = "ID")
     private long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name="User_Id", nullable = false)
+    private User user;
 
     //@Column(name = "Name", nullable = false)
     private String name;
+
     //@Column(name = "Image")
     private String image;
+
     //@Column(name = "Biography")
     private String biography;
+
     //@Column(name = "Location")
     private String location;
+
     //@Column(name = "Website")
     private String website;
-    //endregion
+
+    // endregion
 
     public Profile() { }
 
-    public Profile(String name) {
+    public Profile(User user, String name) {
+        this.user = user;
         this.name = name;
     }
+
+    // region Getters and Setter
 
     public long getId() {
         return id;
@@ -35,6 +49,14 @@ public class Profile {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {
@@ -76,4 +98,6 @@ public class Profile {
     public void setwebsite(String website) {
         this.website = website;
     }
+
+    // endregion
 }
