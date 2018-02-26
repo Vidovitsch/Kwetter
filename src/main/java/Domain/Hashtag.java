@@ -23,11 +23,6 @@ public class Hashtag {
     //@Column(name = "LastUsedDate")
     private Date lastUsed;
 
-    // Column count instead of 'GROUP BY' query on linked table.
-    // This prevents intensive 'GROUP BY' queries on every reload on the 'trend' page.
-    //@Column(name = "Count")
-    private long count;
-
     @OneToMany(mappedBy = "hashtags")
     private Collection<Kweet> kweets = new HashSet<Kweet>();
 
