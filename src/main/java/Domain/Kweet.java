@@ -16,6 +16,9 @@ public class Kweet {
     //@Column(name = "ID")
     private long id;
 
+    //@Column(name = "Message", nullable = false)
+    private String message;
+
     @ManyToOne
     //@JoinColumn(name = "User_ID", nullable = false)
     private User sender;
@@ -53,16 +56,16 @@ public class Kweet {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public User getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Collection<User> getMentions() {
@@ -91,10 +94,6 @@ public class Kweet {
 
     public Date getPublicationDate() {
         return publicationDate;
-    }
-
-    public void setPublicationDate(Date publicationDate) {
-        this.publicationDate = publicationDate;
     }
 
     // endregion

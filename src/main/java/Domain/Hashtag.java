@@ -45,24 +45,12 @@ public class Hashtag {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Date getLastUsed() {
         return lastUsed;
-    }
-
-    public void setLastUsed(Date lastUsed) {
-        this.lastUsed = lastUsed;
     }
 
     public long getCount() {
@@ -75,10 +63,6 @@ public class Hashtag {
 
     public Collection<Kweet> getKweets() {
         return kweets;
-    }
-
-    public void setKweets(HashSet<Kweet> kweets) {
-        this.kweets = kweets;
     }
 
     //endregion

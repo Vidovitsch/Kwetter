@@ -59,16 +59,8 @@ public class User {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public Profile getProfile() {
         return profile;
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
     }
 
     public String getUsername() {
@@ -83,40 +75,20 @@ public class User {
         return roles;
     }
 
-    public void setRoles(HashSet<Role> roles) {
-        this.roles = roles;
-    }
-
     public Collection<User> getFollowing() {
         return following;
-    }
-
-    public void setFollowing(HashSet<User> following) {
-        this.following = following;
     }
 
     public Collection<User> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(HashSet<User> followers) {
-        this.followers = followers;
-    }
-
     public Collection<Kweet> getKweets() {
         return kweets;
     }
 
-    public void setKweets(HashSet<Kweet> kweets) {
-        this.kweets = kweets;
-    }
-
     public Collection<Kweet> getMentions() {
         return mentions;
-    }
-
-    public void setMentions(HashSet<Kweet> mentions) {
-        this.mentions = mentions;
     }
 
     // endregion
