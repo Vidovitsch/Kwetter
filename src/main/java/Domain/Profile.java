@@ -1,25 +1,39 @@
 package Domain;
 
-import java.util.Base64;
-
 public class Profile {
 
-    private Base64 profileImage;
+    // Unique identifier of this profile
+    private int id;
+
+    private User user;
     private String profileName;
+
+    // Base64
+    private String profileImage;
+
     private String biography;
     private String location;
     private String website;
 
-    public Profile(String profileName) {
+    public Profile(User user, String profileName) {
+        this.user = user;
         this.profileName = profileName;
     }
 
-    public Base64 getProfileImage() {
-        return profileImage;
+    public int getId() {
+        return id;
     }
 
-    public void setProfileImage(Base64 profileImage) {
-        this.profileImage = profileImage;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getProfileName() {
@@ -28,6 +42,14 @@ public class Profile {
 
     public void setProfileName(String profileName) {
         this.profileName = profileName;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public String getBiography() {
