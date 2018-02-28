@@ -63,6 +63,10 @@ public class User {
         return profile;
     }
 
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -75,16 +79,32 @@ public class User {
         return roles;
     }
 
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
     public Collection<User> getFollowing() {
         return following;
+    }
+
+    public void setFollowing(Collection<User> following) {
+        this.following = following;
     }
 
     public Collection<User> getFollowers() {
         return followers;
     }
 
+    public void setFollowers(Collection<User> followers) {
+        this.followers = followers;
+    }
+
     public Collection<Kweet> getKweets() {
         return kweets;
+    }
+
+    public void setKweets(Collection<Kweet> kweets) {
+        this.kweets = kweets;
     }
 
     public Collection<Kweet> getMentions() {

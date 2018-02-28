@@ -58,5 +58,9 @@ public class Role {
         return users;
     }
 
+    public void setUsers(Collection<User> users) {
+        this.users = users;
+    }
+
     // endregion
 }

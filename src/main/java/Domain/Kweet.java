@@ -43,11 +43,11 @@ public class Kweet {
 
     public Kweet() { }
 
-    public Kweet(User sender) {
+    public Kweet(User sender, String message) {
         this.sender = sender;
     }
 
-    public Kweet(User sender, Collection<User> mentions) {
+    public Kweet(User sender, Collection<User> mentions, String message) {
         this.sender = sender;
         this.mentions = mentions;
     }
@@ -82,7 +82,7 @@ public class Kweet {
         return hashtags;
     }
 
-    public void setHashtags(HashSet<Hashtag> hashtags) {
+    public void setHashtags(Collection<Hashtag> hashtags) {
         this.hashtags = hashtags;
     }
 

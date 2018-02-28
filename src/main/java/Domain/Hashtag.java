@@ -52,5 +52,9 @@ public class Hashtag {
         return kweets;
     }
 
+    public void setKweets(Collection<Kweet> kweets) {
+        this.kweets = kweets;
+    }
+
     //endregion
 }

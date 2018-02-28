@@ -36,8 +36,7 @@ public class Profile {
 
     public Profile() { }
 
-    public Profile(User user, String name) {
-        this.user = user;
+    public Profile(String name) {
         this.name = name;
     }
 
@@ -49,6 +48,10 @@ public class Profile {
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {
