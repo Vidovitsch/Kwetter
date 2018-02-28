@@ -52,6 +52,9 @@ public class Kweet {
         this.mentions = mentions;
     }
 
+    public Kweet() {
+    }
+
     // region Fields
 
     public long getId() {
