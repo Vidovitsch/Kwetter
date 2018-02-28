@@ -45,14 +45,13 @@ public class Kweet {
 
     public Kweet(User sender, String message) {
         this.sender = sender;
+        this.message = message;
     }
 
     public Kweet(User sender, Collection<User> mentions, String message) {
         this.sender = sender;
         this.mentions = mentions;
-    }
-
-    public Kweet() {
+        this.message = message;
     }
 
     // region Fields
