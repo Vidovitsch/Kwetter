@@ -40,7 +40,7 @@ public class User {
     private Collection<Kweet> kweets = new HashSet<Kweet>();
 
     @ManyToMany
-    //@JoinTable(name = "Following",
+    //@JoinTable(name = "Mention",
     //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
     //        inverseJoinColumns = @JoinColumn(name="Kweet_ID", referencedColumnName = "ID", nullable = false))
     private Collection<Kweet> mentions = new HashSet<Kweet>();

@@ -41,6 +41,8 @@ public class Kweet {
 
     // endregion
 
+    public Kweet() { }
+
     public Kweet(User sender) {
         this.sender = sender;
     }
