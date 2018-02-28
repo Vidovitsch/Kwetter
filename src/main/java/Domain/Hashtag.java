@@ -23,7 +23,7 @@ public class Hashtag {
     //@Column(name = "LastUsedDate")
     private Date lastUsed;
 
-    @OneToMany(mappedBy = "hashtags")
+    @ManyToMany(mappedBy = "hashtags")
     private Collection<Kweet> kweets = new HashSet<Kweet>();
 
     // endregion
