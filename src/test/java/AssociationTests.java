@@ -1,3 +1,4 @@
+import Domain.Hashtag;
 import Domain.Kweet;
 import Domain.Role;
 import Domain.User;
@@ -73,6 +74,7 @@ public class AssociationTests {
         Collection<User> users = dummyData.getDummyUsers();
         Collection<Role> roles = dummyData.getDummyRoles();
 
+
         Iterator<User> userIterator = users.iterator();
         while(userIterator.hasNext()){
             Assert.assertTrue(roles.containsAll(userIterator.next().getRoles()));
@@ -90,5 +92,27 @@ public class AssociationTests {
         }
     }
 
+    @Test
+    public void KweetHashtagAssociationTest() {
+        Collection<Hashtag> hashtags = dummyData.getDummyHashtags();
+        Collection<Kweet> kweets = dummyData.getDummyKweets();
+
+
+        Iterator<Hashtag> hashtagIterator = hashtags.iterator();
+        while(hashtagIterator.hasNext()){
+            Assert.assertTrue(kweets.containsAll(hashtagIterator.next().getKweets()));
+        }
+
+        Iterator<Kweet> kweetIterator = kweets.iterator();
+        while(kweetIterator.hasNext()){
+            Kweet k = kweetIterator.next();
+            Collection<Hashtag> hashtags1 = k.getHashtags();
+            Iterator<Hashtag> kweetHashtagsIterator = hashtags1.iterator();
+            while(kweetHashtagsIterator.hasNext())
+            {
+                Assert.assertTrue(kweetHashtagsIterator.next().getKweets().contains(k));
+            }
+        }
+    }
 
 }
