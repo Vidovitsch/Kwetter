@@ -1,3 +1,4 @@
+import Domain.Kweet;
 import Domain.Role;
 import Domain.User;
 import org.junit.Assert;
@@ -50,6 +51,24 @@ public class AssociationTests {
     }
 
     @Test
+    public void UserKweetAssociationTest() {
+        Collection<User> users = dummyData.getDummyUsers();
+        Collection<Kweet> kweets = dummyData.getDummyKweets();
+
+        Iterator<User> userIterator = users.iterator();
+        while(userIterator.hasNext()){
+            Assert.assertTrue(kweets.containsAll(userIterator.next().getKweets()));
+        }
+        Iterator<Kweet> kweetIterator = kweets.iterator();
+        while(kweetIterator.hasNext()){
+            Kweet k = kweetIterator.next();
+            User u = k.getSender();
+            Assert.assertTrue(u.getKweets().contains(k));
+        }
+
+    }
+
+    @Test
     public void UserRoleAssociationTest() {
         Collection<User> users = dummyData.getDummyUsers();
         Collection<Role> roles = dummyData.getDummyRoles();
@@ -59,5 +78,6 @@ public class AssociationTests {
             Assert.assertTrue(roles.containsAll(userIterator.next().getRoles()));
         }
     }
+
 
 }
