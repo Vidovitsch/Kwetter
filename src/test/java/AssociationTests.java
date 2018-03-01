@@ -77,6 +77,17 @@ public class AssociationTests {
         while(userIterator.hasNext()){
             Assert.assertTrue(roles.containsAll(userIterator.next().getRoles()));
         }
+
+        Iterator<Role> roleIterator = roles.iterator();
+        while(roleIterator.hasNext()){
+            Role r = roleIterator.next();
+            Collection<User> users1 = r.getUsers();
+            Iterator<User> roleUsersIterator = users1.iterator();
+            while(roleUsersIterator.hasNext())
+            {
+                Assert.assertTrue(roleUsersIterator.next().getRoles().contains(r));
+            }
+        }
     }
 
 
