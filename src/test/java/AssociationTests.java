@@ -1,11 +1,9 @@
-import Domain.Hashtag;
-import Domain.Kweet;
-import Domain.Role;
-import Domain.User;
+import Domain.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import javax.jws.soap.SOAPBinding;
 import javax.swing.text.html.HTMLDocument;
 import java.util.Collection;
 import java.util.Iterator;
@@ -115,4 +113,20 @@ public class AssociationTests {
         }
     }
 
+    @Test
+    public void UserProfileAssociationTest() {
+        Collection<User> users = dummyData.getDummyUsers();
+        Collection<Profile> profiles = dummyData.getDummyProfiles();
+
+        Iterator<Profile> profileIterator = profiles.iterator();
+        while(profileIterator.hasNext()){
+            Assert.assertTrue(users.contains(profileIterator.next().getUser()));
+        }
+        Iterator<User> userIterator = users.iterator();
+        while(userIterator.hasNext()){
+            User u = userIterator.next();
+            Profile p = u.getProfile();
+            Assert.assertEquals(p.getUser(), u);
+        }
+    }
 }
