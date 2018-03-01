@@ -145,7 +145,7 @@ public class DummyData {
             kweet.setHashtags(hashtags);
         }
         hashtag1.setKweets(kweets);
-        hashtag1.setKweets(kweets);
+        hashtag2.setKweets(kweets);
 
         return hashtags;
     }
