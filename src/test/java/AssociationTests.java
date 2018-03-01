@@ -1,5 +1,13 @@
+import Domain.Role;
+import Domain.User;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import javax.swing.text.html.HTMLDocument;
+import java.util.Collection;
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 /**
@@ -40,4 +48,16 @@ public class AssociationTests {
     public void someTest() {
         // To Do
     }
+
+    @Test
+    public void UserRoleAssociationTest() {
+        Collection<User> users = dummyData.getDummyUsers();
+        Collection<Role> roles = dummyData.getDummyRoles();
+
+        Iterator<User> userIterator = users.iterator();
+        while(userIterator.hasNext()){
+            Assert.assertTrue(roles.containsAll(userIterator.next().getRoles()));
+        }
+    }
+
 }
