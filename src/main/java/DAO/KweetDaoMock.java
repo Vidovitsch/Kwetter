@@ -22,11 +22,15 @@ public class KweetDaoMock implements IKweetDao{
         return null;
     }
 
-    public Kweet findById() {
+    public Kweet findById(long id) {
         return null;
     }
 
-    public Collection<Kweet> findByName() {
+    public Collection<Kweet> findByMessage(String message) {
+        return null;
+    }
+
+    public Collection<Kweet> findBySender(User sender) {
         return null;
     }
 

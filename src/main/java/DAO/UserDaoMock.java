@@ -18,11 +18,11 @@ public class UserDaoMock implements IUserDao{
         return null;
     }
 
-    public User findById() {
+    public User findById(long id) {
         return null;
     }
 
-    public Collection<User> findByName() {
+    public Collection<User> findByUsername(String username) {
         return null;
     }
 

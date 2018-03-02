@@ -19,11 +19,15 @@ public class ProfileDaoMock implements IProfileDao{
         return null;
     }
 
-    public Profile findById() {
+    public Profile findById(long id) {
         return null;
     }
 
-    public Collection<Profile> findByName() {
+    public Profile findByUser(User user) {
+        return null;
+    }
+
+    public Collection<Profile> findByName(String name) {
         return null;
     }
 

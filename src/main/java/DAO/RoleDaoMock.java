@@ -20,11 +20,11 @@ public class RoleDaoMock implements IRoleDao{
         return null;
     }
 
-    public Role findById() {
+    public Role findById(long id) {
         return null;
     }
 
-    public Collection<Role> findByName() {
+    public Role findByName(String name) {
         return null;
     }
 
