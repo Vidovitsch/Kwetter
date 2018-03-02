@@ -5,6 +5,7 @@ import Domain.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 public class UserDaoMock implements IUserDao{
@@ -42,7 +43,17 @@ public class UserDaoMock implements IUserDao{
         for (int i = 0; i < 10; i++) {
             users.add(new User("DummyUser" + i));
         }
-
+        connectDummyUsers(users);
         return users;
+    }
+
+    private void connectDummyUsers(Collection<User> users) {
+        for (User dummyUser : users) {
+            Collection<User> others = new HashSet<User>(users);
+            others.remove(dummyUser);
+
+            dummyUser.setFollowers((HashSet<User>)others);
+            dummyUser.setFollowing((HashSet<User>)others);
+        }
     }
 }
