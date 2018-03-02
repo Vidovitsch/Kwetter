@@ -4,10 +4,7 @@ import DaoInterfaces.IKweetDao;
 import Domain.Kweet;
 import Domain.User;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class KweetDaoMock implements IKweetDao{
 
@@ -19,15 +16,32 @@ public class KweetDaoMock implements IKweetDao{
     }
 
     public Collection<Kweet> findAll() {
-        return null;
+        return kweets;
     }
 
     public Kweet findById(long id) {
-        return null;
+        Iterator<Kweet> kweetIterator = kweets.iterator();
+        Kweet foundKweet = null;
+        while(kweetIterator.hasNext()){
+            Kweet currentKweet = kweetIterator.next();
+            if(currentKweet.getId() == id){
+                foundKweet = currentKweet;
+            break;
+            }
+        }
+        return foundKweet;
     }
 
     public Collection<Kweet> findByMessage(String message) {
-        return null;
+        Iterator<Kweet> kweetIterator = kweets.iterator();
+        List<Kweet> foundKweets = null;
+        while(kweetIterator.hasNext()){
+            Kweet currentKweet = kweetIterator.next();
+            if(currentKweet.getMessage().toLowerCase().contains(message.toLowerCase())){
+                foundKweets.add(currentKweet);
+            }
+        }
+        return foundKweets;
     }
 
     public Collection<Kweet> findBySender(User sender) {
