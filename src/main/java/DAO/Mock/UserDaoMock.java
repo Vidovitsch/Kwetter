@@ -8,34 +8,50 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-public class UserDaoMock implements IUserDao{
+public class UserDaoMock implements IUserDao {
     Collection<User> users;
+
     public UserDaoMock() {
         users = createDummyUsers();
     }
 
     public Collection<User> findAll() {
-        return null;
+        return users;
     }
 
     public User findById(long id) {
+        for (User u : users) {
+            if (u.getId() == id) {
+                return u;
+            }
+        }
         return null;
     }
 
-    public Collection<User> findByUsername(String username) {
+    public User findByUsername(String username) {
+        for (User u : users) {
+            if (u.getUsername() == username) {
+                return u;
+            }
+        }
         return null;
     }
 
     public User insertUser(User user) {
-        return null;
+        users.add(user);
+        return user;
     }
 
     public User updateUser(User user) {
-        return null;
+        User u = findById(user.getId());
+        if(u == null){
+            u = insertUser(user);
+        }
+        return u;
     }
 
     public boolean deleteUser(User user) {
-        return false;
+        return users.remove(user);
     }
 
     private ArrayList<User> createDummyUsers() {
@@ -52,8 +68,8 @@ public class UserDaoMock implements IUserDao{
             Collection<User> others = new HashSet<User>(users);
             others.remove(dummyUser);
 
-            dummyUser.setFollowers((HashSet<User>)others);
-            dummyUser.setFollowing((HashSet<User>)others);
+            dummyUser.setFollowers((HashSet<User>) others);
+            dummyUser.setFollowing((HashSet<User>) others);
         }
     }
 }
