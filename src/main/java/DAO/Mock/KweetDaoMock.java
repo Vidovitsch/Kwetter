@@ -1,4 +1,4 @@
-package DAO;
+package DAO.Mock;
 
 import DaoInterfaces.IKweetDao;
 import Domain.Kweet;
