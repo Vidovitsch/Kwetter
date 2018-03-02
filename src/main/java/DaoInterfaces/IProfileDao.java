@@ -2,12 +2,12 @@ package DaoInterfaces;
 
 import Domain.Profile;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface IProfileDao {
-    List<Profile> findAll();
+    Collection<Profile> findAll();
     Profile findById();
-    List<Profile> findByName();
+    Collection<Profile> findByName();
     Profile insertProfile(Profile Profile);
     Profile updateProfile(Profile Profile);
     boolean deleteProfile(Profile Profile);

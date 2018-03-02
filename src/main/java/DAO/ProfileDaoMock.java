@@ -15,7 +15,7 @@ public class ProfileDaoMock implements IProfileDao{
         this.profiles = createDummyProfiles(users);
     }
 
-    public List<Profile> findAll() {
+    public Collection<Profile> findAll() {
         return null;
     }
 
@@ -23,7 +23,7 @@ public class ProfileDaoMock implements IProfileDao{
         return null;
     }
 
-    public List<Profile> findByName() {
+    public Collection<Profile> findByName() {
         return null;
     }
 

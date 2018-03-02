@@ -2,12 +2,12 @@ package DaoInterfaces;
 
 import Domain.Hashtag;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface IHashtagDao {
-    List<Hashtag> findAll();
-    Hashtag findById();
-    List<Hashtag> findByName();
+    Collection<Hashtag> findAll();
+    Hashtag findById(long id);
+    Collection<Hashtag> findByName(String name);
     Hashtag insertHashtag(Hashtag Hashtag);
     Hashtag updateHashtag(Hashtag Hashtag);
     boolean deleteHashtag(Hashtag Hashtag);

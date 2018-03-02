@@ -14,7 +14,7 @@ public class UserDaoMock implements IUserDao{
         users = createDummyUsers();
     }
 
-    public List<User> findAll() {
+    public Collection<User> findAll() {
         return null;
     }
 
@@ -22,7 +22,7 @@ public class UserDaoMock implements IUserDao{
         return null;
     }
 
-    public List<User> findByName() {
+    public Collection<User> findByName() {
         return null;
     }
 

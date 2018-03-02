@@ -16,7 +16,7 @@ public class RoleDaoMock implements IRoleDao{
         this.roles = createDummyRoles(users);
     }
 
-    public List<Role> findAll() {
+    public Collection<Role> findAll() {
         return null;
     }
 
@@ -24,7 +24,7 @@ public class RoleDaoMock implements IRoleDao{
         return null;
     }
 
-    public List<Role> findByName() {
+    public Collection<Role> findByName() {
         return null;
     }
 

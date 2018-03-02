@@ -13,12 +13,12 @@ public class KweetDaoMock implements IKweetDao{
 
     Collection<Kweet> kweets;
 
-    public KweetDaoMock(List<User> users) {
+    public KweetDaoMock(Collection<User> users) {
 
         this.kweets = createDummyKweets(users);
     }
 
-    public List<Kweet> findAll() {
+    public Collection<Kweet> findAll() {
         return null;
     }
 
@@ -26,7 +26,7 @@ public class KweetDaoMock implements IKweetDao{
         return null;
     }
 
-    public List<Kweet> findByName() {
+    public Collection<Kweet> findByName() {
         return null;
     }
 

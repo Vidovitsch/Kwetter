@@ -4,9 +4,8 @@ import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 import Domain.Kweet;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import javax.swing.text.html.HTMLDocument;
+import java.util.*;
 
 public class HashtagDaoMock implements IHashtagDao{
     Collection<Hashtag> hashtags;
@@ -15,28 +14,56 @@ public class HashtagDaoMock implements IHashtagDao{
         this.hashtags = createDummyHashtags(kweets);
     }
 
-    public List<Hashtag> findAll() {
-        return null;
+    public Collection<Hashtag> findAll() {
+        return hashtags;
     }
 
-    public Hashtag findById() {
-        return null;
+    public Hashtag findById(long id) {
+        Hashtag foundHashtag = null;
+        Iterator<Hashtag> hashtagIterator = hashtags.iterator();
+        while (hashtagIterator.hasNext()){
+            Hashtag currentHashtag = hashtagIterator.next();
+            if(currentHashtag.getId() == id) {
+                foundHashtag = currentHashtag;
+                break;
+            }
+        }
+        return foundHashtag;
     }
 
-    public List<Hashtag> findByName() {
-        return null;
+    public Collection<Hashtag> findByName(String name) {
+        Collection<Hashtag> foundHashtags = null;
+        Iterator<Hashtag> hashtagIterator = hashtags.iterator();
+        while (hashtagIterator.hasNext()){
+            Hashtag currentHashtag = hashtagIterator.next();
+            if(currentHashtag.getName() == name) {
+                foundHashtags.add(currentHashtag);
+            }
+        }
+        return foundHashtags;
     }
 
     public Hashtag insertHashtag(Hashtag Hashtag) {
-        return null;
+        hashtags.add(Hashtag);
+        return Hashtag;
     }
 
     public Hashtag updateHashtag(Hashtag Hashtag) {
-        return null;
+        Hashtag updatedHashtag = null;
+        Iterator<Hashtag> hashtagIterator = hashtags.iterator();
+        while (hashtagIterator.hasNext()){
+            Hashtag currentHashtag = hashtagIterator.next();
+            if(currentHashtag.getId() == Hashtag.getId()) {
+                currentHashtag = Hashtag;
+                updatedHashtag = currentHashtag;
+                break;
+            }
+        }
+        return updatedHashtag;
     }
 
     public boolean deleteHashtag(Hashtag Hashtag) {
-        return false;
+        try{hashtags.remove(Hashtag); return true;}catch (Exception e) {return false;}
     }
 
     private ArrayList<Hashtag> createDummyHashtags(Collection<Kweet> kweets) {
