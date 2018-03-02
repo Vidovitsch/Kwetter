@@ -8,7 +8,7 @@ import java.util.*;
 
 public class KweetDaoMock implements IKweetDao{
 
-    Collection<Kweet> kweets;
+    private Collection<Kweet> kweets;
 
     public KweetDaoMock(Collection<User> users) {
 
@@ -55,7 +55,7 @@ public class KweetDaoMock implements IKweetDao{
 
     public Kweet updateKweet(Kweet kweet) {
         for(Kweet k : kweets){
-            if(k.getId() == kweet.getId()){
+            if(k.getId() == kweet.getId()) {
                 k = kweet;
                 return k;
             }
@@ -64,7 +64,7 @@ public class KweetDaoMock implements IKweetDao{
     }
 
     public boolean deleteKweet(Kweet kweet) {
-        try{kweets.remove(kweet); return true;}catch (Exception e) {return false;}
+        return kweets.remove(kweet);
     }
 
     private ArrayList<Kweet> createDummyKweets(Collection<User> users) {

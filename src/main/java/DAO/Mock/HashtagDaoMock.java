@@ -7,8 +7,9 @@ import Domain.Kweet;
 import javax.swing.text.html.HTMLDocument;
 import java.util.*;
 
-public class HashtagDaoMock implements IHashtagDao{
-    Collection<Hashtag> hashtags;
+public class HashtagDaoMock implements IHashtagDao {
+
+    private Collection<Hashtag> hashtags;
 
     public HashtagDaoMock(Collection<Kweet> kweets) {
         this.hashtags = createDummyHashtags(kweets);
@@ -30,7 +31,7 @@ public class HashtagDaoMock implements IHashtagDao{
     public Collection<Hashtag> findByName(String name) {
         Collection<Hashtag> foundHashtags = new ArrayList<Hashtag>();
         for(Hashtag h : hashtags){
-            if(h.getName() == name) {
+            if(h.getName().equals(name)) {
                 foundHashtags.add(h);
             }
         }

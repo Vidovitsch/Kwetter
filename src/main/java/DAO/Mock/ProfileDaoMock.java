@@ -6,7 +6,7 @@ import Domain.User;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ProfileDaoMock implements IProfileDao{
+public class ProfileDaoMock implements IProfileDao {
 
     private Collection<Profile> dummyProfiles;
 
