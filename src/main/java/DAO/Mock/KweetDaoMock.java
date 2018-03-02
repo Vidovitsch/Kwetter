@@ -4,10 +4,7 @@ import DaoInterfaces.IKweetDao;
 import Domain.Kweet;
 import Domain.User;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class KweetDaoMock implements IKweetDao{
 
@@ -19,31 +16,55 @@ public class KweetDaoMock implements IKweetDao{
     }
 
     public Collection<Kweet> findAll() {
-        return null;
+        return kweets;
     }
 
     public Kweet findById(long id) {
+        for(Kweet k : kweets){
+            if(k.getId() == id){
+                return k;
+            }
+        }
         return null;
     }
 
     public Collection<Kweet> findByMessage(String message) {
-        return null;
+        Collection<Kweet> foundKweets = new ArrayList<Kweet>();
+        for(Kweet k : kweets){
+            if(k.getMessage().toLowerCase().contains(message.toLowerCase())){
+                foundKweets.add(k);
+            }
+        }
+        return foundKweets;
     }
 
     public Collection<Kweet> findBySender(User sender) {
-        return null;
+        Collection<Kweet> foundKweets = new ArrayList<Kweet>();
+        for(Kweet k : kweets){
+            if(k.getSender() == sender){
+                foundKweets.add(k);
+            }
+        }
+        return foundKweets;
     }
 
-    public Kweet insertKweet(Kweet Kweet) {
-        return null;
+    public Kweet insertKweet(Kweet kweet) {
+        kweets.add(kweet);
+        return kweet;
     }
 
-    public Kweet updateKweet(Kweet Kweet) {
-        return null;
+    public Kweet updateKweet(Kweet kweet) {
+        for(Kweet k : kweets){
+            if(k.getId() == kweet.getId()){
+                k = kweet;
+                return k;
+            }
+        }
+        return insertKweet(kweet);
     }
 
-    public boolean deleteKweet(Kweet Kweet) {
-        return false;
+    public boolean deleteKweet(Kweet kweet) {
+        try{kweets.remove(kweet); return true;}catch (Exception e) {return false;}
     }
 
     private ArrayList<Kweet> createDummyKweets(Collection<User> users) {

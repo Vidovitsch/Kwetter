@@ -19,25 +19,19 @@ public class HashtagDaoMock implements IHashtagDao{
     }
 
     public Hashtag findById(long id) {
-        Hashtag foundHashtag = null;
-        Iterator<Hashtag> hashtagIterator = hashtags.iterator();
-        while (hashtagIterator.hasNext()){
-            Hashtag currentHashtag = hashtagIterator.next();
-            if(currentHashtag.getId() == id) {
-                foundHashtag = currentHashtag;
-                break;
+        for(Hashtag h : hashtags){
+            if(h.getId() == id) {
+                return h;
             }
         }
-        return foundHashtag;
+        return null;
     }
 
     public Collection<Hashtag> findByName(String name) {
-        Collection<Hashtag> foundHashtags = null;
-        Iterator<Hashtag> hashtagIterator = hashtags.iterator();
-        while (hashtagIterator.hasNext()){
-            Hashtag currentHashtag = hashtagIterator.next();
-            if(currentHashtag.getName() == name) {
-                foundHashtags.add(currentHashtag);
+        Collection<Hashtag> foundHashtags = new ArrayList<Hashtag>();
+        for(Hashtag h : hashtags){
+            if(h.getName() == name) {
+                foundHashtags.add(h);
             }
         }
         return foundHashtags;
@@ -49,17 +43,13 @@ public class HashtagDaoMock implements IHashtagDao{
     }
 
     public Hashtag updateHashtag(Hashtag Hashtag) {
-        Hashtag updatedHashtag = null;
-        Iterator<Hashtag> hashtagIterator = hashtags.iterator();
-        while (hashtagIterator.hasNext()){
-            Hashtag currentHashtag = hashtagIterator.next();
-            if(currentHashtag.getId() == Hashtag.getId()) {
-                currentHashtag = Hashtag;
-                updatedHashtag = currentHashtag;
-                break;
+        for(Hashtag h : hashtags){
+            if(h.getId() == Hashtag.getId()) {
+                h = Hashtag;
+                return h;
             }
         }
-        return updatedHashtag;
+        return null;
     }
 
     public boolean deleteHashtag(Hashtag Hashtag) {
