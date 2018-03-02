@@ -8,7 +8,7 @@ public interface IRoleDao {
     Collection<Role> findAll();
     Role findById(long id);
     Role findByName(String name);
-    Role insertRole(Role Role);
-    Role updateRole(Role Role);
-    boolean deleteRole(Role Role);
+    Role insertRole(Role role);
+    Role updateRole(Role role);
+    boolean deleteRole(Role role);
 }

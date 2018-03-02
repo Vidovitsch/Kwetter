@@ -17,26 +17,33 @@ public class RoleDaoMock implements IRoleDao{
     }
 
     public Collection<Role> findAll() {
-        return null;
+        return roles;
     }
 
     public Role findById(long id) {
+        for (Role r : roles){
+            if(r.getId() == id){return r;};
+        }
         return null;
     }
 
     public Role findByName(String name) {
+        for (Role r : roles){
+            if(r.getName() == name){return r;};
+        }
         return null;
     }
 
-    public Role insertRole(Role Role) {
+    public Role insertRole(Role role) {
+        roles.add(role);
+        return role;
+    }
+
+    public Role updateRole(Role role) {
         return null;
     }
 
-    public Role updateRole(Role Role) {
-        return null;
-    }
-
-    public boolean deleteRole(Role Role) {
+    public boolean deleteRole(Role role) {
         return false;
     }
 
