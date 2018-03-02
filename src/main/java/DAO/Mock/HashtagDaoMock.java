@@ -1,4 +1,4 @@
-package DAO;
+package DAO.Mock;
 
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
