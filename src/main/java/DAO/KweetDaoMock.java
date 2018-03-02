@@ -20,44 +20,51 @@ public class KweetDaoMock implements IKweetDao{
     }
 
     public Kweet findById(long id) {
-        Iterator<Kweet> kweetIterator = kweets.iterator();
-        Kweet foundKweet = null;
-        while(kweetIterator.hasNext()){
-            Kweet currentKweet = kweetIterator.next();
-            if(currentKweet.getId() == id){
-                foundKweet = currentKweet;
-            break;
+        for(Kweet k : kweets){
+            if(k.getId() == id){
+                return k;
             }
         }
-        return foundKweet;
+        return null;
     }
 
     public Collection<Kweet> findByMessage(String message) {
-        Iterator<Kweet> kweetIterator = kweets.iterator();
-        List<Kweet> foundKweets = null;
-        while(kweetIterator.hasNext()){
-            Kweet currentKweet = kweetIterator.next();
-            if(currentKweet.getMessage().toLowerCase().contains(message.toLowerCase())){
-                foundKweets.add(currentKweet);
+        Collection<Kweet> foundKweets = new ArrayList<Kweet>();
+        for(Kweet k : kweets){
+            if(k.getMessage().toLowerCase().contains(message.toLowerCase())){
+                foundKweets.add(k);
             }
         }
         return foundKweets;
     }
 
     public Collection<Kweet> findBySender(User sender) {
-        return null;
+        Collection<Kweet> foundKweets = new ArrayList<Kweet>();
+        for(Kweet k : kweets){
+            if(k.getSender() == sender){
+                foundKweets.add(k);
+            }
+        }
+        return foundKweets;
     }
 
-    public Kweet insertKweet(Kweet Kweet) {
-        return null;
+    public Kweet insertKweet(Kweet kweet) {
+        kweets.add(kweet);
+        return kweet;
     }
 
-    public Kweet updateKweet(Kweet Kweet) {
-        return null;
+    public Kweet updateKweet(Kweet kweet) {
+        for(Kweet k : kweets){
+            if(k.getId() == kweet.getId()){
+                k = kweet;
+                return k;
+            }
+        }
+        return insertKweet(kweet);
     }
 
-    public boolean deleteKweet(Kweet Kweet) {
-        return false;
+    public boolean deleteKweet(Kweet kweet) {
+        try{kweets.remove(kweet); return true;}catch (Exception e) {return false;}
     }
 
     private ArrayList<Kweet> createDummyKweets(Collection<User> users) {
