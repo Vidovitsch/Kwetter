@@ -40,11 +40,15 @@ public class RoleDaoMock implements IRoleDao{
     }
 
     public Role updateRole(Role role) {
-        return null;
+        Role r = findById(role.getId());
+        if(r == null){
+            r = insertRole(role);
+        }
+        return r;
     }
 
     public boolean deleteRole(Role role) {
-        return false;
+        return roles.remove(role);
     }
 
     private ArrayList<Role> createDummyRoles(Collection<User> users) {
