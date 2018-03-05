@@ -1,11 +1,11 @@
+package DAO;
+
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class HashtagDaoTest {
-
-
+public class KweetDaoTest {
     private static IHashtagDao hashtagDao;
     private static IKweetDao kweetDao;
     private static IUserDao userDao;
@@ -14,7 +14,6 @@ public class HashtagDaoTest {
     public static void Init() {
         userDao = new UserDaoMock();
         kweetDao = new KweetDaoMock(userDao.findAll());
-        hashtagDao = new HashtagDaoMock(kweetDao.findAll());
     }
 
     @Test
@@ -28,28 +27,37 @@ public class HashtagDaoTest {
     }
 
     @Test
-    public void findByNameTest() {
+    public void findByMessageTest() {
         // To Do
     }
 
     @Test
-    public void insertHashtagTest() {
+    public void findBySenderNameTest() {
         // To Do
     }
 
     @Test
-    public void updateHashtagTest() {
+    public void insertKweetTest() {
         // To Do
     }
 
     @Test
-    public void deleteHashtagTest() {
+    public void updateKweetTest() {
         // To Do
     }
 
     @Test
-    public void getTrendTest() {
+    public void deleteKweetTest() {
         // To Do
     }
 
+    @Test
+    public void getTimelineTest() {
+        // To Do
+    }
+
+    @Test
+    public void searchTest() {
+        // To Do
+    }
 }

@@ -28,19 +28,18 @@ public class HashtagDaoMock implements IHashtagDao {
         return null;
     }
 
-    public Collection<Hashtag> findByName(String name) {
-        Collection<Hashtag> foundHashtags = new ArrayList<Hashtag>();
-        for(Hashtag h : mockHashtags){
-            if(h.getName().equals(name)) {
-                foundHashtags.add(h);
+    public Hashtag findByName(String name) {
+        for (Hashtag hashtag : mockHashtags) {
+            if (hashtag.getName().equals(name)) {
+                return hashtag;
             }
         }
-        return foundHashtags;
+        return null;
     }
 
-    public Hashtag insertHashtag(Hashtag Hashtag) {
-        mockHashtags.add(Hashtag);
-        return Hashtag;
+    public Hashtag insertHashtag(Hashtag hashtag) {
+        mockHashtags.add(hashtag);
+        return hashtag;
     }
 
     public Hashtag updateHashtag(Hashtag hashtag) {
@@ -59,7 +58,7 @@ public class HashtagDaoMock implements IHashtagDao {
         return mockHashtags.remove(hashtag);
     }
 
-    public Collection<Hashtag> getTrend() {
+    public List<Hashtag> getTrend() {
         List<Hashtag> trends = new ArrayList<Hashtag>();
         Date weekAgo = getDateWeekAgo();
         for (Hashtag hashtag : mockHashtags) {

@@ -1,17 +1,20 @@
+package DAO;
+
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class KweetDaoTest {
-    private static IHashtagDao hashtagDao;
-    private static IKweetDao kweetDao;
+public class ProfileDaoTest {
+
+    private static IProfileDao profileDao;
+
     private static IUserDao userDao;
 
     @BeforeClass
     public static void Init() {
         userDao = new UserDaoMock();
-        kweetDao = new KweetDaoMock(userDao.findAll());
+        profileDao = new ProfileDaoMock(userDao.findAll());
     }
 
     @Test
@@ -25,37 +28,27 @@ public class KweetDaoTest {
     }
 
     @Test
-    public void findByMessageTest() {
+    public void findByUserTest() {
         // To Do
     }
 
     @Test
-    public void findBySenderNameTest() {
+    public void findByNameTest() {
         // To Do
     }
 
     @Test
-    public void insertKweetTest() {
+    public void insertProfileTest() {
         // To Do
     }
 
     @Test
-    public void updateKweetTest() {
+    public void updateProfileTest() {
         // To Do
     }
 
     @Test
-    public void deleteKweetTest() {
-        // To Do
-    }
-
-    @Test
-    public void getTimelineTest() {
-        // To Do
-    }
-
-    @Test
-    public void searchTest() {
+    public void deleteProfileTest() {
         // To Do
     }
 }

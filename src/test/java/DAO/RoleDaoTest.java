@@ -1,20 +1,18 @@
+package DAO;
+
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class UserDaoTest {
-
+public class RoleDaoTest {
+    private static IRoleDao roleDao;
     private static IUserDao userDao;
 
     @BeforeClass
     public static void Init() {
         userDao = new UserDaoMock();
-    }
-
-    @Test
-    public void someTest() {
-        // To Do
+        roleDao = new RoleDaoMock(userDao.findAll());
     }
 
     @Test
@@ -28,22 +26,27 @@ public class UserDaoTest {
     }
 
     @Test
-    public void findByUsernameTest() {
+    public void findByNameTest() {
         // To Do
     }
 
     @Test
-    public void insertUserTest() {
+    public void insertRoleTest() {
         // To Do
     }
 
     @Test
-    public void updateUserTest() {
+    public void updateRoleTest() {
         // To Do
     }
 
     @Test
-    public void deleteUser() {
+    public void deleteRoleTest() {
+        // To Do
+    }
+
+    @Test
+    public void someTestTest() {
         // To Do
     }
 

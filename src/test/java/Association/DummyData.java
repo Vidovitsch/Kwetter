@@ -1,3 +1,5 @@
+package Association;
+
 import Domain.*;
 
 import java.util.ArrayList;

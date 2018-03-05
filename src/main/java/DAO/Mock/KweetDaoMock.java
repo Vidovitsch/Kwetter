@@ -1,5 +1,6 @@
 package DAO.Mock;
 
+import Comparator.KweetComparator;
 import DaoInterfaces.IKweetDao;
 import Domain.Hashtag;
 import Domain.Kweet;
@@ -76,7 +77,7 @@ public class KweetDaoMock implements IKweetDao{
             kweets.addAll(following.getKweets());
         }
         kweets.addAll(user.getKweets());
-        Collections.sort(kweets, new Comparator.KweetComparator());
+        Collections.sort(kweets, new KweetComparator());
 
         return kweets;
     }

@@ -1,5 +1,8 @@
-import DAO.Mock.*;
-import DaoInterfaces.*;
+package Association;
+
+import DAO.Mock.ProfileDaoMock;
+import DAO.Mock.UserDaoMock;
+import DaoInterfaces.IProfileDao;
 import Domain.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -8,6 +11,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
+import static org.junit.Assert.*;
 
 /**
  * Scenario for tests:
@@ -34,20 +39,13 @@ import java.util.Iterator;
  * 4.1. Each user has one unique profile.
  */
 
-public class AssociationTestsMockDAO {
+public class AssociationTests {
 
-    private static IHashtagDao hashtagDao;
-    private static IKweetDao kweetDao;
-    private static IProfileDao profileDao;
-    private static IRoleDao roleDao;
-    private static IUserDao userDao;
+    private static DummyData dummyData;
+
     @BeforeClass
     public static void Init() {
-        userDao = new UserDaoMock();
-        profileDao = new ProfileDaoMock(userDao.findAll());
-        roleDao = new RoleDaoMock(userDao.findAll());
-        kweetDao = new KweetDaoMock(userDao.findAll());
-        hashtagDao = new HashtagDaoMock(kweetDao.findAll());
+        dummyData = new DummyData();
     }
 
     @Test
@@ -57,8 +55,8 @@ public class AssociationTestsMockDAO {
 
     @Test
     public void UserKweetAssociationTest() {
-        Collection<User> users = userDao.findAll();
-        Collection<Kweet> kweets = kweetDao.findAll();
+        Collection<User> users = dummyData.getDummyUsers();
+        Collection<Kweet> kweets = dummyData.getDummyKweets();
 
         Iterator<User> userIterator = users.iterator();
         while(userIterator.hasNext()){
@@ -70,12 +68,13 @@ public class AssociationTestsMockDAO {
             User u = k.getSender();
             Assert.assertTrue(u.getKweets().contains(k));
         }
+
     }
 
     @Test
     public void UserRoleAssociationTest() {
-        Collection<User> users = userDao.findAll();
-        Collection<Role> roles = roleDao.findAll();
+        Collection<User> users = dummyData.getDummyUsers();
+        Collection<Role> roles = dummyData.getDummyRoles();
 
 
         Iterator<User> userIterator = users.iterator();
@@ -97,8 +96,9 @@ public class AssociationTestsMockDAO {
 
     @Test
     public void KweetHashtagAssociationTest() {
-        Collection<Hashtag> hashtags = hashtagDao.findAll();
-        Collection<Kweet> kweets = kweetDao.findAll();
+        Collection<Hashtag> hashtags = dummyData.getDummyHashtags();
+        Collection<Kweet> kweets = dummyData.getDummyKweets();
+
 
         Iterator<Hashtag> hashtagIterator = hashtags.iterator();
         while(hashtagIterator.hasNext()){
@@ -119,8 +119,8 @@ public class AssociationTestsMockDAO {
 
     @Test
     public void UserProfileAssociationTest() {
-        Collection<User> users = userDao.findAll();
-        Collection<Profile> profiles = profileDao.findAll();
+        Collection<User> users = dummyData.getDummyUsers();
+        Collection<Profile> profiles = dummyData.getDummyProfiles();
 
         Iterator<Profile> profileIterator = profiles.iterator();
         while(profileIterator.hasNext()){
@@ -135,6 +135,14 @@ public class AssociationTestsMockDAO {
     }
     @Test
     public void minitest(){
-
+        IProfileDao profileDao = new ProfileDaoMock((new UserDaoMock().findAll()));
+        for(Profile p : profileDao.findAll()){
+            p.setwebsite("Urlshizzle");
+            Profile pr = new Profile();
+            p = pr;
+            ArrayList<Profile> profiles = (ArrayList<Profile>)profileDao.findAll();
+            //profiles.set(profiles.indexOf(p), currentProfile);
+            System.out.println(profileDao.findById(p.getId()).getwebsite());
+        }
     }
 }
