@@ -54,13 +54,15 @@ public class KweetDaoMock implements IKweetDao{
     }
 
     public Kweet updateKweet(Kweet kweet) {
-        for(Kweet k : mockKweets){
-            if(k.getId() == kweet.getId()) {
-                k = kweet;
-                return k;
-            }
+        Kweet existingKweet = findById(kweet.getId());
+        if(existingKweet == null){
+            mockKweets.add(kweet);
         }
-        return insertKweet(kweet);
+        else{
+            mockKweets.remove(existingKweet);
+            mockKweets.add(kweet);
+        }
+        return kweet;
     }
 
     public boolean deleteKweet(Kweet kweet) {

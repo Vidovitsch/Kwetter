@@ -50,10 +50,9 @@ public class RoleDaoMock implements IRoleDao{
         if (existingRole == null) {
             mockRoles.add(role);
         } else {
-            ArrayList<Role> roles = (ArrayList<Role>)mockRoles;
-            roles.set(roles.indexOf(existingRole), role);
+            mockRoles.remove(existingRole);
+            mockRoles.add(role);
         }
-
         return role;
     }
 

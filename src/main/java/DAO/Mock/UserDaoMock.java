@@ -44,9 +44,12 @@ public class UserDaoMock implements IUserDao {
     public User updateUser(User user) {
         User u = findById(user.getId());
         if(u == null){
-            u = insertUser(user);
+            mockUsers.add(user);
+        }else{
+            mockUsers.remove(u);
+            mockUsers.add(user);
         }
-        return u;
+        return user;
     }
 
     public boolean deleteUser(User user) {
