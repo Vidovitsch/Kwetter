@@ -56,11 +56,11 @@ public class KweetDaoMock implements IKweetDao{
     public Kweet updateKweet(Kweet kweet) {
         Kweet existingKweet = findById(kweet.getId());
         if(existingKweet == null){
-            kweets.add(kweet);
+            mockKweets.add(kweet);
         }
         else{
-            kweets.remove(existingKweet);
-            kweets.add(kweet);
+            mockKweets.remove(existingKweet);
+            mockKweets.add(kweet);
         }
         return kweet;
     }

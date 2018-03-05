@@ -61,8 +61,8 @@ public class ProfileDaoMock implements IProfileDao {
         if (existingProfile == null) {
             mockProfiles.add(profile);
         } else {
-            dummyProfiles.remove(existingProfile);
-            dummyProfiles.add(profile);
+            mockProfiles.remove(existingProfile);
+            mockProfiles.add(profile);
         }
         return profile;
     }

@@ -45,11 +45,11 @@ public class HashtagDaoMock implements IHashtagDao {
     public Hashtag updateHashtag(Hashtag hashtag) {
         Hashtag existingHashtag = findById(hashtag.getId());
         if(existingHashtag == null){
-            hashtags.add(hashtag);
+            mockHashtags.add(hashtag);
         }
         else{
-            hashtags.remove(existingHashtag);
-            hashtags.add(hashtag);
+            mockHashtags.remove(existingHashtag);
+            mockHashtags.add(hashtag);
         }
         return hashtag;
     }
