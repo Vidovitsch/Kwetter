@@ -57,7 +57,12 @@ public class HashtagDaoMock implements IHashtagDao {
     }
 
     public Collection<Hashtag> getTrend() {
-        return null;
+        Map<Hashtag, Integer> trend = new HashMap<Hashtag, Integer>();
+        for (Hashtag hashtag : mockHashtags) {
+            if (trend.containsKey(hashtag)) {
+                trend.put(hashtag, new Integer(trend.get(hashtag).intValue() + 1));
+            }
+        }
     }
 
     private ArrayList<Hashtag> createDummyHashtags(Collection<Kweet> kweets) {

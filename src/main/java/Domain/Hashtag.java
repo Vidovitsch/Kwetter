@@ -26,6 +26,8 @@ public class Hashtag {
     @ManyToMany(mappedBy = "hashtags")
     private Collection<Kweet> kweets = new HashSet<Kweet>();
 
+    private int timesUsed;
+
     // endregion
 
     public Hashtag() { }
@@ -54,6 +56,14 @@ public class Hashtag {
 
     public void setKweets(Collection<Kweet> kweets) {
         this.kweets = kweets;
+    }
+
+    public int getTimesUsed() {
+        return timesUsed;
+    }
+
+    public void setTimesUsed(int timesUsed) {
+        this.timesUsed = timesUsed;
     }
 
     //endregion
