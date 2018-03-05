@@ -12,7 +12,7 @@ public class RoleDaoMock implements IRoleDao{
     private Collection<Role> mockRoles;
 
     public RoleDaoMock(Collection<User> users) {
-        this.mockRoles = createmockRoles(users);
+        this.mockRoles = createMockRoles(users);
     }
 
     public Collection<Role> findAll() {
@@ -60,7 +60,7 @@ public class RoleDaoMock implements IRoleDao{
         return mockRoles.remove(role);
     }
 
-    private ArrayList<Role> createmockRoles(Collection<User> users) {
+    private ArrayList<Role> createMockRoles(Collection<User> users) {
         ArrayList<Role> roles = new ArrayList<Role>();
 
         Role role1 = new Role("Kweeter");

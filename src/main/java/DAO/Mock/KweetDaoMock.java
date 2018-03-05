@@ -1,6 +1,7 @@
 package DAO.Mock;
 
 import DaoInterfaces.IKweetDao;
+import Domain.Hashtag;
 import Domain.Kweet;
 import Domain.User;
 
@@ -12,7 +13,7 @@ public class KweetDaoMock implements IKweetDao{
 
     public KweetDaoMock(Collection<User> users) {
 
-        this.mockKweets = createDummyKweets(users);
+        this.mockKweets = createMockKweets(users);
     }
 
     public Collection<Kweet> findAll() {
@@ -70,14 +71,35 @@ public class KweetDaoMock implements IKweetDao{
     }
 
     public Collection<Kweet> getTimeline(User user) {
-        return null;
+        List<Kweet> kweets = new ArrayList<Kweet>();
+        for (User following : user.getFollowing()) {
+            kweets.addAll(following.getKweets());
+        }
+        kweets.addAll(user.getKweets());
+        Collections.sort(kweets, new Comparator.KweetComparator());
+
+        return kweets;
     }
 
     public Collection<Kweet> search(String term) {
-        return null;
+        Collection<Kweet> results = new ArrayList<Kweet>();
+        term = term.toLowerCase();
+        for (Kweet kweet : mockKweets) {
+            if (kweet.getSender().getUsername().contains(term)) {
+                results.add(kweet);
+            } else {
+                for (Hashtag hashtag : kweet.getHashtags()) {
+                    if (hashtag.getName().contains(term)) {
+                        results.add(kweet);
+                        break;
+                    }
+                }
+            }
+        }
+        return results;
     }
 
-    private ArrayList<Kweet> createDummyKweets(Collection<User> users) {
+    private ArrayList<Kweet> createMockKweets(Collection<User> users) {
         ArrayList<Kweet> allKweets = new ArrayList<Kweet>();
 
         for (User user : users) {

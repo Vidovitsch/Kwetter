@@ -1,5 +1,6 @@
 package DAO.Mock;
 
+import Comparator.TrendComparator;
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 import Domain.Kweet;
@@ -11,7 +12,7 @@ public class HashtagDaoMock implements IHashtagDao {
     private Collection<Hashtag> mockHashtags;
 
     public HashtagDaoMock(Collection<Kweet> kweets) {
-        this.mockHashtags = createDummyHashtags(kweets);
+        this.mockHashtags = createMockHashtags(kweets);
     }
 
     public Collection<Hashtag> findAll() {
@@ -59,15 +60,26 @@ public class HashtagDaoMock implements IHashtagDao {
     }
 
     public Collection<Hashtag> getTrend() {
-        Map<Hashtag, Integer> trend = new HashMap<Hashtag, Integer>();
+        List<Hashtag> trends = new ArrayList<Hashtag>();
+        Date weekAgo = getDateWeekAgo();
         for (Hashtag hashtag : mockHashtags) {
-            if (trend.containsKey(hashtag)) {
-                trend.put(hashtag, new Integer(trend.get(hashtag).intValue() + 1));
+            if (hashtag.getLastUsed().after(weekAgo)) {
+                trends.add(hashtag);
             }
         }
+        Collections.sort(trends, new TrendComparator());
+        return trends;
     }
 
-    private ArrayList<Hashtag> createDummyHashtags(Collection<Kweet> kweets) {
+    private Date getDateWeekAgo() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, -30);
+
+        return cal.getTime();
+    }
+
+    private ArrayList<Hashtag> createMockHashtags(Collection<Kweet> kweets) {
         ArrayList<Hashtag> hashtags = new ArrayList<Hashtag>();
 
         Hashtag hashtag1 = new Hashtag("Test");
