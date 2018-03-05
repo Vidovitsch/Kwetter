@@ -1,3 +1,6 @@
+import DAO.Mock.ProfileDaoMock;
+import DAO.Mock.UserDaoMock;
+import DaoInterfaces.IProfileDao;
 import Domain.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -5,6 +8,7 @@ import org.junit.Test;
 
 import javax.jws.soap.SOAPBinding;
 import javax.swing.text.html.HTMLDocument;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -127,6 +131,18 @@ public class AssociationTests {
             User u = userIterator.next();
             Profile p = u.getProfile();
             Assert.assertEquals(p.getUser(), u);
+        }
+    }
+    @Test
+    public void minitest(){
+        IProfileDao profileDao = new ProfileDaoMock((new UserDaoMock().findAll()));
+        for(Profile p : profileDao.findAll()){
+            p.setwebsite("Urlshizzle");
+            Profile pr = new Profile();
+            p = pr;
+            ArrayList<Profile> profiles = (ArrayList<Profile>)profileDao.findAll();
+            //profiles.set(profiles.indexOf(p), currentProfile);
+            System.out.println(profileDao.findById(p.getId()).getwebsite());
         }
     }
 }

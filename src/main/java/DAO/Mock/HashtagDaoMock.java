@@ -42,14 +42,16 @@ public class HashtagDaoMock implements IHashtagDao{
         return Hashtag;
     }
 
-    public Hashtag updateHashtag(Hashtag Hashtag) {
-        for(Hashtag h : hashtags){
-            if(h.getId() == Hashtag.getId()) {
-                h = Hashtag;
-                return h;
-            }
+    public Hashtag updateHashtag(Hashtag hashtag) {
+        Hashtag existingHashtag = findById(hashtag.getId());
+        if(existingHashtag == null){
+            hashtags.add(hashtag);
         }
-        return null;
+        else{
+            hashtags.remove(existingHashtag);
+            hashtags.add(hashtag);
+        }
+        return hashtag;
     }
 
     public boolean deleteHashtag(Hashtag Hashtag) {

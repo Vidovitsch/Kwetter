@@ -44,7 +44,9 @@ public class RoleDaoMock implements IRoleDao{
         if(r == null){
             r = insertRole(role);
         }
-        return r;
+        roles.remove(r);
+        roles.add(role);
+        return role;
     }
 
     public boolean deleteRole(Role role) {

@@ -3,10 +3,11 @@ package DAO.Mock;
 import DaoInterfaces.IProfileDao;
 import Domain.Profile;
 import Domain.User;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ProfileDaoMock implements IProfileDao{
+public class ProfileDaoMock implements IProfileDao {
 
     private Collection<Profile> dummyProfiles;
 
@@ -60,10 +61,9 @@ public class ProfileDaoMock implements IProfileDao{
         if (existingProfile == null) {
             dummyProfiles.add(profile);
         } else {
-            ArrayList<Profile> profiles = (ArrayList<Profile>)dummyProfiles;
-            profiles.set(profiles.indexOf(existingProfile), profile);
+            dummyProfiles.remove(existingProfile);
+            dummyProfiles.add(profile);
         }
-
         return profile;
     }
 
