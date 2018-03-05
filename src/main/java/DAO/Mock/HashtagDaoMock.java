@@ -8,18 +8,18 @@ import java.util.*;
 
 public class HashtagDaoMock implements IHashtagDao {
 
-    private Collection<Hashtag> hashtags;
+    private Collection<Hashtag> mockHashtags;
 
     public HashtagDaoMock(Collection<Kweet> kweets) {
-        this.hashtags = createDummyHashtags(kweets);
+        this.mockHashtags = createDummyHashtags(kweets);
     }
 
     public Collection<Hashtag> findAll() {
-        return hashtags;
+        return mockHashtags;
     }
 
     public Hashtag findById(long id) {
-        for(Hashtag h : hashtags){
+        for(Hashtag h : mockHashtags){
             if(h.getId() == id) {
                 return h;
             }
@@ -29,7 +29,7 @@ public class HashtagDaoMock implements IHashtagDao {
 
     public Collection<Hashtag> findByName(String name) {
         Collection<Hashtag> foundHashtags = new ArrayList<Hashtag>();
-        for(Hashtag h : hashtags){
+        for(Hashtag h : mockHashtags){
             if(h.getName().equals(name)) {
                 foundHashtags.add(h);
             }
@@ -38,7 +38,7 @@ public class HashtagDaoMock implements IHashtagDao {
     }
 
     public Hashtag insertHashtag(Hashtag Hashtag) {
-        hashtags.add(Hashtag);
+        mockHashtags.add(Hashtag);
         return Hashtag;
     }
 
@@ -55,7 +55,7 @@ public class HashtagDaoMock implements IHashtagDao {
     }
 
     public boolean deleteHashtag(Hashtag hashtag) {
-        return hashtags.remove(hashtag);
+        return mockHashtags.remove(hashtag);
     }
 
     public Collection<Hashtag> getTrend() {

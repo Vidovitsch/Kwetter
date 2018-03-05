@@ -9,18 +9,18 @@ import java.util.Collection;
 
 public class ProfileDaoMock implements IProfileDao {
 
-    private Collection<Profile> dummyProfiles;
+    private Collection<Profile> mockProfiles;
 
     public ProfileDaoMock(Collection<User> users) {
-        this.dummyProfiles = createDummyProfiles(users);
+        this.mockProfiles = createmockProfiles(users);
     }
 
     public Collection<Profile> findAll() {
-        return dummyProfiles;
+        return mockProfiles;
     }
 
     public Profile findById(long id) {
-        for (Profile profile : dummyProfiles) {
+        for (Profile profile : mockProfiles) {
             if (profile.getId() == id) {
                 return profile;
             }
@@ -30,7 +30,7 @@ public class ProfileDaoMock implements IProfileDao {
     }
 
     public Profile findByUser(User user) {
-        for (Profile profile : dummyProfiles) {
+        for (Profile profile : mockProfiles) {
             if (profile.getUser() == user) {
                 return profile;
             }
@@ -41,7 +41,7 @@ public class ProfileDaoMock implements IProfileDao {
 
     public Collection<Profile> findByName(String name) {
         Collection<Profile> profiles = new ArrayList<Profile>();
-        for (Profile profile : dummyProfiles) {
+        for (Profile profile : mockProfiles) {
             if (profile.getName().equals(name)) {
                 profiles.add(profile);
             }
@@ -51,7 +51,7 @@ public class ProfileDaoMock implements IProfileDao {
     }
 
     public Profile insertProfile(Profile profile) {
-        dummyProfiles.add(profile);
+        mockProfiles.add(profile);
 
         return profile;
     }
@@ -59,7 +59,7 @@ public class ProfileDaoMock implements IProfileDao {
     public Profile updateProfile(Profile profile) {
         Profile existingProfile = findById(profile.getId());
         if (existingProfile == null) {
-            dummyProfiles.add(profile);
+            mockProfiles.add(profile);
         } else {
             dummyProfiles.remove(existingProfile);
             dummyProfiles.add(profile);
@@ -68,10 +68,10 @@ public class ProfileDaoMock implements IProfileDao {
     }
 
     public boolean deleteProfile(Profile profile) {
-        return dummyProfiles.remove(profile);
+        return mockProfiles.remove(profile);
     }
 
-    private ArrayList<Profile> createDummyProfiles(Collection<User> users) {
+    private ArrayList<Profile> createmockProfiles(Collection<User> users) {
         ArrayList<Profile> profiles = new ArrayList<Profile>();
         for (User user : users) {
             Profile dummyProfile = new Profile(user.getUsername() + " Test");
