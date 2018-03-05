@@ -1,7 +1,11 @@
-import DAO.Mock.*;
-import DaoInterfaces.*;
+import DAO.Mock.UserDaoMock;
+import DaoInterfaces.IUserDao;
+import Domain.User;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Collection;
 
 public class UserDaoTest {
 
@@ -13,33 +17,41 @@ public class UserDaoTest {
     }
 
     @Test
-    public void someTest() {
-        // To Do
-    }
-
-    @Test
     public void findAllTest() {
-        // To Do
+        Collection<User> foundUsers = userDao.findAll();
+        Assert.assertNotNull(foundUsers);
     }
 
     @Test
     public void findByIdTest() {
-        // To Do
+        for(User u : userDao.findAll()){
+            Assert.assertEquals(u,userDao.findById(u.getId()));
+        }
     }
 
     @Test
     public void findByUsernameTest() {
-        // To Do
+        for(User u : userDao.findAll()){
+            Assert.assertEquals(u,userDao.findByUsername(u.getUsername()));
+        }
     }
 
     @Test
     public void insertUserTest() {
-        // To Do
+        User u = new User();
+        u.setUsername("henk");
+        userDao.insertUser(u);
+        Assert.assertEquals(u,userDao.findByUsername(u.getUsername()));
     }
 
     @Test
     public void updateUserTest() {
-        // To Do
+        for(User u : userDao.findAll()){
+            String currentUsername = u.getUsername();
+            u.setUsername(u.getUsername()+"test");
+            userDao.updateUser(u);
+            Assert.assertEquals(currentUsername+"test",userDao.findById(u.getId()).getUsername());
+        }
     }
 
     @Test
