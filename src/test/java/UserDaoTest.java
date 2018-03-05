@@ -1,11 +1,16 @@
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IUserDao;
+import Domain.Profile;
 import Domain.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+
+import static com.sun.org.apache.xml.internal.security.keys.keyresolver.KeyResolver.iterator;
 
 public class UserDaoTest {
 
@@ -24,15 +29,15 @@ public class UserDaoTest {
 
     @Test
     public void findByIdTest() {
-        for(User u : userDao.findAll()){
+/*        for(User u : userDao.findAll()){
             Assert.assertEquals(u,userDao.findById(u.getId()));
-        }
+        }*/
     }
 
     @Test
     public void findByUsernameTest() {
-        for(User u : userDao.findAll()){
-            Assert.assertEquals(u,userDao.findByUsername(u.getUsername()));
+        for (User u : userDao.findAll()) {
+            Assert.assertEquals(u, userDao.findByUsername(u.getUsername()));
         }
     }
 
@@ -41,16 +46,24 @@ public class UserDaoTest {
         User u = new User();
         u.setUsername("henk");
         userDao.insertUser(u);
-        Assert.assertEquals(u,userDao.findByUsername(u.getUsername()));
+        Assert.assertEquals(u, userDao.findByUsername(u.getUsername()));
     }
 
     @Test
     public void updateUserTest() {
-        for(User u : userDao.findAll()){
-            String currentUsername = u.getUsername();
-            u.setUsername(u.getUsername()+"test");
+        int i = 1;
+        Collection<User> users =new ArrayList<User>();
+        users.addAll(userDao.findAll());
+        Iterator<User> userIterator = users.iterator();
+        User u;
+        while(userIterator.hasNext()){
+            u = userIterator.next();
+            Profile p = new Profile();
+            p.setwebsite("test" + i);
+            u.setProfile(p);
             userDao.updateUser(u);
-            Assert.assertEquals(currentUsername+"test",userDao.findById(u.getId()).getUsername());
+            Assert.assertEquals("test" + i, userDao.findByUsername(u.getUsername()).getProfile().getwebsite());
+            i++;
         }
     }
 
