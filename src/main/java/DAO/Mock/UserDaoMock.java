@@ -30,7 +30,7 @@ public class UserDaoMock implements IUserDao {
 
     public User findByUsername(String username) {
         for (User u : users) {
-            if (u.getUsername() == username) {
+            if (u.getUsername().equals(username)) {
                 return u;
             }
         }

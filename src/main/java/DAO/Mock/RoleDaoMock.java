@@ -1,6 +1,7 @@
 package DAO.Mock;
 
 import DaoInterfaces.IRoleDao;
+import Domain.Profile;
 import Domain.Role;
 import Domain.User;
 
@@ -10,47 +11,55 @@ import java.util.List;
 
 public class RoleDaoMock implements IRoleDao{
 
-    Collection<Role> roles;
+    private Collection<Role> dummyRoles;
 
     public RoleDaoMock(Collection<User> users) {
-        this.roles = createDummyRoles(users);
+        this.dummyRoles = createDummyRoles(users);
     }
 
     public Collection<Role> findAll() {
-        return roles;
+        return dummyRoles;
     }
 
     public Role findById(long id) {
-        for (Role r : roles){
-            if(r.getId() == id){return r;};
+        for (Role role : dummyRoles) {
+            if (role.getId() == id) {
+                return role;
+            }
         }
+
         return null;
     }
 
     public Role findByName(String name) {
-        for (Role r : roles){
-            if(r.getName() == name){return r;};
+        for (Role role : dummyRoles) {
+            if (role.getName().equals(name)) {
+                return role;
+            }
         }
+
         return null;
     }
 
     public Role insertRole(Role role) {
-        roles.add(role);
+        dummyRoles.add(role);
+
         return role;
     }
 
     public Role updateRole(Role role) {
-        Role r = findById(role.getId());
-        if(r == null){
-            r = insertRole(role);
+        Role existingRole = findById(role.getId());
+        if (existingRole == null) {
+            dummyRoles.add(role);
+        } else {
+            dummyRoles.remove(existingRole);
+            dummyRoles.add(role);
         }
-        roles.remove(r);
-        roles.add(role);
         return role;
     }
 
     public boolean deleteRole(Role role) {
-        return roles.remove(role);
+        return dummyRoles.remove(role);
     }
 
     private ArrayList<Role> createDummyRoles(Collection<User> users) {

@@ -4,11 +4,11 @@ import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 import Domain.Kweet;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.*;
 
-public class HashtagDaoMock implements IHashtagDao{
-    Collection<Hashtag> hashtags;
+public class HashtagDaoMock implements IHashtagDao {
+
+    private Collection<Hashtag> hashtags;
 
     public HashtagDaoMock(Collection<Kweet> kweets) {
         this.hashtags = createDummyHashtags(kweets);
@@ -30,7 +30,7 @@ public class HashtagDaoMock implements IHashtagDao{
     public Collection<Hashtag> findByName(String name) {
         Collection<Hashtag> foundHashtags = new ArrayList<Hashtag>();
         for(Hashtag h : hashtags){
-            if(h.getName() == name) {
+            if(h.getName().equals(name)) {
                 foundHashtags.add(h);
             }
         }
@@ -54,8 +54,12 @@ public class HashtagDaoMock implements IHashtagDao{
         return hashtag;
     }
 
-    public boolean deleteHashtag(Hashtag Hashtag) {
-        try{hashtags.remove(Hashtag); return true;}catch (Exception e) {return false;}
+    public boolean deleteHashtag(Hashtag hashtag) {
+        return hashtags.remove(hashtag);
+    }
+
+    public Collection<Hashtag> getTrend() {
+        return null;
     }
 
     private ArrayList<Hashtag> createDummyHashtags(Collection<Kweet> kweets) {
