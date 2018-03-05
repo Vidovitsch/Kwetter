@@ -4,7 +4,6 @@ import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 import Domain.Kweet;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.*;
 
 public class HashtagDaoMock implements IHashtagDao {
@@ -53,8 +52,12 @@ public class HashtagDaoMock implements IHashtagDao {
         return null;
     }
 
-    public boolean deleteHashtag(Hashtag Hashtag) {
-        try{hashtags.remove(Hashtag); return true;}catch (Exception e) {return false;}
+    public boolean deleteHashtag(Hashtag hashtag) {
+        return hashtags.remove(hashtag);
+    }
+
+    public Collection<Hashtag> getTrend() {
+        return null;
     }
 
     private ArrayList<Hashtag> createDummyHashtags(Collection<Kweet> kweets) {

@@ -23,9 +23,7 @@
     </facet>
     <facet type="ejb" name="EJB">
       <configuration>
-        <ejbRoots>
-          <root url="file://$MODULE_DIR$/src" />
-        </ejbRoots>
+        <ejbRoots />
       </configuration>
     </facet>
   </component>

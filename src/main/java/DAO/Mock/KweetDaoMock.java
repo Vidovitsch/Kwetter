@@ -31,7 +31,7 @@ public class KweetDaoMock implements IKweetDao{
     public Collection<Kweet> findByMessage(String message) {
         Collection<Kweet> foundKweets = new ArrayList<Kweet>();
         for(Kweet k : kweets){
-            if(k.getMessage().toLowerCase().contains(message.toLowerCase())){
+            if (k.getMessage().toLowerCase().contains(message.toLowerCase())){
                 foundKweets.add(k);
             }
         }
@@ -67,6 +67,14 @@ public class KweetDaoMock implements IKweetDao{
         return kweets.remove(kweet);
     }
 
+    public Collection<Kweet> getTimeline(User user) {
+        return null;
+    }
+
+    public Collection<Kweet> search(String term) {
+        return null;
+    }
+
     private ArrayList<Kweet> createDummyKweets(Collection<User> users) {
         ArrayList<Kweet> allKweets = new ArrayList<Kweet>();
 
@@ -89,5 +97,4 @@ public class KweetDaoMock implements IKweetDao{
 
         return allKweets;
     }
-
 }
