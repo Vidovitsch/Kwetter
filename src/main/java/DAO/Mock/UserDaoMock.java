@@ -6,21 +6,20 @@ import Domain.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 
 public class UserDaoMock implements IUserDao {
-    Collection<User> users;
+    Collection<User> mockUsers;
 
     public UserDaoMock() {
-        users = createDummyUsers();
+        mockUsers = createDummyUsers();
     }
 
     public Collection<User> findAll() {
-        return users;
+        return mockUsers;
     }
 
     public User findById(long id) {
-        for (User u : users) {
+        for (User u : mockUsers) {
             if (u.getId() == id) {
                 return u;
             }
@@ -29,7 +28,7 @@ public class UserDaoMock implements IUserDao {
     }
 
     public User findByUsername(String username) {
-        for (User u : users) {
+        for (User u : mockUsers) {
             if (u.getUsername().equals(username)) {
                 return u;
             }
@@ -38,7 +37,7 @@ public class UserDaoMock implements IUserDao {
     }
 
     public User insertUser(User user) {
-        users.add(user);
+        mockUsers.add(user);
         return user;
     }
 
@@ -51,7 +50,7 @@ public class UserDaoMock implements IUserDao {
     }
 
     public boolean deleteUser(User user) {
-        return users.remove(user);
+        return mockUsers.remove(user);
     }
 
     private ArrayList<User> createDummyUsers() {

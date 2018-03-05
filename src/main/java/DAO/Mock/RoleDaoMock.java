@@ -1,28 +1,26 @@
 package DAO.Mock;
 
 import DaoInterfaces.IRoleDao;
-import Domain.Profile;
 import Domain.Role;
 import Domain.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class RoleDaoMock implements IRoleDao{
 
-    private Collection<Role> dummyRoles;
+    private Collection<Role> mockRoles;
 
     public RoleDaoMock(Collection<User> users) {
-        this.dummyRoles = createDummyRoles(users);
+        this.mockRoles = createmockRoles(users);
     }
 
     public Collection<Role> findAll() {
-        return dummyRoles;
+        return mockRoles;
     }
 
     public Role findById(long id) {
-        for (Role role : dummyRoles) {
+        for (Role role : mockRoles) {
             if (role.getId() == id) {
                 return role;
             }
@@ -32,7 +30,7 @@ public class RoleDaoMock implements IRoleDao{
     }
 
     public Role findByName(String name) {
-        for (Role role : dummyRoles) {
+        for (Role role : mockRoles) {
             if (role.getName().equals(name)) {
                 return role;
             }
@@ -42,7 +40,7 @@ public class RoleDaoMock implements IRoleDao{
     }
 
     public Role insertRole(Role role) {
-        dummyRoles.add(role);
+        mockRoles.add(role);
 
         return role;
     }
@@ -50,9 +48,9 @@ public class RoleDaoMock implements IRoleDao{
     public Role updateRole(Role role) {
         Role existingRole = findById(role.getId());
         if (existingRole == null) {
-            dummyRoles.add(role);
+            mockRoles.add(role);
         } else {
-            ArrayList<Role> roles = (ArrayList<Role>)dummyRoles;
+            ArrayList<Role> roles = (ArrayList<Role>)mockRoles;
             roles.set(roles.indexOf(existingRole), role);
         }
 
@@ -60,10 +58,10 @@ public class RoleDaoMock implements IRoleDao{
     }
 
     public boolean deleteRole(Role role) {
-        return dummyRoles.remove(role);
+        return mockRoles.remove(role);
     }
 
-    private ArrayList<Role> createDummyRoles(Collection<User> users) {
+    private ArrayList<Role> createmockRoles(Collection<User> users) {
         ArrayList<Role> roles = new ArrayList<Role>();
 
         Role role1 = new Role("Kweeter");
