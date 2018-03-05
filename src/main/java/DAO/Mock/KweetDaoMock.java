@@ -39,10 +39,10 @@ public class KweetDaoMock implements IKweetDao{
         return foundKweets;
     }
 
-    public Collection<Kweet> findBySender(User sender) {
+    public Collection<Kweet> findBySenderName(String senderName) {
         Collection<Kweet> foundKweets = new ArrayList<Kweet>();
         for(Kweet k : mockKweets){
-            if(k.getSender() == sender){
+            if(k.getSender().getUsername() == senderName){
                 foundKweets.add(k);
             }
         }

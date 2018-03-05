@@ -13,7 +13,7 @@ public interface IKweetDao {
 
     Collection<Kweet> findByMessage(String message);
 
-    Collection<Kweet> findBySender(User sender);
+    Collection<Kweet> findBySenderName(String senderName);
 
     Kweet insertKweet(Kweet Kweet);
 
