@@ -49,6 +49,7 @@ public class UserDaoTest {
         Assert.assertEquals(u, userDao.findByUsername(u.getUsername()));
     }
 
+
     @Test
     public void updateUserTest() {
         int i = 1;
