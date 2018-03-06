@@ -1,3 +1,5 @@
+package DAO;
+
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
@@ -27,12 +29,12 @@ public class UserDaoTest {
         Assert.assertNotNull(foundUsers);
     }
 
-    @Test
-    public void findByIdTest() {
-/*        for(User u : userDao.findAll()){
-            Assert.assertEquals(u,userDao.findById(u.getId()));
-        }*/
-    }
+//    @Test
+//    public void findByIdTest() {
+//        for(User u : userDao.findAll()){
+//            Assert.assertEquals(u,userDao.findById(u.getId()));
+//        }
+//    }
 
     @Test
     public void findByUsernameTest() {
