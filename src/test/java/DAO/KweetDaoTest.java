@@ -1,3 +1,5 @@
+package DAO;
+
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import org.junit.BeforeClass;

@@ -1,20 +1,18 @@
+package DAO;
+
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class HashtagDaoTest {
-
-
-    private static IHashtagDao hashtagDao;
-    private static IKweetDao kweetDao;
+public class RoleDaoTest {
+    private static IRoleDao roleDao;
     private static IUserDao userDao;
 
     @BeforeClass
     public static void Init() {
         userDao = new UserDaoMock();
-        kweetDao = new KweetDaoMock(userDao.findAll());
-        hashtagDao = new HashtagDaoMock(kweetDao.findAll());
+        roleDao = new RoleDaoMock(userDao.findAll());
     }
 
     @Test
@@ -33,22 +31,22 @@ public class HashtagDaoTest {
     }
 
     @Test
-    public void insertHashtagTest() {
+    public void insertRoleTest() {
         // To Do
     }
 
     @Test
-    public void updateHashtagTest() {
+    public void updateRoleTest() {
         // To Do
     }
 
     @Test
-    public void deleteHashtagTest() {
+    public void deleteRoleTest() {
         // To Do
     }
 
     @Test
-    public void getTrendTest() {
+    public void someTestTest() {
         // To Do
     }
 

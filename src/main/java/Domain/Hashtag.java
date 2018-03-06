@@ -36,6 +36,11 @@ public class Hashtag {
         this.name = name;
     }
 
+    public Hashtag(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     // region Getters and Setters
 
     public long getId() {
@@ -46,8 +51,16 @@ public class Hashtag {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Date getLastUsed() {
         return lastUsed;
+    }
+
+    public void setLastUsed(Date lastUsed) {
+        this.lastUsed = lastUsed;
     }
 
     public Collection<Kweet> getKweets() {

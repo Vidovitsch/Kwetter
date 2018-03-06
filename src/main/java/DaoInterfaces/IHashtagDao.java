@@ -3,6 +3,7 @@ package DaoInterfaces;
 import Domain.Hashtag;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface IHashtagDao {
 
@@ -10,7 +11,7 @@ public interface IHashtagDao {
 
     Hashtag findById(long id);
 
-    Collection<Hashtag> findByName(String name);
+    Hashtag findByName(String name);
 
     Hashtag insertHashtag(Hashtag Hashtag);
 
@@ -18,5 +19,5 @@ public interface IHashtagDao {
 
     boolean deleteHashtag(Hashtag Hashtag);
 
-    Collection<Hashtag> getTrend();
+    List<Hashtag> getTrend();
 }
