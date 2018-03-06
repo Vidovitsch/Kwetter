@@ -4,6 +4,7 @@ import Domain.Kweet;
 import Domain.User;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface IKweetDao {
 
@@ -11,9 +12,9 @@ public interface IKweetDao {
 
     Kweet findById(long id);
 
-    Collection<Kweet> findByMessagePart(String message);
+    List<Kweet> findByMessagePart(String message);
 
-    Collection<Kweet> findBySenderName(String senderName);
+    List<Kweet> findBySenderName(String senderName);
 
     Kweet insertKweet(Kweet Kweet);
 
@@ -21,7 +22,7 @@ public interface IKweetDao {
 
     boolean deleteKweet(Kweet Kweet);
 
-    Collection<Kweet> getTimeline(User user);
+    List<Kweet> getTimeline(User user);
 
-    Collection<Kweet> search(String term);
+    List<Kweet> search(String term);
 }

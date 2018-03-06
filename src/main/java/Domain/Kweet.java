@@ -104,5 +104,9 @@ public class Kweet {
         return publicationDate;
     }
 
+    public void setPublicationDate(Date publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
     // endregion
 }

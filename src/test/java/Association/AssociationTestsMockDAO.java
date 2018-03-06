@@ -137,7 +137,7 @@ public class AssociationTestsMockDAO {
     }
 
     @Test
-    public void minitest(){
+    public void minitest() {
 
     }
 }

@@ -30,8 +30,8 @@ public class KweetDaoMock implements IKweetDao{
         return null;
     }
 
-    public Collection<Kweet> findByMessagePart(String message) {
-        Collection<Kweet> foundKweets = new ArrayList<Kweet>();
+    public List<Kweet> findByMessagePart(String message) {
+        List<Kweet> foundKweets = new ArrayList<Kweet>();
         for(Kweet k : mockKweets){
             if (k.getMessage().toLowerCase().contains(message.toLowerCase())){
                 foundKweets.add(k);
@@ -40,10 +40,10 @@ public class KweetDaoMock implements IKweetDao{
         return foundKweets;
     }
 
-    public Collection<Kweet> findBySenderName(String senderName) {
-        Collection<Kweet> foundKweets = new ArrayList<Kweet>();
+    public List<Kweet> findBySenderName(String senderName) {
+        List<Kweet> foundKweets = new ArrayList<Kweet>();
         for(Kweet k : mockKweets){
-            if(k.getSender().getUsername() == senderName){
+            if(k.getSender().getUsername().equals(senderName)){
                 foundKweets.add(k);
             }
         }
@@ -71,7 +71,7 @@ public class KweetDaoMock implements IKweetDao{
         return mockKweets.remove(kweet);
     }
 
-    public Collection<Kweet> getTimeline(User user) {
+    public List<Kweet> getTimeline(User user) {
         List<Kweet> kweets = new ArrayList<Kweet>();
         for (User following : user.getFollowing()) {
             kweets.addAll(following.getKweets());
@@ -82,9 +82,8 @@ public class KweetDaoMock implements IKweetDao{
         return kweets;
     }
 
-    public Collection<Kweet> search(String term) {
-        Collection<Kweet> results = new ArrayList<Kweet>();
-        term = term.toLowerCase();
+    public List<Kweet> search(String term) {
+        List<Kweet> results = new ArrayList<Kweet>();
         for (Kweet kweet : mockKweets) {
             if (kweet.getSender().getUsername().contains(term)) {
                 results.add(kweet);

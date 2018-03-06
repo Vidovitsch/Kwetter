@@ -103,7 +103,7 @@ public class HashtagDaoTest {
         mockHashtag.setName(newName);
         hashtagDao.updateHashtag(mockHashtag);
 
-        // Check hashtag list contains new hashtag
+        // Check hashtag list contains new name
         Assert.assertEquals("The name of the hashtag has been changed", newName, mockHashtag.getName());
 
         // Remove mock hashtag (cleanup)
