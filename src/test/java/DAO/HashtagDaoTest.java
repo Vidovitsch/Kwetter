@@ -43,7 +43,7 @@ public class HashtagDaoTest {
     // Gekke test?
     @Test
     public void findByIdTest() {
-        long id = 999999;
+        long id = 999995;
 
         // Insert new hashtag
         Hashtag mockHashtag = new Hashtag(id, "mockHashtag");
@@ -51,7 +51,7 @@ public class HashtagDaoTest {
 
         // Check fetched hashtag
         Hashtag fetchedHashtag = hashtagDao.findById(id);
-        Assert.assertSame("Fetched hashtag is the same as the mocked one", mockHashtag, fetchedHashtag);
+        Assert.assertEquals("Fetched hashtag is the same as the mocked one", mockHashtag, fetchedHashtag);
     }
 
     @Test
