@@ -36,15 +36,14 @@ public class Hashtag {
         this.name = name;
     }
 
-    public Hashtag(long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     // region Getters and Setters
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

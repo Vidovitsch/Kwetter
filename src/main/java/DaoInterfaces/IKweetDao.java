@@ -11,7 +11,7 @@ public interface IKweetDao {
 
     Kweet findById(long id);
 
-    Collection<Kweet> findByMessage(String message);
+    Collection<Kweet> findByMessagePart(String message);
 
     Collection<Kweet> findBySenderName(String senderName);
 

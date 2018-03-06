@@ -60,6 +60,10 @@ public class Kweet {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public User getSender() {
         return sender;
     }

@@ -30,7 +30,7 @@ public class KweetDaoMock implements IKweetDao{
         return null;
     }
 
-    public Collection<Kweet> findByMessage(String message) {
+    public Collection<Kweet> findByMessagePart(String message) {
         Collection<Kweet> foundKweets = new ArrayList<Kweet>();
         for(Kweet k : mockKweets){
             if (k.getMessage().toLowerCase().contains(message.toLowerCase())){
