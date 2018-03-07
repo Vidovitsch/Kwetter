@@ -7,6 +7,8 @@ import Domain.Kweet;
 import Domain.User;
 import ViewModels.TimeLineItem;
 
+import java.sql.Time;
+import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 public class TimeLineService {
@@ -27,6 +29,21 @@ public class TimeLineService {
             }
         }
         return TimeLine;
+    }
+
+    public TreeSet<TimeLineItem> TenMostRecentKweets(User user){
+        TreeSet<TimeLineItem> TimeLine = new TreeSet<TimeLineItem>();
+        for (Kweet k : user.getKweets()) {
+            TimeLine.add(CreatTimeLineItem(k, true));
+        }
+        TreeSet<TimeLineItem> TimeLineTen = new TreeSet<TimeLineItem>();
+        int i = 0;
+        for(TimeLineItem t : TimeLineTen){
+            TimeLineTen.add(t);
+            i++;
+            if(i>9){break;}
+        }
+        return TimeLineTen;
     }
 
     private TimeLineItem CreatTimeLineItem(Kweet k, boolean owner) {
