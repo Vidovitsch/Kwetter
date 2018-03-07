@@ -39,15 +39,24 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
     private Collection<Kweet> kweets = new HashSet<Kweet>();
 
+
     @ManyToMany
     //@JoinTable(name = "Mention",
     //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
     //        inverseJoinColumns = @JoinColumn(name="Kweet_ID", referencedColumnName = "ID", nullable = false))
     private Collection<Kweet> mentions = new HashSet<Kweet>();
 
+    public Collection<Kweet> getHearts() {
+        return hearts;
+    }
+
+    @ManyToMany
+    private Collection<Kweet> hearts = new HashSet<Kweet>();
+
     // endregion
 
-    public User() { }
+    public User() {
+    }
 
     public User(String username) {
         this.username = username;

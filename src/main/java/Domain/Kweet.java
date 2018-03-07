@@ -26,6 +26,9 @@ public class Kweet {
     @ManyToMany(mappedBy = "mentions")
     private Collection<User> mentions = new HashSet<User>();
 
+    @ManyToMany(mappedBy = "hearts")
+    private Collection<User> hearts = new HashSet<User>();
+
     @ManyToMany
     //@JoinTable(name = "KweetTag",
     //        joinColumns = @JoinColumn(name="Kweet_ID", referencedColumnName = "ID", nullable = false),
@@ -33,7 +36,7 @@ public class Kweet {
     private Collection<Hashtag> hashtags = new HashSet<Hashtag>();
 
     //@Column(name = "Hearts")
-    private long hearts;
+    //private long hearts;
 
     @Temporal(TemporalType.TIMESTAMP)
     //@Column(name = "PublicationDate")
@@ -92,13 +95,11 @@ public class Kweet {
         this.hashtags = hashtags;
     }
 
-    public long getHearts() {
+    public Collection<User> getHearts() {
         return hearts;
     }
 
-    public void setHearts(long hearts) {
-        this.hearts = hearts;
-    }
+    public boolean AddHeart(User liker){try{this.hearts.add(liker);}catch (Exception e){return false;}return true;}
 
     public Date getPublicationDate() {
         return publicationDate;
