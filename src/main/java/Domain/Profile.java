@@ -1,5 +1,6 @@
 package Domain;
 
+
 import javax.persistence.*;
 
 @Entity(name = "Post")

@@ -74,5 +74,4 @@ public class UserDaoTest {
     public void deleteUser() {
         // To Do
     }
-
 }
