@@ -6,6 +6,7 @@ import Domain.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ProfileDaoMock implements IProfileDao {
 
@@ -39,8 +40,8 @@ public class ProfileDaoMock implements IProfileDao {
         return null;
     }
 
-    public Collection<Profile> findByName(String name) {
-        Collection<Profile> profiles = new ArrayList<Profile>();
+    public List<Profile> findByName(String name) {
+        List<Profile> profiles = new ArrayList<Profile>();
         for (Profile profile : mockProfiles) {
             if (profile.getName().equals(name)) {
                 profiles.add(profile);

@@ -4,6 +4,7 @@ import Domain.Profile;
 import Domain.User;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface IProfileDao {
 
@@ -13,7 +14,7 @@ public interface IProfileDao {
 
     Profile findByUser(User user);
 
-    Collection<Profile> findByName(String name);
+    List<Profile> findByName(String name);
 
     Profile insertProfile(Profile Profile);
 
