@@ -8,7 +8,6 @@ import Domain.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.util.*;
 
 public class KweetDaoTest {
@@ -26,14 +25,14 @@ public class KweetDaoTest {
     @Test
     public void findAllTest() {
         // Set status before
-        Collection<Kweet> kweetsBefore = new ArrayList<Kweet>(kweetDao.findAll());
+        List<Kweet> kweetsBefore = new ArrayList<Kweet>(kweetDao.findAll());
 
         // Insert new kweet
         Kweet mockKweet = new Kweet();
         kweetDao.insertKweet(mockKweet);
 
         // Check status after
-        Collection<Kweet> kweetsAfter = kweetDao.findAll();
+        List<Kweet> kweetsAfter = kweetDao.findAll();
         Assert.assertEquals("Returns list with size + 1",
                 kweetsBefore.size() + 1, kweetsAfter.size());
         Assert.assertTrue("New hashtag has been added", kweetsAfter.contains(mockKweet));
@@ -65,9 +64,9 @@ public class KweetDaoTest {
         String message2 = "I'm a brown fox";
 
         // Create mock kweets
-        Kweet mockKweet1 = new Kweet(new User(), message1);
-        Kweet mockKweet2 = new Kweet(new User(), message2);
-        Kweet mockKweet3 = new Kweet(new User(), "mockMessage1");
+        Kweet mockKweet1 = new Kweet(-1,new User(), message1);
+        Kweet mockKweet2 = new Kweet(-1,new User(), message2);
+        Kweet mockKweet3 = new Kweet(-1,new User(), "mockMessage1");
 
         // Insert new hashtags
         kweetDao.insertKweet(mockKweet1);
@@ -93,9 +92,9 @@ public class KweetDaoTest {
         String name = "Hank";
 
         // Create mock kweets
-        Kweet mockKweet1 = new Kweet(new User(name), "mockMessage1");
-        Kweet mockKweet2 = new Kweet(new User(name), "mockMessage2");
-        Kweet mockKweet3 = new Kweet(new User("Jack"), "mockMessage3");
+        Kweet mockKweet1 = new Kweet(-1, new User(-1,name), "mockMessage1");
+        Kweet mockKweet2 = new Kweet(-1, new User(-1,name), "mockMessage2");
+        Kweet mockKweet3 = new Kweet(-1, new User(-1,"Jack"), "mockMessage3");
 
         // Insert new hashtags
         kweetDao.insertKweet(mockKweet1);
@@ -167,14 +166,14 @@ public class KweetDaoTest {
     @Test
     public void getTimelineTest() {
         // Get mock users
-        User mockUser1 = new User("Hank");
-        User mockUser2 = new User("Jack");
-        User mockUser3 = new User("Frank");
+        User mockUser1 = new User(-1,"Hank");
+        User mockUser2 = new User(-1,"Jack");
+        User mockUser3 = new User(-1,"Frank");
 
         // Hank, Jack and Frank send both 2 mock kweets
-        Collection<Kweet> mockKweets1 = new ArrayList<Kweet>();
-        Collection<Kweet> mockKweets2 = new ArrayList<Kweet>();
-        Collection<Kweet> mockKweets3 = new ArrayList<Kweet>();
+        List<Kweet> mockKweets1 = new ArrayList<Kweet>();
+        List<Kweet> mockKweets2 = new ArrayList<Kweet>();
+        List<Kweet> mockKweets3 = new ArrayList<Kweet>();
         Kweet mockKweet1 = new Kweet();
         Kweet mockKweet2 = new Kweet();
         Kweet mockKweet3 = new Kweet();
@@ -199,7 +198,7 @@ public class KweetDaoTest {
         mockKweet4.setPublicationDate(getDateDaysAgo(4));
 
         // Hank follows Jack
-        Collection<User> mockFollowing = new ArrayList<User>();
+        List<User> mockFollowing = new ArrayList<User>();
         mockFollowing.add(mockUser2);
         mockUser1.setFollowing(mockFollowing);
 
@@ -227,12 +226,12 @@ public class KweetDaoTest {
         String hashtag = "HashHash";
 
         // Get mock users
-        User mockUser1 = new User(sender);
+        User mockUser1 = new User(-1,sender);
 
         // Henk sends 2 mock kweets
-        Collection<Kweet> mockKweets = new ArrayList<Kweet>();
-        Kweet mockKweet1 = new Kweet(mockUser1, "mockKweet1");
-        Kweet mockKweet2 = new Kweet(mockUser1, "mockKweet2");
+        List<Kweet> mockKweets = new ArrayList<Kweet>();
+        Kweet mockKweet1 = new Kweet(-1,mockUser1, "mockKweet1");
+        Kweet mockKweet2 = new Kweet(-1,mockUser1, "mockKweet2");
         mockKweets.add(mockKweet1);
         mockKweets.add(mockKweet2);
         mockUser1.setKweets(mockKweets);
@@ -242,13 +241,13 @@ public class KweetDaoTest {
         kweetDao.insertKweet(mockKweet2);
 
         // Set mock hashtag in mockKweet1
-        Collection<Hashtag> mockHashtags = new ArrayList<Hashtag>();
-        Hashtag mockHashtag = new Hashtag(hashtag);
+        List<Hashtag> mockHashtags = new ArrayList<Hashtag>();
+        Hashtag mockHashtag = new Hashtag(-1,hashtag);
         mockHashtags.add(mockHashtag);
         mockKweet1.setHashtags(mockHashtags);
 
         // Check search by sender (incomplete term)
-        Collection<Kweet> kweets = kweetDao.search("Han");
+        List<Kweet> kweets = kweetDao.search("Han");
         Assert.assertTrue("Result contains mockKweet1", kweets.contains(mockKweet1));
         Assert.assertTrue("Result contains mockKweet2", kweets.contains(mockKweet2));
 

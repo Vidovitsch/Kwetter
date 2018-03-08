@@ -1,6 +1,5 @@
-package Services;
+package Service;
 
-import Comparator.KweetComparator;
 import DAO.Mock.KweetDaoMock;
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IKweetDao;
@@ -8,8 +7,6 @@ import Domain.Kweet;
 import Domain.User;
 import ViewModels.TimeLineItem;
 
-import java.sql.Time;
-import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 public class TimeLineService {

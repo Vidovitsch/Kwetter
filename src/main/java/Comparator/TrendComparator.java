@@ -1,7 +1,6 @@
 package Comparator;
 
 import Domain.Hashtag;
-
 import java.util.Comparator;
 
 public class TrendComparator implements Comparator<Hashtag> {

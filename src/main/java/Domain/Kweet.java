@@ -1,63 +1,51 @@
 package Domain;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 @Entity(name = "Kweet")
-//@Table(name = "Kweet")
 public class Kweet {
-
-    // region Fields
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "ID")
     private long id;
 
-    //@Column(name = "Message", nullable = false)
+    @Column(nullable = false)
     private String message;
 
     @ManyToOne
-    //@JoinColumn(name = "User_ID", nullable = false)
+    @JoinColumn(nullable = false)
     private User sender;
 
     @ManyToMany(mappedBy = "mentions")
-    private Collection<User> mentions = new HashSet<User>();
+    private List<User> mentions = new ArrayList<User>();
 
     @ManyToMany(mappedBy = "hearts")
-    private Collection<User> hearts = new HashSet<User>();
+    private List<User> hearts = new ArrayList<User>();
 
     @ManyToMany
     //@JoinTable(name = "KweetTag",
     //        joinColumns = @JoinColumn(name="Kweet_ID", referencedColumnName = "ID", nullable = false),
     //        inverseJoinColumns = @JoinColumn(name="Hashtag_ID", referencedColumnName = "ID", nullable = false))
-    private Collection<Hashtag> hashtags = new HashSet<Hashtag>();
-
-    //@Column(name = "Hearts")
-    //private long hearts;
+    private List<Hashtag> hashtags = new ArrayList<Hashtag>();
 
     @Temporal(TemporalType.TIMESTAMP)
-    //@Column(name = "PublicationDate")
     private Date publicationDate;
-
-    // endregion
 
     public Kweet() { }
 
-    public Kweet(User sender, String message) {
+    public Kweet(long id, User sender, String message) {
+        this.id = id;
         this.sender = sender;
         this.message = message;
     }
 
-    public Kweet(User sender, Collection<User> mentions, String message) {
+    public Kweet(long id, User sender, List<User> mentions, String message) {
+        this.id = id;
         this.sender = sender;
         this.mentions = mentions;
         this.message = message;
     }
-
-    // region Fields
 
     public long getId() {
         return id;
@@ -71,6 +59,10 @@ public class Kweet {
         return sender;
     }
 
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -79,27 +71,29 @@ public class Kweet {
         this.message = message;
     }
 
-    public Collection<User> getMentions() {
+    public List<User> getMentions() {
         return mentions;
     }
 
-    public void setMentions(HashSet<User> mentions) {
+    public void setMentions(List<User> mentions) {
         this.mentions = mentions;
     }
 
-    public Collection<Hashtag> getHashtags() {
+    public List<Hashtag> getHashtags() {
         return hashtags;
     }
 
-    public void setHashtags(Collection<Hashtag> hashtags) {
+    public void setHashtags(List<Hashtag> hashtags) {
         this.hashtags = hashtags;
     }
 
-    public Collection<User> getHearts() {
+    public List<User> getHearts() {
         return hearts;
     }
 
-    public boolean AddHeart(User liker){try{this.hearts.add(liker);}catch (Exception e){return false;}return true;}
+    public void setHearts(List<User> hearts) {
+        this.hearts = hearts;
+    }
 
     public Date getPublicationDate() {
         return publicationDate;
@@ -108,6 +102,4 @@ public class Kweet {
     public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
     }
-
-    // endregion
 }

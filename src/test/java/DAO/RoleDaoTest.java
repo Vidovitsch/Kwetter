@@ -2,18 +2,15 @@ package DAO;
 
 import DAO.Mock.*;
 import DaoInterfaces.*;
-import Domain.*;
-import Domain.Role;
-import Domain.Role;
 import Domain.Role;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public class RoleDaoTest {
+
     private static IRoleDao roleDao;
     private static IUserDao userDao;
 
@@ -26,14 +23,14 @@ public class RoleDaoTest {
     @Test
     public void findAllTest() {
         // Set status before
-        Collection<Role> rolesBefore = new ArrayList<Role>(roleDao.findAll());
+        List<Role> rolesBefore = new ArrayList<Role>(roleDao.findAll());
 
         // Insert new role
-        Role mockRole = new Role("mockRole");
+        Role mockRole = new Role(-1,"mockRole");
         roleDao.insertRole(mockRole);
 
         // Check status after
-        Collection<Role> rolesAfter = roleDao.findAll();
+        List<Role> rolesAfter = roleDao.findAll();
         Assert.assertEquals("Returns list with size + 1",
                 rolesBefore.size() + 1, rolesAfter.size());
         Assert.assertTrue("New Role has been added", rolesAfter.contains(mockRole));
@@ -47,7 +44,7 @@ public class RoleDaoTest {
         long id = 999999;
 
         // Insert new role
-        Role mockRole = new Role("mockRole");
+        Role mockRole = new Role(-1,"mockRole");
         mockRole.setId(id);
         roleDao.insertRole(mockRole);
 
@@ -64,7 +61,7 @@ public class RoleDaoTest {
         String name = "myRole123";
 
         // Insert new role
-        Role mockRole = new Role(name);
+        Role mockRole = new Role(-1,name);
         roleDao.insertRole(mockRole);
 
         // Check fetched role
@@ -78,7 +75,7 @@ public class RoleDaoTest {
     @Test
     public void insertRoleTest() {
         // Insert new role
-        Role mockRole = new Role("mockRole");
+        Role mockRole = new Role(-1,"mockRole");
         mockRole.setId(999999);
         roleDao.insertRole(mockRole);
 
@@ -94,7 +91,7 @@ public class RoleDaoTest {
         String newName = "mockRole123";
 
         // Insert new role
-        Role mockRole = new Role("mockRole");
+        Role mockRole = new Role(-1,"mockRole");
         mockRole.setId(999999);
         roleDao.insertRole(mockRole);
 
@@ -112,7 +109,7 @@ public class RoleDaoTest {
     @Test
     public void deleteRoleTest() {
         // Insert new role
-        Role mockRole = new Role("mockRole");
+        Role mockRole = new Role(-1,"mockRole");
         mockRole.setId(999999);
         roleDao.insertRole(mockRole);
 

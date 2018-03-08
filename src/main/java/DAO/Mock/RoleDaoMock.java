@@ -3,19 +3,18 @@ package DAO.Mock;
 import DaoInterfaces.IRoleDao;
 import Domain.Role;
 import Domain.User;
-
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
-public class RoleDaoMock implements IRoleDao{
+public class RoleDaoMock implements IRoleDao {
 
-    private Collection<Role> mockRoles;
+    private List<Role> mockRoles;
 
-    public RoleDaoMock(Collection<User> users) {
+    public RoleDaoMock(List<User> users) {
         this.mockRoles = createMockRoles(users);
     }
 
-    public Collection<Role> findAll() {
+    public List<Role> findAll() {
         return mockRoles;
     }
 
@@ -60,11 +59,11 @@ public class RoleDaoMock implements IRoleDao{
         return mockRoles.remove(role);
     }
 
-    private ArrayList<Role> createMockRoles(Collection<User> users) {
+    private ArrayList<Role> createMockRoles(List<User> users) {
         ArrayList<Role> roles = new ArrayList<Role>();
 
-        Role role1 = new Role("Kweeter");
-        Role role2 = new Role("Moderator");
+        Role role1 = new Role(0, "Kweeter");
+        Role role2 = new Role(0, "Moderator");
         roles.add(role1);
         roles.add(role2);
 

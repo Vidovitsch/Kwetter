@@ -2,12 +2,11 @@ package DAO.Impl;
 
 import DaoInterfaces.IRoleDao;
 import Domain.Role;
-
-import java.util.Collection;
+import java.util.List;
 
 public class RoleDaoImpl implements IRoleDao {
 
-    public Collection<Role> findAll() {
+    public List<Role> findAll() {
         return null;
     }
 

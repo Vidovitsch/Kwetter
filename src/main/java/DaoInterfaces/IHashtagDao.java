@@ -1,13 +1,11 @@
 package DaoInterfaces;
 
 import Domain.Hashtag;
-
-import java.util.Collection;
 import java.util.List;
 
 public interface IHashtagDao {
 
-    Collection<Hashtag> findAll();
+    List<Hashtag> findAll();
 
     Hashtag findById(long id);
 

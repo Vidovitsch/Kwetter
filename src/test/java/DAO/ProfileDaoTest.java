@@ -2,21 +2,17 @@ package DAO;
 
 import DAO.Mock.*;
 import DaoInterfaces.*;
-import Domain.Hashtag;
 import Domain.Profile;
 import Domain.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class ProfileDaoTest {
 
     private static IProfileDao profileDao;
-
     private static IUserDao userDao;
 
     @BeforeClass
@@ -28,14 +24,14 @@ public class ProfileDaoTest {
     @Test
     public void findAllTest() {
         // Set status before
-        Collection<Profile> ProfilesBefore = new ArrayList<Profile>(profileDao.findAll());
+        List<Profile> ProfilesBefore = new ArrayList<Profile>(profileDao.findAll());
 
         // Insert new profile
-        Profile mockProfile = new Profile("mockProfile");
+        Profile mockProfile = new Profile(-1,"mockProfile");
         profileDao.insertProfile(mockProfile);
 
         // Check status after
-        Collection<Profile> profilesAfter = profileDao.findAll();
+        List<Profile> profilesAfter = profileDao.findAll();
         Assert.assertEquals("Returns list with size + 1",
                 ProfilesBefore.size() + 1, profilesAfter.size());
         Assert.assertTrue("New Profile has been added", profilesAfter.contains(mockProfile));
@@ -49,7 +45,7 @@ public class ProfileDaoTest {
         long id = 999999;
 
         // Insert new profile
-        Profile mockProfile = new Profile("mockProfile");
+        Profile mockProfile = new Profile(-1,"mockProfile");
         mockProfile.setId(id);
         profileDao.insertProfile(mockProfile);
 
@@ -63,10 +59,10 @@ public class ProfileDaoTest {
 
     @Test
     public void findByUserTest() {
-        User mockUser = new User("Hank");
+        User mockUser = new User(-1,"Hank");
 
         // Insert new profile
-        Profile mockProfile = new Profile("mockProfile");
+        Profile mockProfile = new Profile(-1,"mockProfile");
         mockProfile.setUser(mockUser);
         profileDao.insertProfile(mockProfile);
 
@@ -83,9 +79,9 @@ public class ProfileDaoTest {
         String name = "mockProfile";
 
         // Insert new profiles
-        Profile mockProfile1 = new Profile(name);
-        Profile mockProfile2 = new Profile(name);
-        Profile mockProfile3 = new Profile("mockProfile123");
+        Profile mockProfile1 = new Profile(-1,name);
+        Profile mockProfile2 = new Profile(-1,name);
+        Profile mockProfile3 = new Profile(-1,"mockProfile123");
         profileDao.insertProfile(mockProfile1);
         profileDao.insertProfile(mockProfile2);
         profileDao.insertProfile(mockProfile3);
@@ -105,7 +101,7 @@ public class ProfileDaoTest {
     @Test
     public void insertProfileTest() {
         // Insert new profile
-        Profile mockProfile = new Profile("mockProfile");
+        Profile mockProfile = new Profile(-1,"mockProfile");
         mockProfile.setId(999999);
         profileDao.insertProfile(mockProfile);
 
@@ -121,7 +117,7 @@ public class ProfileDaoTest {
         String newName = "mockProfile123";
 
         // Insert new profile
-        Profile mockProfile = new Profile("mockProfile");
+        Profile mockProfile = new Profile(-1,"mockProfile");
         mockProfile.setId(999999);
         profileDao.insertProfile(mockProfile);
 
@@ -139,7 +135,7 @@ public class ProfileDaoTest {
     @Test
     public void deleteProfileTest() {
         // Insert new profile
-        Profile mockProfile = new Profile("mockProfile");
+        Profile mockProfile = new Profile(-1,"mockProfile");
         mockProfile.setId(999999);
         profileDao.insertProfile(mockProfile);
 

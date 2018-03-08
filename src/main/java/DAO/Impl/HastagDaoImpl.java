@@ -2,13 +2,11 @@ package DAO.Impl;
 
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
-
-import java.util.Collection;
 import java.util.List;
 
 public class HastagDaoImpl implements IHashtagDao {
 
-    public Collection<Hashtag> findAll() {
+    public List<Hashtag> findAll() {
         return null;
     }
 

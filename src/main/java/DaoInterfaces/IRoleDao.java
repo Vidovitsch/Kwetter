@@ -1,12 +1,11 @@
 package DaoInterfaces;
 
 import Domain.Role;
-
-import java.util.Collection;
+import java.util.List;
 
 public interface IRoleDao {
 
-    Collection<Role> findAll();
+    List<Role> findAll();
 
     Role findById(long id);
 

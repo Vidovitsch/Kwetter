@@ -3,13 +3,11 @@ package DAO.Impl;
 import DaoInterfaces.IProfileDao;
 import Domain.Profile;
 import Domain.User;
-
-import java.util.Collection;
 import java.util.List;
 
 public class ProfileDaoImpl implements IProfileDao {
 
-    public Collection<Profile> findAll() {
+    public List<Profile> findAll() {
         return null;
     }
 

@@ -5,19 +5,17 @@ import DaoInterfaces.IKweetDao;
 import Domain.Hashtag;
 import Domain.Kweet;
 import Domain.User;
-
 import java.util.*;
 
 public class KweetDaoMock implements IKweetDao{
 
-    private Collection<Kweet> mockKweets;
+    private List<Kweet> mockKweets;
 
-    public KweetDaoMock(Collection<User> users) {
-
+    public KweetDaoMock(List<User> users) {
         this.mockKweets = createMockKweets(users);
     }
 
-    public Collection<Kweet> findAll() {
+    public List<Kweet> findAll() {
         return mockKweets;
     }
 
@@ -99,19 +97,19 @@ public class KweetDaoMock implements IKweetDao{
         return results;
     }
 
-    private ArrayList<Kweet> createMockKweets(Collection<User> users) {
+    private ArrayList<Kweet> createMockKweets(List<User> users) {
         ArrayList<Kweet> allKweets = new ArrayList<Kweet>();
 
         for (User user : users) {
-            Collection<User> otherUsers = new HashSet<User>(users);
+            List<User> otherUsers = new ArrayList<User>(users);
             otherUsers.remove(user);
 
-            Collection<Kweet> kweets = new HashSet<Kweet>();
+            List<Kweet> kweets = new ArrayList<Kweet>();
             for (User otherUser : otherUsers) {
-                Collection<User> mentions = new HashSet<User>();
+                List<User> mentions = new ArrayList<User>();
                 mentions.add(otherUser);
 
-                Kweet kweet = new Kweet(user, mentions, user.getUsername() + otherUser.getUsername());
+                Kweet kweet = new Kweet(0, user, mentions, user.getUsername() + otherUser.getUsername());
                 kweets.add(kweet);
                 allKweets.add(kweet);
             }

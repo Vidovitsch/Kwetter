@@ -7,12 +7,9 @@ import Domain.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-import static org.junit.Assert.*;
 
 /**
  * Scenario for tests:

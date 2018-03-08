@@ -2,13 +2,11 @@ package DaoInterfaces;
 
 import Domain.Kweet;
 import Domain.User;
-
-import java.util.Collection;
 import java.util.List;
 
 public interface IKweetDao {
 
-    Collection<Kweet> findAll();
+    List<Kweet> findAll();
 
     Kweet findById(long id);
 

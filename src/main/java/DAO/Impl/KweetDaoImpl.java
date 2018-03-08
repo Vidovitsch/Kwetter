@@ -3,13 +3,11 @@ package DAO.Impl;
 import DaoInterfaces.IKweetDao;
 import Domain.Kweet;
 import Domain.User;
-
-import java.util.Collection;
 import java.util.List;
 
 public class KweetDaoImpl implements IKweetDao {
 
-    public Collection<Kweet> findAll() {
+    public List<Kweet> findAll() {
         return null;
     }
 

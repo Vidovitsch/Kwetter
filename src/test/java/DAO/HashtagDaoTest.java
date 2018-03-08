@@ -6,7 +6,6 @@ import Domain.Hashtag;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.util.*;
 
 public class HashtagDaoTest {
@@ -26,14 +25,14 @@ public class HashtagDaoTest {
     @Test
     public void findAllTest() {
         // Set status before
-        Collection<Hashtag> hashtagsBefore = new ArrayList<Hashtag>(hashtagDao.findAll());
+        List<Hashtag> hashtagsBefore = new ArrayList<Hashtag>(hashtagDao.findAll());
 
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag("mockHashtag");
+        Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
         hashtagDao.insertHashtag(mockHashtag);
 
         // Check status after
-        Collection<Hashtag> hashtagsAfter = hashtagDao.findAll();
+        List<Hashtag> hashtagsAfter = hashtagDao.findAll();
         Assert.assertEquals("Returns list with size + 1",
                 hashtagsBefore.size() + 1, hashtagsAfter.size());
         Assert.assertTrue("New hashtag has been added", hashtagsAfter.contains(mockHashtag));
@@ -48,7 +47,7 @@ public class HashtagDaoTest {
         long id = 999999;
 
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag("mockHashtag");
+        Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
         mockHashtag.setId(id);
         hashtagDao.insertHashtag(mockHashtag);
 
@@ -65,7 +64,7 @@ public class HashtagDaoTest {
         String name = "myHashtag123";
 
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag(name);
+        Hashtag mockHashtag = new Hashtag(-1,name);
         hashtagDao.insertHashtag(mockHashtag);
 
         // Check fetched hashtag
@@ -79,7 +78,7 @@ public class HashtagDaoTest {
     @Test
     public void insertHashtagTest() {
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag("mockHashtag");
+        Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
         mockHashtag.setId(999999);
         hashtagDao.insertHashtag(mockHashtag);
 
@@ -95,7 +94,7 @@ public class HashtagDaoTest {
         String newName = "mockHashtag123";
 
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag("mockHashtag");
+        Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
         mockHashtag.setId(999999);
         hashtagDao.insertHashtag(mockHashtag);
 
@@ -113,7 +112,7 @@ public class HashtagDaoTest {
     @Test
     public void deleteHashtagTest() {
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag("mockHashtag");
+        Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
         mockHashtag.setId(999999);
         hashtagDao.insertHashtag(mockHashtag);
 
@@ -130,13 +129,13 @@ public class HashtagDaoTest {
         hashtagDao.findAll().clear();
 
         // Create mock hashtags with ids
-        Hashtag mockHashtag1 = new Hashtag("mockHashtag1");
+        Hashtag mockHashtag1 = new Hashtag(-1,"mockHashtag1");
         mockHashtag1.setId(101);
-        Hashtag mockHashtag2 = new Hashtag("mockHashtag2");
+        Hashtag mockHashtag2 = new Hashtag(-1,"mockHashtag2");
         mockHashtag2.setId(102);
-        Hashtag mockHashtag3 = new Hashtag("mockHashtag3");
+        Hashtag mockHashtag3 = new Hashtag(-1,"mockHashtag3");
         mockHashtag3.setId(103);
-        Hashtag mockHashtag4 = new Hashtag("mockHashtag4");
+        Hashtag mockHashtag4 = new Hashtag(-1,"mockHashtag4");
         mockHashtag4.setId(104);
 
         // Set number of times used

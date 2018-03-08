@@ -2,12 +2,11 @@ package DAO.Impl;
 
 import DaoInterfaces.IUserDao;
 import Domain.User;
-
-import java.util.Collection;
+import java.util.List;
 
 public class UserDaoImpl implements IUserDao {
 
-    public Collection<User> findAll() {
+    public List<User> findAll() {
         return null;
     }
 

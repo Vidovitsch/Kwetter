@@ -7,10 +7,10 @@ import Domain.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class UserDaoTest {
 
@@ -53,7 +53,7 @@ public class UserDaoTest {
     @Test
     public void updateUserTest() {
         int i = 1;
-        Collection<User> users =new ArrayList<User>();
+        List<User> users =new ArrayList<User>();
         users.addAll(userDao.findAll());
         Iterator<User> userIterator = users.iterator();
         User u;
@@ -71,7 +71,7 @@ public class UserDaoTest {
     @Test
     public void deleteUser() {
         // Insert new user
-        User mockUser = new User("mockUser");
+        User mockUser = new User(-1,"mockUser");
         mockUser.setId(999999);
         userDao.insertUser(mockUser);
 
