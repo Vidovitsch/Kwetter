@@ -55,6 +55,23 @@ public class KweetService {
         kweetDao.update(kweet);
     }
 
+    public List<Kweet> search(String term) {
+        List<Kweet> searchResults = new ArrayList<Kweet>();
+        for (Kweet kweet : kweetDao.findAll()) {
+            if (kweet.getSender().getUsername().contains(term)) {
+                searchResults.add(kweet);
+            } else {
+                for (Hashtag hashtag : kweet.getHashtags()) {
+                    if (hashtag.getName().contains(term)) {
+                        searchResults.add(kweet);
+                        break;
+                    }
+                }
+            }
+        }
+        return searchResults;
+    }
+
     private List<String> parseNames(char prefix, String message) {
         Pattern pattern = Pattern.compile("(" + prefix + "\\w+)\\b");
         Matcher matcher = pattern.matcher(message);

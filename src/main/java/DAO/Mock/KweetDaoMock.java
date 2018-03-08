@@ -80,23 +80,6 @@ public class KweetDaoMock implements IKweetDao{
         return kweets;
     }
 
-    public List<Kweet> search(String term) {
-        List<Kweet> results = new ArrayList<Kweet>();
-        for (Kweet kweet : mockKweets) {
-            if (kweet.getSender().getUsername().contains(term)) {
-                results.add(kweet);
-            } else {
-                for (Hashtag hashtag : kweet.getHashtags()) {
-                    if (hashtag.getName().contains(term)) {
-                        results.add(kweet);
-                        break;
-                    }
-                }
-            }
-        }
-        return results;
-    }
-
     private ArrayList<Kweet> createMockKweets(List<User> users) {
         ArrayList<Kweet> allKweets = new ArrayList<Kweet>();
 

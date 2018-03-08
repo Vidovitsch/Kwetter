@@ -57,26 +57,6 @@ public class HashtagDaoMock implements IHashtagDao {
         return mockHashtags.remove(hashtag);
     }
 
-    public List<Hashtag> getTrend() {
-        List<Hashtag> trends = new ArrayList<Hashtag>();
-        Date weekAgo = getDateWeekAgo();
-        for (Hashtag hashtag : mockHashtags) {
-            if (hashtag.getLastUsed().after(weekAgo)) {
-                trends.add(hashtag);
-            }
-        }
-        Collections.sort(trends, new TrendComparator());
-        return trends;
-    }
-
-    private Date getDateWeekAgo() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.DATE, -30);
-
-        return cal.getTime();
-    }
-
     private ArrayList<Hashtag> createMockHashtags(List<Kweet> kweets) {
         ArrayList<Hashtag> hashtags = new ArrayList<Hashtag>();
 
