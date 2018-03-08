@@ -35,12 +35,12 @@ public class UserDaoMock implements IUserDao {
         return null;
     }
 
-    public User insertUser(User user) {
+    public User create(User user) {
         mockUsers.add(user);
         return user;
     }
 
-    public User updateUser(User user) {
+    public User update(User user) {
         User u = findById(user.getId());
         if(u == null) {
             mockUsers.add(user);
@@ -51,7 +51,7 @@ public class UserDaoMock implements IUserDao {
         return user;
     }
 
-    public boolean deleteUser(User user) {
+    public boolean remove(User user) {
         return mockUsers.remove(user);
     }
 

@@ -36,12 +36,12 @@ public class HashtagDaoMock implements IHashtagDao {
         return null;
     }
 
-    public Hashtag insertHashtag(Hashtag hashtag) {
+    public Hashtag create(Hashtag hashtag) {
         mockHashtags.add(hashtag);
         return hashtag;
     }
 
-    public Hashtag updateHashtag(Hashtag hashtag) {
+    public Hashtag update(Hashtag hashtag) {
         Hashtag existingHashtag = findById(hashtag.getId());
         if(existingHashtag == null){
             mockHashtags.add(hashtag);
@@ -53,7 +53,7 @@ public class HashtagDaoMock implements IHashtagDao {
         return hashtag;
     }
 
-    public boolean deleteHashtag(Hashtag hashtag) {
+    public boolean remove(Hashtag hashtag) {
         return mockHashtags.remove(hashtag);
     }
 

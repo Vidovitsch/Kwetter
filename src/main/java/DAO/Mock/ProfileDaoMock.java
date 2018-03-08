@@ -49,13 +49,13 @@ public class ProfileDaoMock implements IProfileDao {
         return profiles;
     }
 
-    public Profile insertProfile(Profile profile) {
+    public Profile create(Profile profile) {
         mockProfiles.add(profile);
 
         return profile;
     }
 
-    public Profile updateProfile(Profile profile) {
+    public Profile update(Profile profile) {
         Profile existingProfile = findById(profile.getId());
         if (existingProfile == null) {
             mockProfiles.add(profile);
@@ -66,7 +66,7 @@ public class ProfileDaoMock implements IProfileDao {
         return profile;
     }
 
-    public boolean deleteProfile(Profile profile) {
+    public boolean remove(Profile profile) {
         return mockProfiles.remove(profile);
     }
 

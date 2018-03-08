@@ -29,7 +29,7 @@ public class KweetDaoTest {
 
         // Insert new kweet
         Kweet mockKweet = new Kweet();
-        kweetDao.insertKweet(mockKweet);
+        kweetDao.create(mockKweet);
 
         // Check status after
         List<Kweet> kweetsAfter = kweetDao.findAll();
@@ -38,7 +38,7 @@ public class KweetDaoTest {
         Assert.assertTrue("New hashtag has been added", kweetsAfter.contains(mockKweet));
 
         // Remove mock kweet (cleanup)
-        kweetDao.deleteKweet(mockKweet);
+        kweetDao.remove(mockKweet);
     }
 
     @Test
@@ -48,14 +48,14 @@ public class KweetDaoTest {
         // Insert new hashtag
         Kweet mockKweet = new Kweet();
         mockKweet.setId(id);
-        kweetDao.insertKweet(mockKweet);
+        kweetDao.create(mockKweet);
 
         // Check fetched hashtag
         Kweet fetchedKweet = kweetDao.findById(id);
         Assert.assertEquals("Fetched hashtag is the same as the mocked one", mockKweet, fetchedKweet);
 
         // Remove mock kweet (cleanup)
-        kweetDao.deleteKweet(fetchedKweet);
+        kweetDao.remove(fetchedKweet);
     }
 
     @Test
@@ -69,12 +69,12 @@ public class KweetDaoTest {
         Kweet mockKweet3 = new Kweet(-1,new User(), "mockMessage1");
 
         // Insert new hashtags
-        kweetDao.insertKweet(mockKweet1);
-        kweetDao.insertKweet(mockKweet2);
-        kweetDao.insertKweet(mockKweet3);
+        kweetDao.create(mockKweet1);
+        kweetDao.create(mockKweet2);
+        kweetDao.create(mockKweet3);
 
         // Check for message
-        List<Kweet> fetchedKweets = kweetDao.findByMessagePart("brown fox");
+        List<Kweet> fetchedKweets = kweetDao.findByTerm("brown fox");
         Assert.assertEquals("First message has been found with message part 'brown fox'",
                 mockKweet1, fetchedKweets.get(0));
         Assert.assertEquals("Second message has been found with message part 'brown fox'",
@@ -82,9 +82,9 @@ public class KweetDaoTest {
         Assert.assertFalse("The fetched kweets won't contain mockKweet3", fetchedKweets.contains(mockKweet3));
 
         // Remove mock kweets (cleanup)
-        kweetDao.deleteKweet(mockKweet1);
-        kweetDao.deleteKweet(mockKweet2);
-        kweetDao.deleteKweet(mockKweet3);
+        kweetDao.remove(mockKweet1);
+        kweetDao.remove(mockKweet2);
+        kweetDao.remove(mockKweet3);
     }
 
     @Test
@@ -97,9 +97,9 @@ public class KweetDaoTest {
         Kweet mockKweet3 = new Kweet(-1, new User(-1,"Jack"), "mockMessage3");
 
         // Insert new hashtags
-        kweetDao.insertKweet(mockKweet1);
-        kweetDao.insertKweet(mockKweet2);
-        kweetDao.insertKweet(mockKweet3);
+        kweetDao.create(mockKweet1);
+        kweetDao.create(mockKweet2);
+        kweetDao.create(mockKweet3);
 
         // Check for message
         List<Kweet> fetchedKweets = kweetDao.findBySenderName(name);
@@ -110,9 +110,9 @@ public class KweetDaoTest {
         Assert.assertFalse("The fetched kweets won't contain mockKweet3", fetchedKweets.contains(mockKweet3));
 
         // Remove mock kweets (cleanup)
-        kweetDao.deleteKweet(mockKweet1);
-        kweetDao.deleteKweet(mockKweet2);
-        kweetDao.deleteKweet(mockKweet3);
+        kweetDao.remove(mockKweet1);
+        kweetDao.remove(mockKweet2);
+        kweetDao.remove(mockKweet3);
     }
 
     @Test
@@ -120,13 +120,13 @@ public class KweetDaoTest {
         // Insert new hashtag
         Kweet mockKweet = new Kweet();
         mockKweet.setId(999999);
-        kweetDao.insertKweet(mockKweet);
+        kweetDao.create(mockKweet);
 
         // Check hashtag list contains new hashtag
         Assert.assertTrue("New kweet has been added", kweetDao.findAll().contains(mockKweet));
 
         // Remove mock kweet (cleanup)
-        kweetDao.deleteKweet(mockKweet);
+        kweetDao.remove(mockKweet);
     }
 
     @Test
@@ -136,17 +136,17 @@ public class KweetDaoTest {
         // Insert new kweet
         Kweet mockKweet = new Kweet();
         mockKweet.setId(999999);
-        kweetDao.insertKweet(mockKweet);
+        kweetDao.create(mockKweet);
 
         // Update new kweet
         mockKweet.setMessage(newMessage);
-        kweetDao.updateKweet(mockKweet);
+        kweetDao.update(mockKweet);
 
         // Check kweet list contains new message
         Assert.assertEquals("The message of the kweet has been changed", newMessage, mockKweet.getMessage());
 
         // Remove mock kweet (cleanup)
-        kweetDao.deleteKweet(mockKweet);
+        kweetDao.remove(mockKweet);
     }
 
     @Test
@@ -154,10 +154,10 @@ public class KweetDaoTest {
         // Insert new hashtag
         Kweet mockKweet = new Kweet();
         mockKweet.setId(999999);
-        kweetDao.insertKweet(mockKweet);
+        kweetDao.create(mockKweet);
 
         // Delete inserted kweet
-        kweetDao.deleteKweet(mockKweet);
+        kweetDao.remove(mockKweet);
 
         // Check hashtag list contains new hashtag
         Assert.assertFalse("New kweet has been removed", kweetDao.findAll().contains(mockKweet));
@@ -212,12 +212,12 @@ public class KweetDaoTest {
         Assert.assertFalse("Timeline doesn't contain mockKweet6", timelineKweets.contains(mockKweet6));
 
         // Remove mock kweets (cleanup)
-        kweetDao.deleteKweet(mockKweet1);
-        kweetDao.deleteKweet(mockKweet2);
-        kweetDao.deleteKweet(mockKweet3);
-        kweetDao.deleteKweet(mockKweet4);
-        kweetDao.deleteKweet(mockKweet5);
-        kweetDao.deleteKweet(mockKweet6);
+        kweetDao.remove(mockKweet1);
+        kweetDao.remove(mockKweet2);
+        kweetDao.remove(mockKweet3);
+        kweetDao.remove(mockKweet4);
+        kweetDao.remove(mockKweet5);
+        kweetDao.remove(mockKweet6);
     }
 
     @Test
@@ -237,8 +237,8 @@ public class KweetDaoTest {
         mockUser1.setKweets(mockKweets);
 
         // Insert mock kweets
-        kweetDao.insertKweet(mockKweet1);
-        kweetDao.insertKweet(mockKweet2);
+        kweetDao.create(mockKweet1);
+        kweetDao.create(mockKweet2);
 
         // Set mock hashtag in mockKweet1
         List<Hashtag> mockHashtags = new ArrayList<Hashtag>();
@@ -256,8 +256,8 @@ public class KweetDaoTest {
         Assert.assertTrue("Result contains mockKweet1", kweets.contains(mockKweet1));
 
         // Remove mock kweets (cleanup)
-        kweetDao.deleteKweet(mockKweet1);
-        kweetDao.deleteKweet(mockKweet2);
+        kweetDao.remove(mockKweet1);
+        kweetDao.remove(mockKweet2);
     }
 
     private Date getDateDaysAgo(int days) {

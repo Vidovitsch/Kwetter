@@ -23,15 +23,15 @@ public class ProfileDaoImpl implements IProfileDao {
         return null;
     }
 
-    public Profile insertProfile(Profile Profile) {
+    public Profile create(Profile Profile) {
         return null;
     }
 
-    public Profile updateProfile(Profile Profile) {
+    public Profile update(Profile Profile) {
         return null;
     }
 
-    public boolean deleteProfile(Profile Profile) {
+    public boolean remove(Profile Profile) {
         return false;
     }
 }

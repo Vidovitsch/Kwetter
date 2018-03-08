@@ -38,13 +38,13 @@ public class RoleDaoMock implements IRoleDao {
         return null;
     }
 
-    public Role insertRole(Role role) {
+    public Role create(Role role) {
         mockRoles.add(role);
 
         return role;
     }
 
-    public Role updateRole(Role role) {
+    public Role update(Role role) {
         Role existingRole = findById(role.getId());
         if (existingRole == null) {
             mockRoles.add(role);
@@ -55,7 +55,7 @@ public class RoleDaoMock implements IRoleDao {
         return role;
     }
 
-    public boolean deleteRole(Role role) {
+    public boolean remove(Role role) {
         return mockRoles.remove(role);
     }
 

@@ -18,15 +18,15 @@ public class HastagDaoImpl implements IHashtagDao {
         return null;
     }
 
-    public Hashtag insertHashtag(Hashtag Hashtag) {
+    public Hashtag create(Hashtag Hashtag) {
         return null;
     }
 
-    public Hashtag updateHashtag(Hashtag Hashtag) {
+    public Hashtag update(Hashtag Hashtag) {
         return null;
     }
 
-    public boolean deleteHashtag(Hashtag Hashtag) {
+    public boolean remove(Hashtag Hashtag) {
         return false;
     }
 

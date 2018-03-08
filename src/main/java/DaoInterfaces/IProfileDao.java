@@ -14,9 +14,9 @@ public interface IProfileDao {
 
     List<Profile> findByName(String name);
 
-    Profile insertProfile(Profile Profile);
+    Profile create(Profile Profile);
 
-    Profile updateProfile(Profile Profile);
+    Profile update(Profile Profile);
 
-    boolean deleteProfile(Profile Profile);
+    boolean remove(Profile Profile);
 }

@@ -18,15 +18,15 @@ public class RoleDaoImpl implements IRoleDao {
         return null;
     }
 
-    public Role insertRole(Role role) {
+    public Role create(Role role) {
         return null;
     }
 
-    public Role updateRole(Role role) {
+    public Role update(Role role) {
         return null;
     }
 
-    public boolean deleteRole(Role role) {
+    public boolean remove(Role role) {
         return false;
     }
 }

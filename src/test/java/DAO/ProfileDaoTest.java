@@ -28,7 +28,7 @@ public class ProfileDaoTest {
 
         // Insert new profile
         Profile mockProfile = new Profile(-1,"mockProfile");
-        profileDao.insertProfile(mockProfile);
+        profileDao.create(mockProfile);
 
         // Check status after
         List<Profile> profilesAfter = profileDao.findAll();
@@ -37,7 +37,7 @@ public class ProfileDaoTest {
         Assert.assertTrue("New Profile has been added", profilesAfter.contains(mockProfile));
 
         // Remove mock Profile (cleanup)
-        profileDao.deleteProfile(mockProfile);
+        profileDao.remove(mockProfile);
     }
 
     @Test
@@ -47,14 +47,14 @@ public class ProfileDaoTest {
         // Insert new profile
         Profile mockProfile = new Profile(-1,"mockProfile");
         mockProfile.setId(id);
-        profileDao.insertProfile(mockProfile);
+        profileDao.create(mockProfile);
 
         // Check fetched profile
         Profile fetchedProfile = profileDao.findById(id);
         Assert.assertEquals("Fetched Profile is the same as the mocked one", mockProfile, fetchedProfile);
 
         // Remove mock profile (cleanup)
-        profileDao.deleteProfile(fetchedProfile);
+        profileDao.remove(fetchedProfile);
     }
 
     @Test
@@ -64,14 +64,14 @@ public class ProfileDaoTest {
         // Insert new profile
         Profile mockProfile = new Profile(-1,"mockProfile");
         mockProfile.setUser(mockUser);
-        profileDao.insertProfile(mockProfile);
+        profileDao.create(mockProfile);
 
         // Check fetched profile
         Profile fetchedProfile = profileDao.findByUser(mockUser);
         Assert.assertEquals("Fetched profile is the same as the mocked one", mockProfile, fetchedProfile);
 
         // Remove mock profile (cleanup)
-        profileDao.deleteProfile(fetchedProfile);
+        profileDao.remove(fetchedProfile);
     }
 
     @Test
@@ -82,9 +82,9 @@ public class ProfileDaoTest {
         Profile mockProfile1 = new Profile(-1,name);
         Profile mockProfile2 = new Profile(-1,name);
         Profile mockProfile3 = new Profile(-1,"mockProfile123");
-        profileDao.insertProfile(mockProfile1);
-        profileDao.insertProfile(mockProfile2);
-        profileDao.insertProfile(mockProfile3);
+        profileDao.create(mockProfile1);
+        profileDao.create(mockProfile2);
+        profileDao.create(mockProfile3);
 
         // Check fetched profiles
         List<Profile> fetchedProfiles = profileDao.findByName(name);
@@ -93,9 +93,9 @@ public class ProfileDaoTest {
         Assert.assertFalse("mockProfile1 doesn't have name = " + name, fetchedProfiles.contains(mockProfile3));
 
         // Remove mock profile (cleanup)
-        profileDao.deleteProfile(mockProfile1);
-        profileDao.deleteProfile(mockProfile2);
-        profileDao.deleteProfile(mockProfile3);
+        profileDao.remove(mockProfile1);
+        profileDao.remove(mockProfile2);
+        profileDao.remove(mockProfile3);
     }
 
     @Test
@@ -103,13 +103,13 @@ public class ProfileDaoTest {
         // Insert new profile
         Profile mockProfile = new Profile(-1,"mockProfile");
         mockProfile.setId(999999);
-        profileDao.insertProfile(mockProfile);
+        profileDao.create(mockProfile);
 
         // Check Profile list contains new profile
         Assert.assertTrue("New profile has been added", profileDao.findAll().contains(mockProfile));
 
         // Remove mock profile (cleanup)
-        profileDao.deleteProfile(mockProfile);
+        profileDao.remove(mockProfile);
     }
 
     @Test
@@ -119,17 +119,17 @@ public class ProfileDaoTest {
         // Insert new profile
         Profile mockProfile = new Profile(-1,"mockProfile");
         mockProfile.setId(999999);
-        profileDao.insertProfile(mockProfile);
+        profileDao.create(mockProfile);
 
         // Update new profile
         mockProfile.setName(newName);
-        profileDao.updateProfile(mockProfile);
+        profileDao.update(mockProfile);
 
         // Check Profile list contains new name
         Assert.assertEquals("The name of the profile has been changed", newName, mockProfile.getName());
 
         // Remove mock Profile (cleanup)
-        profileDao.deleteProfile(mockProfile);
+        profileDao.remove(mockProfile);
     }
 
     @Test
@@ -137,10 +137,10 @@ public class ProfileDaoTest {
         // Insert new profile
         Profile mockProfile = new Profile(-1,"mockProfile");
         mockProfile.setId(999999);
-        profileDao.insertProfile(mockProfile);
+        profileDao.create(mockProfile);
 
         // Delete inserted Profile
-        profileDao.deleteProfile(mockProfile);
+        profileDao.remove(mockProfile);
 
         // Check Profile list contains new Profile
         Assert.assertFalse("New Profile has been removed", profileDao.findAll().contains(mockProfile));

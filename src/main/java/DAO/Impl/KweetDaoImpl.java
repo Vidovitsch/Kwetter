@@ -3,8 +3,11 @@ package DAO.Impl;
 import DaoInterfaces.IKweetDao;
 import Domain.Kweet;
 import Domain.User;
+
+import javax.ejb.Stateless;
 import java.util.List;
 
+@Stateless
 public class KweetDaoImpl implements IKweetDao {
 
     public List<Kweet> findAll() {
@@ -15,7 +18,7 @@ public class KweetDaoImpl implements IKweetDao {
         return null;
     }
 
-    public List<Kweet> findByMessagePart(String message) {
+    public List<Kweet> findByTerm(String message) {
         return null;
     }
 
@@ -23,15 +26,15 @@ public class KweetDaoImpl implements IKweetDao {
         return null;
     }
 
-    public Kweet insertKweet(Kweet Kweet) {
+    public Kweet create(Kweet Kweet) {
         return null;
     }
 
-    public Kweet updateKweet(Kweet Kweet) {
+    public Kweet update(Kweet Kweet) {
         return null;
     }
 
-    public boolean deleteKweet(Kweet Kweet) {
+    public boolean remove(Kweet Kweet) {
         return false;
     }
 

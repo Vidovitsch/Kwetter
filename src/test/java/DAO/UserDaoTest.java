@@ -45,7 +45,7 @@ public class UserDaoTest {
     public void insertUserTest() {
         User u = new User();
         u.setUsername("henk");
-        userDao.insertUser(u);
+        userDao.create(u);
         Assert.assertEquals(u, userDao.findByUsername(u.getUsername()));
     }
 
@@ -62,7 +62,7 @@ public class UserDaoTest {
             Profile p = new Profile();
             p.setwebsite("test" + i);
             u.setProfile(p);
-            userDao.updateUser(u);
+            userDao.update(u);
             Assert.assertEquals("test" + i, userDao.findByUsername(u.getUsername()).getProfile().getwebsite());
             i++;
         }
@@ -73,10 +73,10 @@ public class UserDaoTest {
         // Insert new user
         User mockUser = new User(-1,"mockUser");
         mockUser.setId(999999);
-        userDao.insertUser(mockUser);
+        userDao.create(mockUser);
 
         // Delete inserted user
-        userDao.deleteUser(mockUser);
+        userDao.remove(mockUser);
 
         // Check User list contains new user
         Assert.assertFalse("New user has been removed", userDao.findAll().contains(mockUser));

@@ -11,9 +11,9 @@ public interface IUserDao {
 
     User findByUsername(String username);
 
-    User insertUser(User user);
+    User create(User user);
 
-    User updateUser(User user);
+    User update(User user);
 
-    boolean deleteUser(User user);
+    boolean remove(User user);
 }

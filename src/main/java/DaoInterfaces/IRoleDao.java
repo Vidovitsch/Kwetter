@@ -11,9 +11,9 @@ public interface IRoleDao {
 
     Role findByName(String name);
 
-    Role insertRole(Role role);
+    Role create(Role role);
 
-    Role updateRole(Role role);
+    Role update(Role role);
 
-    boolean deleteRole(Role role);
+    boolean remove(Role role);
 }

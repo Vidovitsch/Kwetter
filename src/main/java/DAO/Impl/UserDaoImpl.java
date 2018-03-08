@@ -18,15 +18,15 @@ public class UserDaoImpl implements IUserDao {
         return null;
     }
 
-    public User insertUser(User user) {
+    public User create(User user) {
         return null;
     }
 
-    public User updateUser(User user) {
+    public User update(User user) {
         return null;
     }
 
-    public boolean deleteUser(User user) {
+    public boolean remove(User user) {
         return false;
     }
 }

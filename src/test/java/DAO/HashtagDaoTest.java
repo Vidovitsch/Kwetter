@@ -29,7 +29,7 @@ public class HashtagDaoTest {
 
         // Insert new hashtag
         Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
-        hashtagDao.insertHashtag(mockHashtag);
+        hashtagDao.create(mockHashtag);
 
         // Check status after
         List<Hashtag> hashtagsAfter = hashtagDao.findAll();
@@ -38,7 +38,7 @@ public class HashtagDaoTest {
         Assert.assertTrue("New hashtag has been added", hashtagsAfter.contains(mockHashtag));
 
         // Remove mock hashtag (cleanup)
-        hashtagDao.deleteHashtag(mockHashtag);
+        hashtagDao.remove(mockHashtag);
     }
 
     // Gekke test?
@@ -49,14 +49,14 @@ public class HashtagDaoTest {
         // Insert new hashtag
         Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
         mockHashtag.setId(id);
-        hashtagDao.insertHashtag(mockHashtag);
+        hashtagDao.create(mockHashtag);
 
         // Check fetched hashtag
         Hashtag fetchedHashtag = hashtagDao.findById(id);
         Assert.assertEquals("Fetched hashtag is the same as the mocked one", mockHashtag, fetchedHashtag);
 
         // Remove mock hashtag (cleanup)
-        hashtagDao.deleteHashtag(fetchedHashtag);
+        hashtagDao.remove(fetchedHashtag);
     }
 
     @Test
@@ -65,14 +65,14 @@ public class HashtagDaoTest {
 
         // Insert new hashtag
         Hashtag mockHashtag = new Hashtag(-1,name);
-        hashtagDao.insertHashtag(mockHashtag);
+        hashtagDao.create(mockHashtag);
 
         // Check fetched hashtag
         Hashtag fetchedHashtag = hashtagDao.findByName(name);
         Assert.assertEquals("Fetched hashtag is the same as the mocked one", mockHashtag, fetchedHashtag);
 
         // Remove mock hashtag (cleanup)
-        hashtagDao.deleteHashtag(fetchedHashtag);
+        hashtagDao.remove(fetchedHashtag);
     }
 
     @Test
@@ -80,13 +80,13 @@ public class HashtagDaoTest {
         // Insert new hashtag
         Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
         mockHashtag.setId(999999);
-        hashtagDao.insertHashtag(mockHashtag);
+        hashtagDao.create(mockHashtag);
 
         // Check hashtag list contains new hashtag
         Assert.assertTrue("New hashtag has been added", hashtagDao.findAll().contains(mockHashtag));
 
         // Remove mock hashtag (cleanup)
-        hashtagDao.deleteHashtag(mockHashtag);
+        hashtagDao.remove(mockHashtag);
     }
 
     @Test
@@ -96,17 +96,17 @@ public class HashtagDaoTest {
         // Insert new hashtag
         Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
         mockHashtag.setId(999999);
-        hashtagDao.insertHashtag(mockHashtag);
+        hashtagDao.create(mockHashtag);
 
         // Update new hashtag
         mockHashtag.setName(newName);
-        hashtagDao.updateHashtag(mockHashtag);
+        hashtagDao.update(mockHashtag);
 
         // Check hashtag list contains new name
         Assert.assertEquals("The name of the hashtag has been changed", newName, mockHashtag.getName());
 
         // Remove mock hashtag (cleanup)
-        hashtagDao.deleteHashtag(mockHashtag);
+        hashtagDao.remove(mockHashtag);
     }
 
     @Test
@@ -114,10 +114,10 @@ public class HashtagDaoTest {
         // Insert new hashtag
         Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
         mockHashtag.setId(999999);
-        hashtagDao.insertHashtag(mockHashtag);
+        hashtagDao.create(mockHashtag);
 
         // Delete inserted hashtag
-        hashtagDao.deleteHashtag(mockHashtag);
+        hashtagDao.remove(mockHashtag);
 
         // Check hashtag list contains new hashtag
         Assert.assertFalse("New hashtag has been removed", hashtagDao.findAll().contains(mockHashtag));
@@ -153,10 +153,10 @@ public class HashtagDaoTest {
         mockHashtag4.setLastUsed(getDateWeekAgo());
 
         // Insert new hashtags
-        hashtagDao.insertHashtag(mockHashtag1);
-        hashtagDao.insertHashtag(mockHashtag2);
-        hashtagDao.insertHashtag(mockHashtag3);
-        hashtagDao.insertHashtag(mockHashtag4);
+        hashtagDao.create(mockHashtag1);
+        hashtagDao.create(mockHashtag2);
+        hashtagDao.create(mockHashtag3);
+        hashtagDao.create(mockHashtag4);
 
         // Check trend
         List<Hashtag> trend = hashtagDao.getTrend();
@@ -166,10 +166,10 @@ public class HashtagDaoTest {
         Assert.assertFalse("mockHashtag4 isn't a trend", trend.contains(mockHashtag4));
 
         // Remove mock hashtags (cleanup)
-        hashtagDao.deleteHashtag(mockHashtag1);
-        hashtagDao.deleteHashtag(mockHashtag2);
-        hashtagDao.deleteHashtag(mockHashtag3);
-        hashtagDao.deleteHashtag(mockHashtag4);
+        hashtagDao.remove(mockHashtag1);
+        hashtagDao.remove(mockHashtag2);
+        hashtagDao.remove(mockHashtag3);
+        hashtagDao.remove(mockHashtag4);
     }
 
     private Date getDateWeekAgo() {

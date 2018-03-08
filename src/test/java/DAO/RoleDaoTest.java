@@ -27,7 +27,7 @@ public class RoleDaoTest {
 
         // Insert new role
         Role mockRole = new Role(-1,"mockRole");
-        roleDao.insertRole(mockRole);
+        roleDao.create(mockRole);
 
         // Check status after
         List<Role> rolesAfter = roleDao.findAll();
@@ -36,7 +36,7 @@ public class RoleDaoTest {
         Assert.assertTrue("New Role has been added", rolesAfter.contains(mockRole));
 
         // Remove mock role (cleanup)
-        roleDao.deleteRole(mockRole);
+        roleDao.remove(mockRole);
     }
 
     @Test
@@ -46,14 +46,14 @@ public class RoleDaoTest {
         // Insert new role
         Role mockRole = new Role(-1,"mockRole");
         mockRole.setId(id);
-        roleDao.insertRole(mockRole);
+        roleDao.create(mockRole);
 
         // Check fetched role
         Role fetchedRole = roleDao.findById(id);
         Assert.assertEquals("Fetched role is the same as the mocked one", mockRole, fetchedRole);
 
         // Remove mock role (cleanup)
-        roleDao.deleteRole(fetchedRole);
+        roleDao.remove(fetchedRole);
     }
 
     @Test
@@ -62,14 +62,14 @@ public class RoleDaoTest {
 
         // Insert new role
         Role mockRole = new Role(-1,name);
-        roleDao.insertRole(mockRole);
+        roleDao.create(mockRole);
 
         // Check fetched role
         Role fetchedRole = roleDao.findByName(name);
         Assert.assertEquals("Fetched role is the same as the mocked one", mockRole, fetchedRole);
 
         // Remove mock role (cleanup)
-        roleDao.deleteRole(fetchedRole);
+        roleDao.remove(fetchedRole);
     }
 
     @Test
@@ -77,13 +77,13 @@ public class RoleDaoTest {
         // Insert new role
         Role mockRole = new Role(-1,"mockRole");
         mockRole.setId(999999);
-        roleDao.insertRole(mockRole);
+        roleDao.create(mockRole);
 
         // Check Role list contains new role
         Assert.assertTrue("New role has been added", roleDao.findAll().contains(mockRole));
 
         // Remove mock role (cleanup)
-        roleDao.deleteRole(mockRole);
+        roleDao.remove(mockRole);
     }
 
     @Test
@@ -93,17 +93,17 @@ public class RoleDaoTest {
         // Insert new role
         Role mockRole = new Role(-1,"mockRole");
         mockRole.setId(999999);
-        roleDao.insertRole(mockRole);
+        roleDao.create(mockRole);
 
         // Update new role
         mockRole.setName(newName);
-        roleDao.updateRole(mockRole);
+        roleDao.update(mockRole);
 
         // Check role list contains new name
         Assert.assertEquals("The name of the role has been changed", newName, mockRole.getName());
 
         // Remove mock role (cleanup)
-        roleDao.deleteRole(mockRole);
+        roleDao.remove(mockRole);
     }
 
     @Test
@@ -111,10 +111,10 @@ public class RoleDaoTest {
         // Insert new role
         Role mockRole = new Role(-1,"mockRole");
         mockRole.setId(999999);
-        roleDao.insertRole(mockRole);
+        roleDao.create(mockRole);
 
         // Delete inserted role
-        roleDao.deleteRole(mockRole);
+        roleDao.remove(mockRole);
 
         // Check Role list contains new role
         Assert.assertFalse("New role has been removed", roleDao.findAll().contains(mockRole));
