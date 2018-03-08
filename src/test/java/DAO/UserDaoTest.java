@@ -30,8 +30,7 @@ public class UserDaoTest {
     @Test
     public void findByIdTest() {
         for (User u : userDao.findAll()) {
-            // Lelijk alternatief
-            Assert.assertEquals(u.getId(), userDao.findById(u.getId()).getId());
+            Assert.assertEquals(u, userDao.findById(u.getId()));
         }
     }
 
@@ -71,6 +70,15 @@ public class UserDaoTest {
 
     @Test
     public void deleteUser() {
-        // To Do
+        // Insert new user
+        User mockUser = new User("mockUser");
+        mockUser.setId(999999);
+        userDao.insertUser(mockUser);
+
+        // Delete inserted user
+        userDao.deleteUser(mockUser);
+
+        // Check User list contains new user
+        Assert.assertFalse("New user has been removed", userDao.findAll().contains(mockUser));
     }
 }

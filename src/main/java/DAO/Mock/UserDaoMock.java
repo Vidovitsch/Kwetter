@@ -59,7 +59,9 @@ public class UserDaoMock implements IUserDao {
     private ArrayList<User> createDummyUsers() {
         ArrayList<User> users = new ArrayList<User>();
         for (int i = 0; i < 10; i++) {
-            users.add(new User("DummyUser" + i));
+            User user = new User("DummyUser" + i);
+            user.setId(i + 100);
+            users.add(user);
         }
         connectDummyUsers(users);
         return users;
@@ -70,8 +72,8 @@ public class UserDaoMock implements IUserDao {
             Collection<User> others = new HashSet<User>(users);
             others.remove(dummyUser);
 
-            dummyUser.setFollowers((HashSet<User>) others);
-            dummyUser.setFollowing((HashSet<User>) others);
+            dummyUser.setFollowers(others);
+            dummyUser.setFollowing(others);
         }
     }
 }
