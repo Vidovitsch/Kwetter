@@ -2,8 +2,11 @@ package DAO.Impl;
 
 import DaoInterfaces.IUserDao;
 import Domain.User;
+
+import javax.ejb.Stateless;
 import java.util.List;
 
+@Stateless
 public class UserDaoImpl implements IUserDao {
 
     public List<User> findAll() {

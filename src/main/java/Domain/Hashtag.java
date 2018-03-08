@@ -10,7 +10,7 @@ public class Hashtag {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -18,7 +18,7 @@ public class Hashtag {
 
     @ManyToMany(mappedBy = "hashtags")
     private List<Kweet> kweets = new ArrayList<Kweet>();
-    private int timesUsed;
+    private int timesUsed = 0;
 
     public Hashtag() { }
 

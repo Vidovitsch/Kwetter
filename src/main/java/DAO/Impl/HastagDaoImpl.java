@@ -2,8 +2,11 @@ package DAO.Impl;
 
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
+
+import javax.ejb.Stateless;
 import java.util.List;
 
+@Stateless
 public class HastagDaoImpl implements IHashtagDao {
 
     public List<Hashtag> findAll() {
