@@ -163,102 +163,102 @@ public class KweetDaoTest {
         Assert.assertFalse("New kweet has been removed", kweetDao.findAll().contains(mockKweet));
     }
 
-    @Test
-    public void getTimelineTest() {
-        // Get mock users
-        User mockUser1 = new User(-1,"Hank");
-        User mockUser2 = new User(-1,"Jack");
-        User mockUser3 = new User(-1,"Frank");
-
-        // Hank, Jack and Frank send both 2 mock kweets
-        List<Kweet> mockKweets1 = new ArrayList<Kweet>();
-        List<Kweet> mockKweets2 = new ArrayList<Kweet>();
-        List<Kweet> mockKweets3 = new ArrayList<Kweet>();
-        Kweet mockKweet1 = new Kweet();
-        Kweet mockKweet2 = new Kweet();
-        Kweet mockKweet3 = new Kweet();
-        Kweet mockKweet4 = new Kweet();
-        Kweet mockKweet5 = new Kweet();
-        Kweet mockKweet6 = new Kweet();
-        mockKweets1.add(mockKweet1);
-        mockKweets1.add(mockKweet2);
-        mockKweets2.add(mockKweet3);
-        mockKweets2.add(mockKweet4);
-        mockKweets3.add(mockKweet5);
-        mockKweets3.add(mockKweet6);
-
-        mockUser1.setKweets(mockKweets1);
-        mockUser2.setKweets(mockKweets2);
-        mockUser3.setKweets(mockKweets3);
-
-        // Set publication dates
-        mockKweet1.setPublicationDate(getDateDaysAgo(1));
-        mockKweet2.setPublicationDate(getDateDaysAgo(3));
-        mockKweet3.setPublicationDate(getDateDaysAgo(2));
-        mockKweet4.setPublicationDate(getDateDaysAgo(4));
-
-        // Hank follows Jack
-        List<User> mockFollowing = new ArrayList<User>();
-        mockFollowing.add(mockUser2);
-        mockUser1.setFollowing(mockFollowing);
-
-        // Check timeline
-        List<Kweet> timelineKweets = kweetDao.getTimeline(mockUser1);
-        Assert.assertEquals("Timeline contains mockKweet1 on index 0", mockKweet1.getPublicationDate(), timelineKweets.get(0).getPublicationDate());
-        Assert.assertEquals("Timeline contains mockKweet2 on index 2", mockKweet2, timelineKweets.get(2));
-        Assert.assertEquals("Timeline contains mockKweet3 on index 1", mockKweet3, timelineKweets.get(1));
-        Assert.assertEquals("Timeline contains mockKweet4 on index 3", mockKweet4, timelineKweets.get(3));
-        Assert.assertFalse("Timeline doesn't contain mockKweet5", timelineKweets.contains(mockKweet5));
-        Assert.assertFalse("Timeline doesn't contain mockKweet6", timelineKweets.contains(mockKweet6));
-
-        // Remove mock kweets (cleanup)
-        kweetDao.remove(mockKweet1);
-        kweetDao.remove(mockKweet2);
-        kweetDao.remove(mockKweet3);
-        kweetDao.remove(mockKweet4);
-        kweetDao.remove(mockKweet5);
-        kweetDao.remove(mockKweet6);
-    }
-
-    @Test
-    public void searchTest() {
-        String sender = "Hank";
-        String hashtag = "HashHash";
-
-        // Get mock users
-        User mockUser1 = new User(-1,sender);
-
-        // Henk sends 2 mock kweets
-        List<Kweet> mockKweets = new ArrayList<Kweet>();
-        Kweet mockKweet1 = new Kweet(-1,mockUser1, "mockKweet1");
-        Kweet mockKweet2 = new Kweet(-1,mockUser1, "mockKweet2");
-        mockKweets.add(mockKweet1);
-        mockKweets.add(mockKweet2);
-        mockUser1.setKweets(mockKweets);
-
-        // Insert mock kweets
-        kweetDao.create(mockKweet1);
-        kweetDao.create(mockKweet2);
-
-        // Set mock hashtag in mockKweet1
-        List<Hashtag> mockHashtags = new ArrayList<Hashtag>();
-        Hashtag mockHashtag = new Hashtag(-1,hashtag);
-        mockHashtags.add(mockHashtag);
-        mockKweet1.setHashtags(mockHashtags);
-
-        // Check search by sender (incomplete term)
-        List<Kweet> kweets = kweetDao.search("Han");
-        Assert.assertTrue("Result contains mockKweet1", kweets.contains(mockKweet1));
-        Assert.assertTrue("Result contains mockKweet2", kweets.contains(mockKweet2));
-
-        // Check search by hashtag (incomplete term)
-        kweets = kweetDao.search("Has");
-        Assert.assertTrue("Result contains mockKweet1", kweets.contains(mockKweet1));
-
-        // Remove mock kweets (cleanup)
-        kweetDao.remove(mockKweet1);
-        kweetDao.remove(mockKweet2);
-    }
+//    @Test
+//    public void getTimelineTest() {
+//        // Get mock users
+//        User mockUser1 = new User(-1,"Hank");
+//        User mockUser2 = new User(-1,"Jack");
+//        User mockUser3 = new User(-1,"Frank");
+//
+//        // Hank, Jack and Frank send both 2 mock kweets
+//        List<Kweet> mockKweets1 = new ArrayList<Kweet>();
+//        List<Kweet> mockKweets2 = new ArrayList<Kweet>();
+//        List<Kweet> mockKweets3 = new ArrayList<Kweet>();
+//        Kweet mockKweet1 = new Kweet();
+//        Kweet mockKweet2 = new Kweet();
+//        Kweet mockKweet3 = new Kweet();
+//        Kweet mockKweet4 = new Kweet();
+//        Kweet mockKweet5 = new Kweet();
+//        Kweet mockKweet6 = new Kweet();
+//        mockKweets1.add(mockKweet1);
+//        mockKweets1.add(mockKweet2);
+//        mockKweets2.add(mockKweet3);
+//        mockKweets2.add(mockKweet4);
+//        mockKweets3.add(mockKweet5);
+//        mockKweets3.add(mockKweet6);
+//
+//        mockUser1.setKweets(mockKweets1);
+//        mockUser2.setKweets(mockKweets2);
+//        mockUser3.setKweets(mockKweets3);
+//
+//        // Set publication dates
+//        mockKweet1.setPublicationDate(getDateDaysAgo(1));
+//        mockKweet2.setPublicationDate(getDateDaysAgo(3));
+//        mockKweet3.setPublicationDate(getDateDaysAgo(2));
+//        mockKweet4.setPublicationDate(getDateDaysAgo(4));
+//
+//        // Hank follows Jack
+//        List<User> mockFollowing = new ArrayList<User>();
+//        mockFollowing.add(mockUser2);
+//        mockUser1.setFollowing(mockFollowing);
+//
+//        // Check timeline
+//        List<Kweet> timelineKweets = kweetDao.getTimeline(mockUser1);
+//        Assert.assertEquals("Timeline contains mockKweet1 on index 0", mockKweet1.getPublicationDate(), timelineKweets.get(0).getPublicationDate());
+//        Assert.assertEquals("Timeline contains mockKweet2 on index 2", mockKweet2, timelineKweets.get(2));
+//        Assert.assertEquals("Timeline contains mockKweet3 on index 1", mockKweet3, timelineKweets.get(1));
+//        Assert.assertEquals("Timeline contains mockKweet4 on index 3", mockKweet4, timelineKweets.get(3));
+//        Assert.assertFalse("Timeline doesn't contain mockKweet5", timelineKweets.contains(mockKweet5));
+//        Assert.assertFalse("Timeline doesn't contain mockKweet6", timelineKweets.contains(mockKweet6));
+//
+//        // Remove mock kweets (cleanup)
+//        kweetDao.remove(mockKweet1);
+//        kweetDao.remove(mockKweet2);
+//        kweetDao.remove(mockKweet3);
+//        kweetDao.remove(mockKweet4);
+//        kweetDao.remove(mockKweet5);
+//        kweetDao.remove(mockKweet6);
+//    }
+//
+//    @Test
+//    public void searchTest() {
+//        String sender = "Hank";
+//        String hashtag = "HashHash";
+//
+//        // Get mock users
+//        User mockUser1 = new User(-1,sender);
+//
+//        // Henk sends 2 mock kweets
+//        List<Kweet> mockKweets = new ArrayList<Kweet>();
+//        Kweet mockKweet1 = new Kweet(-1,mockUser1, "mockKweet1");
+//        Kweet mockKweet2 = new Kweet(-1,mockUser1, "mockKweet2");
+//        mockKweets.add(mockKweet1);
+//        mockKweets.add(mockKweet2);
+//        mockUser1.setKweets(mockKweets);
+//
+//        // Insert mock kweets
+//        kweetDao.create(mockKweet1);
+//        kweetDao.create(mockKweet2);
+//
+//        // Set mock hashtag in mockKweet1
+//        List<Hashtag> mockHashtags = new ArrayList<Hashtag>();
+//        Hashtag mockHashtag = new Hashtag(-1,hashtag);
+//        mockHashtags.add(mockHashtag);
+//        mockKweet1.setHashtags(mockHashtags);
+//
+//        // Check search by sender (incomplete term)
+//        List<Kweet> kweets = kweetDao.search("Han");
+//        Assert.assertTrue("Result contains mockKweet1", kweets.contains(mockKweet1));
+//        Assert.assertTrue("Result contains mockKweet2", kweets.contains(mockKweet2));
+//
+//        // Check search by hashtag (incomplete term)
+//        kweets = kweetDao.search("Has");
+//        Assert.assertTrue("Result contains mockKweet1", kweets.contains(mockKweet1));
+//
+//        // Remove mock kweets (cleanup)
+//        kweetDao.remove(mockKweet1);
+//        kweetDao.remove(mockKweet2);
+//    }
 
     private Date getDateDaysAgo(int days) {
         Calendar cal = Calendar.getInstance();

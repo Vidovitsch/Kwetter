@@ -123,54 +123,54 @@ public class HashtagDaoTest {
         Assert.assertFalse("New hashtag has been removed", hashtagDao.findAll().contains(mockHashtag));
     }
 
-    @Test
-    public void getTrendTest() {
-        // Empty existing list
-        hashtagDao.findAll().clear();
-
-        // Create mock hashtags with ids
-        Hashtag mockHashtag1 = new Hashtag(-1,"mockHashtag1");
-        mockHashtag1.setId(101);
-        Hashtag mockHashtag2 = new Hashtag(-1,"mockHashtag2");
-        mockHashtag2.setId(102);
-        Hashtag mockHashtag3 = new Hashtag(-1,"mockHashtag3");
-        mockHashtag3.setId(103);
-        Hashtag mockHashtag4 = new Hashtag(-1,"mockHashtag4");
-        mockHashtag4.setId(104);
-
-        // Set number of times used
-        mockHashtag1.setTimesUsed(1);
-        mockHashtag2.setTimesUsed(8);
-        mockHashtag3.setTimesUsed(6);
-        mockHashtag4.setTimesUsed(3);
-
-        // Set current trends (date within a week from now)
-        mockHashtag1.setLastUsed(new Date());
-        mockHashtag2.setLastUsed(new Date());
-        mockHashtag3.setLastUsed(new Date());
-
-        // Set old trend (date before a week from now)
-        mockHashtag4.setLastUsed(getDateWeekAgo());
-
-        // Insert new hashtags
-        hashtagDao.create(mockHashtag1);
-        hashtagDao.create(mockHashtag2);
-        hashtagDao.create(mockHashtag3);
-        hashtagDao.create(mockHashtag4);
-
-        // Check trend
-        List<Hashtag> trend = hashtagDao.getTrend();
-        Assert.assertEquals("mockHashtag2 is most trendy", mockHashtag2, trend.get(0));
-        Assert.assertEquals("mockHashtag3 is second most trendy", mockHashtag3, trend.get(1));
-        Assert.assertEquals("mockHashtag1 is third most trendy", mockHashtag1, trend.get(2));
-        Assert.assertFalse("mockHashtag4 isn't a trend", trend.contains(mockHashtag4));
-
-        // Remove mock hashtags (cleanup)
-        hashtagDao.remove(mockHashtag1);
-        hashtagDao.remove(mockHashtag2);
-        hashtagDao.remove(mockHashtag3);
-        hashtagDao.remove(mockHashtag4);
-    }
+//    @Test
+//    public void getTrendTest() {
+//        // Empty existing list
+//        hashtagDao.findAll().clear();
+//
+//        // Create mock hashtags with ids
+//        Hashtag mockHashtag1 = new Hashtag(-1,"mockHashtag1");
+//        mockHashtag1.setId(101);
+//        Hashtag mockHashtag2 = new Hashtag(-1,"mockHashtag2");
+//        mockHashtag2.setId(102);
+//        Hashtag mockHashtag3 = new Hashtag(-1,"mockHashtag3");
+//        mockHashtag3.setId(103);
+//        Hashtag mockHashtag4 = new Hashtag(-1,"mockHashtag4");
+//        mockHashtag4.setId(104);
+//
+//        // Set number of times used
+//        mockHashtag1.setTimesUsed(1);
+//        mockHashtag2.setTimesUsed(8);
+//        mockHashtag3.setTimesUsed(6);
+//        mockHashtag4.setTimesUsed(3);
+//
+//        // Set current trends (date within a week from now)
+//        mockHashtag1.setLastUsed(new Date());
+//        mockHashtag2.setLastUsed(new Date());
+//        mockHashtag3.setLastUsed(new Date());
+//
+//        // Set old trend (date before a week from now)
+//        mockHashtag4.setLastUsed(getDateWeekAgo());
+//
+//        // Insert new hashtags
+//        hashtagDao.create(mockHashtag1);
+//        hashtagDao.create(mockHashtag2);
+//        hashtagDao.create(mockHashtag3);
+//        hashtagDao.create(mockHashtag4);
+//
+//        // Check trend
+//        List<Hashtag> trend = hashtagDao.getTrend();
+//        Assert.assertEquals("mockHashtag2 is most trendy", mockHashtag2, trend.get(0));
+//        Assert.assertEquals("mockHashtag3 is second most trendy", mockHashtag3, trend.get(1));
+//        Assert.assertEquals("mockHashtag1 is third most trendy", mockHashtag1, trend.get(2));
+//        Assert.assertFalse("mockHashtag4 isn't a trend", trend.contains(mockHashtag4));
+//
+//        // Remove mock hashtags (cleanup)
+//        hashtagDao.remove(mockHashtag1);
+//        hashtagDao.remove(mockHashtag2);
+//        hashtagDao.remove(mockHashtag3);
+//        hashtagDao.remove(mockHashtag4);
+//    }
 
     private Date getDateWeekAgo() {
         Calendar cal = Calendar.getInstance();
