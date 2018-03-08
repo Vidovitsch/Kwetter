@@ -27,12 +27,13 @@ public class UserDaoTest {
         Assert.assertNotNull(foundUsers);
     }
 
-//    @Test
-//    public void findByIdTest() {
-//        for (User u : userDao.findAll()) {
-//            Assert.assertEquals(u, userDao.findById(u.getId()));
-//        }
-//    }
+    @Test
+    public void findByIdTest() {
+        for (User u : userDao.findAll()) {
+            // Lelijk alternatief
+            Assert.assertEquals(u.getId(), userDao.findById(u.getId()).getId());
+        }
+    }
 
     @Test
     public void findByUsernameTest() {
