@@ -3,6 +3,7 @@ package ViewModels;
 import Domain.User;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class TimelineItem implements Comparable {
 
@@ -10,7 +11,7 @@ public class TimelineItem implements Comparable {
     public Date postDate;
     public String message;
     public String username;
-    public List<User> hearts;
+    public Set<User> hearts;
     public boolean ownKweet;
     public List<User> mentions;
 

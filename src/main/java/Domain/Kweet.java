@@ -21,7 +21,7 @@ public class Kweet {
     private List<User> mentions = new ArrayList<User>();
 
     @ManyToMany(mappedBy = "hearts")
-    private List<User> hearts = new ArrayList<User>();
+    private Set<User> hearts = new HashSet<User>();
 
     @ManyToMany
     //@JoinTable(name = "KweetTag",
@@ -87,11 +87,11 @@ public class Kweet {
         this.hashtags = hashtags;
     }
 
-    public List<User> getHearts() {
+    public Set<User> getHearts() {
         return hearts;
     }
 
-    public void setHearts(List<User> hearts) {
+    public void setHearts(Set<User> hearts) {
         this.hearts = hearts;
     }
 

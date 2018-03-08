@@ -7,7 +7,6 @@ import Domain.Hashtag;
 import Domain.Kweet;
 import Domain.User;
 import Exception.*;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.*;
@@ -28,18 +27,32 @@ public class KweetService {
 
     public KweetService() { }
 
-    public boolean sendKweet(Kweet kweet) throws UserNotFoundException {
+    public boolean send(Kweet kweet) throws UserNotFoundException {
         if (kweet.getMessage() == null || kweet.getMessage().equals("") || kweet.getSender() == null) {
             return false;
         } else {
-            List<String> hashtagNames = parseNames('#', kweet.getMessage());
-            List<String> mentionNames = parseNames('@', kweet.getMessage());
-            addHashtags(kweet, hashtagNames);
-            addMentions(kweet, mentionNames);
+            addHashtags(kweet, parseNames('#', kweet.getMessage()));
+            addMentions(kweet, parseNames('@', kweet.getMessage()));
             kweetDao.create(kweet);
 
             return true;
         }
+    }
+
+    public Kweet edit(Kweet kweet) throws UserNotFoundException {
+        addHashtags(kweet, parseNames('#', kweet.getMessage()));
+        addMentions(kweet, parseNames('@', kweet.getMessage()));
+
+        return kweetDao.update(kweet);
+    }
+
+    public boolean delete(Kweet kweet) {
+        return kweetDao.remove(kweet);
+    }
+
+    public void giveHeart(Kweet kweet, User user) {
+        kweet.getHearts().add(user);
+        kweetDao.update(kweet);
     }
 
     private List<String> parseNames(char prefix, String message) {
