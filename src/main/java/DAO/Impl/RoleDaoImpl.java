@@ -2,8 +2,11 @@ package DAO.Impl;
 
 import DaoInterfaces.IRoleDao;
 import Domain.Role;
+
+import javax.ejb.Stateless;
 import java.util.List;
 
+@Stateless
 public class RoleDaoImpl implements IRoleDao {
 
     public List<Role> findAll() {

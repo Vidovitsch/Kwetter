@@ -27,49 +27,92 @@ public class KweetService {
 
     public KweetService() { }
 
-    public boolean send(Kweet kweet) throws UserNotFoundException {
-        if (kweet.getMessage() == null || kweet.getMessage().equals("") || kweet.getSender() == null) {
-            return false;
-        } else {
-            addHashtags(kweet, parseNames('#', kweet.getMessage()));
-            addMentions(kweet, parseNames('@', kweet.getMessage()));
-            kweetDao.create(kweet);
-
-            return true;
-        }
+    /**
+     * To Do
+     *
+     * @param kweetId
+     * @return
+     * @throws UserNotFoundException
+     */
+    public Kweet publish(Long userId, Long kweetId) throws UserNotFoundException, InvalidKweetException {
+        return publish(userId, kweetDao.findById(kweetId));
     }
 
-    public Kweet edit(Kweet kweet) throws UserNotFoundException {
+    public Kweet publish(Long userId, Kweet kweet) throws UserNotFoundException, InvalidKweetException {
+        // Find user by id and set is as sender of the kweet
+        kweet.setSender(userDao.findById(userId));
+
+        validateKweet(kweet);
+
+        // Filter message on hashtags '#' and mentions '@' and add to kweet
         addHashtags(kweet, parseNames('#', kweet.getMessage()));
         addMentions(kweet, parseNames('@', kweet.getMessage()));
 
-        return kweetDao.update(kweet);
+        if (kweet.getId() == null) {
+            // Kweet isn't persisted. Persist new kweet
+            return kweetDao.create(kweet);
+        } else {
+            // Kweet is already persisted. Update existing kweet
+            return kweetDao.update(kweet);
+        }
     }
 
-    public boolean delete(Kweet kweet) {
-        return kweetDao.remove(kweet);
+    /**
+     * To Do
+     *
+     * @param kweetId
+     * @return
+     */
+    public boolean delete(Long kweetId) {
+        return kweetDao.remove(kweetDao.findById(kweetId));
     }
 
-    public void giveHeart(Kweet kweet, User user) {
-        kweet.getHearts().add(user);
-        kweetDao.update(kweet);
+    /**
+     * To Do
+     *
+     * @param kweetId
+     * @param userId
+     */
+    public Kweet giveHeart(Long userId, Long kweetId) throws NullPointerException {
+        User user = userDao.findById(userId);
+        Kweet kweet = kweetDao.findById(kweetId);
+        if (user != null && kweet != null) {
+            if (!kweet.getHearts().contains(user)) {
+                kweet.getHearts().add(user);
+                kweetDao.update(kweet);
+            }
+        } else {
+            throw new NullPointerException();
+        }
+
+        return kweet;
     }
 
+    /**
+     * To Do
+     *
+     * @param term
+     * @return
+     */
     public List<Kweet> search(String term) {
-        List<Kweet> searchResults = new ArrayList<Kweet>();
-        for (Kweet kweet : kweetDao.findAll()) {
-            if (kweet.getSender().getUsername().contains(term)) {
-                searchResults.add(kweet);
-            } else {
-                for (Hashtag hashtag : kweet.getHashtags()) {
-                    if (hashtag.getName().contains(term)) {
-                        searchResults.add(kweet);
-                        break;
+        if (term != null && !term.equals("")) {
+            List<Kweet> searchResults = new ArrayList<>();
+            for (Kweet kweet : kweetDao.findAll()) {
+                if (kweet.getSender().getUsername().contains(term)) {
+                    searchResults.add(kweet);
+                } else {
+                    for (Hashtag hashtag : kweet.getHashtags()) {
+                        if (hashtag.getName().contains(term)) {
+                            searchResults.add(kweet);
+                            break;
+                        }
                     }
                 }
             }
+            return searchResults;
+        } else {
+            return new ArrayList<>();
         }
-        return searchResults;
     }
 
     private List<String> parseNames(char prefix, String message) {
@@ -77,16 +120,16 @@ public class KweetService {
         Matcher matcher = pattern.matcher(message);
 
         // HashSet to remove duplicates
-        Collection<String> names = new HashSet<String>();
+        Collection<String> names = new HashSet<>();
         while (matcher.find()) {
             names.add(matcher.group(1));
         }
 
-        return new ArrayList<String>(names);
+        return new ArrayList<>(names);
     }
 
     private void addHashtags(Kweet kweet, List<String> names) {
-        List<Hashtag> hashtags = new ArrayList<Hashtag>();
+        List<Hashtag> hashtags = new ArrayList<>();
         for (String name : names) {
             Hashtag hashtag = hashtagDao.findByName(name);
             if (hashtag == null) {
@@ -106,7 +149,7 @@ public class KweetService {
     }
 
     private void addMentions(Kweet kweet, List<String> names) throws UserNotFoundException {
-        List<User> mentions = new ArrayList<User>();
+        List<User> mentions = new ArrayList<>();
         for (String name : names) {
             User user = userDao.findByUsername(name);
             if (user == null) {
@@ -116,5 +159,13 @@ public class KweetService {
             }
         }
         kweet.setMentions(mentions);
+    }
+
+    private void validateKweet(Kweet kweet) throws InvalidKweetException, IllegalArgumentException {
+        if (kweet.getMessage() == null || kweet.getMessage().equals("") || kweet.getMessage().length() > 140) {
+            throw new InvalidKweetException("Message required");
+        } else if (kweet.getMessage().length() <= 140) {
+            throw new InvalidKweetException("Message should have a maximum of 140 characters");
+        }
     }
 }
