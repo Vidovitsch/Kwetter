@@ -28,7 +28,7 @@ public class HashtagDaoTest {
         List<Hashtag> hashtagsBefore = new ArrayList<Hashtag>(hashtagDao.findAll());
 
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
+        Hashtag mockHashtag = new Hashtag((long)-1,"mockHashtag");
         hashtagDao.create(mockHashtag);
 
         // Check status after
@@ -47,7 +47,7 @@ public class HashtagDaoTest {
         long id = 999999;
 
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
+        Hashtag mockHashtag = new Hashtag((long)-1,"mockHashtag");
         mockHashtag.setId(id);
         hashtagDao.create(mockHashtag);
 
@@ -64,7 +64,7 @@ public class HashtagDaoTest {
         String name = "myHashtag123";
 
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag(-1,name);
+        Hashtag mockHashtag = new Hashtag((long)-1,name);
         hashtagDao.create(mockHashtag);
 
         // Check fetched hashtag
@@ -78,8 +78,8 @@ public class HashtagDaoTest {
     @Test
     public void insertHashtagTest() {
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
-        mockHashtag.setId(999999);
+        Hashtag mockHashtag = new Hashtag((long)-1,"mockHashtag");
+        mockHashtag.setId((long)999999);
         hashtagDao.create(mockHashtag);
 
         // Check hashtag list contains new hashtag
@@ -94,8 +94,8 @@ public class HashtagDaoTest {
         String newName = "mockHashtag123";
 
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
-        mockHashtag.setId(999999);
+        Hashtag mockHashtag = new Hashtag((long)-1,"mockHashtag");
+        mockHashtag.setId((long)999999);
         hashtagDao.create(mockHashtag);
 
         // Update new hashtag
@@ -112,8 +112,8 @@ public class HashtagDaoTest {
     @Test
     public void deleteHashtagTest() {
         // Insert new hashtag
-        Hashtag mockHashtag = new Hashtag(-1,"mockHashtag");
-        mockHashtag.setId(999999);
+        Hashtag mockHashtag = new Hashtag((long)-1,"mockHashtag");
+        mockHashtag.setId((long)999999);
         hashtagDao.create(mockHashtag);
 
         // Delete inserted hashtag

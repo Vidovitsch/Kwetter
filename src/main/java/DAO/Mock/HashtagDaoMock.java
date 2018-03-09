@@ -60,8 +60,8 @@ public class HashtagDaoMock implements IHashtagDao {
     private ArrayList<Hashtag> createMockHashtags(List<Kweet> kweets) {
         ArrayList<Hashtag> hashtags = new ArrayList<Hashtag>();
 
-        Hashtag hashtag1 = new Hashtag(1, "Test");
-        Hashtag hashtag2 = new Hashtag(2,"Kwetter");
+        Hashtag hashtag1 = new Hashtag((long)1, "Test");
+        Hashtag hashtag2 = new Hashtag((long)2,"Kwetter");
         hashtags.add(hashtag1);
         hashtags.add(hashtag2);
 

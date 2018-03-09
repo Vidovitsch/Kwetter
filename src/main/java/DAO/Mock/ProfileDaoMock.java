@@ -73,7 +73,7 @@ public class ProfileDaoMock implements IProfileDao {
     private ArrayList<Profile> createMockProfiles(List<User> users) {
         ArrayList<Profile> profiles = new ArrayList<Profile>();
         for (User user : users) {
-            Profile dummyProfile = new Profile(0, user.getUsername() + " Test");
+            Profile dummyProfile = new Profile((long)0, user.getUsername() + " Test");
             dummyProfile.setUser(user);
             user.setProfile(dummyProfile);
             profiles.add(dummyProfile);

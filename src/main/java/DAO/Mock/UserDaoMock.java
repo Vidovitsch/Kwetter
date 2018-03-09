@@ -58,8 +58,8 @@ public class UserDaoMock implements IUserDao {
     private ArrayList<User> createDummyUsers() {
         ArrayList<User> users = new ArrayList<User>();
         for (int i = 0; i < 10; i++) {
-            User user = new User(0, "DummyUser" + i);
-            user.setId(i + 100);
+            User user = new User((long)0, "DummyUser" + i);
+            user.setId((long)i + 100);
             users.add(user);
         }
         connectDummyUsers(users);

@@ -26,7 +26,7 @@ public class RoleDaoTest {
         List<Role> rolesBefore = new ArrayList<Role>(roleDao.findAll());
 
         // Insert new role
-        Role mockRole = new Role(-1,"mockRole");
+        Role mockRole = new Role((long)-1,"mockRole");
         roleDao.create(mockRole);
 
         // Check status after
@@ -44,7 +44,7 @@ public class RoleDaoTest {
         long id = 999999;
 
         // Insert new role
-        Role mockRole = new Role(-1,"mockRole");
+        Role mockRole = new Role((long)-1,"mockRole");
         mockRole.setId(id);
         roleDao.create(mockRole);
 
@@ -61,7 +61,7 @@ public class RoleDaoTest {
         String name = "myRole123";
 
         // Insert new role
-        Role mockRole = new Role(-1,name);
+        Role mockRole = new Role((long)-1,name);
         roleDao.create(mockRole);
 
         // Check fetched role
@@ -75,8 +75,8 @@ public class RoleDaoTest {
     @Test
     public void insertRoleTest() {
         // Insert new role
-        Role mockRole = new Role(-1,"mockRole");
-        mockRole.setId(999999);
+        Role mockRole = new Role((long)-1,"mockRole");
+        mockRole.setId((long)999999);
         roleDao.create(mockRole);
 
         // Check Role list contains new role
@@ -91,8 +91,8 @@ public class RoleDaoTest {
         String newName = "mockRole123";
 
         // Insert new role
-        Role mockRole = new Role(-1,"mockRole");
-        mockRole.setId(999999);
+        Role mockRole = new Role((long)-1,"mockRole");
+        mockRole.setId((long)999999);
         roleDao.create(mockRole);
 
         // Update new role
@@ -109,8 +109,8 @@ public class RoleDaoTest {
     @Test
     public void deleteRoleTest() {
         // Insert new role
-        Role mockRole = new Role(-1,"mockRole");
-        mockRole.setId(999999);
+        Role mockRole = new Role((long)-1,"mockRole");
+        mockRole.setId((long)999999);
         roleDao.create(mockRole);
 
         // Delete inserted role

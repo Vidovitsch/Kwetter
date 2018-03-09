@@ -64,9 +64,9 @@ public class KweetDaoTest {
         String message2 = "I'm a brown fox";
 
         // Create mock kweets
-        Kweet mockKweet1 = new Kweet(-1,new User(), message1);
-        Kweet mockKweet2 = new Kweet(-1,new User(), message2);
-        Kweet mockKweet3 = new Kweet(-1,new User(), "mockMessage1");
+        Kweet mockKweet1 = new Kweet((long)-1,new User(), message1);
+        Kweet mockKweet2 = new Kweet((long)-1,new User(), message2);
+        Kweet mockKweet3 = new Kweet((long)-1,new User(), "mockMessage1");
 
         // Insert new hashtags
         kweetDao.create(mockKweet1);
@@ -92,9 +92,9 @@ public class KweetDaoTest {
         String name = "Hank";
 
         // Create mock kweets
-        Kweet mockKweet1 = new Kweet(-1, new User(-1,name), "mockMessage1");
-        Kweet mockKweet2 = new Kweet(-1, new User(-1,name), "mockMessage2");
-        Kweet mockKweet3 = new Kweet(-1, new User(-1,"Jack"), "mockMessage3");
+        Kweet mockKweet1 = new Kweet((long)-1, new User((long)-1,name), "mockMessage1");
+        Kweet mockKweet2 = new Kweet((long)-1, new User((long)-1,name), "mockMessage2");
+        Kweet mockKweet3 = new Kweet((long)-1, new User((long)-1,"Jack"), "mockMessage3");
 
         // Insert new hashtags
         kweetDao.create(mockKweet1);
@@ -119,7 +119,7 @@ public class KweetDaoTest {
     public void insertKweetTest() {
         // Insert new hashtag
         Kweet mockKweet = new Kweet();
-        mockKweet.setId(999999);
+        mockKweet.setId((long)999999);
         kweetDao.create(mockKweet);
 
         // Check hashtag list contains new hashtag
@@ -135,7 +135,7 @@ public class KweetDaoTest {
 
         // Insert new kweet
         Kweet mockKweet = new Kweet();
-        mockKweet.setId(999999);
+        mockKweet.setId((long)999999);
         kweetDao.create(mockKweet);
 
         // Update new kweet
@@ -153,7 +153,7 @@ public class KweetDaoTest {
     public void deleteKweetTest() {
         // Insert new hashtag
         Kweet mockKweet = new Kweet();
-        mockKweet.setId(999999);
+        mockKweet.setId((long)999999);
         kweetDao.create(mockKweet);
 
         // Delete inserted kweet

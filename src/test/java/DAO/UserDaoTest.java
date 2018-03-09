@@ -71,8 +71,8 @@ public class UserDaoTest {
     @Test
     public void deleteUser() {
         // Insert new user
-        User mockUser = new User(-1,"mockUser");
-        mockUser.setId(999999);
+        User mockUser = new User((long)-1,"mockUser");
+        mockUser.setId((long)999999);
         userDao.create(mockUser);
 
         // Delete inserted user
