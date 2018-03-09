@@ -8,15 +8,23 @@ import Domain.Profile;
 import Exception.*;
 import org.apache.commons.validator.UrlValidator;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+@Stateless
 public class ProfileService {
+
+    @EJB
     IUserDao userDao = new UserDaoMock();
+
+    @EJB
     IProfileDao profileDao = new ProfileDaoMock(userDao.findAll());
 
     public ProfileService() {
     }
 
     public Profile CreateProfile(Profile p, String username) throws InvalidProfileException {
-        if (p.getName() == null) throw new InvalidProfileException("Profile name can't be empty");
+        if (p.getName() == null || p.getName().isEmpty()) throw new InvalidProfileException("Profile name can't be empty");
         if (p.getwebsite() != null) {
             if(!ValidateUrl(p.getwebsite()))throw new InvalidProfileException("The given web address is invalid");
         }
