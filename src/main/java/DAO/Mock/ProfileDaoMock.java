@@ -75,6 +75,7 @@ public class ProfileDaoMock implements IProfileDao {
         for (User user : users) {
             Profile dummyProfile = new Profile((long)0, user.getUsername() + " Test");
             dummyProfile.setUser(user);
+            dummyProfile.setImage("fakeimage");
             user.setProfile(dummyProfile);
             profiles.add(dummyProfile);
         }
