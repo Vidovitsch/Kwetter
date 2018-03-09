@@ -17,6 +17,11 @@ public class TrendService {
 
     public TrendService() { }
 
+    /**
+     * To Do
+     *
+     * @return
+     */
     public List<Hashtag> get() {
         List<Hashtag> trends = filterOnDates(hashtagDao.findAll());
         Collections.sort(trends, new TrendComparator());

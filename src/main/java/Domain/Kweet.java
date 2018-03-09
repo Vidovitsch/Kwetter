@@ -8,7 +8,7 @@ public class Kweet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String message;
@@ -34,24 +34,24 @@ public class Kweet {
 
     public Kweet() { }
 
-    public Kweet(long id, User sender, String message) {
+    public Kweet(Long id, User sender, String message) {
         this.id = id;
         this.sender = sender;
         this.message = message;
     }
 
-    public Kweet(long id, User sender, List<User> mentions, String message) {
+    public Kweet(Long id, User sender, List<User> mentions, String message) {
         this.id = id;
         this.sender = sender;
         this.mentions = mentions;
         this.message = message;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

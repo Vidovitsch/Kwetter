@@ -27,49 +27,77 @@ public class KweetService {
 
     public KweetService() { }
 
-    public boolean send(Kweet kweet) throws UserNotFoundException {
-        if (kweet.getMessage() == null || kweet.getMessage().equals("") || kweet.getSender() == null) {
-            return false;
-        } else {
-            addHashtags(kweet, parseNames('#', kweet.getMessage()));
-            addMentions(kweet, parseNames('@', kweet.getMessage()));
-            kweetDao.create(kweet);
+    /**
+     * To Do
+     *
+     * @param kweet
+     * @return
+     * @throws UserNotFoundException
+     */
+    public void publish(Kweet kweet) throws UserNotFoundException, InvalidKweetException {
+        validateKweet(kweet);
 
-            return true;
-        }
-    }
-
-    public Kweet edit(Kweet kweet) throws UserNotFoundException {
+        // Filter message on hashtags '#' and mentions '@' and add to kweet
         addHashtags(kweet, parseNames('#', kweet.getMessage()));
         addMentions(kweet, parseNames('@', kweet.getMessage()));
 
-        return kweetDao.update(kweet);
+        if (kweet.getId() == null) {
+            // Kweet isn't persisted. Persist new kweet
+            kweetDao.create(kweet);
+        } else {
+            // Kweet is already persisted. Update existing kweet
+            kweetDao.update(kweet);
+        }
     }
 
+    /**
+     * To Do
+     *
+     * @param kweet
+     * @return
+     */
     public boolean delete(Kweet kweet) {
         return kweetDao.remove(kweet);
     }
 
+    /**
+     * To Do
+     *
+     * @param kweet
+     * @param user
+     */
     public void giveHeart(Kweet kweet, User user) {
-        kweet.getHearts().add(user);
-        kweetDao.update(kweet);
+        if (!kweet.getHearts().contains(user)) {
+            kweet.getHearts().add(user);
+            kweetDao.update(kweet);
+        }
     }
 
+    /**
+     * To Do
+     *
+     * @param term
+     * @return
+     */
     public List<Kweet> search(String term) {
-        List<Kweet> searchResults = new ArrayList<Kweet>();
-        for (Kweet kweet : kweetDao.findAll()) {
-            if (kweet.getSender().getUsername().contains(term)) {
-                searchResults.add(kweet);
-            } else {
-                for (Hashtag hashtag : kweet.getHashtags()) {
-                    if (hashtag.getName().contains(term)) {
-                        searchResults.add(kweet);
-                        break;
+        if (term != null && !term.equals("")) {
+            List<Kweet> searchResults = new ArrayList<Kweet>();
+            for (Kweet kweet : kweetDao.findAll()) {
+                if (kweet.getSender().getUsername().contains(term)) {
+                    searchResults.add(kweet);
+                } else {
+                    for (Hashtag hashtag : kweet.getHashtags()) {
+                        if (hashtag.getName().contains(term)) {
+                            searchResults.add(kweet);
+                            break;
+                        }
                     }
                 }
             }
+            return searchResults;
+        } else {
+            return new ArrayList<Kweet>();
         }
-        return searchResults;
     }
 
     private List<String> parseNames(char prefix, String message) {
@@ -116,5 +144,15 @@ public class KweetService {
             }
         }
         kweet.setMentions(mentions);
+    }
+
+    private void validateKweet(Kweet kweet) throws InvalidKweetException, IllegalArgumentException {
+        if (kweet.getMessage() == null || kweet.getMessage().equals("") || kweet.getMessage().length() <= 140) {
+            throw new InvalidKweetException("Message required");
+        } else if (kweet.getMessage().length() <= 140) {
+            throw new InvalidKweetException("Message should have a maximum of 140 characters");
+        } else if (kweet.getSender() == null) {
+            throw new IllegalArgumentException();
+        }
     }
 }
