@@ -32,7 +32,8 @@ public class Kweet {
     @Temporal(TemporalType.TIMESTAMP)
     private Date publicationDate;
 
-    public Kweet() { }
+    public Kweet() {
+    }
 
     public Kweet(long id, User sender, String message) {
         this.id = id;
