@@ -2,7 +2,6 @@ package Service;
 
 import Comparator.TrendComparator;
 import DaoInterfaces.IHashtagDao;
-import DaoInterfaces.IKweetDao;
 import Domain.Hashtag;
 
 import javax.ejb.EJB;
