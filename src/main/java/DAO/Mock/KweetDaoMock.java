@@ -92,7 +92,7 @@ public class KweetDaoMock implements IKweetDao{
                 List<User> mentions = new ArrayList<User>();
                 mentions.add(otherUser);
 
-                Kweet kweet = new Kweet(0, user, mentions, user.getUsername() + otherUser.getUsername());
+                Kweet kweet = new Kweet((long)0, user, mentions, user.getUsername() + otherUser.getUsername());
                 kweets.add(kweet);
                 allKweets.add(kweet);
             }

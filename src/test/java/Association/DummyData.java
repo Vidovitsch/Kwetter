@@ -77,7 +77,7 @@ public class DummyData {
     private ArrayList<User> createDummyUsers() {
         ArrayList<User> users = new ArrayList<User>();
         for (int i = 0; i < 10; i++) {
-            users.add(new User(i, "DummyUser" + i));
+            users.add(new User((long)i, "DummyUser" + i));
         }
 
         return users;
@@ -105,7 +105,7 @@ public class DummyData {
                 List<User> mentions = new ArrayList<User>();
                 mentions.add(otherUser);
 
-                Kweet kweet = new Kweet(-1, user, mentions, user.getUsername() + otherUser.getUsername());
+                Kweet kweet = new Kweet((long)-1, user, mentions, user.getUsername() + otherUser.getUsername());
                 kweets.add(kweet);
                 allKweets.add(kweet);
             }
@@ -119,8 +119,8 @@ public class DummyData {
     private ArrayList<Role> createDummyRoles(List<User> users) {
         ArrayList<Role> roles = new ArrayList<Role>();
 
-        Role role1 = new Role(-1,"Kweeter");
-        Role role2 = new Role(-1,"Moderator");
+        Role role1 = new Role((long)-1,"Kweeter");
+        Role role2 = new Role((long)-1,"Moderator");
         roles.add(role1);
         roles.add(role2);
 
@@ -136,8 +136,8 @@ public class DummyData {
     private ArrayList<Hashtag> createDummyHashtags(List<Kweet> kweets) {
         ArrayList<Hashtag> hashtags = new ArrayList<Hashtag>();
 
-        Hashtag hashtag1 = new Hashtag(-1,"Test");
-        Hashtag hashtag2 = new Hashtag(-1,"Kwetter");
+        Hashtag hashtag1 = new Hashtag((long)-1,"Test");
+        Hashtag hashtag2 = new Hashtag((long)-1,"Kwetter");
         hashtags.add(hashtag1);
         hashtags.add(hashtag2);
 
@@ -154,7 +154,7 @@ public class DummyData {
         ArrayList<Profile> profiles = new ArrayList<Profile>();
 
         for (User user : users) {
-            Profile dummyProfile = new Profile(-1,user.getUsername() + " Test");
+            Profile dummyProfile = new Profile((long)-1,user.getUsername() + " Test");
             dummyProfile.setUser(user);
             user.setProfile(dummyProfile);
             profiles.add(dummyProfile);

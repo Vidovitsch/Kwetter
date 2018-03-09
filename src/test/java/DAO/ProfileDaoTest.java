@@ -27,7 +27,7 @@ public class ProfileDaoTest {
         List<Profile> ProfilesBefore = new ArrayList<Profile>(profileDao.findAll());
 
         // Insert new profile
-        Profile mockProfile = new Profile(-1,"mockProfile");
+        Profile mockProfile = new Profile((long)-1,"mockProfile");
         profileDao.create(mockProfile);
 
         // Check status after
@@ -45,7 +45,7 @@ public class ProfileDaoTest {
         long id = 999999;
 
         // Insert new profile
-        Profile mockProfile = new Profile(-1,"mockProfile");
+        Profile mockProfile = new Profile((long)-1,"mockProfile");
         mockProfile.setId(id);
         profileDao.create(mockProfile);
 
@@ -59,10 +59,10 @@ public class ProfileDaoTest {
 
     @Test
     public void findByUserTest() {
-        User mockUser = new User(-1,"Hank");
+        User mockUser = new User((long)-1,"Hank");
 
         // Insert new profile
-        Profile mockProfile = new Profile(-1,"mockProfile");
+        Profile mockProfile = new Profile((long)-1,"mockProfile");
         mockProfile.setUser(mockUser);
         profileDao.create(mockProfile);
 
@@ -79,9 +79,9 @@ public class ProfileDaoTest {
         String name = "mockProfile";
 
         // Insert new profiles
-        Profile mockProfile1 = new Profile(-1,name);
-        Profile mockProfile2 = new Profile(-1,name);
-        Profile mockProfile3 = new Profile(-1,"mockProfile123");
+        Profile mockProfile1 = new Profile((long)-1,name);
+        Profile mockProfile2 = new Profile((long)-1,name);
+        Profile mockProfile3 = new Profile((long)-1,"mockProfile123");
         profileDao.create(mockProfile1);
         profileDao.create(mockProfile2);
         profileDao.create(mockProfile3);
@@ -101,8 +101,8 @@ public class ProfileDaoTest {
     @Test
     public void insertProfileTest() {
         // Insert new profile
-        Profile mockProfile = new Profile(-1,"mockProfile");
-        mockProfile.setId(999999);
+        Profile mockProfile = new Profile((long)-1,"mockProfile");
+        mockProfile.setId((long)999999);
         profileDao.create(mockProfile);
 
         // Check Profile list contains new profile
@@ -117,8 +117,8 @@ public class ProfileDaoTest {
         String newName = "mockProfile123";
 
         // Insert new profile
-        Profile mockProfile = new Profile(-1,"mockProfile");
-        mockProfile.setId(999999);
+        Profile mockProfile = new Profile((long)-1,"mockProfile");
+        mockProfile.setId((long)999999);
         profileDao.create(mockProfile);
 
         // Update new profile
@@ -135,8 +135,8 @@ public class ProfileDaoTest {
     @Test
     public void deleteProfileTest() {
         // Insert new profile
-        Profile mockProfile = new Profile(-1,"mockProfile");
-        mockProfile.setId(999999);
+        Profile mockProfile = new Profile((long)-1,"mockProfile");
+        mockProfile.setId((long)999999);
         profileDao.create(mockProfile);
 
         // Delete inserted Profile

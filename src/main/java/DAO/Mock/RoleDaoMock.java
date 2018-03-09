@@ -62,8 +62,8 @@ public class RoleDaoMock implements IRoleDao {
     private ArrayList<Role> createMockRoles(List<User> users) {
         ArrayList<Role> roles = new ArrayList<Role>();
 
-        Role role1 = new Role(0, "Kweeter");
-        Role role2 = new Role(0, "Moderator");
+        Role role1 = new Role((long)0, "Kweeter");
+        Role role2 = new Role((long)0, "Moderator");
         roles.add(role1);
         roles.add(role2);
 

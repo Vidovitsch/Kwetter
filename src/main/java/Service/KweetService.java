@@ -25,7 +25,27 @@ public class KweetService {
     @EJB
     private IUserDao userDao;
 
-    public KweetService() { }
+    public KweetService(IKweetDao kweetDao, IHashtagDao hashtagDao, IUserDao userDao) {
+        this.kweetDao = kweetDao;
+        this.hashtagDao = hashtagDao;
+        this.userDao = userDao;
+    }
+
+    public IKweetDao getKweetDao() {
+        return kweetDao;
+    }
+
+    public void setKweetDao(IKweetDao kweetDao) {
+        this.kweetDao = kweetDao;
+    }
+
+    public void setHashtagDao(IHashtagDao hashtagDao) {
+        this.hashtagDao = hashtagDao;
+    }
+
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
 
     /**
      * To Do
