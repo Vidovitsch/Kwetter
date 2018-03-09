@@ -1,7 +1,6 @@
 package Comparator;
 
 import Domain.Kweet;
-
 import java.util.Comparator;
 
 public class KweetComparator implements Comparator<Kweet> {

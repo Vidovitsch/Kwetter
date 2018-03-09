@@ -7,10 +7,10 @@ import Domain.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class UserDaoTest {
 
@@ -27,12 +27,12 @@ public class UserDaoTest {
         Assert.assertNotNull(foundUsers);
     }
 
-//    @Test
-//    public void findByIdTest() {
-//        for (User u : userDao.findAll()) {
-//            Assert.assertEquals(u, userDao.findById(u.getId()));
-//        }
-//    }
+    @Test
+    public void findByIdTest() {
+        for (User u : userDao.findAll()) {
+            Assert.assertEquals(u, userDao.findById(u.getId()));
+        }
+    }
 
     @Test
     public void findByUsernameTest() {
@@ -45,7 +45,7 @@ public class UserDaoTest {
     public void insertUserTest() {
         User u = new User();
         u.setUsername("henk");
-        userDao.insertUser(u);
+        userDao.create(u);
         Assert.assertEquals(u, userDao.findByUsername(u.getUsername()));
     }
 
@@ -53,7 +53,7 @@ public class UserDaoTest {
     @Test
     public void updateUserTest() {
         int i = 1;
-        Collection<User> users =new ArrayList<User>();
+        List<User> users =new ArrayList<User>();
         users.addAll(userDao.findAll());
         Iterator<User> userIterator = users.iterator();
         User u;
@@ -62,7 +62,7 @@ public class UserDaoTest {
             Profile p = new Profile();
             p.setwebsite("test" + i);
             u.setProfile(p);
-            userDao.updateUser(u);
+            userDao.update(u);
             Assert.assertEquals("test" + i, userDao.findByUsername(u.getUsername()).getProfile().getwebsite());
             i++;
         }
@@ -70,6 +70,15 @@ public class UserDaoTest {
 
     @Test
     public void deleteUser() {
-        // To Do
+        // Insert new user
+        User mockUser = new User(-1,"mockUser");
+        mockUser.setId(999999);
+        userDao.create(mockUser);
+
+        // Delete inserted user
+        userDao.remove(mockUser);
+
+        // Check User list contains new user
+        Assert.assertFalse("New user has been removed", userDao.findAll().contains(mockUser));
     }
 }

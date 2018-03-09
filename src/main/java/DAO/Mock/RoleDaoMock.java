@@ -3,19 +3,18 @@ package DAO.Mock;
 import DaoInterfaces.IRoleDao;
 import Domain.Role;
 import Domain.User;
-
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
-public class RoleDaoMock implements IRoleDao{
+public class RoleDaoMock implements IRoleDao {
 
-    private Collection<Role> mockRoles;
+    private List<Role> mockRoles;
 
-    public RoleDaoMock(Collection<User> users) {
+    public RoleDaoMock(List<User> users) {
         this.mockRoles = createMockRoles(users);
     }
 
-    public Collection<Role> findAll() {
+    public List<Role> findAll() {
         return mockRoles;
     }
 
@@ -39,13 +38,13 @@ public class RoleDaoMock implements IRoleDao{
         return null;
     }
 
-    public Role insertRole(Role role) {
+    public Role create(Role role) {
         mockRoles.add(role);
 
         return role;
     }
 
-    public Role updateRole(Role role) {
+    public Role update(Role role) {
         Role existingRole = findById(role.getId());
         if (existingRole == null) {
             mockRoles.add(role);
@@ -56,15 +55,15 @@ public class RoleDaoMock implements IRoleDao{
         return role;
     }
 
-    public boolean deleteRole(Role role) {
+    public boolean remove(Role role) {
         return mockRoles.remove(role);
     }
 
-    private ArrayList<Role> createMockRoles(Collection<User> users) {
+    private ArrayList<Role> createMockRoles(List<User> users) {
         ArrayList<Role> roles = new ArrayList<Role>();
 
-        Role role1 = new Role("Kweeter");
-        Role role2 = new Role("Moderator");
+        Role role1 = new Role(0, "Kweeter");
+        Role role2 = new Role(0, "Moderator");
         roles.add(role1);
         roles.add(role2);
 

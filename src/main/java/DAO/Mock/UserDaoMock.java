@@ -2,19 +2,18 @@ package DAO.Mock;
 
 import DaoInterfaces.IUserDao;
 import Domain.User;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 
 public class UserDaoMock implements IUserDao {
-    Collection<User> mockUsers;
+
+    private List<User> mockUsers;
 
     public UserDaoMock() {
         mockUsers = createDummyUsers();
     }
 
-    public Collection<User> findAll() {
+    public List<User> findAll() {
         return mockUsers;
     }
 
@@ -36,42 +35,44 @@ public class UserDaoMock implements IUserDao {
         return null;
     }
 
-    public User insertUser(User user) {
+    public User create(User user) {
         mockUsers.add(user);
         return user;
     }
 
-    public User updateUser(User user) {
+    public User update(User user) {
         User u = findById(user.getId());
-        if(u == null){
+        if(u == null) {
             mockUsers.add(user);
-        }else{
+        } else {
             mockUsers.remove(u);
             mockUsers.add(user);
         }
         return user;
     }
 
-    public boolean deleteUser(User user) {
+    public boolean remove(User user) {
         return mockUsers.remove(user);
     }
 
     private ArrayList<User> createDummyUsers() {
         ArrayList<User> users = new ArrayList<User>();
         for (int i = 0; i < 10; i++) {
-            users.add(new User("DummyUser" + i));
+            User user = new User(0, "DummyUser" + i);
+            user.setId(i + 100);
+            users.add(user);
         }
         connectDummyUsers(users);
         return users;
     }
 
-    private void connectDummyUsers(Collection<User> users) {
+    private void connectDummyUsers(List<User> users) {
         for (User dummyUser : users) {
-            Collection<User> others = new HashSet<User>(users);
+            List<User> others = new ArrayList<User>(users);
             others.remove(dummyUser);
 
-            dummyUser.setFollowers((HashSet<User>) others);
-            dummyUser.setFollowing((HashSet<User>) others);
+            dummyUser.setFollowers(others);
+            dummyUser.setFollowing(others);
         }
     }
 }

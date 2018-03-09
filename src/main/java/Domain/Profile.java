@@ -1,50 +1,38 @@
 package Domain;
 
-
 import javax.persistence.*;
 
 @Entity(name = "Post")
-//@Table(name = "Post")
 public class Profile {
-
-    // region Fields
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "ID")
     private long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name="User_Id", nullable = false)
+    @JoinColumn(nullable = false)
     private User user;
 
-    //@Column(name = "Name", nullable = false)
+    @Column(nullable = false)
     private String name;
-
-    //@Column(name = "Image")
     private String image;
-
-    //@Column(name = "Biography")
     private String biography;
-
-    //@Column(name = "Location")
     private String location;
-
-    //@Column(name = "Website")
     private String website;
-
-    // endregion
 
     public Profile() { }
 
-    public Profile(String name) {
+    public Profile(long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    // region Getters and Setter
-
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -94,6 +82,4 @@ public class Profile {
     public void setwebsite(String website) {
         this.website = website;
     }
-
-    // endregion
 }

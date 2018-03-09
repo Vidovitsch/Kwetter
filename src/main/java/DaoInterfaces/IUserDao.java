@@ -1,20 +1,19 @@
 package DaoInterfaces;
 
 import Domain.User;
-
-import java.util.Collection;
+import java.util.List;
 
 public interface IUserDao {
 
-    Collection<User> findAll();
+    List<User> findAll();
 
     User findById(long id);
 
     User findByUsername(String username);
 
-    User insertUser(User user);
+    User create(User user);
 
-    User updateUser(User user);
+    User update(User user);
 
-    boolean deleteUser(User user);
+    boolean remove(User user);
 }

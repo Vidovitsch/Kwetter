@@ -3,20 +3,18 @@ package DAO.Mock;
 import DaoInterfaces.IProfileDao;
 import Domain.Profile;
 import Domain.User;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class ProfileDaoMock implements IProfileDao {
 
-    private Collection<Profile> mockProfiles;
+    private List<Profile> mockProfiles;
 
-    public ProfileDaoMock(Collection<User> users) {
+    public ProfileDaoMock(List<User> users) {
         this.mockProfiles = createMockProfiles(users);
     }
 
-    public Collection<Profile> findAll() {
+    public List<Profile> findAll() {
         return mockProfiles;
     }
 
@@ -51,13 +49,13 @@ public class ProfileDaoMock implements IProfileDao {
         return profiles;
     }
 
-    public Profile insertProfile(Profile profile) {
+    public Profile create(Profile profile) {
         mockProfiles.add(profile);
 
         return profile;
     }
 
-    public Profile updateProfile(Profile profile) {
+    public Profile update(Profile profile) {
         Profile existingProfile = findById(profile.getId());
         if (existingProfile == null) {
             mockProfiles.add(profile);
@@ -68,14 +66,14 @@ public class ProfileDaoMock implements IProfileDao {
         return profile;
     }
 
-    public boolean deleteProfile(Profile profile) {
+    public boolean remove(Profile profile) {
         return mockProfiles.remove(profile);
     }
 
-    private ArrayList<Profile> createMockProfiles(Collection<User> users) {
+    private ArrayList<Profile> createMockProfiles(List<User> users) {
         ArrayList<Profile> profiles = new ArrayList<Profile>();
         for (User user : users) {
-            Profile dummyProfile = new Profile(user.getUsername() + " Test");
+            Profile dummyProfile = new Profile(0, user.getUsername() + " Test");
             dummyProfile.setUser(user);
             user.setProfile(dummyProfile);
             profiles.add(dummyProfile);

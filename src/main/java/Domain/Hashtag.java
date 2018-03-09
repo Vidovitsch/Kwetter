@@ -1,42 +1,31 @@
 package Domain;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 @Entity(name = "Hashtag")
-//@Table(name = "Hashtag")
 public class Hashtag {
-
-    // region Fields
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "ID")
     private long id;
 
-    //@Column(name = "Name", nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Temporal(TemporalType.TIMESTAMP)
-    //@Column(name = "LastUsedDate")
     private Date lastUsed;
 
     @ManyToMany(mappedBy = "hashtags")
-    private Collection<Kweet> kweets = new HashSet<Kweet>();
-
-    private int timesUsed;
-
-    // endregion
+    private List<Kweet> kweets = new ArrayList<Kweet>();
+    private int timesUsed = 0;
 
     public Hashtag() { }
 
-    public Hashtag(String name) {
+    public Hashtag(long id, String name) {
+        this.id = id;
         this.name = name;
     }
-
-    // region Getters and Setters
 
     public long getId() {
         return id;
@@ -62,11 +51,11 @@ public class Hashtag {
         this.lastUsed = lastUsed;
     }
 
-    public Collection<Kweet> getKweets() {
+    public List<Kweet> getKweets() {
         return kweets;
     }
 
-    public void setKweets(Collection<Kweet> kweets) {
+    public void setKweets(List<Kweet> kweets) {
         this.kweets = kweets;
     }
 
@@ -77,6 +66,4 @@ public class Hashtag {
     public void setTimesUsed(int timesUsed) {
         this.timesUsed = timesUsed;
     }
-
-    //endregion
 }

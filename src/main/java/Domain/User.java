@@ -1,71 +1,62 @@
 package Domain;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "User")
-//@Table(name = "User")
 public class User {
-
-    // region Fields
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "ID")
     private long id;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
     private Profile profile;
 
-    //@Column(name = "Username", nullable = false)
+    @Column(nullable = false)
     private String username;
 
     @ManyToMany
     //@JoinTable(name = "UserRole",
     //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
     //        inverseJoinColumns = @JoinColumn(name="Role_ID", referencedColumnName = "ID", nullable = false))
-    private Collection<Role> roles = new HashSet<Role>();
+    private List<Role> roles = new ArrayList<Role>();
 
     @ManyToMany
     //@JoinTable(name = "Following",
     //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
     //        inverseJoinColumns = @JoinColumn(name="Following_ID", referencedColumnName = "ID", nullable = false))
-    private Collection<User> following = new HashSet<User>();
+    private List<User> following = new ArrayList<User>();
 
     @ManyToMany(mappedBy = "following")
-    private Collection<User> followers = new HashSet<User>();
+    private List<User> followers = new ArrayList<User>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
-    private Collection<Kweet> kweets = new HashSet<Kweet>();
-
+    private List<Kweet> kweets = new ArrayList<Kweet>();
 
     @ManyToMany
     //@JoinTable(name = "Mention",
     //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
     //        inverseJoinColumns = @JoinColumn(name="Kweet_ID", referencedColumnName = "ID", nullable = false))
-    private Collection<Kweet> mentions = new HashSet<Kweet>();
+    private List<Kweet> mentions = new ArrayList<Kweet>();
 
-    public Collection<Kweet> getHearts() {
-        return hearts;
-    }
+    @ManyToMany(mappedBy = "hearts")
+    private List<Kweet> hearts = new ArrayList<Kweet>();
 
-    @ManyToMany
-    private Collection<Kweet> hearts = new HashSet<Kweet>();
+    public User() { }
 
-    // endregion
-
-    public User() {
-    }
-
-    public User(String username) {
+    public User(long id, String username) {
+        this.id = id;
         this.username = username;
     }
 
-    // region Getters and Setters
-
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Profile getProfile() {
@@ -84,41 +75,51 @@ public class User {
         this.username = username;
     }
 
-    public Collection<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
-    public Collection<User> getFollowing() {
+    public List<User> getFollowing() {
         return following;
     }
 
-    public void setFollowing(Collection<User> following) {
+    public void setFollowing(List<User> following) {
         this.following = following;
     }
 
-    public Collection<User> getFollowers() {
+    public List<User> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(Collection<User> followers) {
+    public void setFollowers(List<User> followers) {
         this.followers = followers;
     }
 
-    public Collection<Kweet> getKweets() {
+    public List<Kweet> getKweets() {
         return kweets;
     }
 
-    public void setKweets(Collection<Kweet> kweets) {
+    public void setKweets(List<Kweet> kweets) {
         this.kweets = kweets;
     }
 
-    public Collection<Kweet> getMentions() {
+    public List<Kweet> getMentions() {
         return mentions;
     }
 
-    // endregion
+    public void setMentions(List<Kweet> mentions) {
+        this.mentions = mentions;
+    }
+
+    public List<Kweet> getHearts() {
+        return hearts;
+    }
+
+    public void setHearts(List<Kweet> hearts) {
+        this.hearts = hearts;
+    }
 }

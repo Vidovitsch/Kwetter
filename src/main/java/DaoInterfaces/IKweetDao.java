@@ -2,27 +2,21 @@ package DaoInterfaces;
 
 import Domain.Kweet;
 import Domain.User;
-
-import java.util.Collection;
 import java.util.List;
 
 public interface IKweetDao {
 
-    Collection<Kweet> findAll();
+    List<Kweet> findAll();
 
     Kweet findById(long id);
 
-    List<Kweet> findByMessagePart(String message);
+    List<Kweet> findByTerm(String term);
 
     List<Kweet> findBySenderName(String senderName);
 
-    Kweet insertKweet(Kweet Kweet);
+    Kweet create(Kweet Kweet);
 
-    Kweet updateKweet(Kweet Kweet);
+    Kweet update(Kweet Kweet);
 
-    boolean deleteKweet(Kweet Kweet);
-
-    List<Kweet> getTimeline(User user);
-
-    List<Kweet> search(String term);
+    boolean remove(Kweet Kweet);
 }

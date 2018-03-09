@@ -4,18 +4,17 @@ import Comparator.TrendComparator;
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 import Domain.Kweet;
-
 import java.util.*;
 
 public class HashtagDaoMock implements IHashtagDao {
 
-    private Collection<Hashtag> mockHashtags;
+    private List<Hashtag> mockHashtags;
 
-    public HashtagDaoMock(Collection<Kweet> kweets) {
+    public HashtagDaoMock(List<Kweet> kweets) {
         this.mockHashtags = createMockHashtags(kweets);
     }
 
-    public Collection<Hashtag> findAll() {
+    public List<Hashtag> findAll() {
         return mockHashtags;
     }
 
@@ -37,12 +36,12 @@ public class HashtagDaoMock implements IHashtagDao {
         return null;
     }
 
-    public Hashtag insertHashtag(Hashtag hashtag) {
+    public Hashtag create(Hashtag hashtag) {
         mockHashtags.add(hashtag);
         return hashtag;
     }
 
-    public Hashtag updateHashtag(Hashtag hashtag) {
+    public Hashtag update(Hashtag hashtag) {
         Hashtag existingHashtag = findById(hashtag.getId());
         if(existingHashtag == null){
             mockHashtags.add(hashtag);
@@ -54,35 +53,15 @@ public class HashtagDaoMock implements IHashtagDao {
         return hashtag;
     }
 
-    public boolean deleteHashtag(Hashtag hashtag) {
+    public boolean remove(Hashtag hashtag) {
         return mockHashtags.remove(hashtag);
     }
 
-    public List<Hashtag> getTrend() {
-        List<Hashtag> trends = new ArrayList<Hashtag>();
-        Date weekAgo = getDateWeekAgo();
-        for (Hashtag hashtag : mockHashtags) {
-            if (hashtag.getLastUsed().after(weekAgo)) {
-                trends.add(hashtag);
-            }
-        }
-        Collections.sort(trends, new TrendComparator());
-        return trends;
-    }
-
-    private Date getDateWeekAgo() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.DATE, -30);
-
-        return cal.getTime();
-    }
-
-    private ArrayList<Hashtag> createMockHashtags(Collection<Kweet> kweets) {
+    private ArrayList<Hashtag> createMockHashtags(List<Kweet> kweets) {
         ArrayList<Hashtag> hashtags = new ArrayList<Hashtag>();
 
-        Hashtag hashtag1 = new Hashtag("Test");
-        Hashtag hashtag2 = new Hashtag("Kwetter");
+        Hashtag hashtag1 = new Hashtag(1, "Test");
+        Hashtag hashtag2 = new Hashtag(2,"Kwetter");
         hashtags.add(hashtag1);
         hashtags.add(hashtag2);
 
