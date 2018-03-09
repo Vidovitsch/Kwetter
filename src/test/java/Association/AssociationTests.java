@@ -130,16 +130,4 @@ public class AssociationTests {
             Assert.assertEquals(p.getUser(), u);
         }
     }
-    @Test
-    public void minitest(){
-        IProfileDao profileDao = new ProfileDaoMock((new UserDaoMock().findAll()));
-        for(Profile p : profileDao.findAll()){
-            p.setwebsite("Urlshizzle");
-            Profile pr = new Profile();
-            p = pr;
-            ArrayList<Profile> profiles = (ArrayList<Profile>)profileDao.findAll();
-            //profiles.set(profiles.indexOf(p), currentProfile);
-            System.out.println(profileDao.findById(p.getId()).getwebsite());
-        }
-    }
 }

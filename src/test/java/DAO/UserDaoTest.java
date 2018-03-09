@@ -68,17 +68,17 @@ public class UserDaoTest {
         }
     }
 
-    @Test
-    public void deleteUser() {
-        // Insert new user
-        User mockUser = new User((long)-1,"mockUser");
-        mockUser.setId((long)999999);
-        userDao.create(mockUser);
-
-        // Delete inserted user
-        userDao.remove(mockUser);
-
-        // Check User list contains new user
-        Assert.assertFalse("New user has been removed", userDao.findAll().contains(mockUser));
-    }
+//    @Test
+//    public void deleteUser() {
+//        // Insert new user
+//        User mockUser = new User((long)-1,"mockUser");
+//        mockUser.setId((long)999999);
+//        userDao.create(mockUser);
+//
+//        // Delete inserted user
+//        userDao.remove(mockUser);
+//
+//        // Check User list contains new user
+//        Assert.assertFalse("New user has been removed", userDao.findAll().contains(mockUser));
+//    }
 }

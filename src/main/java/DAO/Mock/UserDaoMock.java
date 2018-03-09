@@ -17,9 +17,9 @@ public class UserDaoMock implements IUserDao {
         return mockUsers;
     }
 
-    public User findById(long id) {
+    public User findById(Long id) {
         for (User u : mockUsers) {
-            if (u.getId() == id) {
+            if (u.getId().equals(id)) {
                 return u;
             }
         }
@@ -58,8 +58,7 @@ public class UserDaoMock implements IUserDao {
     private ArrayList<User> createDummyUsers() {
         ArrayList<User> users = new ArrayList<User>();
         for (int i = 0; i < 10; i++) {
-            User user = new User((long)0, "DummyUser" + i);
-            user.setId((long)i + 100);
+            User user = new User((long)i + 100, "DummyUser" + i);
             users.add(user);
         }
         connectDummyUsers(users);

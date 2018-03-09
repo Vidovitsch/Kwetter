@@ -69,16 +69,16 @@ public class KweetDaoMock implements IKweetDao{
         return mockKweets.remove(kweet);
     }
 
-    public List<Kweet> getTimeline(User user) {
-        List<Kweet> kweets = new ArrayList<Kweet>();
-        for (User following : user.getFollowing()) {
-            kweets.addAll(following.getKweets());
-        }
-        kweets.addAll(user.getKweets());
-        Collections.sort(kweets, new KweetComparator());
-
-        return kweets;
-    }
+//    public List<Kweet> getTimeline(User user) {
+//        List<Kweet> kweets = new ArrayList<Kweet>();
+//        for (User following : user.getFollowing()) {
+//            kweets.addAll(following.getKweets());
+//        }
+//        kweets.addAll(user.getKweets());
+//        Collections.sort(kweets, new KweetComparator());
+//
+//        return kweets;
+//    }
 
     private ArrayList<Kweet> createMockKweets(List<User> users) {
         ArrayList<Kweet> allKweets = new ArrayList<Kweet>();

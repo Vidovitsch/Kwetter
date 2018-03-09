@@ -25,6 +25,8 @@ public class KweetService {
     @EJB
     private IUserDao userDao;
 
+    public KweetService() { }
+
     public KweetService(IKweetDao kweetDao, IHashtagDao hashtagDao, IUserDao userDao) {
         this.kweetDao = kweetDao;
         this.hashtagDao = hashtagDao;
@@ -62,20 +64,24 @@ public class KweetService {
 
     public Kweet publish(Long userId, Kweet kweet) throws UserNotFoundException, InvalidKweetException {
         // Find user by id and set is as sender of the kweet
-        kweet.setSender(userDao.findById(userId));
-
-        validateKweet(kweet);
-
-        // Filter message on hashtags '#' and mentions '@' and add to kweet
-        addHashtags(kweet, parseNames('#', kweet.getMessage()));
-        addMentions(kweet, parseNames('@', kweet.getMessage()));
-
-        if (kweet.getId() == null) {
-            // Kweet isn't persisted. Persist new kweet
-            return kweetDao.create(kweet);
+        User user = userDao.findById(userId);
+        if (user == null) {
+            throw new UserNotFoundException();
         } else {
-            // Kweet is already persisted. Update existing kweet
-            return kweetDao.update(kweet);
+            kweet.setSender(userDao.findById(userId));
+            validateKweet(kweet);
+
+            // Filter message on hashtags '#' and mentions '@' and add to kweet
+            addHashtags(kweet, parseNames('#', kweet.getMessage()));
+            addMentions(kweet, parseNames('@', kweet.getMessage()));
+
+            if (kweet.getId() == null) {
+                // Kweet isn't persisted. Persist new kweet
+                return kweetDao.create(kweet);
+            } else {
+                // Kweet is already persisted. Update existing kweet
+                return kweetDao.update(kweet);
+            }
         }
     }
 
@@ -144,7 +150,7 @@ public class KweetService {
         // HashSet to remove duplicates
         Collection<String> names = new HashSet<>();
         while (matcher.find()) {
-            names.add(matcher.group(1));
+            names.add(matcher.group(1).substring(1));
         }
 
         return new ArrayList<>(names);
@@ -184,9 +190,9 @@ public class KweetService {
     }
 
     private void validateKweet(Kweet kweet) throws InvalidKweetException, IllegalArgumentException {
-        if (kweet.getMessage() == null || kweet.getMessage().equals("") || kweet.getMessage().length() > 140) {
+        if (kweet.getMessage() == null || kweet.getMessage().equals("")) {
             throw new InvalidKweetException("Message required");
-        } else if (kweet.getMessage().length() <= 140) {
+        } else if (kweet.getMessage().length() > 140) {
             throw new InvalidKweetException("Message should have a maximum of 140 characters");
         }
     }

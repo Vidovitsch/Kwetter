@@ -7,7 +7,7 @@ public interface IUserDao {
 
     List<User> findAll();
 
-    User findById(long id);
+    User findById(Long id);
 
     User findByUsername(String username);
 
