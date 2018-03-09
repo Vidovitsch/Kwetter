@@ -31,6 +31,8 @@ public class KweetService {
         this.userDao = userDao;
     }
 
+    public KweetService(){};
+
     public IKweetDao getKweetDao() {
         return kweetDao;
     }
