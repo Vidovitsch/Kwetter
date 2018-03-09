@@ -24,4 +24,7 @@ public class HomePageUserView {
         this.image = image;
         this.username = username;
     }
+    public HomePageUserView() {
+
+    }
 }

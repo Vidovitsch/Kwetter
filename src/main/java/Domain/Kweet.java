@@ -33,12 +33,14 @@ public class Kweet {
     private Date publicationDate;
 
     public Kweet() {
+        this.publicationDate = new Date();
     }
 
     public Kweet(Long id, User sender, String message) {
         this.id = id;
         this.sender = sender;
         this.message = message;
+        this.publicationDate = new Date();
     }
 
     public Kweet(Long id, User sender, List<User> mentions, String message) {
@@ -46,6 +48,7 @@ public class Kweet {
         this.sender = sender;
         this.mentions = mentions;
         this.message = message;
+        this.publicationDate = new Date();
     }
 
     public Long getId() {

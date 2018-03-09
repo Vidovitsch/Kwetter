@@ -4,6 +4,8 @@ import DAO.Mock.KweetDaoMock;
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IKweetDao;
 import Service.KweeterDataService;
+import ViewModels.HomePageUserView;
+import ViewModels.KweeterData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.json.JSONException;
@@ -11,6 +13,7 @@ import org.json.JSONObject;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 
@@ -31,15 +34,19 @@ public class KweeterDataResource {
         this.kweetDao = kweetDao;
     }
 
+    public KweeterDataResource(){
+    }
+
     @GET
     @Path("{username}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a KweetMessage", notes = "Return some kweet as JSON to the client")
-    public JsonObject getKweeterData(@PathParam("username") String username) throws JSONException {
+    public HomePageUserView getKweeterData(@PathParam("username") String username) {
         KweeterDataService kweeterDataService = new KweeterDataService();
-        JSONObject json = new JSONObject();
-        json.put(username, kweeterDataService.getKweeterData(username));
-        return (JsonObject) json;
+        KweeterData k = kweeterDataService.getKweeterData(username);
+        HomePageUserView h = new HomePageUserView();
+        h.setUsername("test");
+        return h;
     }
 
     /**
