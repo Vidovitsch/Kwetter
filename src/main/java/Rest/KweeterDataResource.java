@@ -3,23 +3,20 @@ package Rest;
 import DAO.Mock.KweetDaoMock;
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IKweetDao;
-import Domain.Kweet;
+import Service.KweeterDataService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-import javax.json.Json;
+import org.json.JSONException;
+import org.json.JSONObject;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
-@Path("kweet")
-@Api(value = "Kweet resource")
-public class KweetResource {
+
+@Path("kweeterdata")
+@Api(value = "Kweeterdata resource")
+public class KweeterDataResource {
 
     @Context
     private UriInfo context;
@@ -30,27 +27,19 @@ public class KweetResource {
     /**
      * Creates a new instance of KweetResource
      */
-    public KweetResource(IKweetDao kweetDao) {
+    public KweeterDataResource(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
     }
 
-    /**
-     * Get all kweets
-     *
-     * @return all kweets
-     */
     @GET
-    @Produces("application/json")
-    public Collection<Kweet> getKweets() {
-        return kweetDao.findAll();
-    }
-
-    @GET
-    @Path("{kweetid}")
+    @Path("{username}")
     @Produces("application/json")
     @ApiOperation(value = "Retrieve a KweetMessage", notes = "Return some kweet as JSON to the client")
-    public JsonObject getKweet(@PathParam("kweetid") int kweetid) {
-        return Json.createObjectBuilder().add(Integer.toString(kweetid), kweetDao.findById(kweetid).getMessage()).build();
+    public JsonObject getKweeterData(@PathParam("username") String username) throws JSONException {
+        KweeterDataService kweeterDataService = new KweeterDataService();
+        JSONObject json = new JSONObject();
+        json.put(username, kweeterDataService.getKweeterData(username));
+        return (JsonObject) json;
     }
 
     /**
@@ -65,5 +54,3 @@ public class KweetResource {
     }
 
 }
-
-
