@@ -30,6 +30,11 @@ public class KweetDaoImpl implements IKweetDao {
         return null;
     }
 
+    @Override
+    public List<Kweet> create(List<Kweet> kweets) {
+        return null;
+    }
+
     public Kweet update(Kweet Kweet) {
         return null;
     }

@@ -25,6 +25,11 @@ public class RoleDaoImpl implements IRoleDao {
         return null;
     }
 
+    @Override
+    public List<Role> create(List<Role> roles) {
+        return null;
+    }
+
     public Role update(Role role) {
         return null;
     }

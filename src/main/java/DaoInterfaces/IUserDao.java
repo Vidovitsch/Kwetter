@@ -13,6 +13,8 @@ public interface IUserDao {
 
     User create(User user);
 
+    List<User> create(List<User> users);
+
     User update(User user);
 
     boolean remove(User user);

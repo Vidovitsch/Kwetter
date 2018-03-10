@@ -32,7 +32,7 @@ public class KweetDaoMock implements IKweetDao {
     }
 
     public List<Kweet> findByTerm(String message) {
-        List<Kweet> foundKweets = new ArrayList<Kweet>();
+        List<Kweet> foundKweets = new ArrayList<>();
         for(Kweet k : mockKweets){
             if (k.getMessage().toLowerCase().contains(message.toLowerCase())){
                 foundKweets.add(k);
@@ -42,9 +42,9 @@ public class KweetDaoMock implements IKweetDao {
     }
 
     public List<Kweet> findBySenderName(String senderName) {
-        List<Kweet> foundKweets = new ArrayList<Kweet>();
+        List<Kweet> foundKweets = new ArrayList<>();
         for(Kweet k : mockKweets){
-            if(k.getSender().getUsername().equals(senderName)){
+            if(k.getSender() != null && k.getSender().getUsername().equals(senderName)){
                 foundKweets.add(k);
             }
         }
@@ -55,6 +55,12 @@ public class KweetDaoMock implements IKweetDao {
         MockFactory.setNextId(kweet, mockKweets);
         mockKweets.add(kweet);
         return kweet;
+    }
+
+    public List<Kweet> create(List<Kweet> kweets) {
+        MockFactory.setNextIds(kweets, mockKweets);
+        mockKweets.addAll(kweets);
+        return kweets;
     }
 
     public Kweet update(Kweet kweet) {

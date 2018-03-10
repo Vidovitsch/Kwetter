@@ -25,6 +25,11 @@ public class HastagDaoImpl implements IHashtagDao {
         return null;
     }
 
+    @Override
+    public List<Hashtag> create(List<Hashtag> hashtags) {
+        return null;
+    }
+
     public Hashtag update(Hashtag Hashtag) {
         return null;
     }

@@ -13,6 +13,8 @@ public interface IRoleDao {
 
     Role create(Role role);
 
+    List<Role> create(List<Role> roles);
+
     Role update(Role role);
 
     boolean remove(Role role);

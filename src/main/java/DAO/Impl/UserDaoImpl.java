@@ -25,6 +25,11 @@ public class UserDaoImpl implements IUserDao {
         return null;
     }
 
+    @Override
+    public List<User> create(List<User> users) {
+        return null;
+    }
+
     public User update(User user) {
         return null;
     }

@@ -46,6 +46,12 @@ public class UserDaoMock implements IUserDao {
         return user;
     }
 
+    public List<User> create(List<User> users) {
+        MockFactory.setNextIds(users, mockUsers);
+        mockUsers.addAll(users);
+        return users;
+    }
+
     public User update(User user) {
         User u = findById(user.getId());
         if(u == null) {

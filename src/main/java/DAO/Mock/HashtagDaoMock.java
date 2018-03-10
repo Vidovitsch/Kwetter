@@ -46,6 +46,12 @@ public class HashtagDaoMock implements IHashtagDao {
         return hashtag;
     }
 
+    public List<Hashtag> create(List<Hashtag> hashtags) {
+        MockFactory.setNextIds(hashtags, mockHashtags);
+        mockHashtags.addAll(hashtags);
+        return hashtags;
+    }
+
     public Hashtag update(Hashtag hashtag) {
         Hashtag existingHashtag = findById(hashtag.getId());
         if(existingHashtag == null){

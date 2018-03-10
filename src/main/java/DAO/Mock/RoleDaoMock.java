@@ -48,6 +48,12 @@ public class RoleDaoMock implements IRoleDao {
         return role;
     }
 
+    public List<Role> create(List<Role> roles) {
+        MockFactory.setNextIds(roles, mockRoles);
+        mockRoles.addAll(roles);
+        return roles;
+    }
+
     public Role update(Role role) {
         Role existingRole = findById(role.getId());
         if (existingRole == null) {

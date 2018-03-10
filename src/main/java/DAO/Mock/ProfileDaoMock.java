@@ -1,6 +1,7 @@
 package DAO.Mock;
 
 import DaoInterfaces.IProfileDao;
+import Domain.Role;
 import Util.MockFactory;
 import Domain.Profile;
 import Domain.User;
@@ -58,6 +59,12 @@ public class ProfileDaoMock implements IProfileDao {
         MockFactory.setNextId(profile, mockProfiles);
         mockProfiles.add(profile);
         return profile;
+    }
+
+    public List<Profile> create(List<Profile> profiles) {
+        MockFactory.setNextIds(profiles, mockProfiles);
+        mockProfiles.addAll(profiles);
+        return profiles;
     }
 
     public Profile update(Profile profile) {

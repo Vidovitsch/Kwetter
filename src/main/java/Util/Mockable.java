@@ -1,4 +1,4 @@
-package Domain;
+package Util;
 
 public interface Mockable {
 

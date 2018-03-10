@@ -14,7 +14,6 @@ import ViewModels.KweeterData;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 public class KweeterDataService {
     IUserDao userDao = new UserDaoMock();

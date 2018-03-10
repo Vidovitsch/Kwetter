@@ -11,9 +11,11 @@ public interface IHashtagDao {
 
     Hashtag findByName(String name);
 
-    Hashtag create(Hashtag Hashtag);
+    Hashtag create(Hashtag hashtag);
 
-    Hashtag update(Hashtag Hashtag);
+    List<Hashtag> create(List<Hashtag> hashtags);
 
-    boolean remove(Hashtag Hashtag);
+    Hashtag update(Hashtag hashtag);
+
+    boolean remove(Hashtag hashtag);
 }

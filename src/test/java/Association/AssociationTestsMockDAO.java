@@ -41,6 +41,7 @@ public class AssociationTestsMockDAO {
     private static IProfileDao profileDao;
     private static IRoleDao roleDao;
     private static IUserDao userDao;
+
     @BeforeClass
     public static void Init() {
         userDao = new UserDaoMock();

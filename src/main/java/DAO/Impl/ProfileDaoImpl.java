@@ -30,6 +30,11 @@ public class ProfileDaoImpl implements IProfileDao {
         return null;
     }
 
+    @Override
+    public List<Profile> create(List<Profile> profiles) {
+        return null;
+    }
+
     public Profile update(Profile Profile) {
         return null;
     }
