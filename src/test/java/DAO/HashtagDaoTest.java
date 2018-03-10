@@ -3,6 +3,7 @@ package DAO;
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Hashtag;
+import Domain.MockFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -41,9 +42,10 @@ public class HashtagDaoTest {
         hashtagDao.remove(mockHashtag);
     }
 
-    // Gekke test?
     @Test
     public void findByIdTest() {
+        MockFactory.createMocks(Hashtag.class, 2);
+
         // Insert new hashtag
         Hashtag mockHashtag = hashtagDao.create(new Hashtag());
 

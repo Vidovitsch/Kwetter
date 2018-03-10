@@ -2,6 +2,7 @@ package DAO.Mock;
 
 import DaoInterfaces.IUserDao;
 import Domain.MockFactory;
+import Domain.Mockable;
 import Domain.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,12 @@ public class UserDaoMock implements IUserDao {
 
     private List<User> mockUsers;
 
+    @SuppressWarnings("unchecked")
     public UserDaoMock() {
-        mockUsers = createDummyUsers();
+        mockUsers = (List<User>)MockFactory.createMocks(User.class, 10);
+        MockFactory.setNewIds(mockUsers);
+
+        connectDummyUsers(mockUsers);
     }
 
     public List<User> findAll() {
@@ -57,16 +62,6 @@ public class UserDaoMock implements IUserDao {
         return mockUsers.remove(user);
     }
 
-    private ArrayList<User> createDummyUsers() {
-        ArrayList<User> users = new ArrayList<User>();
-        for (int i = 0; i < 10; i++) {
-            User user = new User((long)i + 100, "DummyUser" + i);
-            users.add(user);
-        }
-        connectDummyUsers(users);
-        return users;
-    }
-
     private void connectDummyUsers(List<User> users) {
         for (User dummyUser : users) {
             List<User> others = new ArrayList<User>(users);
@@ -75,5 +70,13 @@ public class UserDaoMock implements IUserDao {
             dummyUser.setFollowers(others);
             dummyUser.setFollowing(others);
         }
+    }
+
+    private List<User> convert(List<Mockable> mocks) {
+        List<User> users = new ArrayList<>();
+        for (Mockable mock : mocks) {
+            users.add((User)mock);
+        }
+        return users;
     }
 }
