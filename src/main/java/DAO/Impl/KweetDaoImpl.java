@@ -14,7 +14,7 @@ public class KweetDaoImpl implements IKweetDao {
         return null;
     }
 
-    public Kweet findById(long id) {
+    public Kweet findById(Long id) {
         return null;
     }
 

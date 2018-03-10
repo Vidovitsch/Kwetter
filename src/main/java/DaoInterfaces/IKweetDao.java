@@ -8,7 +8,7 @@ public interface IKweetDao {
 
     List<Kweet> findAll();
 
-    Kweet findById(long id);
+    Kweet findById(Long id);
 
     List<Kweet> findByTerm(String term);
 

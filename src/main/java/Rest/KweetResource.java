@@ -49,8 +49,8 @@ public class KweetResource {
     @Path("{kweetid}")
     @Produces("application/json")
     @ApiOperation(value = "Retrieve a KweetMessage", notes = "Return some kweet as JSON to the client")
-    public JsonObject getKweet(@PathParam("kweetid") int kweetid) {
-        return Json.createObjectBuilder().add(Integer.toString(kweetid), kweetDao.findById(kweetid).getMessage()).build();
+    public JsonObject getKweet(@PathParam("kweetid") long kweetid) {
+        return Json.createObjectBuilder().add(Long.toString(kweetid), kweetDao.findById(kweetid).getMessage()).build();
     }
 
     /**

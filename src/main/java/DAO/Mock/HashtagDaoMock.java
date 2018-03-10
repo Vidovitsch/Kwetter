@@ -1,9 +1,10 @@
 package DAO.Mock;
 
-import Comparator.TrendComparator;
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 import Domain.Kweet;
+import Domain.MockFactory;
+
 import java.util.*;
 
 public class HashtagDaoMock implements IHashtagDao {
@@ -18,9 +19,9 @@ public class HashtagDaoMock implements IHashtagDao {
         return mockHashtags;
     }
 
-    public Hashtag findById(long id) {
+    public Hashtag findById(Long id) {
         for(Hashtag h : mockHashtags){
-            if(h.getId() == id) {
+            if(h.getId().equals(id)) {
                 return h;
             }
         }
@@ -37,6 +38,7 @@ public class HashtagDaoMock implements IHashtagDao {
     }
 
     public Hashtag create(Hashtag hashtag) {
+        MockFactory.setNextId(hashtag, mockHashtags);
         mockHashtags.add(hashtag);
         return hashtag;
     }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Role")
-public class Role {
+public class Role implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

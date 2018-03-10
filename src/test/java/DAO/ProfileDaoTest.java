@@ -42,15 +42,11 @@ public class ProfileDaoTest {
 
     @Test
     public void findByIdTest() {
-        long id = 999999;
-
         // Insert new profile
-        Profile mockProfile = new Profile((long)-1,"mockProfile");
-        mockProfile.setId(id);
-        profileDao.create(mockProfile);
+        Profile mockProfile =  profileDao.create(new Profile());
 
         // Check fetched profile
-        Profile fetchedProfile = profileDao.findById(id);
+        Profile fetchedProfile = profileDao.findById(mockProfile.getId());
         Assert.assertEquals("Fetched Profile is the same as the mocked one", mockProfile, fetchedProfile);
 
         // Remove mock profile (cleanup)

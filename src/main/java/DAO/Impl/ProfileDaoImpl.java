@@ -14,7 +14,7 @@ public class ProfileDaoImpl implements IProfileDao {
         return null;
     }
 
-    public Profile findById(long id) {
+    public Profile findById(Long id) {
         return null;
     }
 

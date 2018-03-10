@@ -4,10 +4,11 @@ import Comparator.KweetComparator;
 import DaoInterfaces.IKweetDao;
 import Domain.Hashtag;
 import Domain.Kweet;
+import Domain.MockFactory;
 import Domain.User;
 import java.util.*;
 
-public class KweetDaoMock implements IKweetDao{
+public class KweetDaoMock implements IKweetDao {
 
     private List<Kweet> mockKweets;
 
@@ -19,9 +20,9 @@ public class KweetDaoMock implements IKweetDao{
         return mockKweets;
     }
 
-    public Kweet findById(long id) {
+    public Kweet findById(Long id) {
         for(Kweet k : mockKweets){
-            if(k.getId() == id){
+            if(k.getId().equals(id)){
                 return k;
             }
         }
@@ -49,6 +50,7 @@ public class KweetDaoMock implements IKweetDao{
     }
 
     public Kweet create(Kweet kweet) {
+        MockFactory.setNextId(kweet, mockKweets);
         mockKweets.add(kweet);
         return kweet;
     }

@@ -43,15 +43,11 @@ public class KweetDaoTest {
 
     @Test
     public void findByIdTest() {
-        long id = 999999;
+        // Insert new kweet
+        Kweet mockKweet = kweetDao.create(new Kweet());
 
-        // Insert new hashtag
-        Kweet mockKweet = new Kweet();
-        mockKweet.setId(id);
-        kweetDao.create(mockKweet);
-
-        // Check fetched hashtag
-        Kweet fetchedKweet = kweetDao.findById(id);
+        // Check fetched kweet
+        Kweet fetchedKweet = kweetDao.findById(mockKweet.getId());
         Assert.assertEquals("Fetched hashtag is the same as the mocked one", mockKweet, fetchedKweet);
 
         // Remove mock kweet (cleanup)
@@ -63,22 +59,15 @@ public class KweetDaoTest {
         String message1 = "The quick brown fox jumps over the lazy dog";
         String message2 = "I'm a brown fox";
 
-        // Create mock kweets
-        Kweet mockKweet1 = new Kweet((long)-1,new User(), message1);
-        Kweet mockKweet2 = new Kweet((long)-1,new User(), message2);
-        Kweet mockKweet3 = new Kweet((long)-1,new User(), "mockMessage1");
-
-        // Insert new hashtags
-        kweetDao.create(mockKweet1);
-        kweetDao.create(mockKweet2);
-        kweetDao.create(mockKweet3);
+        // Insert new kweets
+        Kweet mockKweet1 =  kweetDao.create(new Kweet(null, null, message1));
+        Kweet mockKweet2 = kweetDao.create(new Kweet(null, null, message2));
+        Kweet mockKweet3 = kweetDao.create(new Kweet(null, null, "mockMessage1"));
 
         // Check for message
         List<Kweet> fetchedKweets = kweetDao.findByTerm("brown fox");
-        Assert.assertEquals("First message has been found with message part 'brown fox'",
-                mockKweet1, fetchedKweets.get(0));
-        Assert.assertEquals("Second message has been found with message part 'brown fox'",
-                mockKweet2, fetchedKweets.get(1));
+        Assert.assertTrue(fetchedKweets.contains(mockKweet1));
+        Assert.assertTrue(fetchedKweets.contains(mockKweet2));
         Assert.assertFalse("The fetched kweets won't contain mockKweet3", fetchedKweets.contains(mockKweet3));
 
         // Remove mock kweets (cleanup)
@@ -91,22 +80,15 @@ public class KweetDaoTest {
     public void findBySenderNameTest() {
         String name = "Hank";
 
-        // Create mock kweets
-        Kweet mockKweet1 = new Kweet((long)-1, new User((long)-1,name), "mockMessage1");
-        Kweet mockKweet2 = new Kweet((long)-1, new User((long)-1,name), "mockMessage2");
-        Kweet mockKweet3 = new Kweet((long)-1, new User((long)-1,"Jack"), "mockMessage3");
-
-        // Insert new hashtags
-        kweetDao.create(mockKweet1);
-        kweetDao.create(mockKweet2);
-        kweetDao.create(mockKweet3);
+        // Insert new kweets
+        Kweet mockKweet1 =  kweetDao.create(new Kweet(null, new User((long)-1,name), "message1"));
+        Kweet mockKweet2 = kweetDao.create(new Kweet(null, new User((long)-1,name), "message2"));
+        Kweet mockKweet3 = kweetDao.create(new Kweet(null, new User((long)-1,"Jack"), "mockMessage1"));
 
         // Check for message
         List<Kweet> fetchedKweets = kweetDao.findBySenderName(name);
-        Assert.assertEquals("First message has been found with 'Hank' as sender",
-                mockKweet1, fetchedKweets.get(0));
-        Assert.assertEquals("Second message has been found with 'Hank' as sender",
-                mockKweet2, fetchedKweets.get(1));
+        Assert.assertTrue(fetchedKweets.contains(mockKweet1));
+        Assert.assertTrue(fetchedKweets.contains(mockKweet2));
         Assert.assertFalse("The fetched kweets won't contain mockKweet3", fetchedKweets.contains(mockKweet3));
 
         // Remove mock kweets (cleanup)

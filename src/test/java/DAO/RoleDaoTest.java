@@ -41,15 +41,11 @@ public class RoleDaoTest {
 
     @Test
     public void findByIdTest() {
-        long id = 999999;
-
         // Insert new role
-        Role mockRole = new Role((long)-1,"mockRole");
-        mockRole.setId(id);
-        roleDao.create(mockRole);
+        Role mockRole = roleDao.create(new Role());
 
         // Check fetched role
-        Role fetchedRole = roleDao.findById(id);
+        Role fetchedRole = roleDao.findById(mockRole.getId());
         Assert.assertEquals("Fetched role is the same as the mocked one", mockRole, fetchedRole);
 
         // Remove mock role (cleanup)

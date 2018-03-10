@@ -1,6 +1,7 @@
 package DAO.Mock;
 
 import DaoInterfaces.IRoleDao;
+import Domain.MockFactory;
 import Domain.Role;
 import Domain.User;
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ public class RoleDaoMock implements IRoleDao {
         return mockRoles;
     }
 
-    public Role findById(long id) {
+    public Role findById(Long id) {
         for (Role role : mockRoles) {
-            if (role.getId() == id) {
+            if (role.getId().equals(id)) {
                 return role;
             }
         }
@@ -39,8 +40,8 @@ public class RoleDaoMock implements IRoleDao {
     }
 
     public Role create(Role role) {
+        MockFactory.setNextId(role, mockRoles);
         mockRoles.add(role);
-
         return role;
     }
 

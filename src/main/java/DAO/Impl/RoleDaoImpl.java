@@ -13,7 +13,7 @@ public class RoleDaoImpl implements IRoleDao {
         return null;
     }
 
-    public Role findById(long id) {
+    public Role findById(Long id) {
         return null;
     }
 

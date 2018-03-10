@@ -1,6 +1,7 @@
 package DAO.Mock;
 
 import DaoInterfaces.IUserDao;
+import Domain.MockFactory;
 import Domain.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class UserDaoMock implements IUserDao {
     }
 
     public User create(User user) {
+        MockFactory.setNextId(user, mockUsers);
         mockUsers.add(user);
         return user;
     }

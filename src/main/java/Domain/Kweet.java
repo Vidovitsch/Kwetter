@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity(name = "Kweet")
-public class Kweet {
+public class Kweet implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -8,7 +8,7 @@ public interface IProfileDao {
 
     List<Profile> findAll();
 
-    Profile findById(long id);
+    Profile findById(Long id);
 
     Profile findByUser(User user);
 

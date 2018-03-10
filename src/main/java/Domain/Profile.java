@@ -3,7 +3,7 @@ package Domain;
 import javax.persistence.*;
 
 @Entity(name = "Post")
-public class Profile {
+public class Profile implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -13,7 +13,7 @@ public class HastagDaoImpl implements IHashtagDao {
         return null;
     }
 
-    public Hashtag findById(long id) {
+    public Hashtag findById(Long id) {
         return null;
     }
 

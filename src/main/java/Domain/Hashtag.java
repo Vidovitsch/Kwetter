@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity(name = "Hashtag")
-public class Hashtag {
+public class Hashtag implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

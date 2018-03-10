@@ -7,7 +7,7 @@ public interface IHashtagDao {
 
     List<Hashtag> findAll();
 
-    Hashtag findById(long id);
+    Hashtag findById(Long id);
 
     Hashtag findByName(String name);
 

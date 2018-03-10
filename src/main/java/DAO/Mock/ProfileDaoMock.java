@@ -1,6 +1,7 @@
 package DAO.Mock;
 
 import DaoInterfaces.IProfileDao;
+import Domain.MockFactory;
 import Domain.Profile;
 import Domain.User;
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ public class ProfileDaoMock implements IProfileDao {
         return mockProfiles;
     }
 
-    public Profile findById(long id) {
+    public Profile findById(Long id) {
         for (Profile profile : mockProfiles) {
-            if (profile.getId() == id) {
+            if (profile.getId().equals(id)) {
                 return profile;
             }
         }
@@ -50,8 +51,8 @@ public class ProfileDaoMock implements IProfileDao {
     }
 
     public Profile create(Profile profile) {
+        MockFactory.setNextId(profile, mockProfiles);
         mockProfiles.add(profile);
-
         return profile;
     }
 
