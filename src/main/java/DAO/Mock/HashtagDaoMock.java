@@ -2,6 +2,7 @@ package DAO.Mock;
 
 import DaoInterfaces.IHashtagDao;
 import Domain.*;
+import Util.MockFactory;
 
 import java.util.*;
 
@@ -11,7 +12,7 @@ public class HashtagDaoMock implements IHashtagDao {
 
     @SuppressWarnings("unchecked")
     public HashtagDaoMock(List<Kweet> kweets) {
-        mockHashtags = (List<Hashtag>)MockFactory.createMocks(Hashtag.class, 2);
+        mockHashtags = (List<Hashtag>) MockFactory.createMocks(Hashtag.class, 2);
         MockFactory.setNewIds(mockHashtags);
 
         createDummyHashtags(mockHashtags, kweets);

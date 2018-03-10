@@ -1,5 +1,7 @@
 package Domain;
 
+import Util.Mockable;
+
 import javax.persistence.*;
 
 @Entity(name = "Post")

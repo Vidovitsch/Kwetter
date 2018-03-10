@@ -1,7 +1,7 @@
 package DAO.Mock;
 
 import DaoInterfaces.IUserDao;
-import Domain.MockFactory;
+import Util.MockFactory;
 import Domain.User;
 import java.util.ArrayList;
 import java.util.List;

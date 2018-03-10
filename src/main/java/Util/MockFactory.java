@@ -1,4 +1,4 @@
-package Domain;
+package Util;
 
 import Comparator.MockComparator;
 

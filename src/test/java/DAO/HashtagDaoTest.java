@@ -3,7 +3,7 @@ package DAO;
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Hashtag;
-import Domain.MockFactory;
+import Util.MockFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -2,6 +2,7 @@ package DAO.Mock;
 
 import DaoInterfaces.IKweetDao;
 import Domain.*;
+import Util.MockFactory;
 
 import java.util.*;
 
@@ -11,7 +12,7 @@ public class KweetDaoMock implements IKweetDao {
 
     @SuppressWarnings("unchecked")
     public KweetDaoMock(List<User> users) {
-        mockKweets = (List<Kweet>)MockFactory.createMocks(Kweet.class, 90);
+        mockKweets = (List<Kweet>) MockFactory.createMocks(Kweet.class, 90);
         MockFactory.setNewIds(mockKweets);
 
         createDummyKweets(mockKweets, users);
