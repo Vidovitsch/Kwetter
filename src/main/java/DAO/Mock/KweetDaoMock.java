@@ -1,19 +1,20 @@
 package DAO.Mock;
 
-import Comparator.KweetComparator;
 import DaoInterfaces.IKweetDao;
-import Domain.Hashtag;
-import Domain.Kweet;
-import Domain.MockFactory;
-import Domain.User;
+import Domain.*;
+
 import java.util.*;
 
 public class KweetDaoMock implements IKweetDao {
 
     private List<Kweet> mockKweets;
 
+    @SuppressWarnings("unchecked")
     public KweetDaoMock(List<User> users) {
-        this.mockKweets = createMockKweets(users);
+        mockKweets = (List<Kweet>)MockFactory.createMocks(Kweet.class, 90);
+        MockFactory.setNewIds(mockKweets);
+
+        createDummyKweets(mockKweets, users);
     }
 
     public List<Kweet> findAll() {
@@ -71,26 +72,17 @@ public class KweetDaoMock implements IKweetDao {
         return mockKweets.remove(kweet);
     }
 
-    private ArrayList<Kweet> createMockKweets(List<User> users) {
-        ArrayList<Kweet> allKweets = new ArrayList<Kweet>();
-
-        for (User user : users) {
-            List<User> otherUsers = new ArrayList<User>(users);
-            otherUsers.remove(user);
-
-            List<Kweet> kweets = new ArrayList<Kweet>();
-            for (User otherUser : otherUsers) {
-                List<User> mentions = new ArrayList<User>();
-                mentions.add(otherUser);
-
-                Kweet kweet = new Kweet((long)0, user, mentions, user.getUsername() + otherUser.getUsername());
-                kweets.add(kweet);
-                allKweets.add(kweet);
+    // For mock purposes
+    private void createDummyKweets(List<Kweet> kweets, List<User> users) {
+        for (int i = 0; i < users.size(); i++) {
+            List<Kweet> kweetsToSend = kweets.subList(i * 9, i * 9 + 9);
+            List<User> mentions = new ArrayList<>(users);
+            mentions.remove(users.get(i));
+            users.get(i).setKweets(kweetsToSend);
+            for (Kweet kweet : kweetsToSend) {
+                kweet.setSender(users.get(i));
+                kweet.setMentions(mentions);
             }
-
-            user.setKweets(kweets);
         }
-
-        return allKweets;
     }
 }

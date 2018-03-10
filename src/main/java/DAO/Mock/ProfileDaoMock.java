@@ -11,8 +11,12 @@ public class ProfileDaoMock implements IProfileDao {
 
     private List<Profile> mockProfiles;
 
+    @SuppressWarnings("unchecked")
     public ProfileDaoMock(List<User> users) {
-        this.mockProfiles = createMockProfiles(users);
+        mockProfiles = (List<Profile>)MockFactory.createMocks(Profile.class, 10);
+        MockFactory.setNewIds(mockProfiles);
+
+        connectDummyProfiles(mockProfiles, users);
     }
 
     public List<Profile> findAll() {
@@ -71,16 +75,13 @@ public class ProfileDaoMock implements IProfileDao {
         return mockProfiles.remove(profile);
     }
 
-    private ArrayList<Profile> createMockProfiles(List<User> users) {
-        ArrayList<Profile> profiles = new ArrayList<Profile>();
-        for (User user : users) {
-            Profile dummyProfile = new Profile((long)0, user.getUsername() + " Test");
-            dummyProfile.setUser(user);
-            dummyProfile.setImage("fakeimage");
-            user.setProfile(dummyProfile);
-            profiles.add(dummyProfile);
+    // For mock purposes
+    private void connectDummyProfiles(List<Profile> profiles, List<User> users) {
+        if (users.size() >= profiles.size()) {
+            for (int i = 0; i < profiles.size(); i++) {
+                profiles.get(i).setUser(users.get(i));
+                users.get(i).setProfile(profiles.get(i));
+            }
         }
-
-        return profiles;
     }
 }

@@ -1,7 +1,6 @@
 package Comparator;
 
 import Domain.Mockable;
-
 import java.util.Comparator;
 
 public class MockComparator implements Comparator<Mockable> {

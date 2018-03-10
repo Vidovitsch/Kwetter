@@ -4,15 +4,18 @@ import DaoInterfaces.IRoleDao;
 import Domain.MockFactory;
 import Domain.Role;
 import Domain.User;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RoleDaoMock implements IRoleDao {
 
     private List<Role> mockRoles;
 
+    @SuppressWarnings("unchecked")
     public RoleDaoMock(List<User> users) {
-        this.mockRoles = createMockRoles(users);
+        mockRoles = (List<Role>)MockFactory.createMocks(Role.class, 10);
+        MockFactory.setNewIds(mockRoles);
+
+        connectDummyRoles(mockRoles, users);
     }
 
     public List<Role> findAll() {
@@ -60,20 +63,13 @@ public class RoleDaoMock implements IRoleDao {
         return mockRoles.remove(role);
     }
 
-    private ArrayList<Role> createMockRoles(List<User> users) {
-        ArrayList<Role> roles = new ArrayList<Role>();
-
-        Role role1 = new Role((long)0, "Kweeter");
-        Role role2 = new Role((long)0, "Moderator");
-        roles.add(role1);
-        roles.add(role2);
-
+    // For mock purposes
+    private void connectDummyRoles(List<Role> roles, List<User> users) {
         for (User user : users) {
             user.setRoles(roles);
         }
-        role1.setUsers(users);
-        role2.setUsers(users);
-
-        return roles;
+        for (Role role : roles) {
+            role.setUsers(users);
+        }
     }
 }

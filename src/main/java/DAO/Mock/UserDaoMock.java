@@ -2,7 +2,6 @@ package DAO.Mock;
 
 import DaoInterfaces.IUserDao;
 import Domain.MockFactory;
-import Domain.Mockable;
 import Domain.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,21 +61,14 @@ public class UserDaoMock implements IUserDao {
         return mockUsers.remove(user);
     }
 
+    // For mock purposes
     private void connectDummyUsers(List<User> users) {
         for (User dummyUser : users) {
-            List<User> others = new ArrayList<User>(users);
+            List<User> others = new ArrayList<>(users);
             others.remove(dummyUser);
 
             dummyUser.setFollowers(others);
             dummyUser.setFollowing(others);
         }
-    }
-
-    private List<User> convert(List<Mockable> mocks) {
-        List<User> users = new ArrayList<>();
-        for (Mockable mock : mocks) {
-            users.add((User)mock);
-        }
-        return users;
     }
 }

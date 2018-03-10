@@ -20,22 +20,11 @@ public class MockFactory {
     public static List<? extends Mockable> createMocks(Class<? extends Mockable> mockable, int numberOfMocks) {
         try {
             List<Mockable> mocks = generateList(mockable, numberOfMocks);
-
             for (Mockable mock : mocks) {
                 Field[] fields = mock.getClass().getDeclaredFields();
                 for (Field field : fields) {
-                    boolean isAccessible = field.isAccessible();
-                    field.setAccessible(true);
-
-                    if (field.getType().isAssignableFrom(String.class)) {
-                        field.set(mock, generateRandomString(16));
-                    } else if (field.getType().isAssignableFrom(Date.class)) {
-                        field.set(mock, new Date());
-                    } else if (field.getType().isAssignableFrom(int.class)) {
-                        field.set(mock, getRandomNumber(999));
-                    }
-
-                    field.setAccessible(isAccessible);
+                    // Set some random stuff
+                    randomizeFieldValue(mock, field);
                 }
             }
             return mocks;
@@ -45,23 +34,23 @@ public class MockFactory {
         return new ArrayList<>();
     }
 
-    public static void setNextId(Mockable mockable, List<? extends Mockable> mocks) {
-        if (mocks.size() == 0) {
-            mockable.setId((long)0);
+    public static void setNextId(Mockable newMock, List<? extends Mockable> existingMocks) {
+        if (existingMocks.size() == 0) {
+            newMock.setId((long)0);
         } else {
-            Collections.sort(mocks, new MockComparator());
-            mockable.setId(mocks.get(0).getId() + 1);
+            Collections.sort(existingMocks, new MockComparator());
+            newMock.setId(existingMocks.get(0).getId() + 1);
         }
     }
 
-    public static void setNextIds(List<? extends Mockable> mockables, List<? extends Mockable> mocks) {
+    public static void setNextIds(List<? extends Mockable> newMocks, List<? extends Mockable> existingMocks) {
         Long startPoint = (long)0;
-        if (mocks.size() != 0) {
-            Collections.sort(mocks, new MockComparator());
-            startPoint = mocks.get(0).getId() + 1;
+        if (existingMocks != null && existingMocks.size() != 0) {
+            Collections.sort(existingMocks, new MockComparator());
+            startPoint = existingMocks.get(0).getId() + 1;
         }
-        for (int i = 0; i < mockables.size(); i++) {
-            mockables.get(i).setId(startPoint + i);
+        for (int i = 0; i < newMocks.size(); i++) {
+            newMocks.get(i).setId(startPoint + i);
         }
     }
 
@@ -69,6 +58,22 @@ public class MockFactory {
         for (int i = 0; i < mockables.size(); i++) {
             mockables.get(i).setId((long)i);
         }
+    }
+
+    private static void randomizeFieldValue(Mockable mock, Field field) throws IllegalAccessException {
+        boolean isAccessible = field.isAccessible();
+        field.setAccessible(true);
+
+        // Set some random stuff
+        if (field.getType().isAssignableFrom(String.class)) {
+            field.set(mock, generateRandomString(16));
+        } else if (field.getType().isAssignableFrom(Date.class)) {
+            field.set(mock, new Date());
+        } else if (field.getType().isAssignableFrom(int.class)) {
+            field.set(mock, getRandomNumber(999));
+        }
+
+        field.setAccessible(isAccessible);
     }
 
     private static List<Mockable> generateList(Class<? extends Mockable> mockable, int numberOfMocks)

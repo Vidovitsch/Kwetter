@@ -1,9 +1,7 @@
 package DAO.Mock;
 
 import DaoInterfaces.IHashtagDao;
-import Domain.Hashtag;
-import Domain.Kweet;
-import Domain.MockFactory;
+import Domain.*;
 
 import java.util.*;
 
@@ -11,8 +9,12 @@ public class HashtagDaoMock implements IHashtagDao {
 
     private List<Hashtag> mockHashtags;
 
+    @SuppressWarnings("unchecked")
     public HashtagDaoMock(List<Kweet> kweets) {
-        this.mockHashtags = createMockHashtags(kweets);
+        mockHashtags = (List<Hashtag>)MockFactory.createMocks(Hashtag.class, 2);
+        MockFactory.setNewIds(mockHashtags);
+
+        createDummyHashtags(mockHashtags, kweets);
     }
 
     public List<Hashtag> findAll() {
@@ -59,20 +61,13 @@ public class HashtagDaoMock implements IHashtagDao {
         return mockHashtags.remove(hashtag);
     }
 
-    private ArrayList<Hashtag> createMockHashtags(List<Kweet> kweets) {
-        ArrayList<Hashtag> hashtags = new ArrayList<Hashtag>();
-
-        Hashtag hashtag1 = new Hashtag((long)1, "Test");
-        Hashtag hashtag2 = new Hashtag((long)2,"Kwetter");
-        hashtags.add(hashtag1);
-        hashtags.add(hashtag2);
-
+    // For mock purposes
+    private void createDummyHashtags(List<Hashtag> hashtags, List<Kweet> kweets) {
         for (Kweet kweet : kweets) {
             kweet.setHashtags(hashtags);
         }
-        hashtag1.setKweets(kweets);
-        hashtag2.setKweets(kweets);
-
-        return hashtags;
+        for (Hashtag hashtag : hashtags) {
+            hashtag.setKweets(kweets);
+        }
     }
 }
