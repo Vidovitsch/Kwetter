@@ -16,7 +16,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
-
+import Exception.UserNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -48,10 +48,14 @@ public class HomepageDataResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a KweetMessage", notes = "Return some kweet as JSON to the client")
     public KweeterData getKweeterDataByUsername(@PathParam("username") String username) {
-        KweeterDataService kweeterDataService = new KweeterDataService();
-        KweeterData k = kweeterDataService.getKweeterData(username);
+        try {
+            KweeterDataService kweeterDataService = new KweeterDataService();
+            KweeterData k = kweeterDataService.getKweeterData(username);
 
-        return k;
+            return k;
+        } catch (UserNotFoundException ex) {
+            return null; // Even aanpassen
+        }
     }
 
 
@@ -60,9 +64,14 @@ public class HomepageDataResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve Kweeters Data for the homepage", notes = "ID has to be a valid user-id")
     public KweeterData getKweeterDataByID(@PathParam("userid") long userID) {
-        KweeterDataService kweeterDataService = new KweeterDataService();
-        KweeterData k = kweeterDataService.getKweeterData(userID);
-        return k;
+        try {
+            KweeterDataService kweeterDataService = new KweeterDataService();
+            KweeterData k = kweeterDataService.getKweeterData(userID);
+
+            return k;
+        } catch (UserNotFoundException ex) {
+            return null; // Even aanpassen
+        }
     }
 
 

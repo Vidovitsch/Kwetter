@@ -1,8 +1,6 @@
 package Service;
 
 import Comparator.KweetComparator;
-import DAO.Mock.KweetDaoMock;
-import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IKweetDao;
 import DaoInterfaces.IUserDao;
 import Domain.Kweet;
@@ -11,14 +9,20 @@ import Domain.User;
 import ViewModels.UserImageView;
 import ViewModels.KweeterData;
 import Exception.*;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Stateless
 public class KweeterDataService {
 
-    private IUserDao userDao = new UserDaoMock();
-    private IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
+    @EJB
+    private IUserDao userDao;
+
+    @EJB
+    private IKweetDao kweetDao;
 
     public KweeterDataService() { }
 

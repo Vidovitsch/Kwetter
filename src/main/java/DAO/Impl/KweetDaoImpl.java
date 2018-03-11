@@ -7,7 +7,6 @@ import Domain.User;
 import javax.ejb.Stateless;
 import java.util.List;
 
-@Stateless
 public class KweetDaoImpl implements IKweetDao {
 
     public List<Kweet> findAll() {
