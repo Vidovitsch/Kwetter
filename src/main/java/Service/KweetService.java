@@ -9,7 +9,7 @@ import Domain.User;
 import Exception.*;
 import Qualifier.Mock;
 
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;

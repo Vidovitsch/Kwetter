@@ -11,6 +11,8 @@ import java.util.List;
 @Default
 public class KweetDaoImpl implements IKweetDao {
 
+    public KweetDaoImpl() { }
+
     @Override
     public List<Kweet> findAll() {
         return null;

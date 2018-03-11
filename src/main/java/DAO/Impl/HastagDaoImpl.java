@@ -10,6 +10,8 @@ import java.util.List;
 @Default
 public class HastagDaoImpl implements IHashtagDao {
 
+    public HastagDaoImpl() { }
+
     @Override
     public List<Hashtag> findAll() {
         return null;

@@ -11,6 +11,8 @@ import java.util.List;
 @Default
 public class ProfileDaoImpl implements IProfileDao {
 
+    public ProfileDaoImpl() { }
+
     @Override
     public List<Profile> findAll() {
         return null;

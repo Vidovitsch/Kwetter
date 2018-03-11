@@ -7,7 +7,7 @@ import Exception.*;
 import Qualifier.Mock;
 import org.apache.commons.validator.UrlValidator;
 
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 

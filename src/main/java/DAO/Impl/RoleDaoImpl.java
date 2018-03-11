@@ -10,6 +10,8 @@ import java.util.List;
 @Default
 public class RoleDaoImpl implements IRoleDao {
 
+    public RoleDaoImpl() { }
+
     @Override
     public List<Role> findAll() {
         return null;

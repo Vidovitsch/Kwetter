@@ -4,7 +4,6 @@ import DaoInterfaces.IRoleDao;
 import Qualifier.Mock;
 import Util.MockFactory;
 import Domain.Role;
-import Domain.User;
 import Util.MockService;
 
 import java.util.List;

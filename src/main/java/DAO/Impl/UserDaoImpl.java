@@ -10,6 +10,8 @@ import java.util.List;
 @Default
 public class UserDaoImpl implements IUserDao {
 
+    public UserDaoImpl() { }
+
     @Override
     public List<User> findAll() {
         return null;

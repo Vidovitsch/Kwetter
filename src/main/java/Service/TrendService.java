@@ -5,7 +5,7 @@ import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 import Qualifier.Mock;
 
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;

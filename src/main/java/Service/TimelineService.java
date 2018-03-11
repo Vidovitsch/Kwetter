@@ -8,7 +8,7 @@ import Qualifier.Mock;
 import ViewModels.TimelineItem;
 import ViewModels.UserUsernameView;
 
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
