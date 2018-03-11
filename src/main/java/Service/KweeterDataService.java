@@ -41,8 +41,8 @@ public class KweeterDataService {
             setKweetData(data, username);
 
             // Set following and followers
-            data.setFollowing(getHomePageUserViews(user.getFollowing()));
-            data.setFollowers(getHomePageUserViews(user.getFollowers()));
+            data.setFollowing(getUserImageViews(user.getFollowing()));
+            data.setFollowers(getUserImageViews(user.getFollowers()));
 
             return data;
         }
@@ -66,17 +66,17 @@ public class KweeterDataService {
         }
     }
 
-    private List<HomePageUserView> getHomePageUserViews(List<User> users) {
-        List<HomePageUserView> followers = new ArrayList<>();
+    private List<UserImageView> getUserImageViews(List<User> users) {
+        List<UserImageView> followers = new ArrayList<>();
         if (users != null) {
             for (User u : users) {
                 Profile profile = u.getProfile();
                 if (profile != null) {
                     // Add user profile data
-                    followers.add(new HomePageUserView(profile.getName(), profile.getImage()));
+                    followers.add(new UserImageView(profile.getName(), profile.getImage()));
                 } else {
                     // User has no profile. Place an empty one
-                    followers.add(new HomePageUserView(null, null));
+                    followers.add(new UserImageView(null, null));
                 }
             }
         }
