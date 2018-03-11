@@ -1,8 +1,6 @@
 package Rest;
 
-import Service.KweeterDataService;
 import com.github.phillipkruger.apiee.ApieeService;
-import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.core.Application;
 import java.util.Collections;
@@ -27,7 +25,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider.class);
 
         //instead let's do it manually:
-        resources.add(KweeterDataResource.class);
+        resources.add(HomepageDataResource.class);
         resources.add(ApieeService.class);
         //==> we could also choose packages, see below getProperties()
 
