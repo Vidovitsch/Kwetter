@@ -1,36 +1,31 @@
 package Service;
 
 import Comparator.KweetComparator;
+import DAO.Mock.KweetDaoMock;
+import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IKweetDao;
 import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.Profile;
 import Domain.User;
-import Qualifier.Mock;
 import ViewModels.UserImageView;
 import ViewModels.KweeterData;
 import Exception.*;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.faces.bean.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Named(value = "kweeterDataService")
-@RequestScoped
 public class KweeterDataService {
 
-    @Inject @Mock
     private IUserDao userDao;
 
-    @Inject
-    @Mock
     private IKweetDao kweetDao;
 
-    public KweeterDataService() { }
+    public KweeterDataService() {
+        this.userDao = new UserDaoMock();
+        this.kweetDao = new KweetDaoMock(userDao.findAll());
+    }
 
     public KweeterDataService(IUserDao userDao, IKweetDao kweetDao) {
         this.userDao = userDao;

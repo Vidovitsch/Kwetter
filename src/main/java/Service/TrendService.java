@@ -3,22 +3,27 @@ package Service;
 import Comparator.TrendComparator;
 import DAO.Mock.HashtagDaoMock;
 import DAO.Mock.KweetDaoMock;
-import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IHashtagDao;
 import DaoInterfaces.IKweetDao;
-import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Hashtag;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
+
 import java.util.*;
 
 public class TrendService {
 
+    private IKweetDao kweetDao;
+
     private IHashtagDao hashtagDao;
 
-    public TrendService() { }
+    private IUserDao userDao;
+
+    public TrendService() {
+        this.userDao = new UserDaoMock();
+        this.kweetDao = new KweetDaoMock(userDao.findAll());
+        this.hashtagDao = new HashtagDaoMock(kweetDao.findAll());
+    }
 
     public TrendService(IHashtagDao hashtagDao) {
         this.hashtagDao = hashtagDao;

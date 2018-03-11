@@ -2,12 +2,10 @@ package DAO.Mock;
 
 import DaoInterfaces.IHashtagDao;
 import Domain.*;
-import Qualifier.Mock;
 import Util.MockFactory;
 
 import java.util.*;
 
-@Mock
 public class HashtagDaoMock implements IHashtagDao {
 
     private List<Hashtag> mockHashtags;

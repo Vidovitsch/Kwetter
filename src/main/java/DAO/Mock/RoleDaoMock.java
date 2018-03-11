@@ -10,6 +10,8 @@ public class RoleDaoMock implements IRoleDao {
 
     private List<Role> mockRoles;
 
+    public RoleDaoMock() { }
+
     @SuppressWarnings("unchecked")
     public RoleDaoMock(List<User> users) {
         mockRoles = (List<Role>)MockFactory.createMocks(Role.class, 10);
