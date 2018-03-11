@@ -1,8 +1,7 @@
 package Rest.Config;
 
-import Rest.Resources.HomepageDataResource;
-import Rest.Resources.ProfilePageDataResource;
-import Rest.Resources.UserResource;
+import Domain.Hashtag;
+import Rest.Resources.*;
 import com.github.phillipkruger.apiee.ApieeService;
 
 import javax.ws.rs.core.Application;
@@ -27,6 +26,8 @@ public class ApplicationConfig extends Application {
         resources.add(HomepageDataResource.class);
         resources.add(ProfilePageDataResource.class);
         resources.add(UserResource.class);
+        resources.add(KweetResource.class);
+        resources.add(HashtagResource.class);
         resources.add(ApieeService.class);
         //==> we could also choose packages, see below getProperties()
 
