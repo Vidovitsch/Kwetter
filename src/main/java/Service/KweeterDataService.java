@@ -1,73 +1,90 @@
 package Service;
 
-import DAO.Mock.KweetDaoMock;
-import DAO.Mock.ProfileDaoMock;
-import DAO.Mock.UserDaoMock;
+import Comparator.KweetComparator;
 import DaoInterfaces.IKweetDao;
-import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.Profile;
 import Domain.User;
 import ViewModels.UserImageView;
 import ViewModels.KweeterData;
-
+import Exception.*;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
+@Stateless
 public class KweeterDataService {
-    IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
-    IProfileDao profileDao = new ProfileDaoMock(userDao.findAll());
 
-    public KweeterDataService() {
+    @EJB
+    private IUserDao userDao;
+
+    @EJB
+    private IKweetDao kweetDao;
+
+    public KweeterDataService() { }
+
+    public KweeterDataService(IUserDao userDao, IKweetDao kweetDao) {
+        this.userDao = userDao;
+        this.kweetDao = kweetDao;
     }
 
-    public KweeterData getKweeterData(long userID) {
-        return getKweeterData(userDao.findById(userID).getUsername());
+    public KweeterData getKweeterData(Long userId) throws UserNotFoundException {
+        return getKweeterData(userDao.findById(userId).getUsername());
     }
 
-    public KweeterData getKweeterData(String username) {
-        KweeterData data = new KweeterData();
-        Collection<Kweet> kweets = kweetDao.findBySenderName(username);
-        data.setTotalKweets(kweets.size());
-        if (data.getTotalKweets() != 0) {
-            Kweet lastKweet = null;
-            for (Kweet k : kweets) {
-                if (lastKweet == null) {
-                    lastKweet = k;
-                } else if (lastKweet.getPublicationDate().before(k.getPublicationDate())) {
-                    lastKweet = k;
-                }
-            }
+    public KweeterData getKweeterData(String username) throws UserNotFoundException {
+        User user = userDao.findByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException();
+        } else {
+            KweeterData data = new KweeterData();
+
+            setKweetData(data, username);
+
+            // Set following and followers
+            data.setFollowing(getUserImageViews(user.getFollowing()));
+            data.setFollowers(getUserImageViews(user.getFollowers()));
+
+            return data;
+        }
+    }
+
+    private void setKweetData(KweeterData data, String username) {
+        List<Kweet> sentKweets = kweetDao.findBySenderName(username);
+
+        // Set total of sent kweets
+        data.setTotalKweets(sentKweets.size());
+
+        // Set laset kweet message and date
+        if (sentKweets.size() > 0) {
+
+            // Sort to get the last kweet on first index
+            Collections.sort(sentKweets, new KweetComparator());
+
+            Kweet lastKweet = sentKweets.get(0);
             data.setLastKweetMessage(lastKweet.getMessage());
             data.setLastKweetDate(lastKweet.getPublicationDate());
         }
+    }
 
-        User user = userDao.findByUsername(username);
-
-        ArrayList<UserImageView> following = new ArrayList<>();
-        if(user != null) {
-            Collection<User> followingUsers = user.getFollowing();
-            if (followingUsers != null) {
-                for (User u : followingUsers) {
-                    Profile p = u.getProfile();
-                    following.add(new UserImageView(p.getName(), p.getImage()));
+    private List<UserImageView> getUserImageViews(List<User> users) {
+        List<UserImageView> followers = new ArrayList<>();
+        if (users != null) {
+            for (User u : users) {
+                Profile profile = u.getProfile();
+                if (profile != null) {
+                    // Add user profile data
+                    followers.add(new UserImageView(profile.getName(), profile.getImage()));
+                } else {
+                    // User has no profile. Place an empty one
+                    followers.add(new UserImageView(null, null));
                 }
-                data.setFollowing(following);
-            }
-
-            ArrayList<UserImageView> followers = new ArrayList<>();
-            Collection<User> followerUsers = user.getFollowers();
-            if (followerUsers != null) {
-                for (User u : followerUsers) {
-                    Profile p = u.getProfile();
-                    followers.add(new UserImageView(p.getName(), p.getImage()));
-                }
-                data.setFollowers(followers);
             }
         }
-
-        return data;
+        
+        return followers;
     }
 }

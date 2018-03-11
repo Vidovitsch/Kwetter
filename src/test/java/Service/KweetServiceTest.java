@@ -29,8 +29,8 @@ public class KweetServiceTest {
 
     @BeforeClass
     public static void setUp() {
-        service = new KweetService(kweetDao, hashtagDao, userDao);
-        emptyService = new KweetService();
+        //service = new KweetService(kweetDao, hashtagDao, userDao);
+        service = new KweetService();
     }
 
     @After

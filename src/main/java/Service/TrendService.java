@@ -17,12 +17,8 @@ import java.util.*;
 @Stateless
 public class TrendService {
 
-    IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
-    IProfileDao profileDao = new ProfileDaoMock(userDao.findAll());
     @EJB
-    private IHashtagDao hashtagDao = new HashtagDaoMock(kweetDao.findAll());
-
+    private IHashtagDao hashtagDao;
 
     public TrendService() { }
 

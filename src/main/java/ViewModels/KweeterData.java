@@ -2,13 +2,15 @@ package ViewModels;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public class KweeterData {
-    Date lastKweetDate;
-    String lastKweetMessage;
-    int totalKweets;
-    Collection<UserImageView> following;
-    Collection<UserImageView> followers;
+
+    private Date lastKweetDate;
+    private String lastKweetMessage;
+    private int totalKweets;
+    private List<UserImageView> following;
+    private List<UserImageView> followers;
 
     public Date getLastKweetDate() {
         return lastKweetDate;
@@ -34,24 +36,19 @@ public class KweeterData {
         this.totalKweets = totalKweets;
     }
 
-    public Collection<UserImageView> getFollowing() {
+    public List<UserImageView> getFollowing() {
         return following;
     }
 
-    public void setFollowing(Collection<UserImageView> following) {
+    public void setFollowing(List<UserImageView> following) {
         this.following = following;
     }
 
-    public Collection<UserImageView> getFollowers() {
+    public List<UserImageView> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(Collection<UserImageView> followers) {
+    public void setFollowers(List<UserImageView> followers) {
         this.followers = followers;
     }
-
-    public KweeterData() {
-    }
-
-
 }

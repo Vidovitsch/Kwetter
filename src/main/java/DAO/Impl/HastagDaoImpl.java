@@ -4,9 +4,9 @@ import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Default;
 import java.util.List;
 
-@Stateless
 public class HastagDaoImpl implements IHashtagDao {
 
     public List<Hashtag> findAll() {

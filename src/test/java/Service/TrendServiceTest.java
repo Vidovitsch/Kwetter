@@ -88,7 +88,7 @@ public class TrendServiceTest {
         Assert.assertEquals("#kitty is most used", 1, h3.getTimesUsed());
         Assert.assertEquals("#kitty is most used", h3.getName(), names.get(2));
         Assert.assertEquals("#coding is used ten times, but is too old", 10, oldTag.getTimesUsed());
-        Assert.assertFalse("#coding is used once, but is too old", names.contains(oldTag.getName()));
+        Assert.assertFalse("#coding is used ten times, but is too old", names.contains(oldTag.getName()));
     }
 
     private Date getDateWeekAgo() {

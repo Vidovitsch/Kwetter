@@ -7,22 +7,25 @@ import Domain.Hashtag;
 import Domain.Kweet;
 import Domain.User;
 import Exception.*;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import Qualifier.Mock;
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Stateless
+@Named(value = "kweetService")
+@RequestScoped
 public class KweetService {
 
-    @EJB
+    @Inject @Mock
     private IKweetDao kweetDao;
 
-    @EJB
+    @Inject @Mock
     private IHashtagDao hashtagDao;
 
-    @EJB
+    @Inject @Mock
     private IUserDao userDao;
 
     public KweetService() { }
