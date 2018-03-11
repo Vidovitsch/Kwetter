@@ -20,10 +20,6 @@ public class ApplicationConfig extends Application {
 
         System.out.println("REST configuration starting: getClasses()");
 
-        //features
-        //this will register Jackson JSON providers
-        resources.add(JacksonFeature.class);
-        //we could also use this:
         resources.add(com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider.class);
 
         //instead let's do it manually:
