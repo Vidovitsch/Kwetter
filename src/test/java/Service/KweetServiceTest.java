@@ -11,6 +11,7 @@ import Domain.Kweet;
 import Domain.User;
 import Exception.*;
 import Util.MockFactory;
+import Util.MockService;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -24,17 +25,15 @@ public class KweetServiceTest {
 
     private static KweetService service;
 
-    // For the 100%!
-    private static KweetService emptyService;
-
     @BeforeClass
     public static void setUp() {
-        //service = new KweetService(kweetDao, hashtagDao, userDao);
         service = new KweetService();
     }
 
-    @After
-    public void tearDown() { }
+    @AfterClass
+    public static void tearDown() {
+        MockService.resetMockData();
+    }
 
     @Test
     public void publishNewKweet() throws UserNotFoundException, InvalidKweetException {
@@ -281,7 +280,7 @@ public class KweetServiceTest {
         // Setup
         String message = "A message: #test1 #kweet1";
         User kwet = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Leet").get(0));
-        User rick = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Rick").get(0));
+        User rick = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Rick1").get(0));
         Kweet kweet1 = (Kweet) MockFactory.createMocks(Kweet.class, 1).get(0);
         Kweet kweet2 = (Kweet) MockFactory.createMocks(Kweet.class, 1, "message", message).get(0);
         Kweet kweet3 = (Kweet) MockFactory.createMocks(Kweet.class, 1, "message", "Somemessage").get(0);

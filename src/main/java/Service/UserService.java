@@ -1,26 +1,27 @@
 package Service;
 
-import DAO.Mock.KweetDaoMock;
 import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
-import DaoInterfaces.IKweetDao;
 import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
 import ViewModels.OtherUserView;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.print.attribute.standard.MediaSize;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
 
-    IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock();
-    IProfileDao profileDao = new ProfileDaoMock();
+    private IUserDao userDao;
+
+    private IProfileDao profileDao;
+
+    public UserService() {
+        // Hardcode mock instances (replace by @Mock)
+        this.userDao = new UserDaoMock();
+        this.profileDao = new ProfileDaoMock();
+    }
 
     public boolean createProfile(Profile profile) {
         if (profile.getName().equals("") || profile.getName() == null || profile.getUser() == null) {

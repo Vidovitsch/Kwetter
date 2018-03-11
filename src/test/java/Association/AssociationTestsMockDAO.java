@@ -3,6 +3,8 @@ package Association;
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.*;
+import Util.MockService;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -51,9 +53,9 @@ public class AssociationTestsMockDAO {
         hashtagDao = new HashtagDaoMock();
     }
 
-    @Test
-    public void someTest() {
-        // To Do
+    @AfterClass
+    public static void tearDown() {
+        MockService.resetMockData();
     }
 
     @Test

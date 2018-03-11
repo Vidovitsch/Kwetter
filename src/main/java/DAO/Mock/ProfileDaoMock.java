@@ -5,16 +5,19 @@ import Qualifier.Mock;
 import Util.MockFactory;
 import Domain.Profile;
 import Domain.User;
+import Util.MockService;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Mock
 public class ProfileDaoMock implements IProfileDao {
 
-    // Singleton
-    private static List<Profile> mockProfiles;
+    private List<Profile> mockProfiles;
 
-    public ProfileDaoMock() { }
+    public ProfileDaoMock() {
+        mockProfiles = MockService.getInstance().getProfiles();
+    }
 
     @Override
     public List<Profile> findAll() {

@@ -10,10 +10,8 @@ import Domain.Hashtag;
 import Domain.Kweet;
 import Domain.User;
 import Util.MockFactory;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import Util.MockService;
+import org.junit.*;
 import Exception.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,22 +26,20 @@ public class TrendServiceTest {
     private static TrendService service;
     private static KweetService kweetService;
 
-    // For the 100%!
-    private static TrendService emptyService;
-
     @BeforeClass
     public static void setUp() {
-        service = new TrendService(hashtagDao);
-        kweetService = new KweetService(kweetDao, hashtagDao, userDao);
-        emptyService = new TrendService();
+        service = new TrendService();
+        kweetService = new KweetService();
     }
 
-    @After
-    public void tearDown() { }
+    @AfterClass
+    public static void tearDown() {
+        MockService.resetMockData();
+    }
 
     @Test
     public void getTrend() throws UserNotFoundException, InvalidKweetException {
-        // Clear list
+        // This test needs a full reset of hashtags
         hashtagDao.findAll().clear();
 
         // Setup

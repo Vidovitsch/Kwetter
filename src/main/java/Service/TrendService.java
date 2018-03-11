@@ -2,31 +2,18 @@ package Service;
 
 import Comparator.TrendComparator;
 import DAO.Mock.HashtagDaoMock;
-import DAO.Mock.KweetDaoMock;
-import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IHashtagDao;
-import DaoInterfaces.IKweetDao;
-import DaoInterfaces.IUserDao;
 import Domain.Hashtag;
 
 import java.util.*;
 
 public class TrendService {
 
-    private IKweetDao kweetDao;
-
     private IHashtagDao hashtagDao;
 
-    private IUserDao userDao;
-
     public TrendService() {
-        this.userDao = new UserDaoMock();
-        this.kweetDao = new KweetDaoMock();
+        // Hardcode mock instances (replace by @Mock)
         this.hashtagDao = new HashtagDaoMock();
-    }
-
-    public TrendService(IHashtagDao hashtagDao) {
-        this.hashtagDao = hashtagDao;
     }
 
     /**

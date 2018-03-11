@@ -4,16 +4,18 @@ import DaoInterfaces.IHashtagDao;
 import Domain.*;
 import Qualifier.Mock;
 import Util.MockFactory;
+import Util.MockService;
 
 import java.util.*;
 
 @Mock
 public class HashtagDaoMock implements IHashtagDao {
 
-    // Singleton
-    private static List<Hashtag> mockHashtags;
+    private List<Hashtag> mockHashtags;
 
-    public HashtagDaoMock() { }
+    public HashtagDaoMock() {
+        mockHashtags = MockService.getInstance().getHashtags();
+    }
 
     @Override
     public List<Hashtag> findAll() {
@@ -22,7 +24,7 @@ public class HashtagDaoMock implements IHashtagDao {
 
     @Override
     public Hashtag findById(Long id) {
-        for(Hashtag h : mockHashtags){
+        for(Hashtag h : mockHashtags) {
             if(h.getId().equals(id)) {
                 return h;
             }
@@ -58,7 +60,7 @@ public class HashtagDaoMock implements IHashtagDao {
     @Override
     public Hashtag update(Hashtag hashtag) {
         Hashtag existingHashtag = findById(hashtag.getId());
-        if(existingHashtag == null){
+        if(existingHashtag == null) {
             mockHashtags.add(hashtag);
         }
         else{

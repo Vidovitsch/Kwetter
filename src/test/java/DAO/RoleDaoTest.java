@@ -3,6 +3,8 @@ package DAO;
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Role;
+import Util.MockService;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,12 +14,15 @@ import java.util.List;
 public class RoleDaoTest {
 
     private static IRoleDao roleDao;
-    private static IUserDao userDao;
 
     @BeforeClass
     public static void Init() {
-        userDao = new UserDaoMock();
         roleDao = new RoleDaoMock();
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        MockService.resetMockData();
     }
 
     @Test

@@ -8,15 +8,16 @@ import Domain.Profile;
 import Exception.*;
 import org.apache.commons.validator.UrlValidator;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-
 public class ProfileService {
 
-    IUserDao userDao = new UserDaoMock();
-    IProfileDao profileDao = new ProfileDaoMock();
+    private IUserDao userDao;
+
+    private IProfileDao profileDao;
 
     public ProfileService() {
+        // Hardcode mock instances (replace by @Mock)
+        this.userDao = new UserDaoMock();
+        this.profileDao = new ProfileDaoMock();
     }
 
     public Profile CreateProfile(Profile p, String username) throws InvalidProfileException {

@@ -4,6 +4,8 @@ import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Hashtag;
 import Util.MockFactory;
+import Util.MockService;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,14 +13,16 @@ import java.util.*;
 
 public class HashtagDaoTest {
 
-
     private static IHashtagDao hashtagDao;
 
     @BeforeClass
     public static void Init() {
-        IUserDao userDao = new UserDaoMock();
-        IKweetDao kweetDao = new KweetDaoMock();
         hashtagDao = new HashtagDaoMock();
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        MockService.resetMockData();
     }
 
     @Test

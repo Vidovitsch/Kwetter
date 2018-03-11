@@ -5,6 +5,8 @@ import DaoInterfaces.*;
 import Domain.Kweet;
 import Domain.User;
 import Util.MockFactory;
+import Util.MockService;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,8 +18,12 @@ public class KweetDaoTest {
 
     @BeforeClass
     public static void Init() {
-        IUserDao userDao = new UserDaoMock();
         kweetDao = new KweetDaoMock();
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        MockService.resetMockData();
     }
 
     @Test

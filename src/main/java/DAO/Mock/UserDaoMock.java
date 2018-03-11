@@ -4,16 +4,19 @@ import DaoInterfaces.IUserDao;
 import Qualifier.Mock;
 import Util.MockFactory;
 import Domain.User;
+import Util.MockService;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Mock
 public class UserDaoMock implements IUserDao {
 
-    // Singleton
-    private static List<User> mockUsers;
+    private List<User> mockUsers;
 
-    public UserDaoMock() { }
+    public UserDaoMock() {
+        mockUsers = MockService.getInstance().getUsers();
+    }
 
     @Override
     public List<User> findAll() {

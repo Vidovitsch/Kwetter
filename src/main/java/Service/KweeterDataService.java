@@ -19,16 +19,13 @@ import java.util.List;
 public class KweeterDataService {
 
     private IUserDao userDao;
+
     private IKweetDao kweetDao;
 
     public KweeterDataService() {
+        // Hardcode mock instances (replace by @Mock)
         this.userDao = new UserDaoMock();
         this.kweetDao = new KweetDaoMock();
-    }
-
-    public KweeterDataService(IUserDao userDao, IKweetDao kweetDao) {
-        this.userDao = userDao;
-        this.kweetDao = kweetDao;
     }
 
     public KweeterData getKweeterData(Long userId) throws UserNotFoundException {

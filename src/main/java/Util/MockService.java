@@ -43,6 +43,11 @@ public class MockService {
         return hashtags;
     }
 
+    public static void resetMockData() {
+        setMockData(MockService.getInstance());
+    }
+
+    // Don't change order!!!
     private static void setMockData(MockService instance) {
         instance.setMockUsers();
         instance.setMockKweets();

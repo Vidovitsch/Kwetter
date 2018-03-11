@@ -24,15 +24,10 @@ public class KweetService {
     private IUserDao userDao;
 
     public KweetService() {
+        // Hardcode mock instances (replace by @Mock)
         this.userDao = new UserDaoMock();
         this.kweetDao = new KweetDaoMock();
         this.hashtagDao = new HashtagDaoMock();
-    }
-
-    public KweetService(IKweetDao kweetDao, IHashtagDao hashtagDao, IUserDao userDao) {
-        this.kweetDao = kweetDao;
-        this.hashtagDao = hashtagDao;
-        this.userDao = userDao;
     }
 
     /**

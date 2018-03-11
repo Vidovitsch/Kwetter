@@ -1,10 +1,8 @@
 package Service;
 
 import DAO.Mock.KweetDaoMock;
-import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IKweetDao;
-import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.User;
@@ -17,11 +15,14 @@ import java.util.TreeSet;
 
 public class TimelineService {
 
-    IUserDao userDao;
-    IKweetDao kweetDao;
-    IProfileDao profileDao;
+    private IUserDao userDao;
+
+    private IKweetDao kweetDao;
 
     public TimelineService() {
+        // Hardcode mock instances (replace by @Mock)
+        this.userDao = new UserDaoMock();
+        this.kweetDao = new KweetDaoMock();
     }
 
     public TreeSet<TimelineItem> GenerateTimeLine(long userid) {

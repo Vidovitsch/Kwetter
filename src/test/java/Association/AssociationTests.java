@@ -1,13 +1,12 @@
 package Association;
 
-import DAO.Mock.ProfileDaoMock;
-import DAO.Mock.UserDaoMock;
-import DaoInterfaces.IProfileDao;
 import Domain.*;
+import Util.MockService;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -45,9 +44,9 @@ public class AssociationTests {
         dummyData = new DummyData();
     }
 
-    @Test
-    public void someTest() {
-        // To Do
+    @AfterClass
+    public static void tearDown() {
+        MockService.resetMockData();
     }
 
     @Test

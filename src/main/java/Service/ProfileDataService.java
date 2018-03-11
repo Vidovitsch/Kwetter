@@ -1,10 +1,6 @@
 package Service;
 
-import DAO.Mock.KweetDaoMock;
-import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
-import DaoInterfaces.IKweetDao;
-import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
@@ -13,9 +9,12 @@ import ViewModels.UserTotalsView;
 
 public class ProfileDataService {
 
-    IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock();
-    IProfileDao profileDao = new ProfileDaoMock();
+    private IUserDao userDao;
+
+    public ProfileDataService() {
+        // Hardcode mock instances (replace by @Mock)
+        this.userDao = new UserDaoMock();
+    }
 
     public ProfileDataView GetProfileData(long userid){
         Profile p = userDao.findById(userid).getProfile();
