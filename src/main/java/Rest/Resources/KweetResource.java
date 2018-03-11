@@ -25,7 +25,7 @@ public class KweetResource {
     @Path("/last/{amount}/byuserid/{userid}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users most recent kweets, based on the given amount", notes = "User id needs to be valid and kweets have to be present")
-    public Set<TimelineItem> getMostRecentKweetsByID(@PathParam("userid") long userid, @PathParam("userid") int amount) {
+    public Set<TimelineItem> getMostRecentKweetsByID(@PathParam("userid") long userid, @PathParam("amount") int amount) {
         TimelineService timelineService = new TimelineService();
         return timelineService.MostRecentKweets(userid, amount);
     }
