@@ -33,22 +33,6 @@ public class KweetService {
         this.userDao = userDao;
     }
 
-    public IKweetDao getKweetDao() {
-        return kweetDao;
-    }
-
-    public void setKweetDao(IKweetDao kweetDao) {
-        this.kweetDao = kweetDao;
-    }
-
-    public void setHashtagDao(IHashtagDao hashtagDao) {
-        this.hashtagDao = hashtagDao;
-    }
-
-    public void setUserDao(IUserDao userDao) {
-        this.userDao = userDao;
-    }
-
     /**
      * To Do
      *
@@ -62,12 +46,18 @@ public class KweetService {
 
     public Kweet publish(Long userId, Kweet kweet) throws UserNotFoundException, InvalidKweetException {
         // Find user by id and set is as sender of the kweet
-        User user = userDao.findById(userId);
-        if (user == null) {
+        User sender = userDao.findById(userId);
+        if (sender == null) {
             throw new UserNotFoundException();
         } else {
-            kweet.setSender(userDao.findById(userId));
             validateKweet(kweet);
+
+            kweet.setSender(sender);
+
+            // Make sure the sender knows of kweet
+            if (!sender.getKweets().contains(kweet)) {
+                sender.getKweets().add(kweet);
+            }
 
             // Filter message on hashtags '#' and mentions '@' and add to kweet
             addHashtags(kweet, parseNames('#', kweet.getMessage()));
@@ -90,7 +80,8 @@ public class KweetService {
      * @return
      */
     public boolean delete(Long kweetId) {
-        return kweetDao.remove(kweetDao.findById(kweetId));
+        Kweet kweet = kweetDao.findById(kweetId);
+        return kweetDao.remove(kweet);
     }
 
     /**
@@ -105,6 +96,12 @@ public class KweetService {
         if (user != null && kweet != null) {
             if (!kweet.getHearts().contains(user)) {
                 kweet.getHearts().add(user);
+
+                // Make sure the user knows of kweet
+                if (!user.getHearts().contains(kweet)) {
+                    user.getHearts().add(kweet);
+                }
+
                 kweetDao.update(kweet);
             }
         } else {
@@ -163,6 +160,11 @@ public class KweetService {
                 hashtag.setName(name);
             }
             hashtags.add(updateHashtag(kweet, hashtag));
+
+            // Make sure the hashtag knows of kweet
+            if (!hashtag.getKweets().contains(kweet)) {
+                hashtag.getKweets().add(kweet);
+            }
         }
         kweet.setHashtags(hashtags);
     }
@@ -182,6 +184,11 @@ public class KweetService {
                 throw new UserNotFoundException();
             } else {
                 mentions.add(user);
+            }
+
+            // Make sure the mentioned user knows of kweet
+            if (!user.getMentions().contains(kweet)) {
+                user.getMentions().add(kweet);
             }
         }
         kweet.setMentions(mentions);
