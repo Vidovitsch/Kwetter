@@ -26,10 +26,11 @@ public class MockFactory {
             for (Mockable mock : mocks) {
                 Field[] fields = mock.getClass().getDeclaredFields();
                 for (Field field : fields) {
-                    // Set some random stuff
-                    randomizeFieldValue(mock, field);
                     if (fieldName != null && field.getName().equals(fieldName)) {
                         presetFieldValue(mock, field, fieldValue);
+                    } else {
+                        // Set some random stuff
+                        randomizeFieldValue(mock, field);
                     }
                 }
             }
@@ -85,9 +86,7 @@ public class MockFactory {
     private static void presetFieldValue(Mockable mock, Field field, Object fieldValue) throws IllegalAccessException {
         boolean isAccessible = field.isAccessible();
         field.setAccessible(true);
-
         field.set(mock, fieldValue);
-
         field.setAccessible(isAccessible);
     }
 
