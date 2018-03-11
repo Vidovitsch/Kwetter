@@ -13,6 +13,7 @@ import ViewModels.UserUsernameView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class TimelineService {
@@ -51,20 +52,63 @@ public class TimelineService {
         return mentionsTimeLine;
     }
 
-    public TreeSet<TimelineItem> TenMostRecentKweets(long userid){
+    public Set<TimelineItem> MostRecentKweets(long userid, int amount) {
         User user = userDao.findById(userid);
         TreeSet<TimelineItem> TimeLine = new TreeSet<TimelineItem>();
         for (Kweet k : user.getKweets()) {
             TimeLine.add(CreatTimeLineItem(k, true));
         }
-        TreeSet<TimelineItem> TimeLineTen = new TreeSet<TimelineItem>();
+        TreeSet<TimelineItem> requestedItems = new TreeSet<TimelineItem>();
         int i = 0;
         for(TimelineItem t : TimeLine){
-            TimeLineTen.add(t);
+            requestedItems.add(t);
             i++;
-            if(i>9){break;}
+            if(i>=amount){break;}
         }
-        return TimeLineTen;
+        return requestedItems;
+    }
+
+    public TreeSet<TimelineItem> GenerateTimeLine(String userid) {
+        User user = userDao.findByUsername(userid);
+        TreeSet<TimelineItem> TimeLine = new TreeSet<>();
+        for (Kweet k : user.getKweets()) {
+            TimeLine.add(CreatTimeLineItem(k, true));
+        }
+        for (User u : user.getFollowing()) {
+            for (Kweet k : kweetDao.findBySenderName(u.getUsername())) {
+                TimeLine.add(CreatTimeLineItem(k, false));
+            }
+        }
+        return TimeLine;
+    }
+
+    public TreeSet<TimelineItem> GenerateMentionsTimeLine(String userid) {
+        User user = userDao.findByUsername(userid);
+        TreeSet<TimelineItem> mentionsTimeLine = new TreeSet<>();
+        for (Kweet k : user.getMentions()) {
+            if(k.getSender() == user){
+                mentionsTimeLine.add(CreatTimeLineItem(k, true));
+            }else{
+                mentionsTimeLine.add(CreatTimeLineItem(k, false));
+            }
+        }
+        return mentionsTimeLine;
+    }
+
+    public Set<TimelineItem> MostRecentKweets(String userid, int amount) {
+        User user = userDao.findByUsername(userid);
+        TreeSet<TimelineItem> TimeLine = new TreeSet<TimelineItem>();
+        for (Kweet k : user.getKweets()) {
+            TimeLine.add(CreatTimeLineItem(k, true));
+        }
+        TreeSet<TimelineItem> requestedItems = new TreeSet<TimelineItem>();
+        int i = 0;
+        for(TimelineItem t : TimeLine){
+            requestedItems.add(t);
+            i++;
+            if(i>=amount){break;}
+        }
+        return requestedItems;
     }
 
     private TimelineItem CreatTimeLineItem(Kweet k, boolean owner) {
@@ -88,4 +132,6 @@ public class TimelineService {
 
         return timelineItem;
     }
+
+
 }

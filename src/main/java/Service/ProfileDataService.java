@@ -31,6 +31,15 @@ public class ProfileDataService {
 
     public UserTotalsView GetUserTotals(long userid){
         User u = userDao.findById(userid);
+        return GetUserTotals(u);
+    }
+
+    public UserTotalsView GetUserTotals(String username){
+        User u = userDao.findByUsername(username);
+        return GetUserTotals(u);
+    }
+
+    private UserTotalsView GetUserTotals(User u){
         int following = u.getFollowing().size();
         int followers = u.getFollowers().size();
         int kweets = u.getKweets().size();

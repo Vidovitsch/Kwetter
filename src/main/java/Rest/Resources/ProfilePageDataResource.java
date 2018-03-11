@@ -42,7 +42,7 @@ public class ProfilePageDataResource {
     @ApiOperation(value = "Retrieve a users 10 most recent kweets", notes = "User id has to be valid and kweets have to be available")
     public Set<TimelineItem> getMostRecentKweetsByID(@PathParam("userid") long userid) {
         TimelineService timelineService = new TimelineService();
-        Set<TimelineItem> mostRecentKweets = timelineService.TenMostRecentKweets(userid);
+        Set<TimelineItem> mostRecentKweets = timelineService.MostRecentKweets(userid, 10);
         return mostRecentKweets;
     }
 
