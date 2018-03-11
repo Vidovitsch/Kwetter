@@ -10,22 +10,27 @@ import java.util.List;
 
 public class KweetDaoImpl implements IKweetDao {
 
+    @Override
     public List<Kweet> findAll() {
         return null;
     }
 
+    @Override
     public Kweet findById(Long id) {
         return null;
     }
 
+    @Override
     public List<Kweet> findByTerm(String message) {
         return null;
     }
 
+    @Override
     public List<Kweet> findBySenderName(String senderName) {
         return null;
     }
 
+    @Override
     public Kweet create(Kweet Kweet) {
         return null;
     }
@@ -35,19 +40,13 @@ public class KweetDaoImpl implements IKweetDao {
         return null;
     }
 
+    @Override
     public Kweet update(Kweet Kweet) {
         return null;
     }
 
+    @Override
     public boolean remove(Kweet Kweet) {
         return false;
-    }
-
-    public List<Kweet> getTimeline(User user) {
-        return null;
-    }
-
-    public List<Kweet> search(String term) {
-        return null;
     }
 }

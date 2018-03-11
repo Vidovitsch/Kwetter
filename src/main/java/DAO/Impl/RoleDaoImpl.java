@@ -9,18 +9,22 @@ import java.util.List;
 
 public class RoleDaoImpl implements IRoleDao {
 
+    @Override
     public List<Role> findAll() {
         return null;
     }
 
+    @Override
     public Role findById(Long id) {
         return null;
     }
 
+    @Override
     public Role findByName(String name) {
         return null;
     }
 
+    @Override
     public Role create(Role role) {
         return null;
     }
@@ -30,10 +34,12 @@ public class RoleDaoImpl implements IRoleDao {
         return null;
     }
 
+    @Override
     public Role update(Role role) {
         return null;
     }
 
+    @Override
     public boolean remove(Role role) {
         return false;
     }
