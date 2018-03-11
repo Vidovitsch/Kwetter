@@ -49,12 +49,14 @@ public class HashtagDaoTest {
 
     @Test
     public void findByNameTest() {
+        String name = "SomeName";
+
         // Insert new hashtag
-        Hashtag mockHashtag = (Hashtag)MockFactory.createMocks(Hashtag.class, 1).get(0);
+        Hashtag mockHashtag = (Hashtag)MockFactory.createMocks(Hashtag.class, 1, "name", name).get(0);
         mockHashtag = hashtagDao.create(mockHashtag);
 
         // Check fetched hashtag
-        Hashtag fetchedHashtag = hashtagDao.findByName(mockHashtag.getName());
+        Hashtag fetchedHashtag = hashtagDao.findByName(name);
         Assert.assertEquals("Fetched hashtag is the same as the mocked one", mockHashtag, fetchedHashtag);
     }
 

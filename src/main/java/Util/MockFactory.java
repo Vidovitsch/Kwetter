@@ -1,7 +1,6 @@
 package Util;
 
 import Comparator.MockComparator;
-
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -11,13 +10,17 @@ public class MockFactory {
 
     /**
      * Generates a mocks of a given type with Mockable as super class.
-     * Each property in the mock gets a random String, Data en int value.
+     * Each property in the mock gets a random String, Date en int value.
      *
      * @param mockable
      * @param numberOfMocks
      * @return List of mocks
      */
     public static List<? extends Mockable> createMocks(Class<? extends Mockable> mockable, int numberOfMocks) {
+        return createMocks(mockable, numberOfMocks, null, null);
+    }
+
+    public static List<? extends Mockable> createMocks(Class<? extends Mockable> mockable, int numberOfMocks, String fieldName, Object fieldValue) {
         try {
             List<Mockable> mocks = generateList(mockable, numberOfMocks);
             for (Mockable mock : mocks) {
@@ -25,6 +28,9 @@ public class MockFactory {
                 for (Field field : fields) {
                     // Set some random stuff
                     randomizeFieldValue(mock, field);
+                    if (fieldName != null && field.getName().equals(fieldName)) {
+                        presetFieldValue(mock, field, fieldValue);
+                    }
                 }
             }
             return mocks;
@@ -72,6 +78,15 @@ public class MockFactory {
         } else if (field.getType().isAssignableFrom(int.class)) {
             field.set(mock, getRandomNumber(999));
         }
+
+        field.setAccessible(isAccessible);
+    }
+
+    private static void presetFieldValue(Mockable mock, Field field, Object fieldValue) throws IllegalAccessException {
+        boolean isAccessible = field.isAccessible();
+        field.setAccessible(true);
+
+        field.set(mock, fieldValue);
 
         field.setAccessible(isAccessible);
     }
