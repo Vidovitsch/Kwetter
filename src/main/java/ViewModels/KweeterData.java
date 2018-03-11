@@ -3,18 +3,29 @@ package ViewModels;
 import Domain.Kweet;
 
 import java.util.Collection;
+import java.util.Date;
 
 public class KweeterData {
-    Kweet lastKweet;
+    Date lastKweetDate;
+    String lastKweetMessage;
     int totalKweets;
     Collection<HomePageUserView> following;
+    Collection<HomePageUserView> followers;
 
-    public Kweet getLastKweet() {
-        return lastKweet;
+    public Date getLastKweetDate() {
+        return lastKweetDate;
     }
 
-    public void setLastKweet(Kweet lastKweet) {
-        this.lastKweet = lastKweet;
+    public void setLastKweetDate(Date lastKweetDate) {
+        this.lastKweetDate = lastKweetDate;
+    }
+
+    public String getLastKweetMessage() {
+        return lastKweetMessage;
+    }
+
+    public void setLastKweetMessage(String lastKweetMessage) {
+        this.lastKweetMessage = lastKweetMessage;
     }
 
     public int getTotalKweets() {
@@ -41,9 +52,8 @@ public class KweeterData {
         this.followers = followers;
     }
 
-    Collection<HomePageUserView> followers;
-
-    public KweeterData(){}
+    public KweeterData() {
+    }
 
 
 }

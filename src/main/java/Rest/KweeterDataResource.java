@@ -38,15 +38,27 @@ public class KweeterDataResource {
     }
 
     @GET
-    @Path("{username}")
+    @Path("/byusername/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a KweetMessage", notes = "Return some kweet as JSON to the client")
-    public HomePageUserView getKweeterData(@PathParam("username") String username) {
+    public KweeterData getKweeterDataByUsername(@PathParam("username") String username) {
         KweeterDataService kweeterDataService = new KweeterDataService();
         KweeterData k = kweeterDataService.getKweeterData(username);
-        HomePageUserView h = new HomePageUserView();
-        h.setUsername("test");
-        return h;
+//        HomePageUserView h = new HomePageUserView();
+//        h.setUsername("test");
+        return k;
+    }
+
+    @GET
+    @Path("/byid/{userid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve Kweeters Data for the homepage", notes = "ID has to be a valid usero-id")
+    public KweeterData getKweeterDataByID(@PathParam("userid") long userID) {
+        KweeterDataService kweeterDataService = new KweeterDataService();
+        KweeterData k = kweeterDataService.getKweeterData(userID);
+//        HomePageUserView h = new HomePageUserView();
+//        h.setUsername("test");
+        return k;
     }
 
     /**

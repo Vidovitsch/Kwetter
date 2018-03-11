@@ -1,6 +1,16 @@
 package ViewModels;
 
 public class HomePageUserView {
+    String image;
+    String username;
+
+    public HomePageUserView(String username,String image) {
+        this.image = image;
+        this.username = username;
+    }
+    public HomePageUserView() {
+
+    }
     public String getImage() {
         return image;
     }
@@ -17,14 +27,5 @@ public class HomePageUserView {
         this.username = username;
     }
 
-    String image;
-    String username;
 
-    public HomePageUserView(String image, String username) {
-        this.image = image;
-        this.username = username;
-    }
-    public HomePageUserView() {
-
-    }
 }
