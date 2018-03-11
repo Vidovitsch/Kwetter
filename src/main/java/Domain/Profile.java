@@ -43,6 +43,7 @@ public class Profile implements Mockable {
 
     public void setUser(User user) {
         this.user = user;
+        user.setProfile(this);
     }
 
     public String getName() {
