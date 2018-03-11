@@ -26,6 +26,10 @@ public class TrendService {
 
     public TrendService() { }
 
+    public TrendService(IHashtagDao hashtagDao) {
+        this.hashtagDao = hashtagDao;
+    }
+
     /**
      * To Do
      *

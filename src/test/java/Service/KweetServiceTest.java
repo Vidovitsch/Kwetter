@@ -275,4 +275,26 @@ public class KweetServiceTest {
         Assert.assertTrue("The term 'et' was met by kweet1", results.contains(kweet1));
         Assert.assertTrue("The term 'et' was met by kweet2", results.contains(kweet2));
     }
+
+    @Test
+    public void search_empty() throws UserNotFoundException, InvalidKweetException {
+        // Setup
+        String message = "A message: #test1 #kweet1";
+        User kwet = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Leet").get(0));
+        User rick = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Rick").get(0));
+        Kweet kweet1 = (Kweet) MockFactory.createMocks(Kweet.class, 1).get(0);
+        Kweet kweet2 = (Kweet) MockFactory.createMocks(Kweet.class, 1, "message", message).get(0);
+        Kweet kweet3 = (Kweet) MockFactory.createMocks(Kweet.class, 1, "message", "Somemessage").get(0);
+
+        // Publish kweets
+        service.publish(kwet.getId(), kweet1);
+        service.publish(rick.getId(), kweet2);
+        service.publish(rick.getId(), kweet3);
+
+        // Search
+        List<Kweet> results = service.search("xqxq");
+
+        // Asserts
+        Assert.assertEquals("Two kweets met the given term", 0, results.size());
+    }
 }
