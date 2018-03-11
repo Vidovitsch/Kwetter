@@ -83,8 +83,7 @@ public class HomepageDataResource {
     @ApiOperation(value = "Retrieve the trends for the current week", notes = "")
     public List<String> getTrends() {
         TrendService trendService = new TrendService();
-        List<String> trends = trendService.get();
-        return trends;
+        return trendService.get();
     }
 
 
