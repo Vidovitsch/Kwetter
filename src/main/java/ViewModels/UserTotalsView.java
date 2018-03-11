@@ -1,7 +1,5 @@
 package ViewModels;
 
-import java.util.List;
-
 public class UserTotalsView {
     
     int following;
