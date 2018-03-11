@@ -17,14 +17,15 @@ import java.util.TreeSet;
 
 public class TimelineService {
 
-    IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
-    IProfileDao profileDao = new ProfileDaoMock(userDao.findAll());
+    IUserDao userDao;
+    IKweetDao kweetDao;
+    IProfileDao profileDao;
 
     public TimelineService() {
     }
 
-    public TreeSet<TimelineItem> GenerateTimeLine(User user) {
+    public TreeSet<TimelineItem> GenerateTimeLine(long userid) {
+        User user = userDao.findById(userid);
         TreeSet<TimelineItem> TimeLine = new TreeSet<>();
         for (Kweet k : user.getKweets()) {
             TimeLine.add(CreatTimeLineItem(k, true));
@@ -37,7 +38,8 @@ public class TimelineService {
         return TimeLine;
     }
 
-    public TreeSet<TimelineItem> GenerateMentionsTimeLine(User user) {
+    public TreeSet<TimelineItem> GenerateMentionsTimeLine(long userid) {
+        User user = userDao.findById(userid);
         TreeSet<TimelineItem> mentionsTimeLine = new TreeSet<>();
         for (Kweet k : user.getMentions()) {
             if(k.getSender() == user){

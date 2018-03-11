@@ -45,10 +45,10 @@ public class AssociationTestsMockDAO {
     @BeforeClass
     public static void Init() {
         userDao = new UserDaoMock();
-        profileDao = new ProfileDaoMock(userDao.findAll());
-        roleDao = new RoleDaoMock(userDao.findAll());
-        kweetDao = new KweetDaoMock(userDao.findAll());
-        hashtagDao = new HashtagDaoMock(kweetDao.findAll());
+        profileDao = new ProfileDaoMock();
+        roleDao = new RoleDaoMock();
+        kweetDao = new KweetDaoMock();
+        hashtagDao = new HashtagDaoMock();
     }
 
     @Test

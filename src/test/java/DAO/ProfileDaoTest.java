@@ -18,7 +18,7 @@ public class ProfileDaoTest {
     @BeforeClass
     public static void Init() {
         userDao = new UserDaoMock();
-        profileDao = new ProfileDaoMock(userDao.findAll());
+        profileDao = new ProfileDaoMock();
     }
 
     @Test

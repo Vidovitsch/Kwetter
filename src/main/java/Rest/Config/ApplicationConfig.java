@@ -1,8 +1,9 @@
-package Rest;
+package Rest.Config;
 
-import Domain.Profile;
+import Rest.Resources.HomepageDataResource;
+import Rest.Resources.ProfilePageDataResource;
+import Rest.Resources.UserResource;
 import com.github.phillipkruger.apiee.ApieeService;
-import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.core.Application;
 import java.util.Collections;

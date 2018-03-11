@@ -17,8 +17,8 @@ public class HashtagDaoTest {
     @BeforeClass
     public static void Init() {
         IUserDao userDao = new UserDaoMock();
-        IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
-        hashtagDao = new HashtagDaoMock(kweetDao.findAll());
+        IKweetDao kweetDao = new KweetDaoMock();
+        hashtagDao = new HashtagDaoMock();
     }
 
     @Test

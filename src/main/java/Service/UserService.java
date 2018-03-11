@@ -19,8 +19,8 @@ import java.util.List;
 public class UserService {
 
     IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
-    IProfileDao profileDao = new ProfileDaoMock(userDao.findAll());
+    IKweetDao kweetDao = new KweetDaoMock();
+    IProfileDao profileDao = new ProfileDaoMock();
 
     public boolean createProfile(Profile profile) {
         if (profile.getName().equals("") || profile.getName() == null || profile.getUser() == null) {
