@@ -25,7 +25,7 @@ public class TimelineService {
     }
 
     public TreeSet<TimelineItem> GenerateTimeLine(User user) {
-        TreeSet<TimelineItem> TimeLine = new TreeSet<TimelineItem>();
+        TreeSet<TimelineItem> TimeLine = new TreeSet<>();
         for (Kweet k : user.getKweets()) {
             TimeLine.add(CreatTimeLineItem(k, true));
         }
@@ -37,6 +37,18 @@ public class TimelineService {
         return TimeLine;
     }
 
+    public TreeSet<TimelineItem> GenerateMentionsTimeLine(User user) {
+        TreeSet<TimelineItem> mentionsTimeLine = new TreeSet<>();
+        for (Kweet k : user.getMentions()) {
+            if(k.getSender() == user){
+                mentionsTimeLine.add(CreatTimeLineItem(k, true));
+            }else{
+                mentionsTimeLine.add(CreatTimeLineItem(k, false));
+            }
+        }
+        return mentionsTimeLine;
+    }
+
     public TreeSet<TimelineItem> TenMostRecentKweets(User user){
         TreeSet<TimelineItem> TimeLine = new TreeSet<TimelineItem>();
         for (Kweet k : user.getKweets()) {
@@ -44,7 +56,7 @@ public class TimelineService {
         }
         TreeSet<TimelineItem> TimeLineTen = new TreeSet<TimelineItem>();
         int i = 0;
-        for(TimelineItem t : TimeLineTen){
+        for(TimelineItem t : TimeLine){
             TimeLineTen.add(t);
             i++;
             if(i>9){break;}

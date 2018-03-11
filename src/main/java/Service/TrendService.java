@@ -10,8 +10,6 @@ import DaoInterfaces.IKweetDao;
 import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Hashtag;
-import ViewModels.TrendView;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.*;
@@ -33,7 +31,7 @@ public class TrendService {
      *
      * @return
      */
-    public List<TrendView> get() {
+    public List<String> get() {
         List<Hashtag> trends = filterOnDates(hashtagDao.findAll());
         Collections.sort(trends, new TrendComparator());
 
@@ -60,10 +58,10 @@ public class TrendService {
         return cal.getTime();
     }
 
-    private List<TrendView> convertToNameList(List<Hashtag> hashtags) {
-        List<TrendView> names = new ArrayList<>();
+    private List<String> convertToNameList(List<Hashtag> hashtags) {
+        List<String> names = new ArrayList<>();
         for (Hashtag hashtag : hashtags) {
-            names.add(new TrendView(hashtag.getName()));
+            names.add(hashtag.getName());
         }
 
         return names;
