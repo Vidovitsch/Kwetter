@@ -10,16 +10,10 @@ import java.util.List;
 @Mock
 public class UserDaoMock implements IUserDao {
 
-    private List<User> mockUsers;
+    // Singleton
+    private static List<User> mockUsers;
 
     public UserDaoMock() { }
-
-    @SuppressWarnings("unchecked")
-    public void setMockUsers() {
-        mockUsers = (List<User>)MockFactory.createMocks(User.class, 10);
-        MockFactory.setNewIds(mockUsers);
-        connectDummyUsers(mockUsers);
-    }
 
     @Override
     public List<User> findAll() {
@@ -75,16 +69,5 @@ public class UserDaoMock implements IUserDao {
     @Override
     public boolean remove(User user) {
         return mockUsers.remove(user);
-    }
-
-    // For mock purposes
-    private void connectDummyUsers(List<User> users) {
-        for (User dummyUser : users) {
-            List<User> others = new ArrayList<>(users);
-            others.remove(dummyUser);
-
-            dummyUser.setFollowers(others);
-            dummyUser.setFollowing(others);
-        }
     }
 }

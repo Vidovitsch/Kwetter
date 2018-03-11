@@ -10,16 +10,10 @@ import java.util.*;
 @Mock
 public class KweetDaoMock implements IKweetDao {
 
-    private List<Kweet> mockKweets;
+    // Singleton
+    private static List<Kweet> mockKweets;
 
     public KweetDaoMock() { }
-
-    @SuppressWarnings("unchecked")
-    public void setMockKweets(List<User> users) {
-        mockKweets = (List<Kweet>) MockFactory.createMocks(Kweet.class, 90);
-        MockFactory.setNewIds(mockKweets);
-        createDummyKweets(mockKweets, users);
-    }
 
     @Override
     public List<Kweet> findAll() {
@@ -87,19 +81,5 @@ public class KweetDaoMock implements IKweetDao {
 
     public boolean remove(Kweet kweet) {
         return mockKweets.remove(kweet);
-    }
-
-    // For mock purposes
-    private void createDummyKweets(List<Kweet> kweets, List<User> users) {
-        for (int i = 0; i < users.size(); i++) {
-            List<Kweet> kweetsToSend = kweets.subList(i * 9, i * 9 + 9);
-            List<User> mentions = new ArrayList<>(users);
-            mentions.remove(users.get(i));
-            users.get(i).setKweets(kweetsToSend);
-            for (Kweet kweet : kweetsToSend) {
-                kweet.setSender(users.get(i));
-                kweet.setMentions(mentions);
-            }
-        }
     }
 }

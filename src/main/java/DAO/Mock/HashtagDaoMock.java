@@ -10,16 +10,10 @@ import java.util.*;
 @Mock
 public class HashtagDaoMock implements IHashtagDao {
 
-    private List<Hashtag> mockHashtags;
+    // Singleton
+    private static List<Hashtag> mockHashtags;
 
     public HashtagDaoMock() { }
-
-    @SuppressWarnings("unchecked")
-    public void setMockHashtags(List<Kweet> kweets) {
-        mockHashtags = (List<Hashtag>) MockFactory.createMocks(Hashtag.class, 2);
-        MockFactory.setNewIds(mockHashtags);
-        createDummyHashtags(mockHashtags, kweets);
-    }
 
     @Override
     public List<Hashtag> findAll() {
@@ -77,15 +71,5 @@ public class HashtagDaoMock implements IHashtagDao {
     @Override
     public boolean remove(Hashtag hashtag) {
         return mockHashtags.remove(hashtag);
-    }
-
-    // For mock purposes
-    private void createDummyHashtags(List<Hashtag> hashtags, List<Kweet> kweets) {
-        for (Kweet kweet : kweets) {
-            kweet.setHashtags(hashtags);
-        }
-        for (Hashtag hashtag : hashtags) {
-            hashtag.setKweets(kweets);
-        }
     }
 }
