@@ -1,13 +1,11 @@
 package DAO.Mock;
 
 import DaoInterfaces.IUserDao;
-import Qualifier.Mock;
 import Util.MockFactory;
 import Domain.User;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mock
 public class UserDaoMock implements IUserDao {
 
     private List<User> mockUsers;

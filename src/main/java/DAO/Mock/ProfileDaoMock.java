@@ -1,7 +1,6 @@
 package DAO.Mock;
 
 import DaoInterfaces.IProfileDao;
-import Domain.Role;
 import Util.MockFactory;
 import Domain.Profile;
 import Domain.User;
@@ -11,6 +10,8 @@ import java.util.List;
 public class ProfileDaoMock implements IProfileDao {
 
     private List<Profile> mockProfiles;
+
+    public ProfileDaoMock() { }
 
     @SuppressWarnings("unchecked")
     public ProfileDaoMock(List<User> users) {

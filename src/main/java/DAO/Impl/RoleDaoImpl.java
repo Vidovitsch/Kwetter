@@ -4,6 +4,7 @@ import DaoInterfaces.IRoleDao;
 import Domain.Role;
 
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Default;
 import java.util.List;
 
 public class RoleDaoImpl implements IRoleDao {

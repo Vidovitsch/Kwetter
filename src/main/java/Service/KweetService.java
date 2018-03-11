@@ -1,5 +1,8 @@
 package Service;
 
+import DAO.Mock.HashtagDaoMock;
+import DAO.Mock.KweetDaoMock;
+import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IHashtagDao;
 import DaoInterfaces.IKweetDao;
 import DaoInterfaces.IUserDao;
@@ -7,28 +10,24 @@ import Domain.Hashtag;
 import Domain.Kweet;
 import Domain.User;
 import Exception.*;
-import Qualifier.Mock;
-import javax.faces.bean.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Named(value = "kweetService")
-@RequestScoped
 public class KweetService {
 
-    @Inject @Mock
     private IKweetDao kweetDao;
 
-    @Inject @Mock
     private IHashtagDao hashtagDao;
 
-    @Inject @Mock
     private IUserDao userDao;
 
-    public KweetService() { }
+    public KweetService() {
+        this.userDao = new UserDaoMock();
+        this.kweetDao = new KweetDaoMock(userDao.findAll());
+        this.hashtagDao = new HashtagDaoMock(kweetDao.findAll());
+    }
 
     public KweetService(IKweetDao kweetDao, IHashtagDao hashtagDao, IUserDao userDao) {
         this.kweetDao = kweetDao;

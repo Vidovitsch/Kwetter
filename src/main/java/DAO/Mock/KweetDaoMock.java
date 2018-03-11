@@ -2,12 +2,10 @@ package DAO.Mock;
 
 import DaoInterfaces.IKweetDao;
 import Domain.*;
-import Qualifier.Mock;
 import Util.MockFactory;
 
 import java.util.*;
 
-@Mock
 public class KweetDaoMock implements IKweetDao {
 
     private List<Kweet> mockKweets;

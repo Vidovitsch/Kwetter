@@ -5,6 +5,7 @@ import Domain.Kweet;
 import Domain.User;
 
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Default;
 import java.util.List;
 
 public class KweetDaoImpl implements IKweetDao {
