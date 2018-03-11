@@ -1,11 +1,13 @@
 package DAO.Mock;
 
 import DaoInterfaces.IRoleDao;
+import Qualifier.Mock;
 import Util.MockFactory;
 import Domain.Role;
 import Domain.User;
 import java.util.List;
 
+@Mock
 public class RoleDaoMock implements IRoleDao {
 
     private List<Role> mockRoles;

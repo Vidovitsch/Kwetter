@@ -1,12 +1,14 @@
 package DAO.Mock;
 
 import DaoInterfaces.IProfileDao;
+import Qualifier.Mock;
 import Util.MockFactory;
 import Domain.Profile;
 import Domain.User;
 import java.util.ArrayList;
 import java.util.List;
 
+@Mock
 public class ProfileDaoMock implements IProfileDao {
 
     private List<Profile> mockProfiles;
