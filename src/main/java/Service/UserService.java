@@ -7,6 +7,7 @@ import Domain.User;
 import Qualifier.Mock;
 import ViewModels.OtherUserView;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Named(value = "userService")
-@RequestScoped
+@Stateless
 public class UserService {
 
     @Inject @Mock

@@ -8,6 +8,7 @@ import ViewModels.UserTotalsView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -23,6 +24,10 @@ public class UserResource {
 
     @Context
     private UriInfo context;
+
+    @EJB
+    UserService userService;
+
 
     public UserResource(){
     }
@@ -43,7 +48,6 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the users a user is following, based on the user-id", notes = "User-id has to be valid")
     public List<OtherUserView> getFollowing(@PathParam("userid") long userid) {
-        UserService userService = new UserService();
         List<OtherUserView> following = userService.getFollowing(userid);
         return following;
     }
