@@ -50,8 +50,7 @@ public class HomepageDataResource {
     public KweeterData getKweeterDataByUsername(@PathParam("username") String username) {
         KweeterDataService kweeterDataService = new KweeterDataService();
         KweeterData k = kweeterDataService.getKweeterData(username);
-//        HomePageUserView h = new HomePageUserView();
-//        h.setUsername("test");
+
         return k;
     }
 
@@ -63,8 +62,6 @@ public class HomepageDataResource {
     public KweeterData getKweeterDataByID(@PathParam("userid") long userID) {
         KweeterDataService kweeterDataService = new KweeterDataService();
         KweeterData k = kweeterDataService.getKweeterData(userID);
-//        HomePageUserView h = new HomePageUserView();
-//        h.setUsername("test");
         return k;
     }
 
@@ -101,7 +98,6 @@ public class HomepageDataResource {
         }
         return trends;
     }
-
 
     /**
      * PUT method for updating or creating an instance of BookResource

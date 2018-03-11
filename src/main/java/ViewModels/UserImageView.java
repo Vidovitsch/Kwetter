@@ -1,16 +1,17 @@
 package ViewModels;
 
-public class HomePageUserView {
-
+public class UserImageView {
     String image;
     String username;
 
-    public HomePageUserView(String username,String image) {
+    public UserImageView(String username, String image) {
         this.image = image;
         this.username = username;
     }
 
-    public HomePageUserView() { }
+    public UserImageView() {
+
+    }
 
     public String getImage() {
         return image;
