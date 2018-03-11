@@ -1,4 +1,4 @@
-package Service;
+package Util;
 
 public class BooleanResult {
 

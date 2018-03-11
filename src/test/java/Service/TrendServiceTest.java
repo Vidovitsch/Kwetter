@@ -19,17 +19,26 @@ import java.util.List;
 
 public class TrendServiceTest {
 
-    private static IUserDao userDao = new UserDaoMock();
-    private static IKweetDao kweetDao = new KweetDaoMock();
-    private static IHashtagDao hashtagDao = new HashtagDaoMock();
+    private static IUserDao userDao;
+    private static IKweetDao kweetDao;
+    private static IHashtagDao hashtagDao;
 
     private static TrendService service;
     private static KweetService kweetService;
 
     @BeforeClass
     public static void setUp() {
+        userDao = new UserDaoMock();
+        kweetDao = new KweetDaoMock();
+        hashtagDao = new HashtagDaoMock();
+
         service = new TrendService();
+        service.setHashtagDao(hashtagDao);
+
         kweetService = new KweetService();
+        kweetService.setUserDao(userDao);
+        kweetService.setKweetDao(kweetDao);
+        kweetService.setHashtagDao(hashtagDao);
     }
 
     @AfterClass

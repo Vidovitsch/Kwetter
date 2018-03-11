@@ -136,5 +136,11 @@ public class TimelineService {
         return timelineItem;
     }
 
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
 
+    public void setKweetDao(IKweetDao kweetDao) {
+        this.kweetDao = kweetDao;
+    }
 }

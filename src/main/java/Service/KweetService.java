@@ -136,10 +136,6 @@ public class KweetService {
         }
     }
 
-    public List<Kweet> getAllKweets(){
-        return kweetDao.findAll();
-    }
-
     private List<String> parseNames(char prefix, String message) {
         Pattern pattern = Pattern.compile("(" + prefix + "\\w+)\\b");
         Matcher matcher = pattern.matcher(message);
@@ -202,5 +198,17 @@ public class KweetService {
         } else if (kweet.getMessage().length() > 140) {
             throw new InvalidKweetException("Message should have a maximum of 140 characters");
         }
+    }
+
+    public void setKweetDao(IKweetDao kweetDao) {
+        this.kweetDao = kweetDao;
+    }
+
+    public void setHashtagDao(IHashtagDao hashtagDao) {
+        this.hashtagDao = hashtagDao;
+    }
+
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
     }
 }

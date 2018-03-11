@@ -52,7 +52,11 @@ public class ProfileService {
         return profileDao.update(p);
     }
 
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
 
-
-
+    public void setProfileDao(IProfileDao profileDao) {
+        this.profileDao = profileDao;
+    }
 }

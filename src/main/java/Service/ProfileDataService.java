@@ -49,4 +49,8 @@ public class ProfileDataService {
         UserTotalsView userTotalsView = new UserTotalsView(following,followers,kweets);
         return userTotalsView;
     }
+
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
 }
