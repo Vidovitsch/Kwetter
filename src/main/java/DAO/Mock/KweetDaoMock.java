@@ -13,17 +13,18 @@ public class KweetDaoMock implements IKweetDao {
     public KweetDaoMock() { }
 
     @SuppressWarnings("unchecked")
-    public KweetDaoMock(List<User> users) {
+    public void setMockKweets(List<User> users) {
         mockKweets = (List<Kweet>) MockFactory.createMocks(Kweet.class, 90);
         MockFactory.setNewIds(mockKweets);
-
         createDummyKweets(mockKweets, users);
     }
 
+    @Override
     public List<Kweet> findAll() {
         return mockKweets;
     }
 
+    @Override
     public Kweet findById(Long id) {
         for(Kweet k : mockKweets){
             if(k.getId().equals(id)){
@@ -33,6 +34,7 @@ public class KweetDaoMock implements IKweetDao {
         return null;
     }
 
+    @Override
     public List<Kweet> findByTerm(String message) {
         List<Kweet> foundKweets = new ArrayList<>();
         for(Kweet k : mockKweets){
@@ -43,6 +45,7 @@ public class KweetDaoMock implements IKweetDao {
         return foundKweets;
     }
 
+    @Override
     public List<Kweet> findBySenderName(String senderName) {
         List<Kweet> foundKweets = new ArrayList<>();
         for(Kweet k : mockKweets){
@@ -53,6 +56,7 @@ public class KweetDaoMock implements IKweetDao {
         return foundKweets;
     }
 
+    @Override
     public Kweet create(Kweet kweet) {
         MockFactory.setNextId(kweet, mockKweets);
         mockKweets.add(kweet);
@@ -60,6 +64,7 @@ public class KweetDaoMock implements IKweetDao {
         return kweet;
     }
 
+    @Override
     public List<Kweet> create(List<Kweet> kweets) {
         MockFactory.setNextIds(kweets, mockKweets);
         mockKweets.addAll(kweets);

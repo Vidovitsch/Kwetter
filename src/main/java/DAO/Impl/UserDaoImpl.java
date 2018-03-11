@@ -9,18 +9,22 @@ import java.util.List;
 
 public class UserDaoImpl implements IUserDao {
 
+    @Override
     public List<User> findAll() {
         return null;
     }
 
+    @Override
     public User findById(Long id) {
         return null;
     }
 
+    @Override
     public User findByUsername(String username) {
         return null;
     }
 
+    @Override
     public User create(User user) {
         return null;
     }
@@ -30,10 +34,12 @@ public class UserDaoImpl implements IUserDao {
         return null;
     }
 
+    @Override
     public User update(User user) {
         return null;
     }
 
+    @Override
     public boolean remove(User user) {
         return false;
     }

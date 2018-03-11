@@ -13,17 +13,18 @@ public class HashtagDaoMock implements IHashtagDao {
     public HashtagDaoMock() { }
 
     @SuppressWarnings("unchecked")
-    public HashtagDaoMock(List<Kweet> kweets) {
+    public void setMockHashtags(List<Kweet> kweets) {
         mockHashtags = (List<Hashtag>) MockFactory.createMocks(Hashtag.class, 2);
         MockFactory.setNewIds(mockHashtags);
-
         createDummyHashtags(mockHashtags, kweets);
     }
 
+    @Override
     public List<Hashtag> findAll() {
         return mockHashtags;
     }
 
+    @Override
     public Hashtag findById(Long id) {
         for(Hashtag h : mockHashtags){
             if(h.getId().equals(id)) {
@@ -33,6 +34,7 @@ public class HashtagDaoMock implements IHashtagDao {
         return null;
     }
 
+    @Override
     public Hashtag findByName(String name) {
         for (Hashtag hashtag : mockHashtags) {
             if (hashtag.getName().equals(name)) {
@@ -42,6 +44,7 @@ public class HashtagDaoMock implements IHashtagDao {
         return null;
     }
 
+    @Override
     public Hashtag create(Hashtag hashtag) {
         MockFactory.setNextId(hashtag, mockHashtags);
         mockHashtags.add(hashtag);
@@ -49,12 +52,14 @@ public class HashtagDaoMock implements IHashtagDao {
         return hashtag;
     }
 
+    @Override
     public List<Hashtag> create(List<Hashtag> hashtags) {
         MockFactory.setNextIds(hashtags, mockHashtags);
         mockHashtags.addAll(hashtags);
         return hashtags;
     }
 
+    @Override
     public Hashtag update(Hashtag hashtag) {
         Hashtag existingHashtag = findById(hashtag.getId());
         if(existingHashtag == null){
@@ -67,6 +72,7 @@ public class HashtagDaoMock implements IHashtagDao {
         return hashtag;
     }
 
+    @Override
     public boolean remove(Hashtag hashtag) {
         return mockHashtags.remove(hashtag);
     }

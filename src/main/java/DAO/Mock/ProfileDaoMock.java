@@ -14,17 +14,18 @@ public class ProfileDaoMock implements IProfileDao {
     public ProfileDaoMock() { }
 
     @SuppressWarnings("unchecked")
-    public ProfileDaoMock(List<User> users) {
+    public void setMockProfiles(List<User> users) {
         mockProfiles = (List<Profile>)MockFactory.createMocks(Profile.class, 10);
         MockFactory.setNewIds(mockProfiles);
-
         connectDummyProfiles(mockProfiles, users);
     }
 
+    @Override
     public List<Profile> findAll() {
         return mockProfiles;
     }
 
+    @Override
     public Profile findById(Long id) {
         for (Profile profile : mockProfiles) {
             if (profile.getId().equals(id)) {
@@ -35,6 +36,7 @@ public class ProfileDaoMock implements IProfileDao {
         return null;
     }
 
+    @Override
     public Profile findByUser(User user) {
         for (Profile profile : mockProfiles) {
             if (profile.getUser() == user) {
@@ -45,6 +47,7 @@ public class ProfileDaoMock implements IProfileDao {
         return null;
     }
 
+    @Override
     public List<Profile> findByName(String name) {
         List<Profile> profiles = new ArrayList<Profile>();
         for (Profile profile : mockProfiles) {
@@ -56,18 +59,21 @@ public class ProfileDaoMock implements IProfileDao {
         return profiles;
     }
 
+    @Override
     public Profile create(Profile profile) {
         MockFactory.setNextId(profile, mockProfiles);
         mockProfiles.add(profile);
         return profile;
     }
 
+    @Override
     public List<Profile> create(List<Profile> profiles) {
         MockFactory.setNextIds(profiles, mockProfiles);
         mockProfiles.addAll(profiles);
         return profiles;
     }
 
+    @Override
     public Profile update(Profile profile) {
         Profile existingProfile = findById(profile.getId());
         if (existingProfile == null) {
@@ -79,6 +85,7 @@ public class ProfileDaoMock implements IProfileDao {
         return profile;
     }
 
+    @Override
     public boolean remove(Profile profile) {
         return mockProfiles.remove(profile);
     }

@@ -9,18 +9,22 @@ import java.util.List;
 
 public class HastagDaoImpl implements IHashtagDao {
 
+    @Override
     public List<Hashtag> findAll() {
         return null;
     }
 
+    @Override
     public Hashtag findById(Long id) {
         return null;
     }
 
+    @Override
     public Hashtag findByName(String name) {
         return null;
     }
 
+    @Override
     public Hashtag create(Hashtag Hashtag) {
         return null;
     }
@@ -30,15 +34,13 @@ public class HastagDaoImpl implements IHashtagDao {
         return null;
     }
 
+    @Override
     public Hashtag update(Hashtag Hashtag) {
         return null;
     }
 
+    @Override
     public boolean remove(Hashtag Hashtag) {
         return false;
-    }
-
-    public List<Hashtag> getTrend() {
-        return null;
     }
 }
