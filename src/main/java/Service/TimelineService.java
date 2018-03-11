@@ -52,7 +52,8 @@ public class TimelineService {
         return mentionsTimeLine;
     }
 
-    public TreeSet<TimelineItem> TenMostRecentKweets(User user){
+    public TreeSet<TimelineItem> TenMostRecentKweets(long userid){
+        User user = userDao.findById(userid);
         TreeSet<TimelineItem> TimeLine = new TreeSet<TimelineItem>();
         for (Kweet k : user.getKweets()) {
             TimeLine.add(CreatTimeLineItem(k, true));

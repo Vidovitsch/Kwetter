@@ -22,6 +22,12 @@ public class ProfileDataService {
         return profileDataView;
     }
 
+    public ProfileDataView GetProfileData(String username){
+        Profile p = userDao.findByUsername(username).getProfile();
+        ProfileDataView profileDataView = new ProfileDataView(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
+        return profileDataView;
+    }
+
     public UserTotalsView GetUserTotals(long userid){
         User u = userDao.findById(userid);
         int following = u.getFollowing().size();
