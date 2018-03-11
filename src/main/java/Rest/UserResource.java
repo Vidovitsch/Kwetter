@@ -22,8 +22,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
-import java.util.Set;
-
 
 @Path("user")
 @Api(value = "User resource")
@@ -55,8 +53,9 @@ public class UserResource {
         return following;
     }
 
+
     @GET
-    @Path("/byid/{userid}/following")
+    @Path("/test/{userid}/following")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users 10 most recent kweets", notes = "User id has to be valid and kweets have to be available")
     public List<OtherUserView> getFollowing(@PathParam("userid") long userid) {
@@ -64,5 +63,15 @@ public class UserResource {
         List<OtherUserView> following = userService.getFollowing(userid);
         return following;
     }
+
+    @GET
+    @Path("/test")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Test REST functionality", notes = "")
+    public OtherUserView getTest() {
+        OtherUserView userView = new OtherUserView("test", "test");
+        return userView;
+    }
+
 
 }
