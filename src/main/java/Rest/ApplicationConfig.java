@@ -27,7 +27,8 @@ public class ApplicationConfig extends Application {
 
         //instead let's do it manually:
         resources.add(HomepageDataResource.class);
-        resources.add(ProfilepageDataResource.class);
+        resources.add(ProfilePageDataResource.class);
+        resources.add(UserResource.class);
         resources.add(ApieeService.class);
         //==> we could also choose packages, see below getProperties()
 
