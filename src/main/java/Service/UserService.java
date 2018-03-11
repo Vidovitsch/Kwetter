@@ -8,6 +8,7 @@ import Qualifier.Mock;
 import ViewModels.OtherUserView;
 
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

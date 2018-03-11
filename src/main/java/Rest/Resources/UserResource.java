@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -28,6 +29,8 @@ public class UserResource {
     @EJB
     UserService userService;
 
+    @EJB
+    ProfileDataService profileDataService;
 
     public UserResource(){
     }
@@ -37,7 +40,6 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the users a user is following, based on the username", notes = "Username has to be valid")
     public List<OtherUserView> getFollowing(@PathParam("username") String username) {
-        UserService userService = new UserService();
         List<OtherUserView> following = userService.getFollowing(username);
         return following;
     }
@@ -57,7 +59,6 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the users who follow a certain user, based on the username", notes = "Username has to be valid")
     public List<OtherUserView> getFollowers(@PathParam("username") String username) {
-        UserService userService = new UserService();
         List<OtherUserView> following = userService.getFollowers(username);
         return following;
     }
@@ -67,7 +68,6 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the users who follow a certain user,, based on the user-id", notes = "User-id has to be valid")
     public List<OtherUserView> getFollowers(@PathParam("userid") long userid) {
-        UserService userService = new UserService();
         List<OtherUserView> following = userService.getFollowers(userid);
         return following;
     }
@@ -77,7 +77,6 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the profile-data of a certain user, based on the user-id", notes = "User-id has to be valid")
     public ProfileDataView getProfileByUserID(@PathParam("userid") long userid) {
-        ProfileDataService profileDataService = new ProfileDataService();
         ProfileDataView profileDataView = profileDataService.GetProfileData(userid);
         return profileDataView;
     }
@@ -87,7 +86,6 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the profile-data of a certain user, based on the username", notes = "Username has to be valid")
     public ProfileDataView getProfileByUserID(@PathParam("username") String username) {
-        ProfileDataService profileDataService = new ProfileDataService();
         ProfileDataView profileDataView = profileDataService.GetProfileData(username);
         return profileDataView;
     }
@@ -97,7 +95,6 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users total numbers", notes = "User id has to be valid and only the available data will be given as a result")
     public UserTotalsView getUserTotals(@PathParam("userid") long userid) {
-        ProfileDataService profileDataService = new ProfileDataService();
         UserTotalsView userTotalsView = profileDataService.GetUserTotals(userid);
         return userTotalsView;
     }
@@ -107,7 +104,6 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users total numbers", notes = "Username has to be valid and only the available data will be given as a result")
     public UserTotalsView getUserTotals(@PathParam("username") String username) {
-        ProfileDataService profileDataService = new ProfileDataService();
         UserTotalsView userTotalsView = profileDataService.GetUserTotals(username);
         return userTotalsView;
     }

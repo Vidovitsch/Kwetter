@@ -7,12 +7,14 @@ import Qualifier.Mock;
 import ViewModels.ProfileDataView;
 import ViewModels.UserTotalsView;
 
+import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named(value = "profileDataService")
-@RequestScoped
+@Stateless
 public class ProfileDataService {
 
     @Inject @Mock
