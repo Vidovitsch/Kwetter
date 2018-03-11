@@ -16,11 +16,7 @@ import javax.print.attribute.standard.MediaSize;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
 public class UserService {
-
-//    @EJB
-//    private IProfileDao profileDao;
 
     IUserDao userDao = new UserDaoMock();
     IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());

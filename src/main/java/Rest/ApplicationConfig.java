@@ -2,6 +2,7 @@ package Rest;
 
 import Domain.Profile;
 import com.github.phillipkruger.apiee.ApieeService;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.core.Application;
 import java.util.Collections;
@@ -21,7 +22,7 @@ public class ApplicationConfig extends Application {
 
         //features
         //this will register Jackson JSON providers
-        //resources.add(JacksonFeature.class);
+        resources.add(JacksonFeature.class);
         //we could also use this:
         resources.add(com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider.class);
 

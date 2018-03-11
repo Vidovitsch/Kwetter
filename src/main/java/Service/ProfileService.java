@@ -11,13 +11,10 @@ import org.apache.commons.validator.UrlValidator;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-@Stateless
 public class ProfileService {
 
-    @EJB
     IUserDao userDao = new UserDaoMock();
 
-    @EJB
     IProfileDao profileDao = new ProfileDaoMock(userDao.findAll());
 
     public ProfileService() {

@@ -6,22 +6,28 @@ import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.Profile;
 import Domain.User;
+import Qualifier.Mock;
 import ViewModels.UserImageView;
 import ViewModels.KweeterData;
 import Exception.*;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Stateless
+@Named(value = "kweeterDataService")
+@RequestScoped
 public class KweeterDataService {
 
-    @EJB
+    @Inject @Mock
     private IUserDao userDao;
 
-    @EJB
+    @Inject
+    @Mock
     private IKweetDao kweetDao;
 
     public KweeterDataService() { }
