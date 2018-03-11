@@ -1,16 +1,9 @@
 package Rest.Resources;
 
-import DAO.Mock.KweetDaoMock;
-import DAO.Mock.UserDaoMock;
-import DaoInterfaces.IKweetDao;
-import DaoInterfaces.IUserDao;
 import Service.ProfileDataService;
-import Service.ProfileService;
-import Service.TimelineService;
 import Service.UserService;
 import ViewModels.OtherUserView;
 import ViewModels.ProfileDataView;
-import ViewModels.TimelineItem;
 import ViewModels.UserTotalsView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -93,6 +86,26 @@ public class UserResource {
         ProfileDataService profileDataService = new ProfileDataService();
         ProfileDataView profileDataView = profileDataService.GetProfileData(username);
         return profileDataView;
+    }
+
+    @GET
+    @Path("/usertotals/byid/{userid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve a users total numbers", notes = "User id has to be valid and only the available data will be given as a result")
+    public UserTotalsView getUserTotals(@PathParam("userid") long userid) {
+        ProfileDataService profileDataService = new ProfileDataService();
+        UserTotalsView userTotalsView = profileDataService.GetUserTotals(userid);
+        return userTotalsView;
+    }
+
+    @GET
+    @Path("/usertotals/byusername/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve a users total numbers", notes = "Username has to be valid and only the available data will be given as a result")
+    public UserTotalsView getUserTotals(@PathParam("username") String username) {
+        ProfileDataService profileDataService = new ProfileDataService();
+        UserTotalsView userTotalsView = profileDataService.GetUserTotals(username);
+        return userTotalsView;
     }
 
     @GET

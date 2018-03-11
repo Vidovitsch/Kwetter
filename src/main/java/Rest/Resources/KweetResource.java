@@ -1,21 +1,10 @@
 package Rest.Resources;
-
-import DAO.Mock.KweetDaoMock;
-import DAO.Mock.UserDaoMock;
-import DaoInterfaces.IKweetDao;
-import DaoInterfaces.IUserDao;
-import Service.ProfileDataService;
 import Service.TimelineService;
-import ViewModels.ProfileDataView;
 import ViewModels.TimelineItem;
-import ViewModels.UserTotalsView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
@@ -33,25 +22,67 @@ public class KweetResource {
     }
 
     @GET
-    @Path("/mostrecent/byuserid/{userid}")
+    @Path("/last/{amount}/byuserid/{userid}")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Retrieve a users 10 most recent kweets", notes = "User id has to be valid and kweets have to be available")
-    public Set<TimelineItem> getMostRecentKweetsByID(@PathParam("userid") long userid) {
+    @ApiOperation(value = "Retrieve a users most recent kweets, based on the given amount", notes = "User id needs to be valid and kweets have to be present")
+    public Set<TimelineItem> getMostRecentKweetsByID(@PathParam("userid") long userid, @PathParam("userid") int amount) {
         TimelineService timelineService = new TimelineService();
-        Set<TimelineItem> mostRecentKweets = timelineService.TenMostRecentKweets(userid);
-        return mostRecentKweets;
+        return timelineService.MostRecentKweets(userid, amount);
     }
 
     @GET
     @Path("/timeline/byuserid/{userid}")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Retrieve a users 10 most recent kweets", notes = "User id has to be valid and kweets have to be available")
+    @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "User id has to be valid and kweets have to be available")
     public Set<TimelineItem> getTimelineByUserID(@PathParam("userid") long userid) {
         TimelineService timelineService = new TimelineService();
-        Set<TimelineItem> mostRecentKweets = timelineService.GenerateTimeLine(userid);
-        return mostRecentKweets;
+        return timelineService.GenerateTimeLine(userid);
+    }
+
+    @GET
+    @Path("/mentions/byuserid/{userid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "ID has to be a valid user-id")
+    public Set<TimelineItem> getMentionsByUserID(@PathParam("userid") long userID) {
+        TimelineService timelineService = new TimelineService();
+        return timelineService.GenerateMentionsTimeLine(userID);
     }
 
 
+    @GET
+    @Path("/last/{amount}/byusername/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve a users most recent kweets, based on the given amount", notes = "Username needs to be valid and kweets have to be present")
+    public Set<TimelineItem> getMostRecentKweetsByUsername(@PathParam("username") String username, @PathParam("amount") int amount) {
+        TimelineService timelineService = new TimelineService();
+        return timelineService.MostRecentKweets(username, amount);
+    }
+
+    @GET
+    @Path("/timeline/byusername/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "Username has to be valid and kweets have to be available")
+    public Set<TimelineItem> getTimelineByUsername(@PathParam("username") String username) {
+        TimelineService timelineService = new TimelineService();
+        return timelineService.GenerateTimeLine(username);
+    }
+
+    @GET
+    @Path("/mentions/byusername/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "Username has to be a valid user-id")
+    public Set<TimelineItem> getMentionsByUsername(@PathParam("username") String username) {
+        TimelineService timelineService = new TimelineService();
+        return timelineService.GenerateMentionsTimeLine(username);
+    }
+
+    @POST
+    @Path("/mentions/byusername/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "Username has to be a valid user-id")
+    public Set<TimelineItem> publishKweet(@PathParam("username") String username) {
+        TimelineService timelineService = new TimelineService();
+        return timelineService.GenerateMentionsTimeLine(username);
+    }
 
 }
