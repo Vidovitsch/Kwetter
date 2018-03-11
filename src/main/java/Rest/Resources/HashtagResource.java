@@ -7,6 +7,7 @@ import ViewModels.TrendView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -26,6 +27,9 @@ public class HashtagResource {
     @Context
     private UriInfo context;
 
+    @EJB
+    TrendService trendService;
+
     public HashtagResource(){
     }
 
@@ -34,7 +38,6 @@ public class HashtagResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the trends for the current week", notes = "")
     public List<TrendView> getTrends() {
-        TrendService trendService = new TrendService();
         ArrayList<TrendView> trends = new ArrayList<>();
         for(String trend : trendService.get()){
             trends.add(new TrendView(trend));

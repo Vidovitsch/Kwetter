@@ -9,6 +9,7 @@ import Domain.User;
 import Exception.*;
 import Qualifier.Mock;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Named(value = "kweetService")
-@RequestScoped
+@Stateless
 public class KweetService {
 
     @Inject @Mock

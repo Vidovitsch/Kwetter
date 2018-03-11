@@ -12,6 +12,8 @@ import ViewModels.TimelineItem;
 import ViewModels.TrendView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -30,6 +32,14 @@ public class HomepageDataResource {
     @Context
     private UriInfo context;
 
+    @EJB
+    KweeterDataService kweeterDataService;
+
+    @EJB
+    TimelineService timelineService;
+
+    @EJB
+    TrendService trendService;
 
     public HomepageDataResource(){
     }
@@ -40,7 +50,6 @@ public class HomepageDataResource {
     @ApiOperation(value = "Retrieve a KweetMessage", notes = "Return some kweet as JSON to the client")
     public KweeterData getKweeterDataByUsername(@PathParam("username") String username) {
         try {
-            KweeterDataService kweeterDataService = new KweeterDataService();
             KweeterData k = kweeterDataService.getKweeterData(username);
 
             return k;
@@ -56,7 +65,6 @@ public class HomepageDataResource {
     @ApiOperation(value = "Retrieve Kweeters Data for the homepage", notes = "ID has to be a valid user-id")
     public KweeterData getKweeterDataByID(@PathParam("userid") long userID) {
         try {
-            KweeterDataService kweeterDataService = new KweeterDataService();
             KweeterData k = kweeterDataService.getKweeterData(userID);
             return k;
         } catch (UserNotFoundException ex) {
@@ -70,7 +78,6 @@ public class HomepageDataResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user", notes = "ID has to be a valid user-id")
     public Set<TimelineItem> getTimeline(@PathParam("userid") long userID) {
-        TimelineService timelineService = new TimelineService();
         Set<TimelineItem> timeline = timelineService.GenerateTimeLine(userID);
         return timeline;
     }
@@ -80,7 +87,6 @@ public class HomepageDataResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "ID has to be a valid user-id")
     public Set<TimelineItem> getMentionsTimeline(@PathParam("userid") long userID) {
-        TimelineService timelineService = new TimelineService();
         Set<TimelineItem> mentionsTimeline = timelineService.GenerateMentionsTimeLine(userID);
         return mentionsTimeline;
     }
@@ -90,7 +96,6 @@ public class HomepageDataResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the trends for the current week", notes = "")
     public List<TrendView> getTrends() {
-        TrendService trendService = new TrendService();
         ArrayList<TrendView> trends = new ArrayList<>();
         for(String trend : trendService.get()){
             trends.add(new TrendView(trend));

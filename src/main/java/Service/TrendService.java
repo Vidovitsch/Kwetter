@@ -5,13 +5,14 @@ import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 import Qualifier.Mock;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
 
 @Named(value = "trendService")
-@RequestScoped
+@Stateless
 public class TrendService {
 
     @Inject @Mock

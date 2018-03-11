@@ -8,6 +8,7 @@ import Qualifier.Mock;
 import ViewModels.TimelineItem;
 import ViewModels.UserUsernameView;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,7 +18,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 @Named(value = "timelineService")
-@RequestScoped
+@Stateless
 public class TimelineService {
 
     @Inject @Mock

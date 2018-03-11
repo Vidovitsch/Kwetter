@@ -12,6 +12,7 @@ import ViewModels.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -26,12 +27,12 @@ public class ProfilePageDataResource {
 
     @Context
     private UriInfo context;
-    IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock();
 
-    public ProfilePageDataResource(IKweetDao kweetDao) {
-        this.kweetDao = kweetDao;
-    }
+    @EJB
+    TimelineService timelineService;
+
+    @EJB
+    ProfileDataService profileDataService;
 
     public ProfilePageDataResource(){
     }
@@ -41,7 +42,6 @@ public class ProfilePageDataResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users 10 most recent kweets", notes = "User id has to be valid and kweets have to be available")
     public Set<TimelineItem> getMostRecentKweetsByID(@PathParam("userid") long userid) {
-        TimelineService timelineService = new TimelineService();
         Set<TimelineItem> mostRecentKweets = timelineService.MostRecentKweets(userid, 10);
         return mostRecentKweets;
     }
@@ -51,7 +51,6 @@ public class ProfilePageDataResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users profile data", notes = "User id has to be valid and only the available data will be given as a result")
     public ProfileDataView getProfileData(@PathParam("userid") long userid) {
-        ProfileDataService profileDataService = new ProfileDataService();
         ProfileDataView profileDataView = profileDataService.GetProfileData(userid);
         return profileDataView;
     }
@@ -61,7 +60,6 @@ public class ProfilePageDataResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users total numbers", notes = "User id has to be valid and only the available data will be given as a result")
     public UserTotalsView getUserTotals(@PathParam("userid") long userid) {
-        ProfileDataService profileDataService = new ProfileDataService();
         UserTotalsView userTotalsView = profileDataService.GetUserTotals(userid);
         return userTotalsView;
     }
