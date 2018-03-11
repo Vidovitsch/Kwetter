@@ -1,7 +1,5 @@
 package Service;
 
-import DAO.Mock.ProfileDaoMock;
-import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;

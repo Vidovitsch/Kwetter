@@ -1,7 +1,5 @@
 package Service;
 
-import DAO.Mock.KweetDaoMock;
-import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IKweetDao;
 import DaoInterfaces.IUserDao;
 import Domain.Kweet;

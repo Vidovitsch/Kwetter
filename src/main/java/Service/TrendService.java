@@ -1,7 +1,6 @@
 package Service;
 
 import Comparator.TrendComparator;
-import DAO.Mock.HashtagDaoMock;
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 import Qualifier.Mock;

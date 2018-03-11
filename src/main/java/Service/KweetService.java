@@ -1,8 +1,5 @@
 package Service;
 
-import DAO.Mock.HashtagDaoMock;
-import DAO.Mock.KweetDaoMock;
-import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IHashtagDao;
 import DaoInterfaces.IKweetDao;
 import DaoInterfaces.IUserDao;
