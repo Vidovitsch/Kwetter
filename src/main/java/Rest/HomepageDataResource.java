@@ -9,6 +9,7 @@ import Service.TimelineService;
 import Service.TrendService;
 import ViewModels.KweeterData;
 import ViewModels.TimelineItem;
+import ViewModels.TrendView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.ws.rs.*;
@@ -81,9 +82,9 @@ public class HomepageDataResource {
     @Path("/trends")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the trends for the current week", notes = "")
-    public List<String> getTrends() {
+    public List<TrendView> getTrends() {
         TrendService trendService = new TrendService();
-        List<String> trends = trendService.get();
+        List<TrendView> trends = trendService.get();
         return trends;
     }
 
