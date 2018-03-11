@@ -7,10 +7,12 @@ import Domain.Profile;
 import Domain.User;
 import Util.MockService;
 
+import javax.enterprise.context.Dependent;
 import java.util.ArrayList;
 import java.util.List;
 
 @Mock
+@Dependent
 public class ProfileDaoMock implements IProfileDao {
 
     private List<Profile> mockProfiles;
