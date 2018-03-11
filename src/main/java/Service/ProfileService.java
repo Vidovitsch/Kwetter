@@ -6,19 +6,24 @@ import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Exception.*;
+import Qualifier.Mock;
 import org.apache.commons.validator.UrlValidator;
 
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+@Named(value = "profileService")
+@RequestScoped
 public class ProfileService {
 
+    @Inject @Mock
     private IUserDao userDao;
 
+    @Inject @Mock
     private IProfileDao profileDao;
 
-    public ProfileService() {
-        // Hardcode mock instances (replace by @Mock)
-        this.userDao = new UserDaoMock();
-        this.profileDao = new ProfileDaoMock();
-    }
+    public ProfileService() { }
 
     public Profile CreateProfile(Profile p, String username) throws InvalidProfileException {
         if (p.getName() == null || p.getName().isEmpty()) throw new InvalidProfileException("Profile name can't be empty");

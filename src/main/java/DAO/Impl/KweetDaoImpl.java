@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import java.util.List;
 
+@Default
 public class KweetDaoImpl implements IKweetDao {
 
     @Override

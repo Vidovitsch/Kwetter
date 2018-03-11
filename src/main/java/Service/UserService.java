@@ -8,20 +8,20 @@ import Domain.Profile;
 import Domain.User;
 import ViewModels.OtherUserView;
 
+import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
+@Named(value = "userService")
+@RequestScoped
 public class UserService {
 
     private IUserDao userDao;
 
     private IProfileDao profileDao;
 
-    public UserService() {
-        // Hardcode mock instances (replace by @Mock)
-        this.userDao = new UserDaoMock();
-        this.profileDao = new ProfileDaoMock();
-    }
+    public UserService() { }
 
     public boolean createProfile(Profile profile) {
         if (profile.getName().equals("") || profile.getName() == null || profile.getUser() == null) {

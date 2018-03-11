@@ -4,17 +4,22 @@ import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
+import Qualifier.Mock;
 import ViewModels.ProfileDataView;
 import ViewModels.UserTotalsView;
 
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+@Named(value = "profileDataService")
+@RequestScoped
 public class ProfileDataService {
 
+    @Inject @Mock
     private IUserDao userDao;
 
-    public ProfileDataService() {
-        // Hardcode mock instances (replace by @Mock)
-        this.userDao = new UserDaoMock();
-    }
+    public ProfileDataService() { }
 
     public ProfileDataView GetProfileData(long userid){
         Profile p = userDao.findById(userid).getProfile();

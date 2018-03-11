@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import java.util.List;
 
+@Default
 public class HastagDaoImpl implements IHashtagDao {
 
     @Override

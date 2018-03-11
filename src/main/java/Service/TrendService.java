@@ -4,17 +4,21 @@ import Comparator.TrendComparator;
 import DAO.Mock.HashtagDaoMock;
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
+import Qualifier.Mock;
 
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 
+@Named(value = "trendService")
+@RequestScoped
 public class TrendService {
 
+    @Inject @Mock
     private IHashtagDao hashtagDao;
 
-    public TrendService() {
-        // Hardcode mock instances (replace by @Mock)
-        this.hashtagDao = new HashtagDaoMock();
-    }
+    public TrendService() { }
 
     /**
      * To Do
