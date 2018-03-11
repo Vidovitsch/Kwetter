@@ -4,6 +4,8 @@ import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Profile;
 import Domain.User;
+import Util.MockService;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,12 +15,15 @@ import java.util.List;
 public class ProfileDaoTest {
 
     private static IProfileDao profileDao;
-    private static IUserDao userDao;
 
     @BeforeClass
     public static void Init() {
-        userDao = new UserDaoMock();
         profileDao = new ProfileDaoMock();
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        MockService.resetMockData();
     }
 
     @Test

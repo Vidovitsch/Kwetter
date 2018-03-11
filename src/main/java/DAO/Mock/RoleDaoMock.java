@@ -5,15 +5,18 @@ import Qualifier.Mock;
 import Util.MockFactory;
 import Domain.Role;
 import Domain.User;
+import Util.MockService;
+
 import java.util.List;
 
 @Mock
 public class RoleDaoMock implements IRoleDao {
 
-    // Singleton
-    private static List<Role> mockRoles;
+    private List<Role> mockRoles;
 
-    public RoleDaoMock() { }
+    public RoleDaoMock() {
+        mockRoles = MockService.getInstance().getRoles();
+    }
 
     @Override
     public List<Role> findAll() {

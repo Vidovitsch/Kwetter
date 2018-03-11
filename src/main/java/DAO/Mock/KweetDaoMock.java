@@ -4,16 +4,18 @@ import DaoInterfaces.IKweetDao;
 import Domain.*;
 import Qualifier.Mock;
 import Util.MockFactory;
+import Util.MockService;
 
 import java.util.*;
 
 @Mock
 public class KweetDaoMock implements IKweetDao {
 
-    // Singleton
-    private static List<Kweet> mockKweets;
+    private List<Kweet> mockKweets;
 
-    public KweetDaoMock() { }
+    public KweetDaoMock() {
+        mockKweets = MockService.getInstance().getKweets();
+    }
 
     @Override
     public List<Kweet> findAll() {

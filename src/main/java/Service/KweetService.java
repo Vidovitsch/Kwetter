@@ -10,30 +10,29 @@ import Domain.Hashtag;
 import Domain.Kweet;
 import Domain.User;
 import Exception.*;
+import Qualifier.Mock;
 
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Named(value = "kweetService")
+@RequestScoped
 public class KweetService {
 
+    @Inject @Mock
     private IKweetDao kweetDao;
 
+    @Inject @Mock
     private IHashtagDao hashtagDao;
 
+    @Inject @Mock
     private IUserDao userDao;
 
-    public KweetService() {
-        this.userDao = new UserDaoMock();
-        this.kweetDao = new KweetDaoMock();
-        this.hashtagDao = new HashtagDaoMock();
-    }
-
-    public KweetService(IKweetDao kweetDao, IHashtagDao hashtagDao, IUserDao userDao) {
-        this.kweetDao = kweetDao;
-        this.hashtagDao = hashtagDao;
-        this.userDao = userDao;
-    }
+    public KweetService() { }
 
     /**
      * To Do

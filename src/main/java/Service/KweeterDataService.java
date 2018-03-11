@@ -8,28 +8,29 @@ import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.Profile;
 import Domain.User;
+import Qualifier.Mock;
 import ViewModels.UserImageView;
 import ViewModels.KweeterData;
 import Exception.*;
 
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Named(value = "kweeterDataService")
+@RequestScoped
 public class KweeterDataService {
 
+    @Inject @Mock
     private IUserDao userDao;
+
+    @Inject @Mock
     private IKweetDao kweetDao;
 
-    public KweeterDataService() {
-        this.userDao = new UserDaoMock();
-        this.kweetDao = new KweetDaoMock();
-    }
-
-    public KweeterDataService(IUserDao userDao, IKweetDao kweetDao) {
-        this.userDao = userDao;
-        this.kweetDao = kweetDao;
-    }
+    public KweeterDataService() { }
 
     public KweeterData getKweeterData(Long userId) throws UserNotFoundException {
         return getKweeterData(userDao.findById(userId).getUsername());

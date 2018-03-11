@@ -1,26 +1,27 @@
 package Service;
 
-import DAO.Mock.KweetDaoMock;
 import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
-import DaoInterfaces.IKweetDao;
 import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
 import ViewModels.OtherUserView;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.print.attribute.standard.MediaSize;
+import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
+@Named(value = "userService")
+@RequestScoped
 public class UserService {
 
-    IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock();
-    IProfileDao profileDao = new ProfileDaoMock();
+    private IUserDao userDao;
+
+    private IProfileDao profileDao;
+
+    public UserService() { }
 
     public boolean createProfile(Profile profile) {
         if (profile.getName().equals("") || profile.getName() == null || profile.getUser() == null) {

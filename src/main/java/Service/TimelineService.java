@@ -1,29 +1,34 @@
 package Service;
 
 import DAO.Mock.KweetDaoMock;
-import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IKweetDao;
-import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.User;
+import Qualifier.Mock;
 import ViewModels.TimelineItem;
 import ViewModels.UserUsernameView;
 
+import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+@Named(value = "timelineService")
+@RequestScoped
 public class TimelineService {
 
-    IUserDao userDao;
-    IKweetDao kweetDao;
-    IProfileDao profileDao;
+    @Inject @Mock
+    private IUserDao userDao;
 
-    public TimelineService() {
-    }
+    @Inject @Mock
+    private IKweetDao kweetDao;
+
+    public TimelineService() { }
 
     public TreeSet<TimelineItem> GenerateTimeLine(long userid) {
         User user = userDao.findById(userid);
