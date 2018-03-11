@@ -67,7 +67,6 @@ public class HomepageDataResource {
         try {
             KweeterDataService kweeterDataService = new KweeterDataService();
             KweeterData k = kweeterDataService.getKweeterData(userID);
-
             return k;
         } catch (UserNotFoundException ex) {
             return null; // Even aanpassen
