@@ -11,16 +11,10 @@ import java.util.List;
 @Mock
 public class ProfileDaoMock implements IProfileDao {
 
-    private List<Profile> mockProfiles;
+    // Singleton
+    private static List<Profile> mockProfiles;
 
     public ProfileDaoMock() { }
-
-    @SuppressWarnings("unchecked")
-    public void setMockProfiles(List<User> users) {
-        mockProfiles = (List<Profile>)MockFactory.createMocks(Profile.class, 10);
-        MockFactory.setNewIds(mockProfiles);
-        connectDummyProfiles(mockProfiles, users);
-    }
 
     @Override
     public List<Profile> findAll() {
@@ -90,15 +84,5 @@ public class ProfileDaoMock implements IProfileDao {
     @Override
     public boolean remove(Profile profile) {
         return mockProfiles.remove(profile);
-    }
-
-    // For mock purposes
-    private void connectDummyProfiles(List<Profile> profiles, List<User> users) {
-        if (users.size() >= profiles.size()) {
-            for (int i = 0; i < profiles.size(); i++) {
-                profiles.get(i).setUser(users.get(i));
-                users.get(i).setProfile(profiles.get(i));
-            }
-        }
     }
 }

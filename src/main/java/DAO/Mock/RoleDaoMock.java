@@ -10,16 +10,10 @@ import java.util.List;
 @Mock
 public class RoleDaoMock implements IRoleDao {
 
-    private List<Role> mockRoles;
+    // Singleton
+    private static List<Role> mockRoles;
 
     public RoleDaoMock() { }
-
-    @SuppressWarnings("unchecked")
-    public void setMockRoles(List<User> users) {
-        mockRoles = (List<Role>)MockFactory.createMocks(Role.class, 10);
-        MockFactory.setNewIds(mockRoles);
-        connectDummyRoles(mockRoles, users);
-    }
 
     @Override
     public List<Role> findAll() {
@@ -77,15 +71,5 @@ public class RoleDaoMock implements IRoleDao {
     @Override
     public boolean remove(Role role) {
         return mockRoles.remove(role);
-    }
-
-    // For mock purposes
-    private void connectDummyRoles(List<Role> roles, List<User> users) {
-        for (User user : users) {
-            user.setRoles(roles);
-        }
-        for (Role role : roles) {
-            role.setUsers(users);
-        }
     }
 }
