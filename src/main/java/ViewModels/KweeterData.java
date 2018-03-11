@@ -1,7 +1,5 @@
 package ViewModels;
 
-import Domain.Kweet;
-
 import java.util.Collection;
 import java.util.Date;
 
@@ -9,8 +7,8 @@ public class KweeterData {
     Date lastKweetDate;
     String lastKweetMessage;
     int totalKweets;
-    Collection<HomePageUserView> following;
-    Collection<HomePageUserView> followers;
+    Collection<UserImageView> following;
+    Collection<UserImageView> followers;
 
     public Date getLastKweetDate() {
         return lastKweetDate;
@@ -36,19 +34,19 @@ public class KweeterData {
         this.totalKweets = totalKweets;
     }
 
-    public Collection<HomePageUserView> getFollowing() {
+    public Collection<UserImageView> getFollowing() {
         return following;
     }
 
-    public void setFollowing(Collection<HomePageUserView> following) {
+    public void setFollowing(Collection<UserImageView> following) {
         this.following = following;
     }
 
-    public Collection<HomePageUserView> getFollowers() {
+    public Collection<UserImageView> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(Collection<HomePageUserView> followers) {
+    public void setFollowers(Collection<UserImageView> followers) {
         this.followers = followers;
     }
 

@@ -9,7 +9,7 @@ import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.Profile;
 import Domain.User;
-import ViewModels.HomePageUserView;
+import ViewModels.UserImageView;
 import ViewModels.KweeterData;
 
 import java.util.ArrayList;
@@ -46,23 +46,23 @@ public class KweeterDataService {
 
         User user = userDao.findByUsername(username);
 
-        ArrayList<HomePageUserView> following = new ArrayList<>();
+        ArrayList<UserImageView> following = new ArrayList<>();
         if(user != null) {
             Collection<User> followingUsers = user.getFollowing();
             if (followingUsers != null) {
                 for (User u : followingUsers) {
                     Profile p = u.getProfile();
-                    following.add(new HomePageUserView(p.getName(), p.getImage()));
+                    following.add(new UserImageView(p.getName(), p.getImage()));
                 }
                 data.setFollowing(following);
             }
 
-            ArrayList<HomePageUserView> followers = new ArrayList<>();
+            ArrayList<UserImageView> followers = new ArrayList<>();
             Collection<User> followerUsers = user.getFollowers();
             if (followerUsers != null) {
                 for (User u : followerUsers) {
                     Profile p = u.getProfile();
-                    followers.add(new HomePageUserView(p.getName(), p.getImage()));
+                    followers.add(new UserImageView(p.getName(), p.getImage()));
                 }
                 data.setFollowers(followers);
             }

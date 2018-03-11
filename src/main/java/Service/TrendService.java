@@ -14,13 +14,13 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.*;
 
-//@Stateless
+@Stateless
 public class TrendService {
 
     IUserDao userDao = new UserDaoMock();
     IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
     IProfileDao profileDao = new ProfileDaoMock(userDao.findAll());
-    //@EJB
+    @EJB
     private IHashtagDao hashtagDao = new HashtagDaoMock(kweetDao.findAll());
 
 

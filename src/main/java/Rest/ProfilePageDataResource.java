@@ -8,10 +8,7 @@ import Service.KweeterDataService;
 import Service.ProfileDataService;
 import Service.TimelineService;
 import Service.TrendService;
-import ViewModels.KweeterData;
-import ViewModels.ProfileDataView;
-import ViewModels.TimelineItem;
-import ViewModels.TrendView;
+import ViewModels.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -24,8 +21,8 @@ import java.util.Set;
 
 
 @Path("profilepage")
-@Api(value = "profilepage resources")
-public class ProfilepageDataResource {
+@Api(value = "Profilepage resources")
+public class ProfilePageDataResource {
 
     @Context
     private UriInfo context;
@@ -36,11 +33,11 @@ public class ProfilepageDataResource {
     /**
      * Creates a new instance of KweetResource
      */
-    public ProfilepageDataResource(IKweetDao kweetDao) {
+    public ProfilePageDataResource(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
     }
 
-    public ProfilepageDataResource(){
+    public ProfilePageDataResource(){
     }
 
     @GET
@@ -61,5 +58,15 @@ public class ProfilepageDataResource {
         ProfileDataService profileDataService = new ProfileDataService();
         ProfileDataView profileDataView = profileDataService.GetProfileData(userid);
         return profileDataView;
+    }
+
+    @GET
+    @Path("/usertotals/byid/{userid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve a users total numbers", notes = "User id has to be valid and only the available data will be given as a result")
+    public UserTotalsView getUserTotals(@PathParam("userid") long userid) {
+        ProfileDataService profileDataService = new ProfileDataService();
+        UserTotalsView userTotalsView = profileDataService.GetUserTotals(userid);
+        return userTotalsView;
     }
 }

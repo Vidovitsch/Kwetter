@@ -7,7 +7,9 @@ import DaoInterfaces.IKweetDao;
 import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
+import Domain.User;
 import ViewModels.ProfileDataView;
+import ViewModels.UserTotalsView;
 
 public class ProfileDataService {
     IUserDao userDao = new UserDaoMock();
@@ -18,5 +20,14 @@ public class ProfileDataService {
         Profile p = userDao.findById(userid).getProfile();
         ProfileDataView profileDataView = new ProfileDataView(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
         return profileDataView;
+    }
+
+    public UserTotalsView GetUserTotals(long userid){
+        User u = userDao.findById(userid);
+        int following = u.getFollowing().size();
+        int followers = u.getFollowers().size();
+        int kweets = u.getKweets().size();
+        UserTotalsView userTotalsView = new UserTotalsView(following,followers,kweets);
+        return userTotalsView;
     }
 }
