@@ -1,9 +1,7 @@
 package ViewModels;
 
-import Domain.User;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public class TimelineItem implements Comparable {
 
@@ -11,11 +9,17 @@ public class TimelineItem implements Comparable {
     public Date postDate;
     public String message;
     public String username;
-    public Set<User> hearts;
+    public List<UserUsernameView> hearts;
     public boolean ownKweet;
-    public List<User> mentions;
+    public List<UserUsernameView> mentions;
 
     public int compareTo(Object o) {
-        return this.postDate.compareTo(((TimelineItem)o).postDate);
+        int first = this.postDate.compareTo(((TimelineItem) o).postDate);
+        first = first == 0 ? this.postDate.compareTo(((TimelineItem)o).postDate) : first;
+        if(first == 0 && kweetID != ((TimelineItem) o).kweetID){
+            return -1;
+        }else {
+            return 0;
+        }
     }
 }

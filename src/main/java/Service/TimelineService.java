@@ -1,17 +1,25 @@
 package Service;
 
 import DAO.Mock.KweetDaoMock;
+import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IKweetDao;
+import DaoInterfaces.IProfileDao;
+import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.User;
 import ViewModels.TimelineItem;
+import ViewModels.UserUsernameView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
 
 public class TimelineService {
 
-    IKweetDao kweetDao = new KweetDaoMock((new UserDaoMock()).findAll());
+    IUserDao userDao = new UserDaoMock();
+    IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
+    IProfileDao profileDao = new ProfileDaoMock(userDao.findAll());
 
     public TimelineService() {
     }
@@ -51,8 +59,17 @@ public class TimelineService {
         timelineItem.message = k.getMessage();
         timelineItem.username = k.getSender().getUsername();
         timelineItem.ownKweet = owner;
-        timelineItem.hearts = k.getHearts();
-        timelineItem.mentions = k.getMentions();
+        List<UserUsernameView> hearts = new ArrayList<>();
+        for(User u : k.getHearts()){
+            hearts.add(new UserUsernameView(u.getUsername(), u.getId()));
+        }
+        timelineItem.hearts = hearts;
+
+        List<UserUsernameView> mentions = new ArrayList<>();
+        for(User u : k.getHearts()){
+            mentions.add(new UserUsernameView(u.getUsername(), u.getId()));
+        }
+        timelineItem.mentions = mentions;
 
         return timelineItem;
     }
