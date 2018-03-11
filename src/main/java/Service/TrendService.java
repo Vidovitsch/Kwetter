@@ -3,7 +3,6 @@ package Service;
 import Comparator.TrendComparator;
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.*;
@@ -21,15 +20,15 @@ public class TrendService {
      *
      * @return
      */
-    public List<Hashtag> get() {
+    public List<String> get() {
         List<Hashtag> trends = filterOnDates(hashtagDao.findAll());
         Collections.sort(trends, new TrendComparator());
 
-        return trends;
+        return convertToNameList(trends);
     }
 
     private List<Hashtag> filterOnDates(List<Hashtag> trends) {
-        List<Hashtag> filteredTrends = new ArrayList<Hashtag>();
+        List<Hashtag> filteredTrends = new ArrayList<>();
         Date weekAgo = getDateWeekAgo();
         for (Hashtag trend : trends) {
             if (trend.getLastUsed().after(weekAgo)) {
@@ -46,5 +45,14 @@ public class TrendService {
         cal.add(Calendar.DATE, -7);
 
         return cal.getTime();
+    }
+
+    private List<String> convertToNameList(List<Hashtag> hashtags) {
+        List<String> names = new ArrayList<>();
+        for (Hashtag hashtag : hashtags) {
+            names.add(hashtag.getName());
+        }
+
+        return names;
     }
 }
