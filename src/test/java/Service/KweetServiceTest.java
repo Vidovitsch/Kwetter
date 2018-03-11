@@ -19,8 +19,8 @@ import java.util.List;
 public class KweetServiceTest {
 
     private static IUserDao userDao = new UserDaoMock();
-    private static IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
-    private static IHashtagDao hashtagDao = new HashtagDaoMock(kweetDao.findAll());
+    private static IKweetDao kweetDao = new KweetDaoMock();
+    private static IHashtagDao hashtagDao = new HashtagDaoMock();
 
     private static KweetService service;
 

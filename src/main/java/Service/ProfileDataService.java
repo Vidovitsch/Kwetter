@@ -14,8 +14,8 @@ import ViewModels.UserTotalsView;
 public class ProfileDataService {
 
     IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
-    IProfileDao profileDao = new ProfileDaoMock(userDao.findAll());
+    IKweetDao kweetDao = new KweetDaoMock();
+    IProfileDao profileDao = new ProfileDaoMock();
 
     public ProfileDataView GetProfileData(long userid){
         Profile p = userDao.findById(userid).getProfile();

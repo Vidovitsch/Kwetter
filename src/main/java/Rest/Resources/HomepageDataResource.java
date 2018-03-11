@@ -1,4 +1,4 @@
-package Rest;
+package Rest.Resources;
 
 import DAO.Mock.KweetDaoMock;
 import DAO.Mock.UserDaoMock;
@@ -29,16 +29,7 @@ public class HomepageDataResource {
 
     @Context
     private UriInfo context;
-    IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
 
-
-    /**
-     * Creates a new instance of KweetResource
-     */
-    public HomepageDataResource(IKweetDao kweetDao) {
-        this.kweetDao = kweetDao;
-    }
 
     public HomepageDataResource(){
     }
@@ -80,7 +71,7 @@ public class HomepageDataResource {
     @ApiOperation(value = "Retrieve the Timeline for a user", notes = "ID has to be a valid user-id")
     public Set<TimelineItem> getTimeline(@PathParam("userid") long userID) {
         TimelineService timelineService = new TimelineService();
-        Set<TimelineItem> timeline = timelineService.GenerateTimeLine(userDao.findById(userID));
+        Set<TimelineItem> timeline = timelineService.GenerateTimeLine(userID);
         return timeline;
     }
 
@@ -90,7 +81,7 @@ public class HomepageDataResource {
     @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "ID has to be a valid user-id")
     public Set<TimelineItem> getMentionsTimeline(@PathParam("userid") long userID) {
         TimelineService timelineService = new TimelineService();
-        Set<TimelineItem> mentionsTimeline = timelineService.GenerateMentionsTimeLine(userDao.findById(userID));
+        Set<TimelineItem> mentionsTimeline = timelineService.GenerateMentionsTimeLine(userID);
         return mentionsTimeline;
     }
 

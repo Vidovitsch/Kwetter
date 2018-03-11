@@ -14,8 +14,7 @@ import javax.ejb.Stateless;
 public class ProfileService {
 
     IUserDao userDao = new UserDaoMock();
-
-    IProfileDao profileDao = new ProfileDaoMock(userDao.findAll());
+    IProfileDao profileDao = new ProfileDaoMock();
 
     public ProfileService() {
     }

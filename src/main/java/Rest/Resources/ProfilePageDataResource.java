@@ -1,4 +1,4 @@
-package Rest;
+package Rest.Resources;
 
 import DAO.Mock.KweetDaoMock;
 import DAO.Mock.UserDaoMock;
@@ -27,12 +27,8 @@ public class ProfilePageDataResource {
     @Context
     private UriInfo context;
     IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
+    IKweetDao kweetDao = new KweetDaoMock();
 
-
-    /**
-     * Creates a new instance of KweetResource
-     */
     public ProfilePageDataResource(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
     }

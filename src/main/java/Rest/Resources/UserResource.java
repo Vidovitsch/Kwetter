@@ -1,4 +1,4 @@
-package Rest;
+package Rest.Resources;
 
 import DAO.Mock.KweetDaoMock;
 import DAO.Mock.UserDaoMock;
@@ -29,16 +29,6 @@ public class UserResource {
 
     @Context
     private UriInfo context;
-    IUserDao userDao = new UserDaoMock();
-    IKweetDao kweetDao = new KweetDaoMock(userDao.findAll());
-
-
-    /**
-     * Creates a new instance of KweetResource
-     */
-    public UserResource(IKweetDao kweetDao) {
-        this.kweetDao = kweetDao;
-    }
 
     public UserResource(){
     }

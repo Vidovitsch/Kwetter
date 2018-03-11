@@ -17,7 +17,7 @@ public class KweetDaoTest {
     @BeforeClass
     public static void Init() {
         IUserDao userDao = new UserDaoMock();
-        kweetDao = new KweetDaoMock(userDao.findAll());
+        kweetDao = new KweetDaoMock();
     }
 
     @Test

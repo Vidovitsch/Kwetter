@@ -25,8 +25,8 @@ public class KweetService {
 
     public KweetService() {
         this.userDao = new UserDaoMock();
-        this.kweetDao = new KweetDaoMock(userDao.findAll());
-        this.hashtagDao = new HashtagDaoMock(kweetDao.findAll());
+        this.kweetDao = new KweetDaoMock();
+        this.hashtagDao = new HashtagDaoMock();
     }
 
     public KweetService(IKweetDao kweetDao, IHashtagDao hashtagDao, IUserDao userDao) {
@@ -138,6 +138,10 @@ public class KweetService {
         } else {
             return new ArrayList<>();
         }
+    }
+
+    public List<Kweet> getAllKweets(){
+        return kweetDao.findAll();
     }
 
     private List<String> parseNames(char prefix, String message) {

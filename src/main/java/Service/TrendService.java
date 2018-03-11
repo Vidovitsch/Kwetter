@@ -21,8 +21,8 @@ public class TrendService {
 
     public TrendService() {
         this.userDao = new UserDaoMock();
-        this.kweetDao = new KweetDaoMock(userDao.findAll());
-        this.hashtagDao = new HashtagDaoMock(kweetDao.findAll());
+        this.kweetDao = new KweetDaoMock();
+        this.hashtagDao = new HashtagDaoMock();
     }
 
     public TrendService(IHashtagDao hashtagDao) {

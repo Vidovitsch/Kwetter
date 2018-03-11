@@ -19,12 +19,11 @@ import java.util.List;
 public class KweeterDataService {
 
     private IUserDao userDao;
-
     private IKweetDao kweetDao;
 
     public KweeterDataService() {
         this.userDao = new UserDaoMock();
-        this.kweetDao = new KweetDaoMock(userDao.findAll());
+        this.kweetDao = new KweetDaoMock();
     }
 
     public KweeterDataService(IUserDao userDao, IKweetDao kweetDao) {

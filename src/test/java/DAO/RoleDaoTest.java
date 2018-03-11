@@ -17,7 +17,7 @@ public class RoleDaoTest {
     @BeforeClass
     public static void Init() {
         userDao = new UserDaoMock();
-        roleDao = new RoleDaoMock(userDao.findAll());
+        roleDao = new RoleDaoMock();
     }
 
     @Test
