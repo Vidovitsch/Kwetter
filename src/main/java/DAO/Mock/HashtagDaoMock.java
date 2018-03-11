@@ -43,6 +43,7 @@ public class HashtagDaoMock implements IHashtagDao {
     public Hashtag create(Hashtag hashtag) {
         MockFactory.setNextId(hashtag, mockHashtags);
         mockHashtags.add(hashtag);
+
         return hashtag;
     }
 
