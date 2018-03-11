@@ -14,20 +14,28 @@ import Util.MockFactory;
 import Util.MockService;
 import org.junit.*;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 public class KweetServiceTest {
 
-    private static IUserDao userDao = new UserDaoMock();
-    private static IKweetDao kweetDao = new KweetDaoMock();
-    private static IHashtagDao hashtagDao = new HashtagDaoMock();
+    private static IUserDao userDao;
+    private static IKweetDao kweetDao;
+    private static IHashtagDao hashtagDao;
 
     private static KweetService service;
 
     @BeforeClass
     public static void setUp() {
+        userDao = new UserDaoMock();
+        kweetDao = new KweetDaoMock();
+        hashtagDao = new HashtagDaoMock();
+
         service = new KweetService();
+        service.setUserDao(userDao);
+        service.setKweetDao(kweetDao);
+        service.setHashtagDao(hashtagDao);
     }
 
     @AfterClass

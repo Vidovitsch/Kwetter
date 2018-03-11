@@ -22,13 +22,16 @@ import java.util.List;
 @RequestScoped
 public class KweeterDataService {
 
-    @Inject @Mock
+    @Inject
+    @Mock
     private IUserDao userDao;
 
-    @Inject @Mock
+    @Inject
+    @Mock
     private IKweetDao kweetDao;
 
-    public KweeterDataService() { }
+    public KweeterDataService() {
+    }
 
     public KweeterData getKweeterData(Long userId) throws UserNotFoundException {
         return getKweeterData(userDao.findById(userId).getUsername());
@@ -83,7 +86,15 @@ public class KweeterDataService {
                 }
             }
         }
-        
+
         return followers;
+    }
+
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setKweetDao(IKweetDao kweetDao) {
+        this.kweetDao = kweetDao;
     }
 }

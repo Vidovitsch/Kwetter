@@ -4,9 +4,11 @@ import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
+import Qualifier.Mock;
 import ViewModels.OtherUserView;
 
 import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +17,10 @@ import java.util.List;
 @RequestScoped
 public class UserService {
 
+    @Inject @Mock
     private IUserDao userDao;
 
+    @Inject @Mock
     private IProfileDao profileDao;
 
     public UserService() { }
@@ -65,6 +69,14 @@ public class UserService {
             OtherUserViews.add(new OtherUserView(u.getUsername(), image));
         }
         return OtherUserViews;
+    }
+
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setProfileDao(IProfileDao profileDao) {
+        this.profileDao = profileDao;
     }
 }
 

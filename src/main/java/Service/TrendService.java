@@ -59,4 +59,8 @@ public class TrendService {
 
         return names;
     }
+
+    public void setHashtagDao(IHashtagDao hashtagDao) {
+        this.hashtagDao = hashtagDao;
+    }
 }
