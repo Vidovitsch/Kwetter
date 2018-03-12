@@ -66,9 +66,9 @@ public class KweetService {
         }
     }
 
-    public Kweet publish(Long userId, String message) throws UserNotFoundException, InvalidKweetException {
+    public Kweet publish(String username, String message) throws UserNotFoundException, InvalidKweetException {
         // Find user by id and set is as sender of the kweet
-        User sender = userDao.findById(userId);
+        User sender = userDao.findByUsername(username);
         if (sender != null) {
             validateMessage(message);
 

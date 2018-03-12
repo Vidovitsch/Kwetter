@@ -45,13 +45,14 @@ public class KweetServiceTest {
     @Test
     public void publishNewKweet() throws UserNotFoundException, InvalidKweetException {
         // Setup
-        User user = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
+        User user = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "publishNewKweet").get(0));
 
         // Get kweets befor publish
         List<Kweet> kweets = new ArrayList<>(kweetDao.findAll());
 
         // Publish kweet
-        Kweet publishedKweet = service.publish(user.getId(), "A message");
+        Kweet publishedKweet = service.publish(user.getUsername(), "A message");
 
         // Get kweets after publish
         List<Kweet> fetchedKweets = kweetDao.findAll();
@@ -67,28 +68,31 @@ public class KweetServiceTest {
                 "safdasdfasfsdafasdfsdaflkfejalifjdfasfasfasfasfsafasfasdfalesijflasiejflaeifjljlasefijaeslifjalsiefj";
 
         // Setup
-        User user = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
+        User user = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "publishKweet_TooManyCharacters").get(0));
 
         // Publish kweet
-        service.publish(user.getId(), message);
+        service.publish(user.getUsername(), message);
     }
 
     @Test(expected = InvalidKweetException.class)
     public void publishKweet_MessageIsEmpty() throws UserNotFoundException, InvalidKweetException {
         // Setup
-        User user = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
+        User user = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "publishKweet_MessageIsEmpty").get(0));
 
         // Publish kweet
-        service.publish(user.getId(), "");
+        service.publish(user.getUsername(), "");
     }
 
     @Test(expected = InvalidKweetException.class)
     public void publishKweet_MessageIsNull() throws UserNotFoundException, InvalidKweetException {
         // Setup
-        User user = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
+        User user = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "publishKweet_MessageIsNull").get(0));
 
         // Publish kweet
-        service.publish(user.getId(), null);
+        service.publish(user.getUsername(), null);
     }
 
     @Test(expected = UserNotFoundException.class)
@@ -100,12 +104,15 @@ public class KweetServiceTest {
     @Test
     public void publishKweet_Mentions() throws UserNotFoundException, InvalidKweetException {
         // Setup
-        User rick = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Rick").get(0));
-        User john = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "John").get(0));
-        User hank = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Hank").get(0));
+        User rick = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "Rick").get(0));
+        User john = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "John").get(0));
+        User hank = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "Hank").get(0));
 
         // Publish kweet
-        Kweet publishedkweet = service.publish(hank.getId(), "A message: @Rick @John");
+        Kweet publishedkweet = service.publish(hank.getUsername(), "A message: @Rick @John");
 
         // Asserts
         List<User> mentions = publishedkweet.getMentions();
@@ -117,22 +124,27 @@ public class KweetServiceTest {
     @Test(expected = UserNotFoundException.class)
     public void publishKweet_MentionNotFound() throws UserNotFoundException, InvalidKweetException {
         // Setup
-        User hank = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Hank").get(0));
-        userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Rick").get(0));
-        userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "John").get(0));
+        User hank = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "Hank").get(0));
+        userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "Rick").get(0));
+        userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "John").get(0));
 
         // Publish kweet
-        service.publish(hank.getId(), "A message: @Rik @John");
+        service.publish(hank.getUsername(), "A message: @Rik @John");
     }
 
     @Test
     public void publishKweet_Hashtags() throws UserNotFoundException, InvalidKweetException {
         // Setup
-        User hank = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
-        Hashtag test1 = hashtagDao.create((Hashtag) MockFactory.createMocks(Hashtag.class, 1, "name", "test1").get(0));
+        User hank = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "publishKweet_Hashtags").get(0));
+        Hashtag test1 = hashtagDao.create(
+                (Hashtag) MockFactory.createMocks(Hashtag.class, 1, "name", "test1").get(0));
 
         // Publish kweet
-        Kweet publishedkweet = service.publish(hank.getId(), "A message: #test1 #kwetter1");
+        Kweet publishedkweet = service.publish(hank.getUsername(), "A message: #test1 #kwetter1");
 
         // Asserts
         List<Hashtag> hashtags = publishedkweet.getHashtags();
@@ -147,10 +159,11 @@ public class KweetServiceTest {
         // Setup
         String firstMessage = "A kweet message";
         String secondMessage = "Another kweet message";
-        User user = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
+        User user = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "updateKweet").get(0));
 
         // Publish kweet
-        Kweet publishedKweet = service.publish(user.getId(), firstMessage);
+        Kweet publishedKweet = service.publish(user.getUsername(), firstMessage);
 
         // Assert before update
         Assert.assertEquals(firstMessage, publishedKweet.getMessage());
@@ -165,7 +178,8 @@ public class KweetServiceTest {
     @Test(expected = KweetNotFoundException.class)
     public void updateKweet_NullKweet() throws UserNotFoundException, InvalidKweetException, KweetNotFoundException {
         // Setup
-        User user = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
+        User user = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1).get(0));
 
         // Assert update kweet
         service.publish(user.getId(), (long) -1, "A message");
@@ -174,10 +188,11 @@ public class KweetServiceTest {
     @Test
     public void deleteExistingKweet() throws UserNotFoundException, InvalidKweetException {
         // Setup
-        User user = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
+        User user = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "deleteExistingKweet").get(0));
 
         // Publish kweet
-        Kweet publishedKweet = service.publish(user.getId(), "A message");
+        Kweet publishedKweet = service.publish(user.getUsername(), "A message");
 
         // Assert before
         Assert.assertTrue(kweetDao.findAll().contains(publishedKweet));
@@ -207,14 +222,16 @@ public class KweetServiceTest {
     @Test
     public void giveHeart() throws UserNotFoundException, KweetNotFoundException, InvalidKweetException {
         // Setup
-        Kweet kweet = (Kweet) MockFactory.createMocks(Kweet.class, 1).get(0);
-        User user = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
+        Kweet kweet =
+                (Kweet) MockFactory.createMocks(Kweet.class, 1).get(0);
+        User user = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "giveHeart").get(0));
 
         // Assert before
         Assert.assertEquals("Kweet has 0 hearts", 0, kweet.getHearts().size());
 
         // Publish kweet
-        Kweet publishedKweet = service.publish(user.getId(), "A messaage");
+        Kweet publishedKweet = service.publish(user.getUsername(), "A messaage");
 
         // Give heart to kweet
         service.giveHeart(user.getId(), publishedKweet.getId());
@@ -228,7 +245,8 @@ public class KweetServiceTest {
     @Test(expected = KweetNotFoundException.class)
     public void giveHeart_KweetNull() throws UserNotFoundException, KweetNotFoundException {
         // Setup
-        User user = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
+        User user = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1).get(0));
 
         // Give heart to kweet
         service.giveHeart(user.getId(), (long) -1);
@@ -237,11 +255,13 @@ public class KweetServiceTest {
     @Test(expected = UserNotFoundException.class)
     public void giveHeart_UserNull() throws UserNotFoundException, KweetNotFoundException, InvalidKweetException {
         // Setup
-        Kweet kweet = (Kweet) MockFactory.createMocks(Kweet.class, 1).get(0);
-        User user = userDao.create((User) MockFactory.createMocks(User.class, 1).get(0));
+        Kweet kweet =
+                (Kweet) MockFactory.createMocks(Kweet.class, 1).get(0);
+        User user = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "giveHeart_UserNull").get(0));
 
         // Publish kweet
-        service.publish(user.getId(), "A message");
+        service.publish(user.getUsername(), "A message");
 
         // Give heart to kweet
         service.giveHeart((long) -1, kweet.getId());
@@ -250,16 +270,18 @@ public class KweetServiceTest {
     @Test
     public void search() throws UserNotFoundException, InvalidKweetException {
         // Setup
-        User kwet = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Leet").get(0));
-        User rick = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Rick").get(0));
+        User kwet = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "Laxcxc").get(0));
+        User rick = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "Rick").get(0));
 
         // Publish kweets
-        Kweet kweet1 = service.publish(kwet.getId(), "A message");
-        Kweet kweet2 = service.publish(rick.getId(), "A message: #test1 #kweet1");
-        service.publish(rick.getId(), "Somemessage");
+        Kweet kweet1 = service.publish(kwet.getUsername(), "A message");
+        Kweet kweet2 = service.publish(rick.getUsername(), "A message: #test1 #xcxc1");
+        service.publish(rick.getUsername(), "Somemessage");
 
         // Search
-        List<Kweet> results = service.search("eet");
+        List<Kweet> results = service.search("xcxc");
 
         // Asserts
         Assert.assertEquals("Two kweets met the given term", 2, results.size());
@@ -270,14 +292,15 @@ public class KweetServiceTest {
     @Test
     public void search_empty() throws UserNotFoundException, InvalidKweetException {
         // Setup
-        String message = "A message: #test1 #kweet1";
-        User kwet = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Leet").get(0));
-        User rick = userDao.create((User) MockFactory.createMocks(User.class, 1, "username", "Rick1").get(0));
+        User kwet = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "Let").get(0));
+        User rick = userDao.create(
+                (User) MockFactory.createMocks(User.class, 1, "username", "Rick1").get(0));
 
         // Publish kweets
-        service.publish(kwet.getId(), "A message");
-        service.publish(rick.getId(), "A message: #test1 #kweet1");
-        service.publish(rick.getId(), "Somemessage");
+        service.publish(kwet.getUsername(), "A message");
+        service.publish(rick.getUsername(), "A message: #test1 #kwet1");
+        service.publish(rick.getUsername(), "Somemessage");
 
         // Search
         List<Kweet> results = service.search("xqxq");

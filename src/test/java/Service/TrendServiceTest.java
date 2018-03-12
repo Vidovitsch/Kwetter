@@ -74,9 +74,9 @@ public class TrendServiceTest {
         kweetDao.create((Kweet) MockFactory.createMocks(Kweet.class, 1, "message", message4).get(0));
 
         // Publish
-        kweetService.publish(rick.getId(), message1);
-        kweetService.publish(rick.getId(), message2);
-        kweetService.publish(rick.getId(), message3);
+        kweetService.publish(rick.getUsername(), message1);
+        kweetService.publish(rick.getUsername(), message2);
+        kweetService.publish(rick.getUsername(), message3);
 
         // Get trend
         List<String> names = service.get();
