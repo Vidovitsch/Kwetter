@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "User")
+@Table(name = "User")
+@NamedQueries({
+        @NamedQuery(name = "User.findAll", query = "SELECT a FROM User AS a"),
+        @NamedQuery(name = "User.findByUsername", query = "SELECT a FROM User AS a WHERE a.username = :username")
+})
 public class User implements Mockable {
 
     @Id
@@ -16,19 +21,19 @@ public class User implements Mockable {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
     private Profile profile;
 
-    @Column(nullable = false)
+    @Column(name = "username", nullable = false)
     private String username;
 
     @ManyToMany
-    //@JoinTable(name = "UserRole",
-    //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
-    //        inverseJoinColumns = @JoinColumn(name="Role_ID", referencedColumnName = "ID", nullable = false))
+    @JoinTable(name = "UserRole",
+            joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="role_id", referencedColumnName = "id", nullable = false))
     private List<Role> roles = new ArrayList<Role>();
 
     @ManyToMany
-    //@JoinTable(name = "Following",
-    //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
-    //        inverseJoinColumns = @JoinColumn(name="Following_ID", referencedColumnName = "ID", nullable = false))
+    @JoinTable(name = "Following",
+            joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="following_id", referencedColumnName = "id", nullable = false))
     private List<User> following = new ArrayList<User>();
 
     @ManyToMany(mappedBy = "following")
@@ -38,9 +43,9 @@ public class User implements Mockable {
     private List<Kweet> kweets = new ArrayList<Kweet>();
 
     @ManyToMany
-    //@JoinTable(name = "Mention",
-    //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
-    //        inverseJoinColumns = @JoinColumn(name="Kweet_ID", referencedColumnName = "ID", nullable = false))
+    @JoinTable(name = "Mention",
+            joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="kweet_id", referencedColumnName = "id", nullable = false))
     private List<Kweet> mentions = new ArrayList<Kweet>();
 
     @ManyToMany(mappedBy = "hearts")

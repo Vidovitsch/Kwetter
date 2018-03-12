@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Role")
+@Table(name = "Role")
 public class Role implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "description")
     private String description;
 
     @ManyToMany(mappedBy = "roles")

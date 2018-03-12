@@ -51,6 +51,9 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.4" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.4" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:eclipselink:2.5.0" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:javax.persistence:2.1.0" />
+          <element id="library" level="project" name="Maven: org.eclipse.persistence:commonj.sdo:2.1.1" />
           <element id="library" level="project" name="Maven: com.google.javascript:closure-compiler:v20161024" />
           <element id="library" level="project" name="Maven: com.google.javascript:closure-compiler-externs:v20161024" />
           <element id="library" level="project" name="Maven: args4j:args4j:2.33" />

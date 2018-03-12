@@ -8,6 +8,7 @@ import javax.enterprise.inject.Default;
 import java.util.List;
 
 @Default
+@Stateless
 public class RoleDaoImpl implements IRoleDao {
 
     public RoleDaoImpl() { }

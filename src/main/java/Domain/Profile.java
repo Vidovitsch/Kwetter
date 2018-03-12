@@ -4,7 +4,8 @@ import Util.Mockable;
 
 import javax.persistence.*;
 
-@Entity(name = "Post")
+@Entity(name = "Profile")
+@Table(name = "Profile")
 public class Profile implements Mockable {
 
     @Id
@@ -12,14 +13,22 @@ public class Profile implements Mockable {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "image")
     private String image;
+
+    @Column(name = "biography")
     private String biography;
+
+    @Column(name = "location")
     private String location;
+
+    @Column(name = "website")
     private String website;
 
     public Profile() { }
@@ -41,10 +50,7 @@ public class Profile implements Mockable {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-        user.setProfile(this);
-    }
+    public void setUser(User user) { this.user = user; }
 
     public String getName() {
         return name;

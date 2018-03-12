@@ -18,7 +18,6 @@ import java.util.List;
 public class UserService {
 
     @Inject
-    @Mock
     private IUserDao userDao;
 
     @Inject
