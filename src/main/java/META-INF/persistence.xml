@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
-    <persistence-unit name="URegisterPU" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="Kwetter" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>Domain.User</class>
+        <class>Domain.Hashtag</class>
+        <class>Domain.Profile</class>
+        <class>Domain.Kweet</class>
+        <class>Domain.Role</class>
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.24.75:3306/Kwetter"/>
