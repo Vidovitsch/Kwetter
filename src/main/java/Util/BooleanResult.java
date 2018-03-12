@@ -1,9 +1,12 @@
 package Util;
 
-public class BooleanResult {
+public class BooleanResult{
 
     private String message;
     private boolean succes;
+
+    public BooleanResult() {
+    }
 
     public BooleanResult(String message, boolean succes) {
         this.message = message;
