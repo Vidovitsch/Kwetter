@@ -43,16 +43,16 @@ public class KweetService {
         this.userDao = userDao;
     }
 
-    /**
-     * To Do
-     *
-     * @param kweetId
-     * @return
-     */
-    public Kweet publish(Long userId, Long kweetId, String message) throws KweetNotFoundException,
+    // Method for REST testing!
+    public Kweet update(Long userId, Long kweetId, String message) throws KweetNotFoundException,
+            UserNotFoundException, InvalidKweetException {
+        return update(userDao.findById(userId).getUsername(), kweetId, message);
+    }
+
+    public Kweet update(String username, Long kweetId, String message) throws KweetNotFoundException,
             UserNotFoundException, InvalidKweetException {
         Kweet kweet = kweetDao.findById(kweetId);
-        if (kweet != null && kweet.getSender().getId().equals(userId)) {
+        if (kweet != null && kweet.getSender().getUsername().equals(username)) {
             validateMessage(message);
             kweet.setMessage(message);
 
@@ -66,11 +66,12 @@ public class KweetService {
         }
     }
 
-    public Kweet publish(long userid, String message) throws UserNotFoundException, InvalidKweetException {
-        return publish(userDao.findById(userid).getUsername(), message);
+    // Method for REST testing!
+    public Kweet create(Long userId, String message) throws UserNotFoundException, InvalidKweetException {
+        return create(userDao.findById(userId).getUsername(), message);
     }
 
-    public Kweet publish(String username, String message) throws UserNotFoundException, InvalidKweetException {
+    public Kweet create(String username, String message) throws UserNotFoundException, InvalidKweetException {
         // Find user by id and set is as sender of the kweet
         User sender = userDao.findByUsername(username);
         if (sender != null) {
@@ -108,10 +109,10 @@ public class KweetService {
      * To Do
      *
      * @param kweetId
-     * @param userId
+     * @param username
      */
-    public Kweet giveHeart(Long userId, Long kweetId) throws UserNotFoundException, KweetNotFoundException {
-        User user = userDao.findById(userId);
+    public Kweet giveHeart(String username, Long kweetId) throws UserNotFoundException, KweetNotFoundException {
+        User user = userDao.findByUsername(username);
         Kweet kweet = kweetDao.findById(kweetId);
         if (user != null && kweet != null) {
             if (!kweet.getHearts().contains(user)) {

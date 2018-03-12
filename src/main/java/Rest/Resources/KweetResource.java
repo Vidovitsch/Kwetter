@@ -91,8 +91,8 @@ public class KweetResource {
     @ApiOperation(value = "Post a kweet for a user, identified by the username", notes = "Username has to be valid")
     public BooleanResult publishKweet(@PathParam("username") String username, String message) {
         try{
-            Kweet k = kweetService.publish(username, message);
-            return new BooleanResult(k.getMessage(),true);
+            kweetService.create(username, message);
+            return new BooleanResult("Kweet succesfully posted",true);
         }catch (Exception e){
             return new BooleanResult(e.getMessage(),false);
         }
