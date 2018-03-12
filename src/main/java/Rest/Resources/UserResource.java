@@ -26,12 +26,13 @@ public class UserResource {
     private UriInfo context;
 
     @EJB
-    UserService userService;
+    private UserService userService;
 
     @EJB
-    ProfileDataService profileDataService;
+    private ProfileDataService profileDataService;
 
-    public UserResource() { }
+    public UserResource() {
+    }
 
     @GET
     @Path("/byusername/{username}/following")

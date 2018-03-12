@@ -10,7 +10,6 @@ import Exception.*;
 import Qualifier.Mock;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
@@ -32,43 +31,61 @@ public class KweetService {
 
     public KweetService() { }
 
+    public void setKweetDao(IKweetDao kweetDao) {
+        this.kweetDao = kweetDao;
+    }
+
+    public void setHashtagDao(IHashtagDao hashtagDao) {
+        this.hashtagDao = hashtagDao;
+    }
+
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
+
     /**
      * To Do
      *
      * @param kweetId
      * @return
-     * @throws UserNotFoundException
      */
-    public Kweet publish(Long userId, Long kweetId) throws UserNotFoundException, InvalidKweetException {
-        return publish(userId, kweetDao.findById(kweetId));
-    }
-
-    public Kweet publish(Long userId, Kweet kweet) throws UserNotFoundException, InvalidKweetException {
-        // Find user by id and set is as sender of the kweet
-        User sender = userDao.findById(userId);
-        if (sender == null) {
-            throw new UserNotFoundException();
-        } else {
-            validateKweet(kweet);
-
-            kweet.setSender(sender);
-
-            // Make sure the sender knows of kweet
-            if (!sender.getKweets().contains(kweet)) {
-                sender.getKweets().add(kweet);
-            }
+    public Kweet publish(Long userId, Long kweetId, String message) throws KweetNotFoundException,
+            UserNotFoundException, InvalidKweetException {
+        Kweet kweet = kweetDao.findById(kweetId);
+        if (kweet != null && kweet.getSender().getId().equals(userId)) {
+            validateMessage(message);
+            kweet.setMessage(message);
 
             // Filter message on hashtags '#' and mentions '@' and add to kweet
             addHashtags(kweet, parseNames('#', kweet.getMessage()));
             addMentions(kweet, parseNames('@', kweet.getMessage()));
 
-            if (kweet.getId() == null) {
-                // Kweet isn't persisted. Persist new kweet
-                return kweetDao.create(kweet);
-            } else {
-                // Kweet is already persisted. Update existing kweet
-                return kweetDao.update(kweet);
-            }
+            return kweetDao.update(kweet);
+        } else {
+            throw new KweetNotFoundException();
+        }
+    }
+
+    public Kweet publish(Long userId, String message) throws UserNotFoundException, InvalidKweetException {
+        // Find user by id and set is as sender of the kweet
+        User sender = userDao.findById(userId);
+        if (sender != null) {
+            validateMessage(message);
+
+            Kweet kweet = new Kweet();
+            kweet.setMessage(message);
+            kweet.setSender(sender);
+
+            // Make sure the sender knows of kweet
+            syncWithKweets(sender.getKweets(), kweet);
+
+            // Filter message on hashtags '#' and mentions '@' and add to kweet
+            addHashtags(kweet, parseNames('#', kweet.getMessage()));
+            addMentions(kweet, parseNames('@', kweet.getMessage()));
+
+            return kweetDao.create(kweet);
+        } else {
+            throw new UserNotFoundException();
         }
     }
 
@@ -89,7 +106,7 @@ public class KweetService {
      * @param kweetId
      * @param userId
      */
-    public Kweet giveHeart(Long userId, Long kweetId) throws NullPointerException {
+    public Kweet giveHeart(Long userId, Long kweetId) throws UserNotFoundException, KweetNotFoundException {
         User user = userDao.findById(userId);
         Kweet kweet = kweetDao.findById(kweetId);
         if (user != null && kweet != null) {
@@ -97,14 +114,14 @@ public class KweetService {
                 kweet.getHearts().add(user);
 
                 // Make sure the user knows of kweet
-                if (!user.getHearts().contains(kweet)) {
-                    user.getHearts().add(kweet);
-                }
+                syncWithKweets(user.getHearts(), kweet);
 
                 kweetDao.update(kweet);
             }
+        } else if (user == null){
+            throw new UserNotFoundException();
         } else {
-            throw new NullPointerException();
+            throw new KweetNotFoundException();
         }
 
         return kweet;
@@ -161,9 +178,7 @@ public class KweetService {
             hashtags.add(updateHashtag(kweet, hashtag));
 
             // Make sure the hashtag knows of kweet
-            if (!hashtag.getKweets().contains(kweet)) {
-                hashtag.getKweets().add(kweet);
-            }
+            syncWithKweets(hashtag.getKweets(), kweet);
         }
         kweet.setHashtags(hashtags);
     }
@@ -186,30 +201,22 @@ public class KweetService {
             }
 
             // Make sure the mentioned user knows of kweet
-            if (!user.getMentions().contains(kweet)) {
-                user.getMentions().add(kweet);
-            }
+            syncWithKweets(user.getMentions(), kweet);
         }
         kweet.setMentions(mentions);
     }
 
-    private void validateKweet(Kweet kweet) throws InvalidKweetException, IllegalArgumentException {
-        if (kweet.getMessage() == null || kweet.getMessage().equals("")) {
+    private void validateMessage(String message) throws InvalidKweetException, IllegalArgumentException {
+        if (message == null || message.equals("")) {
             throw new InvalidKweetException("Message required");
-        } else if (kweet.getMessage().length() > 140) {
+        } else if (message.length() > 140) {
             throw new InvalidKweetException("Message should have a maximum of 140 characters");
         }
     }
 
-    public void setKweetDao(IKweetDao kweetDao) {
-        this.kweetDao = kweetDao;
-    }
-
-    public void setHashtagDao(IHashtagDao hashtagDao) {
-        this.hashtagDao = hashtagDao;
-    }
-
-    public void setUserDao(IUserDao userDao) {
-        this.userDao = userDao;
+    private void syncWithKweets(List<Kweet> userKweets, Kweet kweet) {
+        if (!userKweets.contains(kweet)) {
+            userKweets.add(kweet);
+        }
     }
 }

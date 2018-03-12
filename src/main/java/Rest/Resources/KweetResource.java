@@ -1,4 +1,5 @@
 package Rest.Resources;
+
 import Service.TimelineService;
 import ViewModels.TimelineItem;
 import io.swagger.annotations.Api;
@@ -20,9 +21,9 @@ public class KweetResource {
     private UriInfo context;
 
     @EJB
-    TimelineService timelineService;
+    private TimelineService timelineService;
 
-    public KweetResource(){
+    public KweetResource() {
     }
 
     @GET

@@ -75,6 +75,17 @@ public class HashtagDaoTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
+    public void insertHashtagsTest() {
+        // Insert new hashtag
+        List<Hashtag> mockHashtags = (List<Hashtag>)MockFactory.createMocks(Hashtag.class, 3);
+        hashtagDao.create(mockHashtags);
+
+        // Check hashtag list contains new hashtag
+        Assert.assertTrue("New hashtags have been added", hashtagDao.findAll().containsAll(mockHashtags));
+    }
+
+    @Test
     public void updateHashtagTest() {
         // Insert new hashtag
         Hashtag mockHashtag = (Hashtag)MockFactory.createMocks(Hashtag.class, 1).get(0);

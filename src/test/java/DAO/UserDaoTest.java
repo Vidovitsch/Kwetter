@@ -4,6 +4,7 @@ import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
+import Util.MockFactory;
 import Util.MockService;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -59,6 +60,16 @@ public class UserDaoTest {
         userDao.remove(u);
     }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    public void insertUsersTest() {
+        // Insert new role
+        List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 3);
+        userDao.create(mockUsers);
+
+        // Check Role list contains new role
+        Assert.assertTrue("New users have been added", userDao.findAll().containsAll(mockUsers));;
+    }
 
     @Test
     public void updateUserTest() {

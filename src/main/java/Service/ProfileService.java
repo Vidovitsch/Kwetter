@@ -8,7 +8,6 @@ import Qualifier.Mock;
 import org.apache.commons.validator.UrlValidator;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
