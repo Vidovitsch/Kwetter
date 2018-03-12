@@ -1,5 +1,7 @@
 package Rest.Resources;
 import Domain.Kweet;
+import Exception.InvalidKweetException;
+import Exception.UserNotFoundException;
 import Service.KweetService;
 import Service.TimelineService;
 import Util.BooleanResult;
@@ -86,7 +88,7 @@ public class KweetResource {
     @Path("/create/byusername/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "Username has to be a valid user-id")
+    @ApiOperation(value = "Post a kweet for a user, identified by the username", notes = "Username has to be valid")
     public BooleanResult publishKweet(@PathParam("username") String username, String message) {
         try{
             kweetService.create(username, message);
@@ -94,5 +96,25 @@ public class KweetResource {
         }catch (Exception e){
             return new BooleanResult(e.getMessage(),false);
         }
+    }
+
+    @POST
+    @Path("/create/byid/{userid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Post a kweet for a user, identified by the user's id", notes = "Userid has to be a valid user-id")
+    public BooleanResult publishKweet(@PathParam("userid") long userid, String message) {
+
+        Kweet k = null;
+        try {
+            k = kweetService.publish(userid, message);
+        } catch (UserNotFoundException e) {
+            return new BooleanResult("User not found",false);
+        } catch (InvalidKweetException e) {
+            return new BooleanResult("Invalid Kweet",false);
+        }
+        return new BooleanResult(k.getMessage(),true);
+            //return new BooleanResult(e.getMessage(),false);
+
     }
 }
