@@ -35,21 +35,10 @@ public class KweetDaoMock implements IKweetDao {
     }
 
     @Override
-    public List<Kweet> findByTerm(String message) {
+    public List<Kweet> findBySender(User sender) {
         List<Kweet> foundKweets = new ArrayList<>();
         for(Kweet k : mockKweets){
-            if (k.getMessage().toLowerCase().contains(message.toLowerCase())){
-                foundKweets.add(k);
-            }
-        }
-        return foundKweets;
-    }
-
-    @Override
-    public List<Kweet> findBySenderName(String senderName) {
-        List<Kweet> foundKweets = new ArrayList<>();
-        for(Kweet k : mockKweets){
-            if(k.getSender() != null && k.getSender().getUsername().equals(senderName)){
+            if(k.getSender() != null && k.getSender().getUsername().equals(sender.getUsername())){
                 foundKweets.add(k);
             }
         }

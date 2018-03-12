@@ -2,12 +2,16 @@ package DAO.Impl;
 
 import DaoInterfaces.IProfileDao;
 import Domain.Profile;
+import Domain.Profile;
 import Domain.User;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 @Default
@@ -20,42 +24,53 @@ public class ProfileDaoImpl implements IProfileDao {
     public ProfileDaoImpl() { }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Profile> findAll() {
-        return null;
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Profile.class));
+
+        return em.createQuery(cq).getResultList();
     }
 
     @Override
     public Profile findById(Long id) {
-        return null;
+        return em.find(Profile.class, id);
     }
 
     @Override
     public Profile findByUser(User user) {
-        return null;
+        Query q = em.createNamedQuery("Profile.findByUser", Profile.class);
+        q.setParameter("user", user);
+
+        return (Profile) q.getResultList();
     }
 
     @Override
-    public List<Profile> findByName(String name) {
-        return null;
-    }
+    public Profile create(Profile profile) {
+        em.persist(profile);
 
-    @Override
-    public Profile create(Profile Profile) {
-        return null;
+        return profile;
     }
 
     @Override
     public List<Profile> create(List<Profile> profiles) {
-        return null;
+        List<Profile> newProfiles = new ArrayList<>();
+        for (Profile profile : profiles) {
+            newProfiles.add(create(profile));
+        }
+
+        return newProfiles;
     }
 
     @Override
-    public Profile update(Profile Profile) {
-        return null;
+    public Profile update(Profile profile) {
+        return em.merge(profile);
     }
 
     @Override
-    public boolean remove(Profile Profile) {
-        return false;
+    public boolean remove(Profile profile) {
+        em.remove(profile);
+
+        return true;
     }
 }

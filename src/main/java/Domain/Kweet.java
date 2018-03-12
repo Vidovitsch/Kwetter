@@ -7,6 +7,9 @@ import java.util.*;
 
 @Entity(name = "Kweet")
 @Table(name = "Kweet")
+@NamedQueries({
+        @NamedQuery(name = "Kweet.findBySender", query = "SELECT a FROM Kweet AS a WHERE a.sender = :sender"),
+})
 public class Kweet implements Mockable {
 
     @Id

@@ -8,6 +8,9 @@ import java.util.List;
 
 @Entity(name = "Role")
 @Table(name = "Role")
+@NamedQueries({
+        @NamedQuery(name = "Role.findByName", query = "SELECT a FROM Role AS a WHERE a.name = :name")
+})
 public class Role implements Mockable {
 
     @Id

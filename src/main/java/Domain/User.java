@@ -9,7 +9,6 @@ import java.util.List;
 @Entity(name = "User")
 @Table(name = "User")
 @NamedQueries({
-        @NamedQuery(name = "User.findAll", query = "SELECT a FROM User AS a"),
         @NamedQuery(name = "User.findByUsername", query = "SELECT a FROM User AS a WHERE a.username = :username")
 })
 public class User implements Mockable {

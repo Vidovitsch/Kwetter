@@ -7,6 +7,9 @@ import java.util.*;
 
 @Entity(name = "Hashtag")
 @Table(name = "Hashtag")
+@NamedQueries({
+        @NamedQuery(name = "Hashtag.findByName", query = "SELECT a FROM Hashtag AS a WHERE a.name = :name")
+})
 public class Hashtag implements Mockable {
 
     @Id

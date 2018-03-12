@@ -2,11 +2,15 @@ package DAO.Impl;
 
 import DaoInterfaces.IRoleDao;
 import Domain.Role;
+import Domain.User;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 @Default
@@ -19,37 +23,53 @@ public class RoleDaoImpl implements IRoleDao {
     public RoleDaoImpl() { }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Role> findAll() {
-        return null;
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Role.class));
+
+        return em.createQuery(cq).getResultList();
     }
 
     @Override
     public Role findById(Long id) {
-        return null;
+        return em.find(Role.class, id);
     }
 
     @Override
     public Role findByName(String name) {
-        return null;
+        Query q = em.createNamedQuery("Role.findByName", Role.class);
+        q.setParameter("name", name);
+
+        return (Role) q.getResultList();
     }
 
     @Override
     public Role create(Role role) {
-        return null;
+        em.persist(role);
+
+        return role;
     }
 
     @Override
     public List<Role> create(List<Role> roles) {
-        return null;
+        List<Role> newRoles = new ArrayList<>();
+        for (Role role : roles) {
+            newRoles.add(create(role));
+        }
+
+        return newRoles;
     }
 
     @Override
     public Role update(Role role) {
-        return null;
+        return em.merge(role);
     }
 
     @Override
     public boolean remove(Role role) {
-        return false;
+        em.remove(role);
+
+        return true;
     }
 }

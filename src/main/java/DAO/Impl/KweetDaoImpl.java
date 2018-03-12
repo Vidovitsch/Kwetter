@@ -2,12 +2,16 @@ package DAO.Impl;
 
 import DaoInterfaces.IKweetDao;
 import Domain.Kweet;
+import Domain.Profile;
 import Domain.User;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 @Default
@@ -20,42 +24,54 @@ public class KweetDaoImpl implements IKweetDao {
     public KweetDaoImpl() { }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Kweet> findAll() {
-        return null;
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Kweet.class));
+
+        return em.createQuery(cq).getResultList();
     }
 
     @Override
     public Kweet findById(Long id) {
-        return null;
+        return em.find(Kweet.class, id);
     }
 
     @Override
-    public List<Kweet> findByTerm(String message) {
-        return null;
-    }
+    @SuppressWarnings("unchecked")
+    public List<Kweet> findBySender(User sender) {
+        Query q = em.createNamedQuery("Kweet.findBySender", Kweet.class);
+        q.setParameter("sender", sender);
 
-    @Override
-    public List<Kweet> findBySenderName(String senderName) {
-        return null;
+        return (List<Kweet>) q.getResultList();
     }
 
     @Override
     public Kweet create(Kweet Kweet) {
-        return null;
+        em.persist(Kweet);
+
+        return Kweet;
     }
 
     @Override
     public List<Kweet> create(List<Kweet> kweets) {
-        return null;
+        List<Kweet> newKweets = new ArrayList<>();
+        for (Kweet kweet : kweets) {
+            newKweets.add(create(kweet));
+        }
+
+        return newKweets;
     }
 
     @Override
     public Kweet update(Kweet Kweet) {
-        return null;
+        return em.merge(Kweet);
     }
 
     @Override
     public boolean remove(Kweet Kweet) {
-        return false;
+        em.remove(Kweet);
+
+        return true;
     }
 }

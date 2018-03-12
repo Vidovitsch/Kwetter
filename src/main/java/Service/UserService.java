@@ -55,7 +55,7 @@ public class UserService {
 
     public List<OtherUserView> getFollowing(long userid) {
         User user = userDao.findById(userid);
-        return generateOtherUserViews(user.getFollowing());
+        return generateOtherUserViews(userDao.findAll());
     }
 
     private List<OtherUserView> generateOtherUserViews(List<User> users) {

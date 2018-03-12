@@ -49,18 +49,6 @@ public class ProfileDaoMock implements IProfileDao {
     }
 
     @Override
-    public List<Profile> findByName(String name) {
-        List<Profile> profiles = new ArrayList<Profile>();
-        for (Profile profile : mockProfiles) {
-            if (profile.getName().equals(name)) {
-                profiles.add(profile);
-            }
-        }
-
-        return profiles;
-    }
-
-    @Override
     public Profile create(Profile profile) {
         MockFactory.setNextId(profile, mockProfiles);
         mockProfiles.add(profile);

@@ -12,8 +12,6 @@ public interface IProfileDao {
 
     Profile findByUser(User user);
 
-    List<Profile> findByName(String name);
-
     Profile create(Profile profile);
 
     List<Profile> create(List<Profile> profiles);

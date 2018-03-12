@@ -1,6 +1,8 @@
 package DaoInterfaces;
 
 import Domain.Kweet;
+import Domain.User;
+
 import java.util.List;
 
 public interface IKweetDao {
@@ -9,9 +11,7 @@ public interface IKweetDao {
 
     Kweet findById(Long id);
 
-    List<Kweet> findByTerm(String term);
-
-    List<Kweet> findBySenderName(String senderName);
+    List<Kweet> findBySender(User sender);
 
     Kweet create(Kweet kweet);
 

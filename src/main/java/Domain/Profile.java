@@ -6,6 +6,9 @@ import javax.persistence.*;
 
 @Entity(name = "Profile")
 @Table(name = "Profile")
+@NamedQueries({
+        @NamedQuery(name = "Profile.findByUser", query = "SELECT a FROM Profile AS a WHERE a.user = :user")
+})
 public class Profile implements Mockable {
 
     @Id

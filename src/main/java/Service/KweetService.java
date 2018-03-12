@@ -99,7 +99,7 @@ public class KweetService {
                 addMentions(kweet, parseNames('@', kweet.getMessage()));
 
                 Kweet k = kweetDao.create(kweet);
-                List<Kweet> kweets = kweetDao.findBySenderName(sender.getUsername());
+                List<Kweet> kweets = kweetDao.findBySender(sender);
                 syncWithKweets(kweets, k);
                 return k;
             } else {
