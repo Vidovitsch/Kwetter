@@ -1,5 +1,4 @@
 package Rest.Resources;
-
 import Service.KweetService;
 import Service.TimelineService;
 import Util.BooleanResult;
@@ -24,7 +23,7 @@ public class KweetResource {
     private UriInfo context;
 
     @EJB
-    TimelineService timelineService;
+    private TimelineService timelineService;
 
     @EJB
     KweetService kweetService;

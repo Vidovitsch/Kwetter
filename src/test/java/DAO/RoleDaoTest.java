@@ -3,6 +3,7 @@ package DAO;
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Role;
+import Util.MockFactory;
 import Util.MockService;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -85,6 +86,17 @@ public class RoleDaoTest {
 
         // Remove mock role (cleanup)
         roleDao.remove(mockRole);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void insertRolesTest() {
+        // Insert new role
+        List<Role> mockRoles = (List<Role>) MockFactory.createMocks(Role.class, 3);
+        roleDao.create(mockRoles);
+
+        // Check Role list contains new role
+        Assert.assertTrue("New roles have been added", roleDao.findAll().containsAll(mockRoles));
     }
 
     @Test

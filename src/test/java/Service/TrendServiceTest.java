@@ -71,15 +71,12 @@ public class TrendServiceTest {
         oldTag.setTimesUsed(10);
         hashtagDao.create(oldTag);
 
-        Kweet kweet1 = (Kweet) MockFactory.createMocks(Kweet.class, 1, "message", message1).get(0);
-        Kweet kweet2 = (Kweet) MockFactory.createMocks(Kweet.class, 1, "message", message2).get(0);
-        Kweet kweet3 = (Kweet) MockFactory.createMocks(Kweet.class, 1, "message", message3).get(0);
         kweetDao.create((Kweet) MockFactory.createMocks(Kweet.class, 1, "message", message4).get(0));
 
         // Publish
-        kweetService.publish(rick.getId(), kweet1);
-        kweetService.publish(rick.getId(), kweet2);
-        kweetService.publish(rick.getId(), kweet3);
+        kweetService.publish(rick.getUsername(), message1);
+        kweetService.publish(rick.getUsername(), message2);
+        kweetService.publish(rick.getUsername(), message3);
 
         // Get trend
         List<String> names = service.get();

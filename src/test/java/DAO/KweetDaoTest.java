@@ -98,6 +98,17 @@ public class KweetDaoTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
+    public void insertKweetsTest() {
+        // Insert new hashtag
+        List<Kweet> mockKweets = (List<Kweet>)MockFactory.createMocks(Kweet.class, 3);
+        kweetDao.create(mockKweets);
+
+        // Check hashtag list contains new hashtag
+        Assert.assertTrue("New kweets have been added", kweetDao.findAll().containsAll(mockKweets));
+    }
+
+    @Test
     public void updateKweetTest() {
         // Insert new kweet
         Kweet mockKweet = (Kweet)MockFactory.createMocks(Kweet.class, 1).get(0);
