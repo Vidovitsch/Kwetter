@@ -9,7 +9,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -32,8 +31,7 @@ public class UserResource {
     @EJB
     ProfileDataService profileDataService;
 
-    public UserResource(){
-    }
+    public UserResource() { }
 
     @GET
     @Path("/byusername/{username}/following")
