@@ -9,6 +9,7 @@ import Domain.User;
 import Exception.*;
 import Qualifier.Mock;
 
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,16 +21,20 @@ import java.util.regex.Pattern;
 @Stateless
 public class KweetService {
 
-    @Inject @Mock
+    @Inject
+    @Mock
     private IKweetDao kweetDao;
 
-    @Inject @Mock
+    @Inject
+    @Mock
     private IHashtagDao hashtagDao;
 
-    @Inject @Mock
+    @Inject
+    @Mock
     private IUserDao userDao;
 
-    public KweetService() { }
+    public KweetService() {
+    }
 
     public void setKweetDao(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
@@ -67,30 +72,41 @@ public class KweetService {
     }
 
     // Method for REST testing!
-    public Kweet create(Long userId, String message) throws UserNotFoundException, InvalidKweetException {
-        return create(userDao.findById(userId).getUsername(), message);
+    public Kweet create(Long userId, String message) {
+        try {
+            return create(userDao.findById(userId).getUsername(), message);
+        } catch (Exception e) {
+            throw (EJBException) new EJBException(e).initCause(e);
+        }
     }
 
-    public Kweet create(String username, String message) throws UserNotFoundException, InvalidKweetException {
+    public Kweet create(String username, String message){
         // Find user by id and set is as sender of the kweet
-        User sender = userDao.findByUsername(username);
-        if (sender != null) {
-            validateMessage(message);
+        try {
+            User sender = userDao.findByUsername(username);
+            if (sender != null) {
+                validateMessage(message);
 
-            Kweet kweet = new Kweet();
-            kweet.setMessage(message);
-            kweet.setSender(sender);
+                Kweet kweet = new Kweet();
+                kweet.setMessage(message);
+                kweet.setSender(sender);
 
-            // Make sure the sender knows of kweet
-            syncWithKweets(sender.getKweets(), kweet);
+                // Make sure the sender knows of kweet
+                //syncWithKweets(sender.getKweets(), kweet);
 
-            // Filter message on hashtags '#' and mentions '@' and add to kweet
-            addHashtags(kweet, parseNames('#', kweet.getMessage()));
-            addMentions(kweet, parseNames('@', kweet.getMessage()));
+                // Filter message on hashtags '#' and mentions '@' and add to kweet
+                addHashtags(kweet, parseNames('#', kweet.getMessage()));
+                addMentions(kweet, parseNames('@', kweet.getMessage()));
 
-            return kweetDao.create(kweet);
-        } else {
-            throw new UserNotFoundException();
+                Kweet k = kweetDao.create(kweet);
+                List<Kweet> kweets = kweetDao.findBySenderName(sender.getUsername());
+                syncWithKweets(kweets, k);
+                return k;
+            } else {
+                throw new UserNotFoundException();
+            }
+        } catch (Exception e) {
+            throw (EJBException) new EJBException(e).initCause(e);
         }
     }
 
@@ -123,7 +139,7 @@ public class KweetService {
 
                 kweetDao.update(kweet);
             }
-        } else if (user == null){
+        } else if (user == null) {
             throw new UserNotFoundException();
         } else {
             throw new KweetNotFoundException();

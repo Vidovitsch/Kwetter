@@ -2,23 +2,23 @@ package Util;
 
 public class BooleanResult{
 
-    private String message;
+    private Object result;
     private boolean succes;
 
     public BooleanResult() {
     }
 
-    public BooleanResult(String message, boolean succes) {
-        this.message = message;
+    public BooleanResult(Object result, boolean succes) {
+        this.result = result;
         this.succes = succes;
     }
 
-    public String getMessage() {
-        return message;
+    public Object getResult() {
+        return result;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setResult(Object result) {
+        this.result = result;
     }
 
     public boolean isSucces() {

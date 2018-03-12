@@ -17,25 +17,26 @@ import java.util.List;
 @Stateless
 public class UserService {
 
-    @Inject @Mock
+    @Inject
+    @Mock
     private IUserDao userDao;
 
-    @Inject @Mock
+    @Inject
+    @Mock
     private IProfileDao profileDao;
 
-    public UserService() { }
-
-    public boolean createProfile(Profile profile) {
-        if (profile.getName().equals("") || profile.getName() == null || profile.getUser() == null) {
-            return false;
-        } else {
-            profileDao.create(profile);
-            return true;
-        }
+    public UserService() {
     }
 
-    public boolean editProfile(Profile profile) {
-        return false;
+    public Boolean AddFollowing(long userid, long followingid) {
+        try {
+            List<User> following = userDao.findById(userid).getFollowing();
+            if(following.contains(userDao.findById(followingid))) return false;
+            following.add(userDao.findById(followingid));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public List<OtherUserView> getFollowers(String username) {
@@ -58,7 +59,7 @@ public class UserService {
         return generateOtherUserViews(user.getFollowing());
     }
 
-    private List<OtherUserView> generateOtherUserViews(List<User> users){
+    private List<OtherUserView> generateOtherUserViews(List<User> users) {
         ArrayList<OtherUserView> OtherUserViews = new ArrayList<>();
         for (User u : users) {
             String image = "";
@@ -69,14 +70,6 @@ public class UserService {
             OtherUserViews.add(new OtherUserView(u.getUsername(), image));
         }
         return OtherUserViews;
-    }
-
-    public void setUserDao(IUserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setProfileDao(IProfileDao profileDao) {
-        this.profileDao = profileDao;
     }
 }
 

@@ -1,19 +1,19 @@
 package ViewModels;
 
-public class ProfileDataView {
+public class ProfileData {
     private String name;
     private String location;
     private String website;
     private String bio;
 
-    public ProfileDataView(String name, String location, String website, String bio) {
+    public ProfileData(String name, String location, String website, String bio) {
         this.name = name;
         this.location = location;
         this.website = website;
         this.bio = bio;
     }
 
-    public ProfileDataView() {
+    public ProfileData() {
     }
 
     public String getName() {

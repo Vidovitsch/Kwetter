@@ -1,15 +1,19 @@
 package Service;
 
+import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
 import Qualifier.Mock;
-import ViewModels.ProfileDataView;
+import ViewModels.ProfileData;
 import ViewModels.UserTotalsView;
+import org.apache.commons.validator.UrlValidator;
 
+
+import Exception.*;
+
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -21,19 +25,52 @@ public class ProfileDataService {
     @Mock
     private IUserDao userDao;
 
+    @Inject
+    @Mock
+    private IProfileDao profileDao;
+
     public ProfileDataService() {
     }
 
-    public ProfileDataView GetProfileData(long userid) {
-        Profile p = userDao.findById(userid).getProfile();
-        ProfileDataView profileDataView = new ProfileDataView(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
-        return profileDataView;
+    public ProfileData CreateProfile(long userid, ProfileData profileData) throws InvalidProfileException {
+        if(profileDao.findByUser(userDao.findById(userid)) != null){
+            throw new InvalidProfileException("Profile already created, update instead");
+        }
+        if (profileData.getName() == null || profileData.getName().isEmpty())
+            throw new InvalidProfileException("Profile name can't be empty");
+        if (profileData.getWebsite() != null) {
+            if (!ValidateUrl(profileData.getWebsite()))
+                throw new InvalidProfileException("The given web address is invalid");
+        }
+        Profile p = new Profile(userid, profileData.getName());
+        p.setwebsite(profileData.getWebsite());
+        p.setName(profileData.getName());
+        p.setBiography(profileData.getBio());
+        p.setLocation(profileData.getLocation());
+        profileDao.create(p);
+        return GetProfileData(userid);
     }
 
-    public ProfileDataView GetProfileData(String username) {
+    private boolean ValidateUrl(String url) {
+        String[] schemes = {"http", "https"}; // DEFAULT schemes = "http", "https", "ftp"
+        UrlValidator urlValidator = new UrlValidator(schemes);
+        if (urlValidator.isValid(url)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public ProfileData GetProfileData(long userid) {
+        Profile p = userDao.findById(userid).getProfile();
+        ProfileData profileData = new ProfileData(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
+        return profileData;
+    }
+
+    public ProfileData GetProfileData(String username) {
         Profile p = userDao.findByUsername(username).getProfile();
-        ProfileDataView profileDataView = new ProfileDataView(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
-        return profileDataView;
+        ProfileData profileData = new ProfileData(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
+        return profileData;
     }
 
     public UserTotalsView GetUserTotals(long userid) {
@@ -54,7 +91,24 @@ public class ProfileDataService {
         return userTotalsView;
     }
 
-    public void setUserDao(IUserDao userDao) {
-        this.userDao = userDao;
+    public ProfileData UpdateProfile(long userid, ProfileData profileData) {
+        try {
+            if (userDao.findById(userid).getProfile() == null)
+                throw new InvalidProfileException("This profile does not have a user linked yet");
+            if (profileData.getName() == null) throw new InvalidProfileException("Profile name can't be empty");
+            if (profileData.getWebsite() != null) {
+                if (!ValidateUrl(profileData.getWebsite()))
+                    throw new InvalidProfileException("The given web address is invalid");
+            }
+            Profile p = profileDao.findByUser(userDao.findById(userid));
+            p.setwebsite(profileData.getWebsite());
+            p.setName(profileData.getName());
+            p.setBiography(profileData.getBio());
+            p.setLocation(profileData.getLocation());
+            profileDao.update(p);
+            return GetProfileData(userid);
+        } catch (Exception e) {
+            throw (EJBException) new EJBException(e).initCause(e);
+        }
     }
 }

@@ -1,16 +1,15 @@
 package Rest.Resources;
 import Domain.Kweet;
-import Exception.InvalidKweetException;
-import Exception.UserNotFoundException;
 import Service.KweetService;
 import Service.TimelineService;
 import Util.BooleanResult;
+import ViewModels.NewKweetData;
 import ViewModels.TimelineItem;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -89,13 +88,14 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Post a kweet for a user, identified by the username", notes = "Username has to be valid")
-    public BooleanResult publishKweet(@PathParam("username") String username, String message) {
-        try{
-            kweetService.create(username, message);
-            return new BooleanResult("Kweet succesfully posted",true);
-        }catch (Exception e){
-            return new BooleanResult(e.getMessage(),false);
+    public BooleanResult publishKweet(@PathParam("username") String username, NewKweetData newKweetData) {
+        Kweet k = null;
+        try {
+            k = kweetService.create(username, newKweetData.getMessage());
+        } catch (EJBException e) {
+            return new BooleanResult(e.getCausedByException().getMessage(), false);
         }
+        return new BooleanResult(k.getMessage(),true);
     }
 
     @POST
@@ -103,18 +103,13 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Post a kweet for a user, identified by the user's id", notes = "Userid has to be a valid user-id")
-    public BooleanResult publishKweet(@PathParam("userid") long userid, String message) {
-
+    public BooleanResult publishKweet(@PathParam("userid") long userid, NewKweetData newKweetData) {
         Kweet k = null;
         try {
-            k = kweetService.publish(userid, message);
-        } catch (UserNotFoundException e) {
-            return new BooleanResult("User not found",false);
-        } catch (InvalidKweetException e) {
-            return new BooleanResult("Invalid Kweet",false);
+            k = kweetService.create(userid, newKweetData.getMessage());
+        } catch (EJBException e) {
+            return new BooleanResult(e.getCausedByException().getMessage(), false);
         }
         return new BooleanResult(k.getMessage(),true);
-            //return new BooleanResult(e.getMessage(),false);
-
     }
 }
