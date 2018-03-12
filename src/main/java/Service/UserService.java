@@ -17,7 +17,7 @@ import java.util.List;
 @Stateless
 public class UserService {
 
-    @Inject @Mock
+    @Inject
     private IUserDao userDao;
 
     @Inject @Mock

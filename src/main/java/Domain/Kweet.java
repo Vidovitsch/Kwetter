@@ -6,32 +6,34 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity(name = "Kweet")
+@Table(name = "Kweet")
 public class Kweet implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "message", nullable = false)
     private String message;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User sender;
 
     @ManyToMany(mappedBy = "mentions")
-    private List<User> mentions = new ArrayList<User>();
+    private List<User> mentions = new ArrayList<>();
 
     @ManyToMany(mappedBy = "hearts")
-    private Set<User> hearts = new HashSet<User>();
+    private Set<User> hearts = new HashSet<>();
 
     @ManyToMany
-    //@JoinTable(name = "KweetTag",
-    //        joinColumns = @JoinColumn(name="Kweet_ID", referencedColumnName = "ID", nullable = false),
-    //        inverseJoinColumns = @JoinColumn(name="Hashtag_ID", referencedColumnName = "ID", nullable = false))
-    private List<Hashtag> hashtags = new ArrayList<Hashtag>();
+    @JoinTable(name = "KweetTag",
+            joinColumns = @JoinColumn(name="kweet_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="hashtag_id", referencedColumnName = "id", nullable = false))
+    private List<Hashtag> hashtags = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "publicationDate")
     private Date publicationDate;
 
     public Kweet() {

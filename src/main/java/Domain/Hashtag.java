@@ -6,20 +6,24 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity(name = "Hashtag")
+@Table(name = "Hashtag")
 public class Hashtag implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "lastUsed")
     private Date lastUsed;
 
     @ManyToMany(mappedBy = "hashtags")
-    private List<Kweet> kweets = new ArrayList<Kweet>();
+    private List<Kweet> kweets = new ArrayList<>();
+
+    @Column(name = "timesUsed")
     private int timesUsed = 0;
 
     public Hashtag() { }

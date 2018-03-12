@@ -107,7 +107,7 @@ public class KweetResource {
 
         Kweet k = null;
         try {
-            k = kweetService.publish(userid, message);
+            k = kweetService.create(userid, message);
         } catch (UserNotFoundException e) {
             return new BooleanResult("User not found",false);
         } catch (InvalidKweetException e) {

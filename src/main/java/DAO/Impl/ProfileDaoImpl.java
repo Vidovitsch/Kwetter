@@ -9,6 +9,7 @@ import javax.enterprise.inject.Default;
 import java.util.List;
 
 @Default
+@Stateless
 public class ProfileDaoImpl implements IProfileDao {
 
     public ProfileDaoImpl() { }
