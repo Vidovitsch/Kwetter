@@ -66,6 +66,10 @@ public class KweetService {
         }
     }
 
+    public Kweet publish(long userid, String message) throws UserNotFoundException, InvalidKweetException {
+        return publish(userDao.findById(userid).getUsername(), message);
+    }
+
     public Kweet publish(String username, String message) throws UserNotFoundException, InvalidKweetException {
         // Find user by id and set is as sender of the kweet
         User sender = userDao.findByUsername(username);

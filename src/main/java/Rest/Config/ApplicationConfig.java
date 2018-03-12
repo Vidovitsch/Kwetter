@@ -1,7 +1,7 @@
 package Rest.Config;
 
-import Domain.Hashtag;
 import Rest.Resources.*;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.github.phillipkruger.apiee.ApieeService;
 
 import javax.ws.rs.core.Application;
@@ -20,7 +20,7 @@ public class ApplicationConfig extends Application {
 
         System.out.println("REST configuration starting: getClasses()");
 
-        resources.add(com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider.class);
+        resources.add(JacksonJaxbJsonProvider.class);
 
         //instead let's do it manually:
         resources.add(UserResource.class);
