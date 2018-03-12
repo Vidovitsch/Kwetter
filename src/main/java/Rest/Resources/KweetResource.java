@@ -85,7 +85,7 @@ public class KweetResource {
     @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "Username has to be a valid user-id")
     public BooleanResult publishKweet(@PathParam("username") String username, String message) {
         try{
-            kweetService.publish(username, message);
+            kweetService.create(username, message);
             return new BooleanResult("Kweet succesfully posted",true);
         }catch (Exception e){
             return new BooleanResult(e.getMessage(),false);
