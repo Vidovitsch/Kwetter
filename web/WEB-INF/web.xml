@@ -3,7 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-
+    <security-role>
+        <role-name>user</role-name>
+    </security-role>
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
     <!-- Session configuration -->
     <session-config>
         <cookie-config>
@@ -16,18 +21,19 @@
         <web-resource-collection>
             <web-resource-name>Authorize user pages</web-resource-name>
             <url-pattern>/rest/tokens/*</url-pattern>
+            <url-pattern>/rest/apiee/*</url-pattern>
         </web-resource-collection>
         <!-- OMIT auth-constraint -->
     </security-constraint>
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>Admin pages</web-resource-name>
+            <web-resource-name>User pages</web-resource-name>
             <url-pattern>/rest/*</url-pattern>
         </web-resource-collection>
-        <auth-constraint>
-            <role-name>member</role-name>
-        </auth-constraint>
+        <!--<auth-constraint>-->
+            <!--<role-name>user</role-name>-->
+        <!--</auth-constraint>-->
     </security-constraint>
 
 </web-app>
