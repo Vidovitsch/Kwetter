@@ -1,8 +1,10 @@
 package Rest.Resources;
+import Domain.Kweet;
 import Service.KweetService;
 import Service.TimelineService;
 import Util.BooleanResult;
 import ViewModels.TimelineItem;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -79,9 +81,11 @@ public class KweetResource {
         return timelineService.GenerateMentionsTimeLine(username);
     }
 
+
     @POST
     @Path("/create/byusername/{username}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "Username has to be a valid user-id")
     public BooleanResult publishKweet(@PathParam("username") String username, String message) {
         try{
@@ -91,5 +95,4 @@ public class KweetResource {
             return new BooleanResult(e.getMessage(),false);
         }
     }
-
 }
