@@ -13,13 +13,15 @@ import java.util.Set;
 
 
 @Path("kweet")
-@Api(value = "kweet resource")
+@Api(value = "Kweet resource")
 public class KweetResource {
 
     @Context
     private UriInfo context;
+
     @EJB
     TimelineService timelineService;
+
     public KweetResource(){
     }
 
@@ -72,12 +74,12 @@ public class KweetResource {
         return timelineService.GenerateMentionsTimeLine(username);
     }
 
-    @POST
-    @Path("/mentions/byusername/{username}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "Username has to be a valid user-id")
-    public Set<TimelineItem> publishKweet(@PathParam("username") String username) {
-        return timelineService.GenerateMentionsTimeLine(username);
-    }
+//    @POST
+//    @Path("/mentions/byusername/{username}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "Username has to be a valid user-id")
+//    public Set<TimelineItem> publishKweet(@PathParam("username") String username) {
+//        return timelineService.GenerateMentionsTimeLine(username);
+//    }
 
 }

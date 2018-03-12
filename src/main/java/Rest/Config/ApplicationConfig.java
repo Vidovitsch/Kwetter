@@ -23,8 +23,6 @@ public class ApplicationConfig extends Application {
         resources.add(com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider.class);
 
         //instead let's do it manually:
-        resources.add(HomepageDataResource.class);
-        resources.add(ProfilePageDataResource.class);
         resources.add(UserResource.class);
         resources.add(KweetResource.class);
         resources.add(HashtagResource.class);
