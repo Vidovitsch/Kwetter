@@ -16,7 +16,7 @@ import java.util.List;
 @Stateless
 public class UserDaoImpl implements IUserDao {
 
-    @PersistenceContext
+    @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
     public UserDaoImpl() { }
