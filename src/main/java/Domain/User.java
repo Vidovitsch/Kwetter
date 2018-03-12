@@ -48,7 +48,10 @@ public class User implements Mockable {
             inverseJoinColumns = @JoinColumn(name="kweet_id", referencedColumnName = "id", nullable = false))
     private List<Kweet> mentions = new ArrayList<Kweet>();
 
-    @ManyToMany(mappedBy = "hearts")
+    @ManyToMany
+    @JoinTable(name = "KweetHeart",
+            joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="kweet_id", referencedColumnName = "id", nullable = false))
     private List<Kweet> hearts = new ArrayList<Kweet>();
 
     public User() { }
