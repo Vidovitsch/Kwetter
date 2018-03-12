@@ -6,11 +6,16 @@ import Domain.User;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Default
 @Stateless
 public class ProfileDaoImpl implements IProfileDao {
+
+    @PersistenceContext(name = "KwetterPU")
+    private EntityManager em;
 
     public ProfileDaoImpl() { }
 
