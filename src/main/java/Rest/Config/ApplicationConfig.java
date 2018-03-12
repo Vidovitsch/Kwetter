@@ -1,6 +1,7 @@
 package Rest.Config;
 
 import Rest.Resources.*;
+import Rest.auth.AuthResource;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.github.phillipkruger.apiee.ApieeService;
 
@@ -27,6 +28,7 @@ public class ApplicationConfig extends Application {
         resources.add(KweetResource.class);
         resources.add(HashtagResource.class);
         resources.add(ApieeService.class);
+        resources.add(AuthResource.class);
         //==> we could also choose packages, see below getProperties()
 
         System.out.println("REST configuration ended successfully.");
