@@ -1,10 +1,13 @@
 package Rest.auth;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.security.enterprise.credential.Credential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.IdentityStore;
 
-@ApplicationScoped
+@Stateless
+@Default
 public class JWTIdentityStore implements IdentityStore {
 
     @Override

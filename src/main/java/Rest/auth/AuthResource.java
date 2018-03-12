@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 
 import java.util.Arrays;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.JsonObject;
@@ -16,7 +17,7 @@ import javax.ws.rs.core.Response;
 @Api(value = "Auth resource")
 public class AuthResource {
 
-    @Inject
+    @EJB
     JWTStore jwtStore;
 
     /**
@@ -25,13 +26,13 @@ public class AuthResource {
      * @return JWT token
      */
     @POST
-    public Response authenticate(JsonObject credential) throws SystemException {
+    public Response authenticate(Credentials credential) throws SystemException {
         // TODO: Should compare user credentials on the database.
-        String username = credential.getString("username");
-        String password = credential.getString("password");
+        String username = credential.username;
+        String password = credential.password;
 
         // TODO: Groups should retrieve from database based on authenticate user.
-        String token = this.jwtStore.generateToken(username, Arrays.asList("ADMIN", "MEMBER"));
+        String token = this.jwtStore.generateToken(username, Arrays.asList("admin", "user"));
 
         return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
     }

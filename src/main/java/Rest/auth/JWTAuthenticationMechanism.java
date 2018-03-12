@@ -1,6 +1,7 @@
 package Rest.auth;
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.security.enterprise.AuthenticationException;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.SystemException;
 
-@ApplicationScoped
+@Stateless
 public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
 
     private static final String BEARER = "Bearer ";

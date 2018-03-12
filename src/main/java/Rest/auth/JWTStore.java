@@ -14,6 +14,10 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -23,12 +27,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.transaction.SystemException;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 @Stateless
+@Default
 public class JWTStore {
 
     private static final Instant CURRENT_TIME = Instant.now();
@@ -37,9 +43,14 @@ public class JWTStore {
     //@Inject
     KeyGenerator keyGenerator;
 
+    SecretKey secretKey = null;
+
+
     public String generateToken(final String username, final List<String> groupNames) throws SystemException {
         try {
-            SecretKey secretKey = this.keyGenerator.generateKey();
+            if(secretKey == null){
+                SetKey();
+            }
 
             // Create HMAC signer
             JWSSigner signer = new MACSigner(secretKey);
@@ -73,13 +84,16 @@ public class JWTStore {
             throw new SystemException(ex.getMessage());
         } catch (JOSEException ex) {
             throw new SystemException(ex.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+            throw new SystemException(e.getMessage());
         }
     }
 
     public JWTCredential getCredential(String token) throws SystemException {
         try {
-            SecretKey secretKey = this.keyGenerator.generateKey();
-
+            if(secretKey == null){
+                SetKey();
+            }
             SignedJWT signedJWT = SignedJWT.parse(token);
 
             JWTClaimsSet claimsSet = signedJWT.getJWTClaimsSet();
@@ -105,7 +119,17 @@ public class JWTStore {
 
         } catch (ParseException | JOSEException ex) {
             throw new SystemException(ex.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+            throw new SystemException(e.getMessage());
         }
+    }
+
+    private void SetKey() throws NoSuchAlgorithmException {
+        keyGenerator = KeyGenerator.getInstance("AES");
+        SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+        secureRandom.setSeed("kwetter".getBytes());
+        keyGenerator.init(256, secureRandom);
+        secretKey = keyGenerator.generateKey();
     }
 
     protected boolean isTokenTimeValid(final Date creation, final Date expiration) {
