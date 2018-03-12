@@ -17,38 +17,40 @@ import javax.inject.Named;
 @Stateless
 public class ProfileDataService {
 
-    @Inject @Mock
+    @Inject
+    @Mock
     private IUserDao userDao;
 
-    public ProfileDataService() { }
+    public ProfileDataService() {
+    }
 
-    public ProfileDataView GetProfileData(long userid){
+    public ProfileDataView GetProfileData(long userid) {
         Profile p = userDao.findById(userid).getProfile();
         ProfileDataView profileDataView = new ProfileDataView(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
         return profileDataView;
     }
 
-    public ProfileDataView GetProfileData(String username){
+    public ProfileDataView GetProfileData(String username) {
         Profile p = userDao.findByUsername(username).getProfile();
         ProfileDataView profileDataView = new ProfileDataView(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
         return profileDataView;
     }
 
-    public UserTotalsView GetUserTotals(long userid){
+    public UserTotalsView GetUserTotals(long userid) {
         User u = userDao.findById(userid);
         return GetUserTotals(u);
     }
 
-    public UserTotalsView GetUserTotals(String username){
+    public UserTotalsView GetUserTotals(String username) {
         User u = userDao.findByUsername(username);
         return GetUserTotals(u);
     }
 
-    private UserTotalsView GetUserTotals(User u){
+    private UserTotalsView GetUserTotals(User u) {
         int following = u.getFollowing().size();
         int followers = u.getFollowers().size();
         int kweets = u.getKweets().size();
-        UserTotalsView userTotalsView = new UserTotalsView(following,followers,kweets);
+        UserTotalsView userTotalsView = new UserTotalsView(following, followers, kweets);
         return userTotalsView;
     }
 
