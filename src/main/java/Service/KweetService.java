@@ -108,6 +108,9 @@ public class KweetService {
                 kweet.setMessage(message);
                 kweet.setSender(sender);
 
+                // Prevents nullpointers
+                kweet.setHearts(new ArrayList<>());
+
                 // Filter message on hashtags '#' and mentions '@' and add to kweet
                 addHashtags(kweet, parseNames('#', kweet.getMessage()));
                 addMentions(kweet, parseNames('@', kweet.getMessage()));
@@ -230,6 +233,9 @@ public class KweetService {
     private Hashtag updateHashtag(Kweet kweet, Hashtag hashtag) {
         hashtag.setLastUsed(kweet.getPublicationDate());
         hashtag.setTimesUsed(hashtag.getTimesUsed() + 1);
+
+        // Prevents nullpointers
+        hashtag.setKweets(new ArrayList<>());
 
         return hashtag;
     }

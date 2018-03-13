@@ -232,7 +232,7 @@ public class KweetServiceTest {
         Assert.assertEquals("Kweet has 0 hearts", 0, kweet.getHearts().size());
 
         // Publish kweet
-        Kweet publishedKweet = service.create(user.getUsername(), "A messaage");
+        Kweet publishedKweet = service.create(user.getUsername(), "A message");
 
         // Give heart to kweet
         publishedKweet = service.giveHeart(user.getUsername(), publishedKweet.getId());
