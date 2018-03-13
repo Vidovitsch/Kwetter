@@ -24,16 +24,16 @@ public class Kweet implements Mockable {
     private User sender;
 
     @ManyToMany(mappedBy = "mentions")
-    private List<User> mentions = new ArrayList<>();
+    private List<User> mentions;
 
     @ManyToMany(mappedBy = "hearts")
-    private Set<User> hearts = new HashSet<>();
+    private List<User> hearts;
 
     @ManyToMany
     @JoinTable(name = "KweetTag",
             joinColumns = @JoinColumn(name="kweet_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="hashtag_id", referencedColumnName = "id", nullable = false))
-    private List<Hashtag> hashtags = new ArrayList<>();
+    private List<Hashtag> hashtags;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "publicationDate")
@@ -98,11 +98,11 @@ public class Kweet implements Mockable {
         this.hashtags = hashtags;
     }
 
-    public Set<User> getHearts() {
+    public List<User> getHearts() {
         return hearts;
     }
 
-    public void setHearts(Set<User> hearts) {
+    public void setHearts(List<User> hearts) {
         this.hearts = hearts;
     }
 

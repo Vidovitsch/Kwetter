@@ -1,13 +1,10 @@
 package Service;
 
-import DAO.Mock.HashtagDaoMock;
-import DAO.Mock.KweetDaoMock;
 import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.User;
-import Qualifier.Mock;
 import Util.MockFactory;
 import Util.MockService;
 import org.junit.AfterClass;
@@ -15,6 +12,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceTest {

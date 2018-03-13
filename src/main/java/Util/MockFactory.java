@@ -78,6 +78,9 @@ public class MockFactory {
             field.set(mock, new Date());
         } else if (field.getType().isAssignableFrom(int.class)) {
             field.set(mock, getRandomNumber(999));
+        } else if (field.getType().isInterface()) {
+            // Very risky!!! Should be changed in future!
+            field.set(mock, new ArrayList<>());
         }
 
         field.setAccessible(isAccessible);

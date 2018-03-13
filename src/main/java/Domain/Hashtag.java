@@ -24,10 +24,10 @@ public class Hashtag implements Mockable {
     private Date lastUsed;
 
     @ManyToMany(mappedBy = "hashtags")
-    private List<Kweet> kweets = new ArrayList<>();
+    private List<Kweet> kweets;
 
     @Column(name = "timesUsed")
-    private int timesUsed = 0;
+    private int timesUsed;
 
     public Hashtag() { }
 

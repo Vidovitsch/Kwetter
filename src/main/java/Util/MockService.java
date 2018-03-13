@@ -3,6 +3,7 @@ package Util;
 import Domain.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class MockService {
@@ -60,6 +61,12 @@ public class MockService {
     private void setMockHashtags() {
         hashtags = (List<Hashtag>) MockFactory.createMocks(Hashtag.class, 2);
         MockFactory.setNewIds(hashtags);
+
+        // Initialize lists
+        for (Hashtag hashtag : hashtags) {
+            hashtag.setKweets(new ArrayList<>());
+        }
+
         createDummyHashtags();
     }
 
@@ -67,14 +74,22 @@ public class MockService {
     private void setMockKweets() {
         kweets = (List<Kweet>) MockFactory.createMocks(Kweet.class, 90);
         MockFactory.setNewIds(kweets);
-        createDummyKweets();
 
+        // Initialize lists
+        for (Kweet kweet : kweets) {
+            kweet.setHashtags(new ArrayList<>());
+            kweet.setMentions(new ArrayList<>());
+            kweet.setHearts(new ArrayList<>());
+        }
+
+        createDummyKweets();
     }
 
     @SuppressWarnings("unchecked")
     private void setMockProfiles() {
         profiles = (List<Profile>) MockFactory.createMocks(Profile.class, 10);
         MockFactory.setNewIds(profiles);
+
         connectDummyProfiles();
     }
 
@@ -82,6 +97,12 @@ public class MockService {
     private void setMockRoles() {
         roles = (List<Role>)MockFactory.createMocks(Role.class, 10);
         MockFactory.setNewIds(roles);
+
+        // Initialize lists
+        for (Role role : roles) {
+            role.setUsers(new ArrayList<>());
+        }
+
         connectDummyRoles();
     }
 
@@ -89,8 +110,18 @@ public class MockService {
     private void setMockUsers() {
         users = (List<User>)MockFactory.createMocks(User.class, 10);
         MockFactory.setNewIds(users);
-        connectDummyUsers();
 
+        // Initialize lists
+        for (User user : users) {
+            user.setKweets(new ArrayList<>());
+            user.setRoles(new ArrayList<>());
+            user.setFollowers(new ArrayList<>());
+            user.setFollowing(new ArrayList<>());
+            user.setHearts(new ArrayList<>());
+            user.setMentions(new ArrayList<>());
+        }
+
+        connectDummyUsers();
     }
 
     private void createDummyHashtags() {

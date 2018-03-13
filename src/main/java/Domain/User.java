@@ -27,31 +27,31 @@ public class User implements Mockable {
     @JoinTable(name = "UserRole",
             joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="role_id", referencedColumnName = "id", nullable = false))
-    private List<Role> roles = new ArrayList<>();
+    private List<Role> roles;
 
     @ManyToMany
     @JoinTable(name = "Following",
             joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="following_id", referencedColumnName = "id", nullable = false))
-    private List<User> following = new ArrayList<>();
+    private List<User> following;
 
     @ManyToMany(mappedBy = "following")
-    private List<User> followers = new ArrayList<>();
+    private List<User> followers;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
-    private List<Kweet> kweets = new ArrayList<>();
+    private List<Kweet> kweets;
 
     @ManyToMany
     @JoinTable(name = "Mention",
             joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="kweet_id", referencedColumnName = "id", nullable = false))
-    private List<Kweet> mentions = new ArrayList<>();
+    private List<Kweet> mentions;
 
     @ManyToMany
     @JoinTable(name = "KweetHeart",
             joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="kweet_id", referencedColumnName = "id", nullable = false))
-    private List<Kweet> hearts = new ArrayList<>();
+    private List<Kweet> hearts;
 
     public User() { }
 
