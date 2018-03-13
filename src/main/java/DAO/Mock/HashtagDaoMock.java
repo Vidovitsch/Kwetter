@@ -1,76 +1,79 @@
 package DAO.Mock;
 
 import DaoInterfaces.IHashtagDao;
-import Domain.Hashtag;
-import Domain.Kweet;
+import Domain.*;
+import Qualifier.Mock;
+import Util.MockFactory;
+import Util.MockService;
 
-import javax.swing.text.html.HTMLDocument;
+import javax.enterprise.context.Dependent;
 import java.util.*;
 
+@Mock
+@Dependent
 public class HashtagDaoMock implements IHashtagDao {
 
-    private Collection<Hashtag> hashtags;
+    private List<Hashtag> mockHashtags;
 
-    public HashtagDaoMock(Collection<Kweet> kweets) {
-        this.hashtags = createDummyHashtags(kweets);
+    public HashtagDaoMock() {
+        mockHashtags = MockService.getInstance().getHashtags();
     }
 
-    public Collection<Hashtag> findAll() {
-        return hashtags;
+    @Override
+    public List<Hashtag> findAll() {
+        return mockHashtags;
     }
 
-    public Hashtag findById(long id) {
-        for(Hashtag h : hashtags){
-            if(h.getId() == id) {
+    @Override
+    public Hashtag findById(Long id) {
+        for(Hashtag h : mockHashtags) {
+            if(h.getId().equals(id)) {
                 return h;
             }
         }
         return null;
     }
 
-    public Collection<Hashtag> findByName(String name) {
-        Collection<Hashtag> foundHashtags = new ArrayList<Hashtag>();
-        for(Hashtag h : hashtags){
-            if(h.getName().equals(name)) {
-                foundHashtags.add(h);
-            }
-        }
-        return foundHashtags;
-    }
-
-    public Hashtag insertHashtag(Hashtag Hashtag) {
-        hashtags.add(Hashtag);
-        return Hashtag;
-    }
-
-    public Hashtag updateHashtag(Hashtag Hashtag) {
-        for(Hashtag h : hashtags){
-            if(h.getId() == Hashtag.getId()) {
-                h = Hashtag;
-                return h;
+    @Override
+    public Hashtag findByName(String name) {
+        for (Hashtag hashtag : mockHashtags) {
+            if (hashtag.getName().equals(name)) {
+                return hashtag;
             }
         }
         return null;
     }
 
-    public boolean deleteHashtag(Hashtag Hashtag) {
-        try{hashtags.remove(Hashtag); return true;}catch (Exception e) {return false;}
+    @Override
+    public Hashtag create(Hashtag hashtag) {
+        MockFactory.setNextId(hashtag, mockHashtags);
+        mockHashtags.add(hashtag);
+
+        return hashtag;
     }
 
-    private ArrayList<Hashtag> createDummyHashtags(Collection<Kweet> kweets) {
-        ArrayList<Hashtag> hashtags = new ArrayList<Hashtag>();
-
-        Hashtag hashtag1 = new Hashtag("Test");
-        Hashtag hashtag2 = new Hashtag("Kwetter");
-        hashtags.add(hashtag1);
-        hashtags.add(hashtag2);
-
-        for (Kweet kweet : kweets) {
-            kweet.setHashtags(hashtags);
-        }
-        hashtag1.setKweets(kweets);
-        hashtag2.setKweets(kweets);
-
+    @Override
+    public List<Hashtag> create(List<Hashtag> hashtags) {
+        MockFactory.setNextIds(hashtags, mockHashtags);
+        mockHashtags.addAll(hashtags);
         return hashtags;
+    }
+
+    @Override
+    public Hashtag update(Hashtag hashtag) {
+        Hashtag existingHashtag = findById(hashtag.getId());
+        if(existingHashtag == null) {
+            mockHashtags.add(hashtag);
+        }
+        else{
+            mockHashtags.remove(existingHashtag);
+            mockHashtags.add(hashtag);
+        }
+        return hashtag;
+    }
+
+    @Override
+    public boolean remove(Hashtag hashtag) {
+        return mockHashtags.remove(hashtag);
     }
 }

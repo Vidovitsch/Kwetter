@@ -2,15 +2,21 @@ package DaoInterfaces;
 
 import Domain.Profile;
 import Domain.User;
-
-import java.util.Collection;
+import java.util.List;
 
 public interface IProfileDao {
-    Collection<Profile> findAll();
-    Profile findById(long id);
+
+    List<Profile> findAll();
+
+    Profile findById(Long id);
+
     Profile findByUser(User user);
-    Collection<Profile> findByName(String name);
-    Profile insertProfile(Profile Profile);
-    Profile updateProfile(Profile Profile);
-    boolean deleteProfile(Profile Profile);
+
+    Profile create(Profile profile);
+
+    List<Profile> create(List<Profile> profiles);
+
+    Profile update(Profile profile);
+
+    boolean remove(Profile profile);
 }

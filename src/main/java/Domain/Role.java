@@ -1,41 +1,44 @@
 package Domain;
 
+import Util.Mockable;
+
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Role")
-//@Table(name = "Role")
-public class Role {
-
-    // region Fields
+@Table(name = "Role")
+@NamedQueries({
+        @NamedQuery(name = "Role.findByName", query = "SELECT a FROM Role AS a WHERE a.name = :name")
+})
+public class Role implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "ID")
-    private long id;
+    private Long id;
 
-    //@Column(name = "Name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    //@Column(name = "Description")
+    @Column(name = "description")
     private String description;
 
     @ManyToMany(mappedBy = "roles")
-    private Collection<User> users = new HashSet<User>();
-
-    // endregion
+    private List<User> users = new ArrayList<User>();
 
     public Role() { }
 
-    public Role(String name) {
+    public Role(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    // region Getters and Setters
-
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -54,13 +57,11 @@ public class Role {
         this.description = description;
     }
 
-    public Collection<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Collection<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
-
-    // endregion
 }
