@@ -8,6 +8,7 @@ import Domain.Kweet;
 import Domain.User;
 import Exception.*;
 import Qualifier.Mock;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -33,9 +34,6 @@ public class KweetService {
     @Mock
     private IUserDao userDao;
 
-    public KweetService() {
-    }
-
     public void setKweetDao(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
     }
@@ -48,7 +46,7 @@ public class KweetService {
         this.userDao = userDao;
     }
 
-    // Method for REST testing!
+//    // Method for REST testing!
     public Kweet update(Long userId, Long kweetId, String message) throws KweetNotFoundException,
             UserNotFoundException, InvalidKweetException {
         return update(userDao.findById(userId).getUsername(), kweetId, message);
@@ -80,7 +78,7 @@ public class KweetService {
         }
     }
 
-    public Kweet create(String username, String message){
+    public Kweet create(String username, String message) throws InvalidKweetException, UserNotFoundException {
         // Find user by id and set is as sender of the kweet
         try {
             User sender = userDao.findByUsername(username);
@@ -106,7 +104,11 @@ public class KweetService {
                 throw new UserNotFoundException();
             }
         } catch (Exception e) {
-            throw (EJBException) new EJBException(e).initCause(e);
+            try {
+                throw (EJBException) new EJBException(e).initCause(e);
+            } catch (IllegalStateException stateException) {
+                throw e;
+            }
         }
     }
 

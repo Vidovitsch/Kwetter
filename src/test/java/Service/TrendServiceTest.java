@@ -47,7 +47,7 @@ public class TrendServiceTest {
     }
 
     @Test
-    public void getTrend() throws UserNotFoundException, InvalidKweetException {
+    public void getTrend() throws InvalidKweetException, UserNotFoundException {
         // This test needs a full reset of hashtags
         hashtagDao.findAll().clear();
 

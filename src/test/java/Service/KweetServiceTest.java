@@ -64,7 +64,7 @@ public class KweetServiceTest {
     }
 
     @Test(expected = InvalidKweetException.class)
-    public void createKweet_TooManyCharacters() throws UserNotFoundException, InvalidKweetException {
+    public void createKweet_TooManyCharacters() throws InvalidKweetException, UserNotFoundException {
         String message = "This message is too long: sdfhlkasdgjasofjoewfjwafewefewf" +
                 "safdasdfasfsdafasdfsdaflkfejalifjdfasfasfasfasfsafasfasdfalesijflasiejflaeifjljlasefijaeslifjalsiefj";
 
@@ -87,7 +87,7 @@ public class KweetServiceTest {
     }
 
     @Test(expected = InvalidKweetException.class)
-    public void createKweet_MessageIsNull() throws EJBException {
+    public void createKweet_MessageIsNull() throws InvalidKweetException, UserNotFoundException {
         // Setup
         User user = userDao.create(
                 (User) MockFactory.createMocks(User.class, 1, "username", "publishKweet_MessageIsNull").get(0));

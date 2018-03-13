@@ -28,8 +28,8 @@ public class AuthResource {
     @POST
     public Response authenticate(Credentials credential) throws SystemException {
         // TODO: Should compare user credentials on the database.
-        String username = credential.username;
-        String password = credential.password;
+        String username = credential.getUsername();
+        String password = credential.getPassword();
 
         // TODO: Groups should retrieve from database based on authenticate user.
         String token = this.jwtStore.generateToken(username, Arrays.asList("admin", "user"));

@@ -18,15 +18,10 @@ public class TrendService {
     private IHashtagDao hashtagDao;
 
     public TrendService() { }
-
-    /**
-     * To Do
-     *
-     * @return
-     */
+    
     public List<String> get() {
         List<Hashtag> trends = filterOnDates(hashtagDao.findAll());
-        Collections.sort(trends, new TrendComparator());
+        trends.sort(new TrendComparator());
 
         return convertToNameList(trends);
     }

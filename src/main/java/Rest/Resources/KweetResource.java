@@ -7,6 +7,7 @@ import ViewModels.NewKweetData;
 import ViewModels.TimelineItem;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import Exception.*;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -93,7 +94,8 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Post a kweet for a user, identified by the username", notes = "Username has to be valid")
-    public BooleanResult publishKweet(@PathParam("username") String username, NewKweetData newKweetData) {
+    public BooleanResult publishKweet(@PathParam("username") String username, NewKweetData newKweetData)
+            throws InvalidKweetException, UserNotFoundException{
         Kweet k;
         try {
             k = kweetService.create(username, newKweetData.getMessage());
@@ -109,7 +111,7 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Post a kweet for a user, identified by the user's id", notes = "Userid has to be a valid user-id")
-    public BooleanResult publishKweet(@PathParam("userid") long userid, NewKweetData newKweetData) {
+    public BooleanResult publishKweet(@PathParam("userid") Long userid, NewKweetData newKweetData) {
         Kweet k;
         try {
             k = kweetService.create(userid, newKweetData.getMessage());
