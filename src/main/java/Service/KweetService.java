@@ -46,12 +46,23 @@ public class KweetService {
         this.userDao = userDao;
     }
 
-//    // Method for REST testing!
+    // Method for REST testing!
     public Kweet update(Long userId, Long kweetId, String message) throws KweetNotFoundException,
             UserNotFoundException, InvalidKweetException {
         return update(userDao.findById(userId).getUsername(), kweetId, message);
     }
 
+    /**
+     * Updates an existing/persisted kweet.
+     *
+     * @param username of the sender of the kweet
+     * @param kweetId of the kweet to be updated
+     * @param message that is updated
+     * @return the updated version of the kweet
+     * @throws KweetNotFoundException when the kweetId isn't equal to any of the persisted id's
+     * @throws UserNotFoundException when mentions in the message aren't equal to any of the persisted usernames
+     * @throws InvalidKweetException when the updated message has null, empty or a too long value (max. 140 characters)
+     */
     public Kweet update(String username, Long kweetId, String message) throws KweetNotFoundException,
             UserNotFoundException, InvalidKweetException {
         Kweet kweet = kweetDao.findById(kweetId);
@@ -78,8 +89,16 @@ public class KweetService {
         }
     }
 
+    /**
+     * Creates a new kweet.
+     *
+     * @param username of the sender of the new kweet
+     * @param message to be send in the kweet
+     * @return the new persisted kweet
+     * @throws InvalidKweetException when the updated message has null, empty or a too long value (max. 140 characters)
+     * @throws UserNotFoundException when mentions in the message or usernamearen't equal to any of the persisted usernames
+     */
     public Kweet create(String username, String message) throws InvalidKweetException, UserNotFoundException {
-        // Find user by id and set is as sender of the kweet
         try {
             User sender = userDao.findByUsername(username);
             if (sender != null) {
@@ -89,16 +108,15 @@ public class KweetService {
                 kweet.setMessage(message);
                 kweet.setSender(sender);
 
-                // Make sure the sender knows of kweet
-                //syncWithKweets(sender.getKweets(), kweet);
-
                 // Filter message on hashtags '#' and mentions '@' and add to kweet
                 addHashtags(kweet, parseNames('#', kweet.getMessage()));
                 addMentions(kweet, parseNames('@', kweet.getMessage()));
 
                 Kweet k = kweetDao.create(kweet);
-                List<Kweet> kweets = kweetDao.findBySender(sender);
-                syncWithKweets(kweets, k);
+
+                // Make sure the user knows of kweet
+                syncWithKweets(kweetDao.findBySender(sender), k);
+
                 return k;
             } else {
                 throw new UserNotFoundException();
@@ -113,10 +131,10 @@ public class KweetService {
     }
 
     /**
-     * To Do
+     * Deletes a persisted kweet.
      *
-     * @param kweetId
-     * @return
+     * @param kweetId of the kweet to be deleted
+     * @return true if the kweet existed and has been deleted, else false
      */
     public boolean delete(Long kweetId) {
         Kweet kweet = kweetDao.findById(kweetId);
@@ -124,10 +142,13 @@ public class KweetService {
     }
 
     /**
-     * To Do
+     * Gives a heart ('like') to a persisted kweet.
      *
-     * @param kweetId
-     * @param username
+     * @param username of the user that gives a heart
+     * @param kweetId of the kweet that gets a heart
+     * @return the updated kweet that got a heart
+     * @throws UserNotFoundException when the username isn't equal to any peristed usernames
+     * @throws KweetNotFoundException when the kweetId isn't equal to any persisted kweets
      */
     public Kweet giveHeart(String username, Long kweetId) throws UserNotFoundException, KweetNotFoundException {
         User user = userDao.findByUsername(username);
@@ -151,10 +172,10 @@ public class KweetService {
     }
 
     /**
-     * To Do
-     *
-     * @param term
-     * @return
+     * Search within all persisted kweet by the given search term.
+     * @param term to search kweets. The term will be used to search for hashtags or senders.
+     *             It's a valid search result when a part of the hashtag or sender is equal to the given term.
+     * @return list of found kweets where the term equals parts the of hashtags or senders
      */
     public List<Kweet> search(String term) {
         if (term != null && !term.equals("")) {

@@ -235,7 +235,7 @@ public class KweetServiceTest {
         Kweet publishedKweet = service.create(user.getUsername(), "A messaage");
 
         // Give heart to kweet
-        service.giveHeart(user.getUsername(), publishedKweet.getId());
+        publishedKweet = service.giveHeart(user.getUsername(), publishedKweet.getId());
 
         // Assert after
         Assert.assertEquals("Kweet has 1 heart", 1, publishedKweet.getHearts().size());

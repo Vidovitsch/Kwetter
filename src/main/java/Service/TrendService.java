@@ -17,8 +17,19 @@ public class TrendService {
     @Inject @Mock
     private IHashtagDao hashtagDao;
 
-    public TrendService() { }
-    
+    public void setHashtagDao(IHashtagDao hashtagDao) {
+        this.hashtagDao = hashtagDao;
+    }
+
+    /**
+     * Gets the current trend of hashtags.
+     * The trend is measured by two factors:
+     *      1. The number of times the hashtag is used in kweets.
+     *      2. The latest use of the hashtag in a kweet.
+     *          If the difference between the latest date and the current date is bigger than 7 days,
+     *          the hashtag can't be a trend anymore, despite the number of uses.
+     * @return A list of hashtag names
+     */
     public List<String> get() {
         List<Hashtag> trends = filterOnDates(hashtagDao.findAll());
         trends.sort(new TrendComparator());
@@ -53,9 +64,5 @@ public class TrendService {
         }
 
         return names;
-    }
-
-    public void setHashtagDao(IHashtagDao hashtagDao) {
-        this.hashtagDao = hashtagDao;
     }
 }
