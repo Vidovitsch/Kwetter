@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 public class AuthResource {
 
     @EJB
-    JWTStore jwtStore;
+    private JWTStore jwtStore;
 
     /**
      *

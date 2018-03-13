@@ -28,16 +28,16 @@ public class KweetResource {
     private TimelineService timelineService;
 
     @EJB
-    KweetService kweetService;
+    private KweetService kweetService;
 
-    public KweetResource() {
-    }
+    public KweetResource() { }
 
     @GET
     @Path("/last/{amount}/byuserid/{userid}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users most recent kweets, based on the given amount", notes = "User id needs to be valid and kweets have to be present")
     public Set<TimelineItem> getMostRecentKweetsByID(@PathParam("userid") long userid, @PathParam("amount") int amount) {
+
         return timelineService.MostRecentKweets(userid, amount);
     }
 
@@ -46,6 +46,7 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "User id has to be valid and kweets have to be available")
     public Set<TimelineItem> getTimelineByUserID(@PathParam("userid") long userid) {
+
         return timelineService.GenerateTimeLine(userid);
     }
 
@@ -54,6 +55,7 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "ID has to be a valid user-id")
     public Set<TimelineItem> getMentionsByUserID(@PathParam("userid") long userID) {
+
         return timelineService.GenerateMentionsTimeLine(userID);
     }
 
@@ -63,6 +65,7 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users most recent kweets, based on the given amount", notes = "Username needs to be valid and kweets have to be present")
     public Set<TimelineItem> getMostRecentKweetsByUsername(@PathParam("username") String username, @PathParam("amount") int amount) {
+
         return timelineService.MostRecentKweets(username, amount);
     }
 
@@ -71,6 +74,7 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "Username has to be valid and kweets have to be available")
     public Set<TimelineItem> getTimelineByUsername(@PathParam("username") String username) {
+
         return timelineService.GenerateTimeLine(username);
     }
 
@@ -79,6 +83,7 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "Username has to be a valid user-id")
     public Set<TimelineItem> getMentionsByUsername(@PathParam("username") String username) {
+
         return timelineService.GenerateMentionsTimeLine(username);
     }
 
@@ -89,12 +94,13 @@ public class KweetResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Post a kweet for a user, identified by the username", notes = "Username has to be valid")
     public BooleanResult publishKweet(@PathParam("username") String username, NewKweetData newKweetData) {
-        Kweet k = null;
+        Kweet k;
         try {
             k = kweetService.create(username, newKweetData.getMessage());
         } catch (EJBException e) {
             return new BooleanResult(e.getCausedByException().getMessage(), false);
         }
+
         return new BooleanResult(k.getMessage(),true);
     }
 
@@ -104,12 +110,13 @@ public class KweetResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Post a kweet for a user, identified by the user's id", notes = "Userid has to be a valid user-id")
     public BooleanResult publishKweet(@PathParam("userid") long userid, NewKweetData newKweetData) {
-        Kweet k = null;
+        Kweet k;
         try {
             k = kweetService.create(userid, newKweetData.getMessage());
         } catch (EJBException e) {
             return new BooleanResult(e.getCausedByException().getMessage(), false);
         }
+
         return new BooleanResult(k.getMessage(),true);
     }
 }

@@ -35,6 +35,15 @@ public class KweeterDataService {
         return getKweeterData(userDao.findById(userId).getUsername());
     }
 
+
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setKweetDao(IKweetDao kweetDao) {
+        this.kweetDao = kweetDao;
+    }
+
     public KweeterData getKweeterData(String username) throws UserNotFoundException {
         User user = userDao.findByUsername(username);
         if (user == null) {
@@ -86,13 +95,5 @@ public class KweeterDataService {
         }
 
         return followers;
-    }
-
-    public void setUserDao(IUserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setKweetDao(IKweetDao kweetDao) {
-        this.kweetDao = kweetDao;
     }
 }

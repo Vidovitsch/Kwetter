@@ -20,10 +20,10 @@ public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
     private static final String BEARER = "Bearer ";
 
     @Inject
-    IdentityStore identityStore;
+    private IdentityStore identityStore;
 
     @Inject
-    JWTStore jwtStore;
+    private JWTStore jwtStore;
 
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest req, HttpServletResponse res, HttpMessageContext context){

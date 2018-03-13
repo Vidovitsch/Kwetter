@@ -41,9 +41,9 @@ public class JWTStore {
     private static final Instant EXPIRED_TIME = CURRENT_TIME.plus(3, ChronoUnit.MINUTES);
 
     //@Inject
-    KeyGenerator keyGenerator;
+    private KeyGenerator keyGenerator;
 
-    SecretKey secretKey = null;
+    private SecretKey secretKey = null;
 
 
     public String generateToken(final String username, final List<String> groupNames) throws SystemException {

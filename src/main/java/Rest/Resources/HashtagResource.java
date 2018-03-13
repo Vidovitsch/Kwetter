@@ -25,8 +25,7 @@ public class HashtagResource {
     @EJB
     private TrendService trendService;
 
-    public HashtagResource() {
-    }
+    public HashtagResource() { }
 
     @GET
     @Path("/trends")
@@ -37,6 +36,7 @@ public class HashtagResource {
         for (String trend : trendService.get()) {
             trends.add(new TrendView(trend));
         }
+
         return trends;
     }
 }

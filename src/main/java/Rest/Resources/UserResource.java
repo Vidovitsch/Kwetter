@@ -33,16 +33,15 @@ public class UserResource {
     @EJB
     private ProfileDataService profileDataService;
 
-    public UserResource() {
-    }
+    public UserResource() { }
 
     @GET
     @Path("/byusername/{username}/following")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the users a user is following, based on the username", notes = "Username has to be valid")
     public List<OtherUserView> getFollowing(@PathParam("username") String username) {
-        List<OtherUserView> following = userService.getFollowing(username);
-        return following;
+
+        return userService.getFollowing(username);
     }
 
 
@@ -51,8 +50,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the users a user is following, based on the user-id", notes = "User-id has to be valid")
     public List<OtherUserView> getFollowing(@PathParam("userid") long userid) {
-        List<OtherUserView> following = userService.getFollowing(userid);
-        return following;
+
+        return userService.getFollowing(userid);
     }
 
     @GET
@@ -60,8 +59,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the users who follow a certain user, based on the username", notes = "Username has to be valid")
     public List<OtherUserView> getFollowers(@PathParam("username") String username) {
-        List<OtherUserView> following = userService.getFollowers(username);
-        return following;
+
+        return userService.getFollowers(username);
     }
 
     @GET
@@ -69,8 +68,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the users who follow a certain user,, based on the user-id", notes = "User-id has to be valid")
     public List<OtherUserView> getFollowers(@PathParam("userid") long userid) {
-        List<OtherUserView> following = userService.getFollowers(userid);
-        return following;
+
+        return userService.getFollowers(userid);
     }
 
     @GET
@@ -78,8 +77,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the profile-data of a certain user, based on the user-id", notes = "User-id has to be valid")
     public ProfileData getProfileByUserID(@PathParam("userid") long userid) {
-        ProfileData profileData = profileDataService.GetProfileData(userid);
-        return profileData;
+
+        return profileDataService.GetProfileData(userid);
     }
 
     @GET
@@ -87,8 +86,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the profile-data of a certain user, based on the username", notes = "Username has to be valid")
     public ProfileData getProfileByUserID(@PathParam("username") String username) {
-        ProfileData profileData = profileDataService.GetProfileData(username);
-        return profileData;
+
+        return profileDataService.GetProfileData(username);
     }
 
     @GET
@@ -96,8 +95,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users total numbers", notes = "User id has to be valid and only the available data will be given as a result")
     public UserTotalsView getUserTotals(@PathParam("userid") long userid) {
-        UserTotalsView userTotalsView = profileDataService.GetUserTotals(userid);
-        return userTotalsView;
+
+        return profileDataService.GetUserTotals(userid);
     }
 
     @GET
@@ -105,8 +104,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users total numbers", notes = "Username has to be valid and only the available data will be given as a result")
     public UserTotalsView getUserTotals(@PathParam("username") String username) {
-        UserTotalsView userTotalsView = profileDataService.GetUserTotals(username);
-        return userTotalsView;
+
+        return profileDataService.GetUserTotals(username);
     }
 
     @GET
@@ -114,8 +113,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Test REST functionality", notes = "")
     public OtherUserView getTest() {
-        OtherUserView userView = new OtherUserView("test", "test");
-        return userView;
+
+        return new OtherUserView("test", "test");
     }
 
     @POST
@@ -124,7 +123,7 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Create a new profile for a user, identified by the user's id", notes = "Userid has to be a valid user-id")
     public BooleanResult createProfile(@PathParam("userid") long userid, ProfileData profileData) {
-        ProfileData p = null;
+        ProfileData p;
         try {
             p = profileDataService.CreateProfile(userid, profileData);
         } catch (EJBException e) {
@@ -134,6 +133,7 @@ public class UserResource {
         }
         Gson gsonObj = new Gson();
         String strJson = gsonObj.toJson(p);
+
         return new BooleanResult(strJson, true);
     }
 
@@ -143,7 +143,7 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Update the profile of a user, identified by the user's id", notes = "Userid has to be a valid user-id")
     public BooleanResult updateProfile(@PathParam("userid") long userid, ProfileData profileData) {
-        ProfileData p = null;
+        ProfileData p;
         try {
             p = profileDataService.UpdateProfile(userid, profileData);
         } catch (EJBException e) {
@@ -151,6 +151,7 @@ public class UserResource {
         }
         Gson gsonObj = new Gson();
         String strJson = gsonObj.toJson(p);
+
         return new BooleanResult(strJson, true);
     }
 
@@ -166,6 +167,4 @@ public class UserResource {
             return new BooleanResult("User could not be followed", false);
         }
     }
-
-
 }

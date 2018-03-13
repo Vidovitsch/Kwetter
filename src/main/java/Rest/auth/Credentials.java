@@ -1,8 +1,14 @@
 package Rest.auth;
 
 public class Credentials {
-    String username;
-    String password;
+    private String username;
+    private String password;
+
+    public Credentials() { }
+
+    public Credentials(String username) {
+        this.username = username;
+    }
 
     public String getUsername() {
         return username;
@@ -18,13 +24,5 @@ public class Credentials {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Credentials(String username) {
-        this.username = username;
-    }
-
-    public Credentials() {
-
     }
 }
