@@ -2,7 +2,6 @@ package Service;
 
 import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
-import Domain.Profile;
 import Domain.User;
 import Qualifier.Mock;
 import ViewModels.OtherUserView;
@@ -18,23 +17,28 @@ import java.util.List;
 public class UserService {
 
     @Inject
+    @Mock
     private IUserDao userDao;
 
     @Inject
     @Mock
     private IProfileDao profileDao;
 
-    public UserService() {
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
     }
 
-    public Boolean AddFollowing(long userid, long followingid) {
-        try {
-            List<User> following = userDao.findById(userid).getFollowing();
-            if(following.contains(userDao.findById(followingid))) return false;
-            following.add(userDao.findById(followingid));
-            return true;
-        } catch (Exception e) {
+    public void setProfileDao(IProfileDao profileDao) {
+        this.profileDao = profileDao;
+    }
+
+    public Boolean addFollowing(Long userId, Long followingId) {
+        List<User> following = userDao.findById(userId).getFollowing();
+        if (following.contains(userDao.findById(followingId))) {
             return false;
+        } else {
+            following.add(userDao.findById(followingId));
+            return true;
         }
     }
 
@@ -55,17 +59,14 @@ public class UserService {
 
     public List<OtherUserView> getFollowing(long userid) {
         User user = userDao.findById(userid);
-        return generateOtherUserViews(userDao.findAll());
+        return generateOtherUserViews(user.getFollowing());
     }
 
+    // For mocking
     private List<OtherUserView> generateOtherUserViews(List<User> users) {
         ArrayList<OtherUserView> OtherUserViews = new ArrayList<>();
         for (User u : users) {
-            String image = "";
-            try {
-                image = u.getProfile().getImage();
-            } catch (Exception e) {
-            }
+            String image = u.getProfile().getImage();
             OtherUserViews.add(new OtherUserView(u.getUsername(), image));
         }
         return OtherUserViews;

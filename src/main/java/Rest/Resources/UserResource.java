@@ -2,7 +2,6 @@ package Rest.Resources;
 
 import Exception.InvalidProfileException;
 import Service.ProfileDataService;
-import Service.ProfileService;
 import Service.UserService;
 import Util.BooleanResult;
 import ViewModels.OtherUserView;
@@ -160,7 +159,7 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Add user to follow to a user, both identified by the user's id's", notes = "Userid's have to be a valid")
     public BooleanResult updateProfile(@PathParam("userid") long userid, @PathParam("followuserid") long followuserid) {
-        boolean added = userService.AddFollowing(userid, followuserid);
+        boolean added = userService.addFollowing(userid, followuserid);
         if (added) {
             return new BooleanResult("User now followed", true);
         } else {

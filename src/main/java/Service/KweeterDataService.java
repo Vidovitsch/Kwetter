@@ -35,7 +35,6 @@ public class KweeterDataService {
         return getKweeterData(userDao.findById(userId).getUsername());
     }
 
-
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
     }
