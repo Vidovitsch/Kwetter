@@ -14,6 +14,7 @@ import Util.MockFactory;
 import Util.MockService;
 import org.junit.*;
 
+import javax.ejb.EJBException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +87,7 @@ public class KweetServiceTest {
     }
 
     @Test(expected = InvalidKweetException.class)
-    public void createKweet_MessageIsNull() throws UserNotFoundException, InvalidKweetException {
+    public void createKweet_MessageIsNull() throws EJBException {
         // Setup
         User user = userDao.create(
                 (User) MockFactory.createMocks(User.class, 1, "username", "publishKweet_MessageIsNull").get(0));

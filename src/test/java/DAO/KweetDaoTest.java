@@ -54,34 +54,16 @@ public class KweetDaoTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void findByMessagePartTest() {
-        String message1 = "The quick brown fox jumps over the lazy dog";
-        String message2 = "I'm a brown fox";
-
-        // Insert new kweets
-        List<Kweet> kweets = (List<Kweet>)MockFactory.createMocks(Kweet.class, 3);
-        kweets.get(0).setMessage(message1);
-        kweets.get(1).setMessage(message2);
-        kweetDao.create(kweets);
-
-        // Check for message
-        List<Kweet> fetchedKweets = kweetDao.findByTerm("brown fox");
-        Assert.assertTrue(fetchedKweets.contains(kweets.get(0)));
-        Assert.assertTrue(fetchedKweets.contains(kweets.get(1)));
-        Assert.assertFalse(fetchedKweets.contains(kweets.get(2)));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
     public void findBySenderNameTest() {
         // Insert new kweets
         List<Kweet> kweets = (List<Kweet>)MockFactory.createMocks(Kweet.class, 3);
-        kweets.get(0).setSender(new User((long)-1, "Hank"));
-        kweets.get(1).setSender(new User((long)-1, "Hank"));
+        User user = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
+        kweets.get(0).setSender(user);
+        kweets.get(1).setSender(user);
         kweets = kweetDao.create(kweets);
 
         // Check for message
-        List<Kweet> fetchedKweets = kweetDao.findBySenderName("Hank");
+        List<Kweet> fetchedKweets = kweetDao.findBySender(user);
         Assert.assertTrue(fetchedKweets.contains(kweets.get(0)));
         Assert.assertTrue(fetchedKweets.contains(kweets.get(1)));
         Assert.assertFalse(fetchedKweets.contains(kweets.get(2)));

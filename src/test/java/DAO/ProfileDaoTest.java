@@ -68,23 +68,6 @@ public class ProfileDaoTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void findByNameTest() {
-        String name = "mockProfile";
-
-        // Insert new profiles
-        List<Profile> mockProfiles = profileDao.create(
-                (List<Profile>) MockFactory.createMocks(Profile.class, 2, "name", name));
-        Profile mockProfile = profileDao.create(
-                (Profile) MockFactory.createMocks(Profile.class, 1, "name", "mockProfile123").get(0));
-
-        // Check fetched profiles
-        List<Profile> fetchedProfiles = profileDao.findByName(name);
-        Assert.assertTrue(fetchedProfiles.containsAll(mockProfiles));
-        Assert.assertFalse(fetchedProfiles.contains(mockProfile));
-    }
-
-    @Test
     public void insertProfileTest() {
         // Insert new profile
         Profile mockProfile = profileDao.create(

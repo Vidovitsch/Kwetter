@@ -53,7 +53,7 @@ public class KweeterDataService {
     }
 
     private void setKweetData(KweeterData data, String username) {
-        List<Kweet> sentKweets = kweetDao.findBySenderName(username);
+        List<Kweet> sentKweets = kweetDao.findBySender(userDao.findByUsername(username));
 
         // Set total of sent kweets
         data.setTotalKweets(sentKweets.size());
@@ -62,7 +62,7 @@ public class KweeterDataService {
         if (sentKweets.size() > 0) {
 
             // Sort to get the last kweet on first index
-            Collections.sort(sentKweets, new KweetComparator());
+            sentKweets.sort(new KweetComparator());
 
             Kweet lastKweet = sentKweets.get(0);
             data.setLastKweetMessage(lastKweet.getMessage());

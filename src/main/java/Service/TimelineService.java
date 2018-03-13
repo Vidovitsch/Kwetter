@@ -35,7 +35,7 @@ public class TimelineService {
             TimeLine.add(CreatTimeLineItem(k, true));
         }
         for (User u : user.getFollowing()) {
-            for (Kweet k : kweetDao.findBySenderName(u.getUsername())) {
+            for (Kweet k : kweetDao.findBySender(u)) {
                 TimeLine.add(CreatTimeLineItem(k, false));
             }
         }
@@ -78,7 +78,7 @@ public class TimelineService {
             TimeLine.add(CreatTimeLineItem(k, true));
         }
         for (User u : user.getFollowing()) {
-            for (Kweet k : kweetDao.findBySenderName(u.getUsername())) {
+            for (Kweet k : kweetDao.findBySender(u)) {
                 TimeLine.add(CreatTimeLineItem(k, false));
             }
         }
