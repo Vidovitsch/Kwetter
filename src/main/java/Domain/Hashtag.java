@@ -24,7 +24,7 @@ public class Hashtag implements Mockable {
     private Date lastUsed;
 
     @ManyToMany(mappedBy = "hashtags")
-    private List<Kweet> kweets;
+    private List<Kweet> kweets = new ArrayList<>();
 
     @Column(name = "timesUsed")
     private int timesUsed;

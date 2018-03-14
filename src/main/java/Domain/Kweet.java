@@ -24,16 +24,16 @@ public class Kweet implements Mockable {
     private User sender;
 
     @ManyToMany(mappedBy = "mentions")
-    private List<User> mentions;
+    private List<User> mentions = new ArrayList<>();
 
     @ManyToMany(mappedBy = "hearts")
-    private List<User> hearts;
+    private List<User> hearts  = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "KweetTag",
             joinColumns = @JoinColumn(name="kweet_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="hashtag_id", referencedColumnName = "id", nullable = false))
-    private List<Hashtag> hashtags;
+    private List<Hashtag> hashtags  = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "publicationDate")

@@ -62,11 +62,6 @@ public class MockService {
         hashtags = (List<Hashtag>) MockFactory.createMocks(Hashtag.class, 2);
         MockFactory.setNewIds(hashtags);
 
-        // Initialize lists
-        for (Hashtag hashtag : hashtags) {
-            hashtag.setKweets(new ArrayList<>());
-        }
-
         createDummyHashtags();
     }
 
@@ -74,13 +69,6 @@ public class MockService {
     private void setMockKweets() {
         kweets = (List<Kweet>) MockFactory.createMocks(Kweet.class, 90);
         MockFactory.setNewIds(kweets);
-
-        // Initialize lists
-        for (Kweet kweet : kweets) {
-            kweet.setHashtags(new ArrayList<>());
-            kweet.setMentions(new ArrayList<>());
-            kweet.setHearts(new ArrayList<>());
-        }
 
         createDummyKweets();
     }
@@ -98,11 +86,6 @@ public class MockService {
         roles = (List<Role>)MockFactory.createMocks(Role.class, 10);
         MockFactory.setNewIds(roles);
 
-        // Initialize lists
-        for (Role role : roles) {
-            role.setUsers(new ArrayList<>());
-        }
-
         connectDummyRoles();
     }
 
@@ -110,16 +93,6 @@ public class MockService {
     private void setMockUsers() {
         users = (List<User>)MockFactory.createMocks(User.class, 10);
         MockFactory.setNewIds(users);
-
-        // Initialize lists
-        for (User user : users) {
-            user.setKweets(new ArrayList<>());
-            user.setRoles(new ArrayList<>());
-            user.setFollowers(new ArrayList<>());
-            user.setFollowing(new ArrayList<>());
-            user.setHearts(new ArrayList<>());
-            user.setMentions(new ArrayList<>());
-        }
 
         connectDummyUsers();
     }
