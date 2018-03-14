@@ -52,7 +52,7 @@ public class UserServiceTest {
         Assert.assertEquals("User follows one other user",
                 1, mockUsers.get(0).getFollowing().size());
         Assert.assertTrue(mockUsers.get(0).getFollowing().contains(mockUsers.get(1)));
-        Assert.assertFalse("User followed user successfully", result);
+        Assert.assertTrue("User followed user successfully", result);
     }
 
     @Test
