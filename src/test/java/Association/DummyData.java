@@ -1,8 +1,8 @@
-import Domain.*;
+package Association;
 
+import Domain.*;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 
 public class DummyData {
 
@@ -77,35 +77,35 @@ public class DummyData {
     private ArrayList<User> createDummyUsers() {
         ArrayList<User> users = new ArrayList<User>();
         for (int i = 0; i < 10; i++) {
-            users.add(new User("DummyUser" + i));
+            users.add(new User((long)i, "DummyUser" + i));
         }
 
         return users;
     }
 
-    private void connectDummyUsers(Collection<User> users) {
+    private void connectDummyUsers(List<User> users) {
         for (User dummyUser : users) {
-            Collection<User> others = new HashSet<User>(users);
+            List<User> others = new ArrayList<User>(users);
             others.remove(dummyUser);
 
-            dummyUser.setFollowers((HashSet<User>)others);
-            dummyUser.setFollowing((HashSet<User>)others);
+            dummyUser.setFollowers(others);
+            dummyUser.setFollowing(others);
         }
     }
 
-    private ArrayList<Kweet> createDummyKweets(Collection<User> users) {
+    private ArrayList<Kweet> createDummyKweets(List<User> users) {
         ArrayList<Kweet> allKweets = new ArrayList<Kweet>();
 
         for (User user : users) {
-            Collection<User> otherUsers = new HashSet<User>(users);
+            List<User> otherUsers = new ArrayList<User>(users);
             otherUsers.remove(user);
 
-            Collection<Kweet> kweets = new HashSet<Kweet>();
+            List<Kweet> kweets = new ArrayList<Kweet>();
             for (User otherUser : otherUsers) {
-                Collection<User> mentions = new HashSet<User>();
+                List<User> mentions = new ArrayList<User>();
                 mentions.add(otherUser);
 
-                Kweet kweet = new Kweet(user, mentions, user.getUsername() + otherUser.getUsername());
+                Kweet kweet = new Kweet((long)-1, user, mentions, user.getUsername() + otherUser.getUsername());
                 kweets.add(kweet);
                 allKweets.add(kweet);
             }
@@ -116,11 +116,11 @@ public class DummyData {
         return allKweets;
     }
 
-    private ArrayList<Role> createDummyRoles(Collection<User> users) {
+    private ArrayList<Role> createDummyRoles(List<User> users) {
         ArrayList<Role> roles = new ArrayList<Role>();
 
-        Role role1 = new Role("Kweeter");
-        Role role2 = new Role("Moderator");
+        Role role1 = new Role((long)-1,"Kweeter");
+        Role role2 = new Role((long)-1,"Moderator");
         roles.add(role1);
         roles.add(role2);
 
@@ -133,11 +133,11 @@ public class DummyData {
         return roles;
     }
 
-    private ArrayList<Hashtag> createDummyHashtags(Collection<Kweet> kweets) {
+    private ArrayList<Hashtag> createDummyHashtags(List<Kweet> kweets) {
         ArrayList<Hashtag> hashtags = new ArrayList<Hashtag>();
 
-        Hashtag hashtag1 = new Hashtag("Test");
-        Hashtag hashtag2 = new Hashtag("Kwetter");
+        Hashtag hashtag1 = new Hashtag((long)-1,"Test");
+        Hashtag hashtag2 = new Hashtag((long)-1,"Kwetter");
         hashtags.add(hashtag1);
         hashtags.add(hashtag2);
 
@@ -150,11 +150,11 @@ public class DummyData {
         return hashtags;
     }
 
-    private ArrayList<Profile> createDummyProfiles(Collection<User> users) {
+    private ArrayList<Profile> createDummyProfiles(List<User> users) {
         ArrayList<Profile> profiles = new ArrayList<Profile>();
 
         for (User user : users) {
-            Profile dummyProfile = new Profile(user.getUsername() + " Test");
+            Profile dummyProfile = new Profile((long)-1,user.getUsername() + " Test");
             dummyProfile.setUser(user);
             user.setProfile(dummyProfile);
             profiles.add(dummyProfile);

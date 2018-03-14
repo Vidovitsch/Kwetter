@@ -1,58 +1,59 @@
 package Domain;
 
+import Util.Mockable;
+
 import javax.persistence.*;
 
-@Entity(name = "Post")
-//@Table(name = "Post")
-public class Profile {
-
-    // region Fields
+@Entity(name = "Profile")
+@Table(name = "Profile")
+@NamedQueries({
+        @NamedQuery(name = "Profile.findByUser", query = "SELECT a FROM Profile AS a WHERE a.user = :user")
+})
+public class Profile implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "ID")
-    private long id;
+    private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name="User_Id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    //@Column(name = "Name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    //@Column(name = "Image")
+    @Column(name = "image")
     private String image;
 
-    //@Column(name = "Biography")
+    @Column(name = "biography")
     private String biography;
 
-    //@Column(name = "Location")
+    @Column(name = "location")
     private String location;
 
-    //@Column(name = "Website")
+    @Column(name = "website")
     private String website;
-
-    // endregion
 
     public Profile() { }
 
-    public Profile(String name) {
+    public Profile(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    // region Getters and Setter
-
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public void setUser(User user) { this.user = user; }
 
     public String getName() {
         return name;
@@ -93,6 +94,4 @@ public class Profile {
     public void setwebsite(String website) {
         this.website = website;
     }
-
-    // endregion
 }
