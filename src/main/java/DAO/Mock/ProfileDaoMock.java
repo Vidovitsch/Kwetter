@@ -1,26 +1,35 @@
 package DAO.Mock;
 
 import DaoInterfaces.IProfileDao;
+import Qualifier.Mock;
+import Util.MockFactory;
 import Domain.Profile;
 import Domain.User;
-import java.util.ArrayList;
-import java.util.Collection;
+import Util.MockService;
 
+import javax.enterprise.context.Dependent;
+import java.util.ArrayList;
+import java.util.List;
+
+@Mock
+@Dependent
 public class ProfileDaoMock implements IProfileDao {
 
-    private Collection<Profile> dummyProfiles;
+    private List<Profile> mockProfiles;
 
-    public ProfileDaoMock(Collection<User> users) {
-        this.dummyProfiles = createDummyProfiles(users);
+    public ProfileDaoMock() {
+        mockProfiles = MockService.getInstance().getProfiles();
     }
 
-    public Collection<Profile> findAll() {
-        return dummyProfiles;
+    @Override
+    public List<Profile> findAll() {
+        return mockProfiles;
     }
 
-    public Profile findById(long id) {
-        for (Profile profile : dummyProfiles) {
-            if (profile.getId() == id) {
+    @Override
+    public Profile findById(Long id) {
+        for (Profile profile : mockProfiles) {
+            if (profile.getId().equals(id)) {
                 return profile;
             }
         }
@@ -28,8 +37,9 @@ public class ProfileDaoMock implements IProfileDao {
         return null;
     }
 
+    @Override
     public Profile findByUser(User user) {
-        for (Profile profile : dummyProfiles) {
+        for (Profile profile : mockProfiles) {
             if (profile.getUser() == user) {
                 return profile;
             }
@@ -38,48 +48,34 @@ public class ProfileDaoMock implements IProfileDao {
         return null;
     }
 
-    public Collection<Profile> findByName(String name) {
-        Collection<Profile> profiles = new ArrayList<Profile>();
-        for (Profile profile : dummyProfiles) {
-            if (profile.getName().equals(name)) {
-                profiles.add(profile);
-            }
-        }
-
-        return profiles;
-    }
-
-    public Profile insertProfile(Profile profile) {
-        dummyProfiles.add(profile);
-
+    @Override
+    public Profile create(Profile profile) {
+        MockFactory.setNextId(profile, mockProfiles);
+        mockProfiles.add(profile);
         return profile;
     }
 
-    public Profile updateProfile(Profile profile) {
+    @Override
+    public List<Profile> create(List<Profile> profiles) {
+        MockFactory.setNextIds(profiles, mockProfiles);
+        mockProfiles.addAll(profiles);
+        return profiles;
+    }
+
+    @Override
+    public Profile update(Profile profile) {
         Profile existingProfile = findById(profile.getId());
         if (existingProfile == null) {
-            dummyProfiles.add(profile);
+            mockProfiles.add(profile);
         } else {
-            ArrayList<Profile> profiles = (ArrayList<Profile>)dummyProfiles;
-            profiles.set(profiles.indexOf(existingProfile), profile);
+            mockProfiles.remove(existingProfile);
+            mockProfiles.add(profile);
         }
-
         return profile;
     }
 
-    public boolean deleteProfile(Profile profile) {
-        return dummyProfiles.remove(profile);
-    }
-
-    private ArrayList<Profile> createDummyProfiles(Collection<User> users) {
-        ArrayList<Profile> profiles = new ArrayList<Profile>();
-        for (User user : users) {
-            Profile dummyProfile = new Profile(user.getUsername() + " Test");
-            dummyProfile.setUser(user);
-            user.setProfile(dummyProfile);
-            profiles.add(dummyProfile);
-        }
-
-        return profiles;
+    @Override
+    public boolean remove(Profile profile) {
+        return mockProfiles.remove(profile);
     }
 }

@@ -1,62 +1,71 @@
 package Domain;
 
+import Util.Mockable;
+
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "User")
-//@Table(name = "User")
-public class User {
-
-    // region Fields
+@Table(name = "User")
+@NamedQueries({
+        @NamedQuery(name = "User.findByUsername", query = "SELECT a FROM User AS a WHERE a.username = :username")
+})
+public class User implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "ID")
-    private long id;
+    private Long id;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
     private Profile profile;
 
-    //@Column(name = "Username", nullable = false)
+    @Column(name = "username", nullable = false)
     private String username;
 
     @ManyToMany
-    //@JoinTable(name = "UserRole",
-    //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
-    //        inverseJoinColumns = @JoinColumn(name="Role_ID", referencedColumnName = "ID", nullable = false))
-    private Collection<Role> roles = new HashSet<Role>();
+    @JoinTable(name = "UserRole",
+            joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="role_id", referencedColumnName = "id", nullable = false))
+    private List<Role> roles;
 
     @ManyToMany
-    //@JoinTable(name = "Following",
-    //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
-    //        inverseJoinColumns = @JoinColumn(name="Following_ID", referencedColumnName = "ID", nullable = false))
-    private Collection<User> following = new HashSet<User>();
+    @JoinTable(name = "Following",
+            joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="following_id", referencedColumnName = "id", nullable = false))
+    private List<User> following;
 
     @ManyToMany(mappedBy = "following")
-    private Collection<User> followers = new HashSet<User>();
+    private List<User> followers;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
-    private Collection<Kweet> kweets = new HashSet<Kweet>();
+    private List<Kweet> kweets;
 
     @ManyToMany
-    //@JoinTable(name = "Mention",
-    //        joinColumns = @JoinColumn(name="User_ID", referencedColumnName = "ID", nullable = false),
-    //        inverseJoinColumns = @JoinColumn(name="Kweet_ID", referencedColumnName = "ID", nullable = false))
-    private Collection<Kweet> mentions = new HashSet<Kweet>();
+    @JoinTable(name = "Mention",
+            joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="kweet_id", referencedColumnName = "id", nullable = false))
+    private List<Kweet> mentions;
 
-    // endregion
+    @ManyToMany
+    @JoinTable(name = "KweetHeart",
+            joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="kweet_id", referencedColumnName = "id", nullable = false))
+    private List<Kweet> hearts;
 
     public User() { }
 
-    public User(String username) {
+    public User(Long id, String username) {
+        this.id = id;
         this.username = username;
     }
 
-    // region Getters and Setters
-
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Profile getProfile() {
@@ -75,41 +84,51 @@ public class User {
         this.username = username;
     }
 
-    public Collection<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
-    public Collection<User> getFollowing() {
+    public List<User> getFollowing() {
         return following;
     }
 
-    public void setFollowing(Collection<User> following) {
+    public void setFollowing(List<User> following) {
         this.following = following;
     }
 
-    public Collection<User> getFollowers() {
+    public List<User> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(Collection<User> followers) {
+    public void setFollowers(List<User> followers) {
         this.followers = followers;
     }
 
-    public Collection<Kweet> getKweets() {
+    public List<Kweet> getKweets() {
         return kweets;
     }
 
-    public void setKweets(Collection<Kweet> kweets) {
+    public void setKweets(List<Kweet> kweets) {
         this.kweets = kweets;
     }
 
-    public Collection<Kweet> getMentions() {
+    public List<Kweet> getMentions() {
         return mentions;
     }
 
-    // endregion
+    public void setMentions(List<Kweet> mentions) {
+        this.mentions = mentions;
+    }
+
+    public List<Kweet> getHearts() {
+        return hearts;
+    }
+
+    public void setHearts(List<Kweet> hearts) {
+        this.hearts = hearts;
+    }
 }

@@ -1,60 +1,78 @@
 package Domain;
 
+import Util.Mockable;
+
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 @Entity(name = "Hashtag")
-//@Table(name = "Hashtag")
-public class Hashtag {
-
-    // region Fields
+@Table(name = "Hashtag")
+@NamedQueries({
+        @NamedQuery(name = "Hashtag.findByName", query = "SELECT a FROM Hashtag AS a WHERE a.name = :name")
+})
+public class Hashtag implements Mockable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "ID")
-    private long id;
+    private Long id;
 
-    //@Column(name = "Name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Temporal(TemporalType.TIMESTAMP)
-    //@Column(name = "LastUsedDate")
+    @Column(name = "lastUsed")
     private Date lastUsed;
 
     @ManyToMany(mappedBy = "hashtags")
-    private Collection<Kweet> kweets = new HashSet<Kweet>();
+    private List<Kweet> kweets;
 
-    // endregion
+    @Column(name = "timesUsed")
+    private int timesUsed;
 
     public Hashtag() { }
 
-    public Hashtag(String name) {
+    public Hashtag(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    // region Getters and Setters
-
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Date getLastUsed() {
         return lastUsed;
     }
 
-    public Collection<Kweet> getKweets() {
+    public void setLastUsed(Date lastUsed) {
+        this.lastUsed = lastUsed;
+    }
+
+    public List<Kweet> getKweets() {
         return kweets;
     }
 
-    public void setKweets(Collection<Kweet> kweets) {
+    public void setKweets(List<Kweet> kweets) {
         this.kweets = kweets;
     }
 
-    //endregion
+    public int getTimesUsed() {
+        return timesUsed;
+    }
+
+    public void setTimesUsed(int timesUsed) {
+        this.timesUsed = timesUsed;
+    }
 }

@@ -1,29 +1,33 @@
 package DAO.Mock;
 
 import DaoInterfaces.IRoleDao;
-import Domain.Profile;
+import Qualifier.Mock;
+import Util.MockFactory;
 import Domain.Role;
-import Domain.User;
+import Util.MockService;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.enterprise.context.Dependent;
 import java.util.List;
 
-public class RoleDaoMock implements IRoleDao{
+@Mock
+@Dependent
+public class RoleDaoMock implements IRoleDao {
 
-    private Collection<Role> dummyRoles;
+    private List<Role> mockRoles;
 
-    public RoleDaoMock(Collection<User> users) {
-        this.dummyRoles = createDummyRoles(users);
+    public RoleDaoMock() {
+        mockRoles = MockService.getInstance().getRoles();
     }
 
-    public Collection<Role> findAll() {
-        return dummyRoles;
+    @Override
+    public List<Role> findAll() {
+        return mockRoles;
     }
 
-    public Role findById(long id) {
-        for (Role role : dummyRoles) {
-            if (role.getId() == id) {
+    @Override
+    public Role findById(Long id) {
+        for (Role role : mockRoles) {
+            if (role.getId().equals(id)) {
                 return role;
             }
         }
@@ -31,8 +35,9 @@ public class RoleDaoMock implements IRoleDao{
         return null;
     }
 
+    @Override
     public Role findByName(String name) {
-        for (Role role : dummyRoles) {
+        for (Role role : mockRoles) {
             if (role.getName().equals(name)) {
                 return role;
             }
@@ -41,42 +46,34 @@ public class RoleDaoMock implements IRoleDao{
         return null;
     }
 
-    public Role insertRole(Role role) {
-        dummyRoles.add(role);
-
+    @Override
+    public Role create(Role role) {
+        MockFactory.setNextId(role, mockRoles);
+        mockRoles.add(role);
         return role;
     }
 
-    public Role updateRole(Role role) {
+    @Override
+    public List<Role> create(List<Role> roles) {
+        MockFactory.setNextIds(roles, mockRoles);
+        mockRoles.addAll(roles);
+        return roles;
+    }
+
+    @Override
+    public Role update(Role role) {
         Role existingRole = findById(role.getId());
         if (existingRole == null) {
-            dummyRoles.add(role);
+            mockRoles.add(role);
         } else {
-            ArrayList<Role> roles = (ArrayList<Role>)dummyRoles;
-            roles.set(roles.indexOf(existingRole), role);
+            mockRoles.remove(existingRole);
+            mockRoles.add(role);
         }
-
         return role;
     }
 
-    public boolean deleteRole(Role role) {
-        return dummyRoles.remove(role);
-    }
-
-    private ArrayList<Role> createDummyRoles(Collection<User> users) {
-        ArrayList<Role> roles = new ArrayList<Role>();
-
-        Role role1 = new Role("Kweeter");
-        Role role2 = new Role("Moderator");
-        roles.add(role1);
-        roles.add(role2);
-
-        for (User user : users) {
-            user.setRoles(roles);
-        }
-        role1.setUsers(users);
-        role2.setUsers(users);
-
-        return roles;
+    @Override
+    public boolean remove(Role role) {
+        return mockRoles.remove(role);
     }
 }
