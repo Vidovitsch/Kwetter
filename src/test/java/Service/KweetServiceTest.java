@@ -14,7 +14,6 @@ import Util.MockFactory;
 import Util.MockService;
 import org.junit.*;
 
-import javax.ejb.EJBException;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,12 +1,9 @@
 package Service;
 
-import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
-import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
-import Qualifier.Mock;
 import Util.MockFactory;
 import Util.MockService;
 import ViewModels.OtherUserView;
@@ -15,24 +12,20 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceTest {
 
     private static IUserDao userDao;
-    private static IProfileDao profileDao;
 
     private static UserService service;
 
     @BeforeClass
     public static void setUp() {
         userDao = new UserDaoMock();
-        profileDao = new ProfileDaoMock();
 
         service = new UserService();
         service.setUserDao(userDao);
-        service.setProfileDao(profileDao);
     }
 
     @AfterClass

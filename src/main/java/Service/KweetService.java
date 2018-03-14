@@ -108,9 +108,6 @@ public class KweetService {
                 kweet.setMessage(message);
                 kweet.setSender(sender);
 
-                // Prevents nullpointers
-                kweet.setHearts(new ArrayList<>());
-
                 // Filter message on hashtags '#' and mentions '@' and add to kweet
                 addHashtags(kweet, parseNames('#', kweet.getMessage()));
                 addMentions(kweet, parseNames('@', kweet.getMessage()));
@@ -157,6 +154,10 @@ public class KweetService {
         User user = userDao.findByUsername(username);
         Kweet kweet = kweetDao.findById(kweetId);
         if (user != null && kweet != null) {
+            if (kweet.getHearts() == null) {
+                kweet.setHearts(new ArrayList<>());
+            }
+
             if (!kweet.getHearts().contains(user)) {
                 kweet.getHearts().add(user);
 
@@ -234,9 +235,6 @@ public class KweetService {
         hashtag.setLastUsed(kweet.getPublicationDate());
         hashtag.setTimesUsed(hashtag.getTimesUsed() + 1);
 
-        // Prevents nullpointers
-        hashtag.setKweets(new ArrayList<>());
-
         return hashtag;
     }
 
@@ -265,6 +263,10 @@ public class KweetService {
     }
 
     private void syncWithKweets(List<Kweet> userKweets, Kweet kweet) {
+        if (userKweets == null) {
+            // Prevents nullpointers
+            userKweets = new ArrayList<>();
+        }
         if (!userKweets.contains(kweet)) {
             userKweets.add(kweet);
         }
