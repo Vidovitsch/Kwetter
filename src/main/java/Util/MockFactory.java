@@ -45,7 +45,7 @@ public class MockFactory {
         if (existingMocks.size() == 0) {
             newMock.setId((long)0);
         } else {
-            Collections.sort(existingMocks, new MockComparator());
+            existingMocks.sort(new MockComparator());
             newMock.setId(existingMocks.get(0).getId() + 1);
         }
     }
