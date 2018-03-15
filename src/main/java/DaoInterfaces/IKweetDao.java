@@ -8,7 +8,7 @@ import java.util.List;
 public interface IKweetDao {
 
     /**
-     * Find all persisted kweets
+     * Find all persisted kweet
      * @return a list of kweets
      */
     List<Kweet> findAll();
