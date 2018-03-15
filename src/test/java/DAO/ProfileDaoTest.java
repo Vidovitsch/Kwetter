@@ -1,5 +1,6 @@
 package DAO;
 
+import DAO.Impl2.ProfileDaoImpl2;
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Profile;
@@ -19,7 +20,7 @@ public class ProfileDaoTest {
 
     @BeforeClass
     public static void Init() {
-        profileDao = new ProfileDaoMock();
+        profileDao = new ProfileDaoImpl2();
     }
 
     @AfterClass
