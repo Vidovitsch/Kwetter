@@ -4,7 +4,6 @@ import DaoInterfaces.IKweetDao;
 import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.User;
-import Qualifier.Mock;
 import ViewModels.TimelineItem;
 import ViewModels.UserUsernameView;
 
@@ -13,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
 
 @Named(value = "timelineService")
@@ -34,68 +32,112 @@ public class TimelineService {
         this.kweetDao = kweetDao;
     }
 
-    public TreeSet<TimelineItem> generateTimeLine(String userid) {
-        User user = userDao.findByUsername(userid);
-        TreeSet<TimelineItem> TimeLine = new TreeSet<>();
-        for (Kweet k : user.getKweets()) {
-            TimeLine.add(CreatTimeLineItem(k, true));
+    /**
+     * Generates a timeline for a specific user by username.
+     * The timeline consists of kweets sent by the user and kweets sent by the users this user follows.
+     * The timeline is sorted from recent to older.
+     *
+     * @param username of the user of the timeline
+     * @return a collection of timeline items (timeline)
+     */
+    public TreeSet<TimelineItem> generateTimeline(String username) {
+        User user = userDao.findByUsername(username);
+        TreeSet<TimelineItem> timeline = new TreeSet<>();
+        timeline.addAll(getOwnKweets(user));
+        timeline.addAll(getFollowingKweets(user));
+
+        return timeline;
+    }
+
+    /**
+     * Generates a timeline for a specific user by username.
+     * The timeline consists of kweets that this user got mentioned in.
+     * The timeline is sorted from recent to older.
+     *
+     * @param username of the user of the timeline
+     * @return a collection of timeline items (timeline)
+     */
+    public TreeSet<TimelineItem> generateMentionsTimeline(String username) {
+        User user = userDao.findByUsername(username);
+
+        return new TreeSet<>(getMentionedKweets(user));
+    }
+
+    /**
+     * Get the (n) most recent kweets of the user by username.
+     *
+     * @param username of the user of the timeline
+     * @param amount the amount of recent kweets in the timeline
+     * @return a list of timeline items (timeline)
+     */
+    public List<TimelineItem> mostRecentKweets(String username, int amount) {
+        User user = userDao.findByUsername(username);
+        TreeSet<TimelineItem> timeline = new TreeSet<>(getOwnKweets(user));
+
+        return new ArrayList<>(timeline).subList(0, amount);
+    }
+
+    private List<TimelineItem> getOwnKweets(User owner) {
+        List<TimelineItem> timeline = new ArrayList<>();
+        for (Kweet kweet : owner.getKweets()) {
+            timeline.add(creatTimelineItem(kweet, true));
         }
-        for (User u : user.getFollowing()) {
-            for (Kweet k : kweetDao.findBySender(u)) {
-                TimeLine.add(CreatTimeLineItem(k, false));
+
+        return timeline;
+    }
+
+    private List<TimelineItem> getFollowingKweets(User user) {
+        List<TimelineItem> timeline = new ArrayList<>();
+        for (User followingUser : user.getFollowing()) {
+            for (Kweet kweet : kweetDao.findBySender(followingUser)) {
+                timeline.add(creatTimelineItem(kweet, false));
             }
         }
-        return TimeLine;
+
+        return timeline;
     }
 
-    public TreeSet<TimelineItem> GenerateMentionsTimeLine(String userid) {
-        User user = userDao.findByUsername(userid);
-        TreeSet<TimelineItem> mentionsTimeLine = new TreeSet<>();
-        for (Kweet k : user.getMentions()) {
-            if(k.getSender() == user){
-                mentionsTimeLine.add(CreatTimeLineItem(k, true));
-            }else{
-                mentionsTimeLine.add(CreatTimeLineItem(k, false));
+    private List<TimelineItem> getMentionedKweets(User user) {
+        List<TimelineItem> timeline = new ArrayList<>();
+        for (Kweet kweet : user.getMentions()) {
+            if (kweet.getSender().equals(user)) {
+                timeline.add(creatTimelineItem(kweet, true));
+            } else {
+                timeline.add(creatTimelineItem(kweet, false));
             }
         }
-        return mentionsTimeLine;
+
+        return timeline;
     }
 
-    public Set<TimelineItem> MostRecentKweets(String userid, int amount) {
-        User user = userDao.findByUsername(userid);
-        TreeSet<TimelineItem> TimeLine = new TreeSet<TimelineItem>();
-        for (Kweet k : user.getKweets()) {
-            TimeLine.add(CreatTimeLineItem(k, true));
-        }
-        TreeSet<TimelineItem> requestedItems = new TreeSet<TimelineItem>();
-        int i = 0;
-        for(TimelineItem t : TimeLine){
-            requestedItems.add(t);
-            i++;
-            if(i>=amount){break;}
-        }
-        return requestedItems;
-    }
-
-    private TimelineItem CreatTimeLineItem(Kweet k, boolean owner) {
+    private TimelineItem creatTimelineItem(Kweet kweet, boolean owner) {
         TimelineItem timelineItem = new TimelineItem();
-        timelineItem.kweetID = k.getId();
-        timelineItem.postDate = k.getPublicationDate();
-        timelineItem.message = k.getMessage();
-        timelineItem.username = k.getSender().getUsername();
+        timelineItem.kweetID = kweet.getId();
+        timelineItem.postDate = kweet.getPublicationDate();
+        timelineItem.message = kweet.getMessage();
+        timelineItem.username = kweet.getSender().getUsername();
         timelineItem.ownKweet = owner;
-        List<UserUsernameView> hearts = new ArrayList<>();
-        for (User u : k.getHearts()) {
-            hearts.add(new UserUsernameView(u.getUsername(), u.getId()));
-        }
-        timelineItem.hearts = hearts;
-
-        List<UserUsernameView> mentions = new ArrayList<>();
-        for (User u : k.getHearts()) {
-            mentions.add(new UserUsernameView(u.getUsername(), u.getId()));
-        }
-        timelineItem.mentions = mentions;
+        timelineItem.hearts = getUserViewsByHearts(kweet);
+        timelineItem.mentions = getUserViewsByMentions(kweet);
 
         return timelineItem;
+    }
+
+    private List<UserUsernameView> getUserViewsByHearts(Kweet kweet) {
+        List<UserUsernameView> hearts = new ArrayList<>();
+        for (User user : kweet.getHearts()) {
+            hearts.add(new UserUsernameView(user.getUsername(), user.getId()));
+        }
+
+        return hearts;
+    }
+
+    private List<UserUsernameView> getUserViewsByMentions(Kweet kweet) {
+        List<UserUsernameView> mentions = new ArrayList<>();
+        for (User user : kweet.getMentions()) {
+            mentions.add(new UserUsernameView(user.getUsername(), user.getId()));
+        }
+
+        return mentions;
     }
 }

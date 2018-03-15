@@ -16,6 +16,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
+import java.util.List;
 import java.util.Set;
 
 @Path("kweet")
@@ -35,9 +36,9 @@ public class KweetResource {
     @Path("/last/{amount}/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve a users most recent kweets, based on the given amount", notes = "Username needs to be valid and kweets have to be present")
-    public Set<TimelineItem> getMostRecentKweetsByUsername(@PathParam("username") String username, @PathParam("amount") int amount) {
+    public List<TimelineItem> getMostRecentKweetsByUsername(@PathParam("username") String username, @PathParam("amount") int amount) {
 
-        return timelineService.MostRecentKweets(username, amount);
+        return timelineService.mostRecentKweets(username, amount);
     }
 
     @GET
@@ -46,7 +47,7 @@ public class KweetResource {
     @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "Username has to be valid and kweets have to be available")
     public Set<TimelineItem> getTimelineByUsername(@PathParam("username") String username) {
 
-        return timelineService.generateTimeLine(username);
+        return timelineService.generateTimeline(username);
     }
 
     @GET
@@ -55,7 +56,7 @@ public class KweetResource {
     @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "Username has to be a valid user-id")
     public Set<TimelineItem> getMentionsByUsername(@PathParam("username") String username) {
 
-        return timelineService.GenerateMentionsTimeLine(username);
+        return timelineService.generateMentionsTimeline(username);
     }
 
     @POST
