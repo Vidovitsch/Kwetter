@@ -48,7 +48,7 @@ public class HastagDaoImpl2 implements IHashtagDao {
     public Hashtag create(Hashtag hashtag) {
         em.getTransaction().begin();
         em.persist(hashtag);
-em.getTransaction().commit();
+        em.getTransaction().commit();
         return hashtag;
     }
 
