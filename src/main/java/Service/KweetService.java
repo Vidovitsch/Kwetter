@@ -154,10 +154,6 @@ public class KweetService {
         User user = userDao.findByUsername(username);
         Kweet kweet = kweetDao.findById(kweetId);
         if (user != null && kweet != null) {
-            if (kweet.getHearts() == null) {
-                kweet.setHearts(new ArrayList<>());
-            }
-
             if (!kweet.getHearts().contains(user)) {
                 kweet.getHearts().add(user);
 
@@ -245,10 +241,9 @@ public class KweetService {
             if (user == null) {
                 throw new UserNotFoundException();
             } else {
-                mentions.add(user);
-            }
+                mentions.
 
-            // Make sure the mentioned user knows of kweet
+            // Make sure the mentioned user knows of kweet!
             syncWithKweets(user.getMentions(), kweet);
         }
         kweet.setMentions(mentions);
@@ -263,10 +258,6 @@ public class KweetService {
     }
 
     private void syncWithKweets(List<Kweet> userKweets, Kweet kweet) {
-        if (userKweets == null) {
-            // Prevents nullpointers
-            userKweets = new ArrayList<>();
-        }
         if (!userKweets.contains(kweet)) {
             userKweets.add(kweet);
         }
