@@ -241,7 +241,7 @@ public class KweetService {
             if (user == null) {
                 throw new UserNotFoundException();
             } else {
-                mentions.add(u=
+                mentions.add(user);
             }
 
             // Make sure the mentioned user knows of kweet!
