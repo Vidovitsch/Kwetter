@@ -13,7 +13,7 @@ import java.util.*;
 public class Kweet implements Mockable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "message", nullable = false)

@@ -28,6 +28,15 @@ public class TimelineService {
 
     public TimelineService() { }
 
+
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setKweetDao(IKweetDao kweetDao) {
+        this.kweetDao = kweetDao;
+    }
+
     public TreeSet<TimelineItem> GenerateTimeLine(long userid) {
         User user = userDao.findById(userid);
         TreeSet<TimelineItem> TimeLine = new TreeSet<>();
@@ -122,25 +131,17 @@ public class TimelineService {
         timelineItem.username = k.getSender().getUsername();
         timelineItem.ownKweet = owner;
         List<UserUsernameView> hearts = new ArrayList<>();
-        for(User u : k.getHearts()){
+        for (User u : k.getHearts()) {
             hearts.add(new UserUsernameView(u.getUsername(), u.getId()));
         }
         timelineItem.hearts = hearts;
 
         List<UserUsernameView> mentions = new ArrayList<>();
-        for(User u : k.getHearts()){
+        for (User u : k.getHearts()) {
             mentions.add(new UserUsernameView(u.getUsername(), u.getId()));
         }
         timelineItem.mentions = mentions;
 
         return timelineItem;
-    }
-
-    public void setUserDao(IUserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setKweetDao(IKweetDao kweetDao) {
-        this.kweetDao = kweetDao;
     }
 }
