@@ -37,50 +37,7 @@ public class TimelineService {
         this.kweetDao = kweetDao;
     }
 
-    public TreeSet<TimelineItem> GenerateTimeLine(long userid) {
-        User user = userDao.findById(userid);
-        TreeSet<TimelineItem> TimeLine = new TreeSet<>();
-        for (Kweet k : user.getKweets()) {
-            TimeLine.add(CreatTimeLineItem(k, true));
-        }
-        for (User u : user.getFollowing()) {
-            for (Kweet k : kweetDao.findBySender(u)) {
-                TimeLine.add(CreatTimeLineItem(k, false));
-            }
-        }
-        return TimeLine;
-    }
-
-    public TreeSet<TimelineItem> GenerateMentionsTimeLine(long userid) {
-        User user = userDao.findById(userid);
-        TreeSet<TimelineItem> mentionsTimeLine = new TreeSet<>();
-        for (Kweet k : user.getMentions()) {
-            if(k.getSender() == user){
-                mentionsTimeLine.add(CreatTimeLineItem(k, true));
-            }else{
-                mentionsTimeLine.add(CreatTimeLineItem(k, false));
-            }
-        }
-        return mentionsTimeLine;
-    }
-
-    public Set<TimelineItem> MostRecentKweets(long userid, int amount) {
-        User user = userDao.findById(userid);
-        TreeSet<TimelineItem> TimeLine = new TreeSet<TimelineItem>();
-        for (Kweet k : user.getKweets()) {
-            TimeLine.add(CreatTimeLineItem(k, true));
-        }
-        TreeSet<TimelineItem> requestedItems = new TreeSet<TimelineItem>();
-        int i = 0;
-        for(TimelineItem t : TimeLine){
-            requestedItems.add(t);
-            i++;
-            if(i>=amount){break;}
-        }
-        return requestedItems;
-    }
-
-    public TreeSet<TimelineItem> GenerateTimeLine(String userid) {
+    public TreeSet<TimelineItem> generateTimeLine(String userid) {
         User user = userDao.findByUsername(userid);
         TreeSet<TimelineItem> TimeLine = new TreeSet<>();
         for (Kweet k : user.getKweets()) {

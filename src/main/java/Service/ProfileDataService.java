@@ -11,8 +11,6 @@ import org.apache.commons.validator.UrlValidator;
 
 
 import Exception.*;
-
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,86 +27,59 @@ public class ProfileDataService {
     @Mock
     private IProfileDao profileDao;
 
-    public ProfileDataService() {
-    }
-
-    public ProfileData CreateProfile(long userid, ProfileData profileData) throws InvalidProfileException {
-        if(profileDao.findByUser(userDao.findById(userid)) != null){
-            throw new InvalidProfileException("Profile already created, update instead");
-        }
-        if (profileData.getName() == null || profileData.getName().isEmpty())
+    public void setProfile(String username, ProfileData profileData) throws InvalidProfileException {
+        User owner = userDao.findByUsername(username);
+        if (profileDao.findByUser(owner) != null)
+        if (profileData.getName() == null || profileData.getName().isEmpty()) {
             throw new InvalidProfileException("Profile name can't be empty");
-        if (profileData.getWebsite() != null) {
-            if (!ValidateUrl(profileData.getWebsite()))
-                throw new InvalidProfileException("The given web address is invalid");
+        } else if (profileData.getWebsite() != null && !validateUrl(profileData.getWebsite())) {
+            throw new InvalidProfileException("The given web address is invalid");
         }
-        Profile p = new Profile(userid, profileData.getName());
-        p.setwebsite(profileData.getWebsite());
-        p.setName(profileData.getName());
-        p.setBiography(profileData.getBio());
-        p.setLocation(profileData.getLocation());
-        profileDao.create(p);
-        return GetProfileData(userid);
+
+        createOrUpdateProfile(owner, profileData);
     }
 
-    private boolean ValidateUrl(String url) {
-        String[] schemes = {"http", "https"}; // DEFAULT schemes = "http", "https", "ftp"
-        UrlValidator urlValidator = new UrlValidator(schemes);
-        if (urlValidator.isValid(url)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public ProfileData GetProfileData(long userid) {
-        Profile p = userDao.findById(userid).getProfile();
-        ProfileData profileData = new ProfileData(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
-        return profileData;
-    }
-
-    public ProfileData GetProfileData(String username) {
+    public ProfileData getProfileData(String username) {
         Profile p = userDao.findByUsername(username).getProfile();
-        ProfileData profileData = new ProfileData(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
-        return profileData;
+        return new ProfileData(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
     }
 
-    public UserTotalsView GetUserTotals(long userid) {
-        User u = userDao.findById(userid);
-        return GetUserTotals(u);
+    public UserTotalsView getUserTotals(String username) {
+        return getUserTotals(userDao.findByUsername(username));
     }
 
-    public UserTotalsView GetUserTotals(String username) {
-        User u = userDao.findByUsername(username);
-        return GetUserTotals(u);
+    private boolean validateUrl(String url) {
+        // Default schemes = "http", "https", "ftp"
+        return new UrlValidator(new String[] { "http", "https" }).isValid(url);
     }
 
-    private UserTotalsView GetUserTotals(User u) {
-        int following = u.getFollowing().size();
-        int followers = u.getFollowers().size();
-        int kweets = u.getKweets().size();
-        UserTotalsView userTotalsView = new UserTotalsView(following, followers, kweets);
-        return userTotalsView;
+    private UserTotalsView getUserTotals(User user) {
+        int following = user.getFollowing().size();
+        int followers = user.getFollowers().size();
+        int kweets = user.getKweets().size();
+
+        return new UserTotalsView(following, followers, kweets);
     }
 
-    public ProfileData UpdateProfile(long userid, ProfileData profileData) {
-        try {
-            if (userDao.findById(userid).getProfile() == null)
-                throw new InvalidProfileException("This profile does not have a user linked yet");
-            if (profileData.getName() == null) throw new InvalidProfileException("Profile name can't be empty");
-            if (profileData.getWebsite() != null) {
-                if (!ValidateUrl(profileData.getWebsite()))
-                    throw new InvalidProfileException("The given web address is invalid");
-            }
-            Profile p = profileDao.findByUser(userDao.findById(userid));
-            p.setwebsite(profileData.getWebsite());
-            p.setName(profileData.getName());
-            p.setBiography(profileData.getBio());
-            p.setLocation(profileData.getLocation());
-            profileDao.update(p);
-            return GetProfileData(userid);
-        } catch (Exception e) {
-            throw (EJBException) new EJBException(e).initCause(e);
+    private void createOrUpdateProfile(User owner, ProfileData profileData) {
+        if (profileDao.findByUser(owner) != null) {
+            Profile updatedProfile = convertToProfile(owner, profileData);
+            profileDao.update(updatedProfile);
+        } else {
+            Profile newProfile = convertToProfile(owner, profileData);
+            profileDao.create(newProfile);
         }
+    }
+
+    private Profile convertToProfile(User owner, ProfileData profileData) {
+        Profile profile = new Profile();
+        profile.setName(profileData.getName());
+        profile.setUser(owner);
+        profile.setwebsite(profileData.getWebsite());
+        profile.setName(profileData.getName());
+        profile.setBiography(profileData.getBio());
+        profile.setLocation(profileData.getLocation());
+
+        return profile;
     }
 }
