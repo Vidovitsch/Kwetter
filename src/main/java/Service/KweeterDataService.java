@@ -23,10 +23,11 @@ import java.util.List;
 @Stateless
 public class KweeterDataService {
 
-    @Inject @Mock
+    @Inject
+
     private IUserDao userDao;
 
-    @Inject @Mock
+    @Inject
     private IKweetDao kweetDao;
 
     public KweeterDataService() { }

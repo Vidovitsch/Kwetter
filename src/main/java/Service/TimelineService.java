@@ -20,10 +20,10 @@ import java.util.TreeSet;
 @Stateless
 public class TimelineService {
 
-    @Inject @Mock
+    @Inject
     private IUserDao userDao;
 
-    @Inject @Mock
+    @Inject
     private IKweetDao kweetDao;
 
     public TimelineService() { }

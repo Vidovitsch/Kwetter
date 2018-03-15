@@ -22,11 +22,9 @@ import javax.inject.Named;
 public class ProfileDataService {
 
     @Inject
-    @Mock
     private IUserDao userDao;
 
     @Inject
-    @Mock
     private IProfileDao profileDao;
 
     public ProfileDataService() {

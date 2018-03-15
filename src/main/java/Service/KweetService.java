@@ -23,15 +23,12 @@ import java.util.regex.Pattern;
 public class KweetService {
 
     @Inject
-    @Mock
     private IKweetDao kweetDao;
 
     @Inject
-    @Mock
     private IHashtagDao hashtagDao;
 
     @Inject
-    @Mock
     private IUserDao userDao;
 
     public void setKweetDao(IKweetDao kweetDao) {

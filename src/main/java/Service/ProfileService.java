@@ -15,10 +15,10 @@ import javax.inject.Named;
 @Stateless
 public class ProfileService {
 
-    @Inject @Mock
+    @Inject
     private IUserDao userDao;
 
-    @Inject @Mock
+    @Inject
     private IProfileDao profileDao;
 
     public ProfileService() { }
