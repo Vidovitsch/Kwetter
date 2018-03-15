@@ -12,6 +12,8 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import javax.persistence.RollbackException;
 import java.util.*;
 
 public class HashtagDaoTest {
@@ -48,7 +50,8 @@ public class HashtagDaoTest {
     @Test
     public void findByIdTest() {
         // Insert new hashtag
-        Hashtag mockHashtag = hashtagDao.create(new Hashtag());
+        Hashtag mockHashtag = (Hashtag)MockFactory.createMocks(Hashtag.class, 1).get(0);
+        hashtagDao.create(mockHashtag);
 
         // Check fetched hashtag
         Hashtag fetchedHashtag = hashtagDao.findById(mockHashtag.getId());
@@ -61,7 +64,11 @@ public class HashtagDaoTest {
 
         // Insert new hashtag
         Hashtag mockHashtag = (Hashtag)MockFactory.createMocks(Hashtag.class, 1, "name", name).get(0);
-        mockHashtag = hashtagDao.create(mockHashtag);
+        try{
+        mockHashtag = hashtagDao.create(mockHashtag);}
+        catch (RollbackException e){
+            mockHashtag = hashtagDao.findByName(mockHashtag.getName());
+        }
 
         // Check fetched hashtag
         Hashtag fetchedHashtag = hashtagDao.findByName(name);
@@ -116,6 +123,6 @@ public class HashtagDaoTest {
         hashtagDao.remove(mockHashtag);
 
         // Check hashtag list contains new hashtag
-        Assert.assertFalse("New hashtag has been removed", hashtagDao.findAll().contains(mockHashtag));
+        Assert.assertFalse("New hashtag has not been removed", hashtagDao.findAll().contains(mockHashtag));
     }
 }

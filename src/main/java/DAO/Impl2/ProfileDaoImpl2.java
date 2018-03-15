@@ -6,9 +6,7 @@ import Domain.User;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +14,13 @@ import java.util.List;
 
 public class ProfileDaoImpl2 implements IProfileDao {
 
-    @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
+    private static EntityManagerFactory factory;
 
-    public ProfileDaoImpl2() { }
+    public ProfileDaoImpl2() {
+        factory = Persistence.createEntityManagerFactory("KWETTERPUP");
+        em = factory.createEntityManager();
+    }
 
     @Override
     @SuppressWarnings("unchecked")

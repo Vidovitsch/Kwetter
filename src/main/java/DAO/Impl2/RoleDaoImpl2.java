@@ -5,9 +5,7 @@ import Domain.Role;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +13,13 @@ import java.util.List;
 
 public class RoleDaoImpl2 implements IRoleDao {
 
-    @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
+    private static EntityManagerFactory factory;
 
-    public RoleDaoImpl2() { }
+    public RoleDaoImpl2() {
+        factory = Persistence.createEntityManagerFactory("KWETTERPUP");
+        em = factory.createEntityManager();
+    }
 
     @Override
     @SuppressWarnings("unchecked")

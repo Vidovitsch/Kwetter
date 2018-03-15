@@ -5,19 +5,21 @@ import Domain.User;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl2 implements IUserDao {
 
-    @PersistenceContext(name = "KwetterPU")
-    private EntityManager em;
 
-    public UserDaoImpl2() { }
+    private EntityManager em;
+    private static EntityManagerFactory factory;
+
+    public UserDaoImpl2() {
+        factory = Persistence.createEntityManagerFactory("KWETTERPUP");
+        em = factory.createEntityManager();
+    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -43,7 +45,9 @@ public class UserDaoImpl2 implements IUserDao {
 
     @Override
     public User create(User user) {
+        em.getTransaction().begin();
         em.persist(user);
+        em.getTransaction().commit();
 
         return user;
     }
@@ -65,8 +69,9 @@ public class UserDaoImpl2 implements IUserDao {
 
     @Override
     public boolean remove(User user) {
+        em.getTransaction().begin();
         em.remove(user);
-
+em.getTransaction().commit();
         return true;
     }
 }

@@ -40,8 +40,11 @@ public class HastagDaoImpl2 implements IHashtagDao {
     public Hashtag findByName(String name) {
         Query q = em.createNamedQuery("Hashtag.findByName", Hashtag.class);
         q.setParameter("name", name);
-
-        return (Hashtag) q.getResultList();
+        for (Object o : q.getResultList()) {
+            return (Hashtag) o;
+        }
+        return null;
+        //return (Hashtag) q.getResultList();
     }
 
     @Override
@@ -69,7 +72,9 @@ public class HastagDaoImpl2 implements IHashtagDao {
 
     @Override
     public boolean remove(Hashtag hashtag) {
+        em.getTransaction().begin();
         em.remove(hashtag);
+        em.getTransaction().commit();
 
         return true;
     }
