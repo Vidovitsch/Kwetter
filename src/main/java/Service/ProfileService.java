@@ -23,6 +23,15 @@ public class ProfileService {
     @Inject
     private IProfileDao profileDao;
 
+    /**
+     * Sets a profile for a user by username
+     * If the user has already a profile, his/her current profile will get updated.
+     * If the user has no profile, a new profile for this user will be created.
+     *
+     * @param username of the user with the new or updated profile
+     * @param profileData needed for the creation or update of the profile
+     * @throws InvalidProfileException when the profile name or web address of the profile is invalid
+     */
     public void setProfile(String username, ProfileData profileData) throws InvalidProfileException {
         User owner = userDao.findByUsername(username);
         if (profileDao.findByUser(owner) != null)
@@ -35,11 +44,24 @@ public class ProfileService {
         createOrUpdateProfile(owner, profileData);
     }
 
+    /**
+     * Gets the profile data of a user by username.
+     * The returned profile is in a view format and consists only of useful visual data.
+     *
+     * @param username of the user with the profile
+     * @return the profile of the user in view format
+     */
     public ProfileData getProfileData(String username) {
         Profile p = userDao.findByUsername(username).getProfile();
         return new ProfileData(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
     }
 
+    /**
+     * Gets a view of total followers, following and kweets a user has by username.
+     *
+     * @param username of the user with the view data
+     * @return total values of followers, following and kweets in view format
+     */
     public UserTotalsView getUserTotals(String username) {
         return getUserTotals(userDao.findByUsername(username));
     }
