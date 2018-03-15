@@ -38,6 +38,14 @@ public class KweeterDataService {
         this.kweetDao = kweetDao;
     }
 
+    /**
+     * Gets the data of a user by username.
+     * This data consists of image view of the last kweet message, last kweet date, followers and following.
+     *
+     * @param username of the user with kweeter data
+     * @return kweeter data in a view format
+     * @throws UserNotFoundException when the user with the given username doesn't exist
+     */
     public KweeterData getKweeterData(String username) throws UserNotFoundException {
         User user = userDao.findByUsername(username);
         if (user == null) {
