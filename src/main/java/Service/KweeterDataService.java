@@ -6,17 +6,14 @@ import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.Profile;
 import Domain.User;
-import Qualifier.Mock;
 import ViewModels.UserImageView;
 import ViewModels.KweeterData;
 import Exception.*;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Named(value = "kweeterDataService")
@@ -24,13 +21,10 @@ import java.util.List;
 public class KweeterDataService {
 
     @Inject
-
     private IUserDao userDao;
 
     @Inject
     private IKweetDao kweetDao;
-
-    public KweeterDataService() { }
 
     public KweeterData getKweeterData(Long userId) throws UserNotFoundException {
         return getKweeterData(userDao.findById(userId).getUsername());
@@ -44,6 +38,14 @@ public class KweeterDataService {
         this.kweetDao = kweetDao;
     }
 
+    /**
+     * Gets the data of a user by username.
+     * This data consists of image view of the last kweet message, last kweet date, followers and following.
+     *
+     * @param username of the user with kweeter data
+     * @return kweeter data in a view format
+     * @throws UserNotFoundException when the user with the given username doesn't exist
+     */
     public KweeterData getKweeterData(String username) throws UserNotFoundException {
         User user = userDao.findByUsername(username);
         if (user == null) {

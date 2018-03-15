@@ -3,15 +3,17 @@ package Service;
 import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
-import Exception.*;
-import Qualifier.Mock;
+import Domain.User;
+import ViewModels.ProfileData;
+import ViewModels.UserTotalsView;
 import org.apache.commons.validator.UrlValidator;
 
+import Exception.*;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named(value = "profileService")
+@Named(value = "profileDataService")
 @Stateless
 public class ProfileService {
 
@@ -21,42 +23,81 @@ public class ProfileService {
     @Inject
     private IProfileDao profileDao;
 
-    public ProfileService() { }
-
-    public Profile CreateProfile(Profile p, String username) throws InvalidProfileException {
-        if (p.getName() == null || p.getName().isEmpty()) throw new InvalidProfileException("Profile name can't be empty");
-        if (p.getwebsite() != null) {
-            if(!ValidateUrl(p.getwebsite()))throw new InvalidProfileException("The given web address is invalid");
+    /**
+     * Sets a profile for a user by username
+     * If the user has already a profile, his/her current profile will get updated.
+     * If the user has no profile, a new profile for this user will be created.
+     *
+     * @param username of the user with the new or updated profile
+     * @param profileData needed for the creation or update of the profile
+     * @throws InvalidProfileException when the profile name or web address of the profile is invalid
+     */
+    public void setProfile(String username, ProfileData profileData) throws InvalidProfileException {
+        User owner = userDao.findByUsername(username);
+        if (profileDao.findByUser(owner) != null)
+        if (profileData.getName() == null || profileData.getName().isEmpty()) {
+            throw new InvalidProfileException("Profile name can't be empty");
+        } else if (profileData.getWebsite() != null && !validateUrl(profileData.getWebsite())) {
+            throw new InvalidProfileException("The given web address is invalid");
         }
-        p.setUser(userDao.findByUsername(username));
-        return profileDao.create(p);
+
+        createOrUpdateProfile(owner, profileData);
     }
 
-    private boolean ValidateUrl(String url) {
-        String[] schemes = {"http", "https"}; // DEFAULT schemes = "http", "https", "ftp"
-        UrlValidator urlValidator = new UrlValidator(schemes);
-        if (urlValidator.isValid(url)) {
-            return true;
+    /**
+     * Gets the profile data of a user by username.
+     * The returned profile is in a view format and consists only of useful visual data.
+     *
+     * @param username of the user with the profile
+     * @return the profile of the user in view format
+     */
+    public ProfileData getProfileData(String username) {
+        Profile p = userDao.findByUsername(username).getProfile();
+        return new ProfileData(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
+    }
+
+    /**
+     * Gets a view of total followers, following and kweets a user has by username.
+     *
+     * @param username of the user with the view data
+     * @return total values of followers, following and kweets in view format
+     */
+    public UserTotalsView getUserTotals(String username) {
+        return getUserTotals(userDao.findByUsername(username));
+    }
+
+    private boolean validateUrl(String url) {
+        // Default schemes = "http", "https", "ftp"
+        return new UrlValidator(new String[] { "http", "https" }).isValid(url);
+    }
+
+    private UserTotalsView getUserTotals(User user) {
+        int following = user.getFollowing().size();
+        int followers = user.getFollowers().size();
+        int kweets = user.getKweets().size();
+
+        return new UserTotalsView(following, followers, kweets);
+    }
+
+    private void createOrUpdateProfile(User owner, ProfileData profileData) {
+        if (profileDao.findByUser(owner) != null) {
+            Profile updatedProfile = convertToProfile(owner, profileData);
+            profileDao.update(updatedProfile);
         } else {
-            return false;
+            Profile newProfile = convertToProfile(owner, profileData);
+            profileDao.create(newProfile);
         }
     }
 
-    public Profile EditProfile(Profile p) throws InvalidProfileException {
-        if(p.getId() == 0)throw new InvalidProfileException("This profile does not have a valid ID, create one before you edit");
-        if(p.getUser() == null)throw new InvalidProfileException("This profile does not have a user linked yet");
-        if (p.getName() == null) throw new InvalidProfileException("Profile name can't be empty");
-        if (p.getwebsite() != null) {
-            if(!ValidateUrl(p.getwebsite()))throw new InvalidProfileException("The given web address is invalid");
-        }
-        return profileDao.update(p);
-    }
+    private Profile convertToProfile(User owner, ProfileData profileData) {
+        Profile profile = new Profile();
+        profile.setName(profileData.getName());
+        profile.setUser(owner);
+        profile.setwebsite(profileData.getWebsite());
+        profile.setName(profileData.getName());
+        profile.setBiography(profileData.getBio());
+        profile.setLocation(profileData.getLocation());
 
-    public void setUserDao(IUserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setProfileDao(IProfileDao profileDao) {
-        this.profileDao = profileDao;
+        return profile;
     }
 }
