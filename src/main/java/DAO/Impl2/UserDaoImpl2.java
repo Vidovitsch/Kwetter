@@ -12,7 +12,6 @@ import java.util.List;
 
 public class UserDaoImpl2 implements IUserDao {
 
-
     private EntityManager em;
     private static EntityManagerFactory factory;
 

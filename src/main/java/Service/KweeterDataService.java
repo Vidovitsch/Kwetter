@@ -6,17 +6,14 @@ import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.Profile;
 import Domain.User;
-import Qualifier.Mock;
 import ViewModels.UserImageView;
 import ViewModels.KweeterData;
 import Exception.*;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Named(value = "kweeterDataService")
@@ -24,13 +21,10 @@ import java.util.List;
 public class KweeterDataService {
 
     @Inject
-
     private IUserDao userDao;
 
     @Inject
     private IKweetDao kweetDao;
-
-    public KweeterDataService() { }
 
     public KweeterData getKweeterData(Long userId) throws UserNotFoundException {
         return getKweeterData(userDao.findById(userId).getUsername());

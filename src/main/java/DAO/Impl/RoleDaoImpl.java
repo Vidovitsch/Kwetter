@@ -20,8 +20,6 @@ public class RoleDaoImpl implements IRoleDao {
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public RoleDaoImpl() { }
-
     @Override
     @SuppressWarnings("unchecked")
     public List<Role> findAll() {

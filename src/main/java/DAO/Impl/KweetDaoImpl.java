@@ -21,8 +21,6 @@ public class KweetDaoImpl implements IKweetDao {
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public KweetDaoImpl() { }
-
     @Override
     @SuppressWarnings("unchecked")
     public List<Kweet> findAll() {

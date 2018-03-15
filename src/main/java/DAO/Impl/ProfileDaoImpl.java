@@ -4,6 +4,7 @@ import DaoInterfaces.IProfileDao;
 import Domain.Profile;
 import Domain.Profile;
 import Domain.User;
+import Qualifier.Mock;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
@@ -20,8 +21,6 @@ public class ProfileDaoImpl implements IProfileDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
-
-    public ProfileDaoImpl() { }
 
     @Override
     @SuppressWarnings("unchecked")

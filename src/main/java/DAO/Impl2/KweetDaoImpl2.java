@@ -17,7 +17,6 @@ public class KweetDaoImpl2 implements IKweetDao {
     private EntityManager em;
     private static EntityManagerFactory factory;
 
-
     public KweetDaoImpl2() {
         factory = Persistence.createEntityManagerFactory("KWETTERPUP");
         em = factory.createEntityManager();

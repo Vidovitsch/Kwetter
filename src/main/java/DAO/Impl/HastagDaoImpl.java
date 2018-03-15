@@ -16,7 +16,6 @@ public class HastagDaoImpl implements IHashtagDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
-    public HastagDaoImpl() { }
 
     @Override
     @SuppressWarnings("unchecked")

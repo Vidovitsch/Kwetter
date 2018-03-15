@@ -19,8 +19,6 @@ public class UserDaoImpl implements IUserDao {
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public UserDaoImpl() { }
-
     @Override
     @SuppressWarnings("unchecked")
     public List<User> findAll() {

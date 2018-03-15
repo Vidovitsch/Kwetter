@@ -1,7 +1,7 @@
 package Rest.Resources;
 
 import Exception.InvalidProfileException;
-import Service.ProfileDataService;
+import Service.ProfileService;
 import Service.UserService;
 import Util.BooleanResult;
 import ViewModels.OtherUserView;
@@ -30,7 +30,7 @@ public class UserResource {
     private UserService userService;
 
     @EJB
-    private ProfileDataService profileDataService;
+    private ProfileService profileService;
 
     public UserResource() { }
 
@@ -58,7 +58,7 @@ public class UserResource {
     @ApiOperation(value = "Retrieve the profile-data of a certain user, based on the username", notes = "Username has to be valid")
     public ProfileData getProfileByUserID(@PathParam("username") String username) {
 
-        return profileDataService.getProfileData(username);
+        return profileService.getProfileData(username);
     }
 
     @GET
@@ -67,7 +67,7 @@ public class UserResource {
     @ApiOperation(value = "Retrieve a users total numbers", notes = "Username has to be valid and only the available data will be given as a result")
     public UserTotalsView getUserTotals(@PathParam("username") String username) {
 
-        return profileDataService.getUserTotals(username);
+        return profileService.getUserTotals(username);
     }
 
     @POST
@@ -77,7 +77,7 @@ public class UserResource {
     @ApiOperation(value = "Create a new profile for a user, identified by the user's id", notes = "Userid has to be a valid user-id")
     public BooleanResult setProfile(@PathParam("username") String username, ProfileData profileData) {
         try {
-            profileDataService.setProfile(username, profileData);
+            profileService.setProfile(username, profileData);
         } catch (EJBException e) {
             return new BooleanResult(e.getCausedByException().getMessage(), false);
         } catch (InvalidProfileException e) {

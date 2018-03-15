@@ -26,9 +26,6 @@ public class TimelineService {
     @Inject
     private IKweetDao kweetDao;
 
-    public TimelineService() { }
-
-
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
     }
