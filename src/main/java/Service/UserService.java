@@ -21,7 +21,6 @@ public class UserService {
     private IUserDao userDao;
 
     @Inject
-    @Mock
     private IProfileDao profileDao;
 
     public void setUserDao(IUserDao userDao) {

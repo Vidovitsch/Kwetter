@@ -1,4 +1,4 @@
-package DAO.Impl;
+package DAO.Impl2;
 
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
@@ -10,17 +10,21 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-@Default
-@Stateless
-public class HastagDaoImpl implements IHashtagDao {
 
-    @PersistenceContext(name = "KwetterPU")
+public class HastagDaoImpl2 implements IHashtagDao {
+
     private EntityManager em;
-    public HastagDaoImpl() { }
+    private static EntityManagerFactory factory;
+
+    public HastagDaoImpl2() {
+        factory = Persistence.createEntityManagerFactory("KWETTERPUP");
+        em = factory.createEntityManager();
+    }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Hashtag> findAll() {
+
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(Hashtag.class));
 
@@ -42,8 +46,9 @@ public class HastagDaoImpl implements IHashtagDao {
 
     @Override
     public Hashtag create(Hashtag hashtag) {
+        em.getTransaction().begin();
         em.persist(hashtag);
-
+        em.getTransaction().commit();
         return hashtag;
     }
 

@@ -20,11 +20,9 @@ import javax.inject.Named;
 public class ProfileDataService {
 
     @Inject
-    @Mock
     private IUserDao userDao;
 
     @Inject
-    @Mock
     private IProfileDao profileDao;
 
     public void setProfile(String username, ProfileData profileData) throws InvalidProfileException {

@@ -1,4 +1,4 @@
-package DAO.Impl;
+package DAO.Impl2;
 
 import DaoInterfaces.IUserDao;
 import Domain.User;
@@ -12,14 +12,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-@Default
-@Stateless
-public class UserDaoImpl implements IUserDao {
+public class UserDaoImpl2 implements IUserDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public UserDaoImpl() { }
+    public UserDaoImpl2() { }
 
     @Override
     @SuppressWarnings("unchecked")
