@@ -1,4 +1,7 @@
-package DAO.Impl;
+package DAO.EntityManager;
 
-public class IEntityManagerImplementation {
+import javax.persistence.EntityManager;
+
+public interface IEntityManagerImplementation {
+    EntityManager GetEntityManger();
 }

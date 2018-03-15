@@ -1,11 +1,25 @@
-package DAO.Impl;
+package DAO.EntityManager;
+
+import Qualifier.Testing;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
-public class PayaraEntityManagerProvider {
+@Testing
+public class TestingEntityManagerProvider implements IEntityManagerImplementation {
 
-    @PersistenceContext(name = "KwetterPU")
     public static EntityManager em;
+    private static EntityManagerFactory factory;
 
+    public TestingEntityManagerProvider() {
+        factory = Persistence.createEntityManagerFactory("KWETTERPUP");
+        em = factory.createEntityManager();
+    }
+
+    @Override
+    public EntityManager GetEntityManger() {
+        return em;
+    }
 }

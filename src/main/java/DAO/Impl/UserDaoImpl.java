@@ -1,5 +1,6 @@
 package DAO.Impl;
 
+import DAO.EntityManager.EntityManagerProvider;
 import DaoInterfaces.IUserDao;
 import Domain.User;
 
@@ -16,10 +17,11 @@ import java.util.List;
 @Stateless
 public class UserDaoImpl implements IUserDao {
 
-    @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public UserDaoImpl() { }
+    public UserDaoImpl() {
+        this.em = new EntityManagerProvider().GetEntityManager();
+    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -45,7 +47,9 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public User create(User user) {
+        em.getTransaction().begin();
         em.persist(user);
+        em.getTransaction().commit();
 
         return user;
     }
@@ -67,8 +71,9 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public boolean remove(User user) {
+        em.getTransaction().begin();
         em.remove(user);
-
+        em.getTransaction().commit();
         return true;
     }
 }

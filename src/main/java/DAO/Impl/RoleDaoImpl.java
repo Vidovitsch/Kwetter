@@ -1,5 +1,6 @@
 package DAO.Impl;
 
+import DAO.EntityManager.EntityManagerProvider;
 import DaoInterfaces.IRoleDao;
 import Domain.Role;
 import Domain.User;
@@ -17,10 +18,11 @@ import java.util.List;
 @Stateless
 public class RoleDaoImpl implements IRoleDao {
 
-    @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public RoleDaoImpl() { }
+    public RoleDaoImpl() {
+        this.em = new EntityManagerProvider().GetEntityManager();
+    }
 
     @Override
     @SuppressWarnings("unchecked")

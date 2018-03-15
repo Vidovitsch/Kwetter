@@ -1,5 +1,6 @@
 package DAO.Impl;
 
+import DAO.EntityManager.EntityManagerProvider;
 import DaoInterfaces.IProfileDao;
 import Domain.Profile;
 import Domain.Profile;
@@ -17,11 +18,11 @@ import java.util.List;
 @Default
 @Stateless
 public class ProfileDaoImpl implements IProfileDao {
-
-    @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public ProfileDaoImpl() { }
+    public ProfileDaoImpl() {
+        this.em = new EntityManagerProvider().GetEntityManager();
+    }
 
     @Override
     @SuppressWarnings("unchecked")

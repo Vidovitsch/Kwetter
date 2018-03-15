@@ -1,5 +1,6 @@
 package DAO.Impl;
 
+import DAO.EntityManager.EntityManagerProvider;
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 
@@ -14,13 +15,16 @@ import java.util.List;
 @Stateless
 public class HastagDaoImpl implements IHashtagDao {
 
-    @PersistenceContext(name = "KwetterPU")
-    private EntityManager em;
-    public HastagDaoImpl() { }
+    private static EntityManager em;
+
+    public HastagDaoImpl() {
+        this.em = new EntityManagerProvider().GetEntityManager();
+    }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Hashtag> findAll() {
+
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(Hashtag.class));
 
@@ -36,14 +40,18 @@ public class HastagDaoImpl implements IHashtagDao {
     public Hashtag findByName(String name) {
         Query q = em.createNamedQuery("Hashtag.findByName", Hashtag.class);
         q.setParameter("name", name);
-
-        return (Hashtag) q.getResultList();
+        for (Object o : q.getResultList()) {
+            return (Hashtag) o;
+        }
+        return null;
+        //return (Hashtag) q.getResultList();
     }
 
     @Override
     public Hashtag create(Hashtag hashtag) {
+        em.getTransaction().begin();
         em.persist(hashtag);
-
+        em.getTransaction().commit();
         return hashtag;
     }
 
@@ -64,7 +72,9 @@ public class HastagDaoImpl implements IHashtagDao {
 
     @Override
     public boolean remove(Hashtag hashtag) {
+        em.getTransaction().begin();
         em.remove(hashtag);
+        em.getTransaction().commit();
 
         return true;
     }
