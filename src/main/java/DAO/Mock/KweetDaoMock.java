@@ -13,7 +13,7 @@ import java.util.*;
 @Dependent
 public class KweetDaoMock implements IKweetDao {
 
-    private List<Kweet> mockKwees;
+    private List<Kweet> mockKweets;
 
     public KweetDaoMock() {
         mockKweets = MockService.getInstance().getKweets();
