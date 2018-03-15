@@ -4,11 +4,9 @@ import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
-import Qualifier.Mock;
 import ViewModels.ProfileData;
 import ViewModels.UserTotalsView;
 import org.apache.commons.validator.UrlValidator;
-
 
 import Exception.*;
 import javax.ejb.Stateless;
@@ -17,14 +15,12 @@ import javax.inject.Named;
 
 @Named(value = "profileDataService")
 @Stateless
-public class ProfileDataService {
+public class ProfileService {
 
     @Inject
-    @Mock
     private IUserDao userDao;
 
     @Inject
-    @Mock
     private IProfileDao profileDao;
 
     public void setProfile(String username, ProfileData profileData) throws InvalidProfileException {
