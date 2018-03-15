@@ -244,7 +244,7 @@ public class KweetService {
                 mentions.add(user);
             }
 
-            // Make sure the mentioned user knows of kweet!
+            // Make sure the mentioned user knows of kweet
             syncWithKweets(user.getMentions(), kweet);
         }
         kweet.setMentions(mentions);
