@@ -31,16 +31,16 @@ public class UserService {
         this.profileDao = profileDao;
     }
 
-    public Boolean addFollowing(Long userId, Long followingId) {
-        User followingUser = userDao.findById(userId);
-        User followedUser = userDao.findById(followingId);
+    public Boolean addFollowing(String username, String following) {
+        User user = userDao.findByUsername(username);
+        User followingUser = userDao.findByUsername(following);
 
-        List<User> following = followingUser.getFollowing();
-        if (following.contains(followedUser)) {
+        List<User> followingUsers = user.getFollowing();
+        if (followingUsers.contains(followingUser)) {
             return false;
         } else {
-            following.add(followedUser);
-            followedUser.getFollowers().add(followingUser);
+            followingUsers.add(followingUser);
+            followingUser.getFollowers().add(user);
             return true;
         }
     }
@@ -50,24 +50,11 @@ public class UserService {
         return generateOtherUserViews(user.getFollowers());
     }
 
-    // For testing
-    public List<OtherUserView> getFollowers(Long userid) {
-        User user = userDao.findById(userid);
-        return generateOtherUserViews(user.getFollowers());
-    }
-
     public List<OtherUserView> getFollowing(String username) {
         User user = userDao.findByUsername(username);
         return generateOtherUserViews(user.getFollowing());
     }
 
-    // For testing
-    public List<OtherUserView> getFollowing(Long userid) {
-        User user = userDao.findById(userid);
-        return generateOtherUserViews(user.getFollowing());
-    }
-
-    // For mocking
     private List<OtherUserView> generateOtherUserViews(List<User> users) {
         ArrayList<OtherUserView> OtherUserViews = new ArrayList<>();
         for (User user : users) {

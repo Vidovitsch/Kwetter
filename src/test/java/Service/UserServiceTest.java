@@ -46,7 +46,7 @@ public class UserServiceTest {
         Assert.assertFalse(mockUsers.get(0).getFollowing().contains(mockUsers.get(1)));
 
         // Add following
-        boolean result = service.addFollowing(mockUsers.get(0).getId(), mockUsers.get(1).getId());
+        boolean result = service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(1).getUsername());
 
         // Assert after
         Assert.assertEquals("User follows one other user",
@@ -61,10 +61,10 @@ public class UserServiceTest {
         // Setup
         List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 2);
         userDao.create(mockUsers);
-        service.addFollowing(mockUsers.get(0).getId(), mockUsers.get(1).getId());
+        service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(1).getUsername());
 
         // Add following again
-        boolean result = service.addFollowing(mockUsers.get(0).getId(), mockUsers.get(1).getId());
+        boolean result = service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(1).getUsername());
 
         // Assert after
         Assert.assertEquals(1, mockUsers.get(0).getFollowing().size());
@@ -79,8 +79,8 @@ public class UserServiceTest {
         Profile mockProfile = (Profile) MockFactory.createMocks(Profile.class, 1).get(0);
         List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 3, "profile", mockProfile);
         userDao.create(mockUsers);
-        service.addFollowing(mockUsers.get(0).getId(), mockUsers.get(1).getId());
-        service.addFollowing(mockUsers.get(0).getId(), mockUsers.get(2).getId());
+        service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(1).getUsername());
+        service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(2).getUsername());
 
         // Get followling
         List<OtherUserView> following = service.getFollowing(mockUsers.get(0).getUsername());
@@ -101,8 +101,8 @@ public class UserServiceTest {
         // Setup
         List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 3);
         userDao.create(mockUsers);
-        service.addFollowing(mockUsers.get(0).getId(), mockUsers.get(1).getId());
-        service.addFollowing(mockUsers.get(0).getId(), mockUsers.get(2).getId());
+        service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(1).getUsername());
+        service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(2).getUsername());
 
         // Get followling
         List<OtherUserView> following = service.getFollowing(mockUsers.get(0).getUsername());
@@ -123,8 +123,8 @@ public class UserServiceTest {
         // Setup
         List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 3);
         userDao.create(mockUsers);
-        service.addFollowing(mockUsers.get(0).getId(), mockUsers.get(2).getId());
-        service.addFollowing(mockUsers.get(1).getId(), mockUsers.get(2).getId());
+        service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(2).getUsername());
+        service.addFollowing(mockUsers.get(1).getUsername(), mockUsers.get(2).getUsername());
 
         // Get followers
         List<OtherUserView> followers = service.getFollowers(mockUsers.get(2).getUsername());

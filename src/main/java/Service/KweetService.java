@@ -43,12 +43,6 @@ public class KweetService {
         this.userDao = userDao;
     }
 
-    // Method for REST testing!
-    public Kweet update(Long userId, Long kweetId, String message) throws KweetNotFoundException,
-            UserNotFoundException, InvalidKweetException {
-        return update(userDao.findById(userId).getUsername(), kweetId, message);
-    }
-
     /**
      * Updates an existing/persisted kweet.
      *
@@ -74,15 +68,6 @@ public class KweetService {
             return kweetDao.update(kweet);
         } else {
             throw new KweetNotFoundException();
-        }
-    }
-
-    // Method for REST testing!
-    public Kweet create(Long userId, String message) {
-        try {
-            return create(userDao.findById(userId).getUsername(), message);
-        } catch (Exception e) {
-            throw (EJBException) new EJBException(e).initCause(e);
         }
     }
 
