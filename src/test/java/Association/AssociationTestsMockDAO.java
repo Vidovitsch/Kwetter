@@ -55,7 +55,7 @@ public class AssociationTestsMockDAO {
 
     @AfterClass
     public static void tearDown() {
-        MockService.resetMockData();
+        MockService.renewMockData();
     }
 
     @Test

@@ -100,11 +100,7 @@ public class TimelineService {
     private List<TimelineItem> getMentionedKweets(User user) {
         List<TimelineItem> timeline = new ArrayList<>();
         for (Kweet kweet : user.getMentions()) {
-            if (kweet.getSender().equals(user)) {
-                timeline.add(creatTimelineItem(kweet, true));
-            } else {
-                timeline.add(creatTimelineItem(kweet, false));
-            }
+            timeline.add(creatTimelineItem(kweet, false));
         }
 
         return timeline;

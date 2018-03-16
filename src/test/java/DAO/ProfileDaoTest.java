@@ -1,7 +1,6 @@
 package DAO;
 
 import DAO.Impl.ProfileDaoImpl;
-import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Profile;
 import Domain.User;
@@ -26,7 +25,7 @@ public class ProfileDaoTest {
 
     @AfterClass
     public static void tearDown() {
-        MockService.resetMockData();
+        MockService.renewMockData();
     }
 
     @Test

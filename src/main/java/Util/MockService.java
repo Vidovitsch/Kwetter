@@ -44,7 +44,7 @@ public class MockService {
         return hashtags;
     }
 
-    public static void resetMockData() {
+    public static void renewMockData() {
         setMockData(MockService.getInstance());
     }
 
