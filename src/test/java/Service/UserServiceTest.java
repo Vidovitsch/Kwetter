@@ -89,10 +89,6 @@ public class UserServiceTest {
         Assert.assertEquals("User follows two other users", 2, following.size());
         Assert.assertEquals(mockUsers.get(1).getUsername(), following.get(0).getUsername());
         Assert.assertEquals(mockUsers.get(2).getUsername(), following.get(1).getUsername());
-
-        // Check image
-        Assert.assertNotNull(following.get(0).getImage());
-        Assert.assertNotNull(following.get(1).getImage());
     }
 
     @Test
@@ -111,10 +107,6 @@ public class UserServiceTest {
         Assert.assertEquals("User follows two other users", 2, following.size());
         Assert.assertEquals(mockUsers.get(1).getUsername(), following.get(0).getUsername());
         Assert.assertEquals(mockUsers.get(2).getUsername(), following.get(1).getUsername());
-
-        // Check image
-        Assert.assertNull(following.get(0).getImage());
-        Assert.assertNull(following.get(1).getImage());
     }
 
     @Test

@@ -124,4 +124,19 @@ public class ProfileServiceTest {
         // Assert after
         Assert.assertEquals("Profile name isn't 'dummyProfile'", "dummyProfile123123", service.getProfileData(hank.getUsername()).getName());
     }
+
+    @Test
+    public void getProfileData() {
+
+    }
+
+    @Test
+    public void getProfileData_nullProfile() {
+
+    }
+
+    @Test
+    public void getUserTotals() {
+
+    }
 }
