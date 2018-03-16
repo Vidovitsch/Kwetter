@@ -74,10 +74,10 @@ public class UserService {
     private List<OtherUserView> generateOtherUserViews(List<User> users) {
         ArrayList<OtherUserView> OtherUserViews = new ArrayList<>();
         for (User user : users) {
-            Profile profile = profileDao.findByUser(user);
+            Profile p = profileDao.findByUser(user);
             String image;
-            if (profile != null) {
-                image = profile.getImage();
+            if (p != null) {
+                image = p.getImage();
             } else {
                 image = null;
             }

@@ -46,7 +46,11 @@ public class ProfileDaoImpl implements IProfileDao {
     public Profile findByUser(User user) {
         Query q = em.createNamedQuery("Profile.findByUser", Profile.class);
         q.setParameter("user", user);
-        return (Profile) q.getResultList().get(0);
+        try {
+            return (Profile) q.getResultList().get(0);
+        }catch (ArrayIndexOutOfBoundsException e){
+            return null;
+        }
     }
 
     @Override
