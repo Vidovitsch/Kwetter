@@ -20,6 +20,9 @@ public class User implements Mockable {
     @Column(name = "username", nullable = false)
     private String username;
 
+    @Column(name = "passwordhash")
+    private String passwordhash;
+
     @ManyToMany
     @JoinTable(name = "UserRole",
             joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false),
@@ -119,5 +122,13 @@ public class User implements Mockable {
 
     public void setHearts(List<Kweet> hearts) {
         this.hearts = hearts;
+    }
+
+    public String getPasswordhash() {
+        return passwordhash;
+    }
+
+    public void setPasswordhash(String passwordhash) {
+        this.passwordhash = passwordhash;
     }
 }

@@ -1,8 +1,11 @@
 package Service;
 
+import DAO.Impl.ProfileDaoImpl;
 import DAO.Mock.KweetDaoMock;
+import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
 import DaoInterfaces.IKweetDao;
+import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.User;
@@ -20,6 +23,7 @@ public class TimelineServiceTest {
 
     private static IUserDao userDao;
     private static IKweetDao kweetDao;
+    private static IProfileDao profileDao;
 
     private static TimelineService service;
 
@@ -27,6 +31,7 @@ public class TimelineServiceTest {
     public static void setUp() {
         userDao = new UserDaoMock();
         kweetDao = new KweetDaoMock();
+        profileDao = new ProfileDaoMock();
 
         service = new TimelineService();
         service.setKweetDao(kweetDao);
