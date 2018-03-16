@@ -14,7 +14,7 @@ import java.util.List;
 public class Role implements Mockable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -24,7 +24,7 @@ public class Role implements Mockable {
     private String description;
 
     @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     public Role() { }
 

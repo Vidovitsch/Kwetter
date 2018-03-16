@@ -6,11 +6,11 @@ import Qualifier.Mock;
 import Util.MockFactory;
 import Util.MockService;
 
-import javax.enterprise.context.Dependent;
+import javax.ejb.Stateless;
 import java.util.*;
 
 @Mock
-@Dependent
+@Stateless
 public class KweetDaoMock implements IKweetDao {
 
     private List<Kweet> mockKweets;

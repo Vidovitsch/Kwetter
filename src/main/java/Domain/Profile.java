@@ -12,11 +12,11 @@ import javax.persistence.*;
 public class Profile implements Mockable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="user_id")
     private User user;
 
     @Column(name = "name", nullable = false)

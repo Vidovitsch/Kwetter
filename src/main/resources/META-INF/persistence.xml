@@ -2,6 +2,7 @@
 <persistence version="2.0"
              xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
     <persistence-unit name="KwetterPU">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>jdbc/Kwetter</jta-data-source>
@@ -11,4 +12,20 @@
         <class>Domain.Role</class>
         <class>Domain.Kweet</class>
     </persistence-unit>
+
+    <persistence-unit name="KwetterPU_test">
+        <class>Domain.User</class>
+        <class>Domain.Profile</class>
+        <class>Domain.Hashtag</class>
+        <class>Domain.Role</class>
+        <class>Domain.Kweet</class>
+        <properties>
+            <property name="javax.persistence.jdbc.password" value="SOPSOP164"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.24.75:3306/Kwetter"/>
+            <property name="javax.persistence.logging.level" value="INFO"/>
+        </properties>
+     </persistence-unit>
+
 </persistence>

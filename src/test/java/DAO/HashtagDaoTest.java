@@ -1,6 +1,8 @@
 package DAO;
 
-import DAO.Mock.*;
+
+import DAO.Impl.HastagDaoImpl;
+import DAO.TestImpl.HastagDaoImpl2;
 import DaoInterfaces.*;
 import Domain.Hashtag;
 import Util.MockFactory;
@@ -9,6 +11,8 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import javax.persistence.RollbackException;
 import java.util.*;
 
 public class HashtagDaoTest {
@@ -17,12 +21,12 @@ public class HashtagDaoTest {
 
     @BeforeClass
     public static void Init() {
-        hashtagDao = new HashtagDaoMock();
+        hashtagDao = new HastagDaoImpl2("KwetterPU_test");
     }
 
     @AfterClass
     public static void tearDown() {
-        MockService.resetMockData();
+        MockService.renewMockData();
     }
 
     @Test
@@ -44,11 +48,16 @@ public class HashtagDaoTest {
     @Test
     public void findByIdTest() {
         // Insert new hashtag
-        Hashtag mockHashtag = hashtagDao.create(new Hashtag());
-
+        Hashtag mockHashtag = (Hashtag)MockFactory.createMocks(Hashtag.class, 1).get(0);
+        mockHashtag.setId((long)1);
+        try{
+            mockHashtag = hashtagDao.create(mockHashtag);}
+        catch (RollbackException e){
+            mockHashtag = hashtagDao.update(mockHashtag);
+        }
         // Check fetched hashtag
-        Hashtag fetchedHashtag = hashtagDao.findById(mockHashtag.getId());
-        Assert.assertEquals("Fetched hashtag is the same as the mocked one", mockHashtag, fetchedHashtag);
+        Hashtag fetchedHashtag = hashtagDao.findById((long)1);
+        Assert.assertEquals("Fetched hashtag is not the same as the mocked one", mockHashtag, fetchedHashtag);
     }
 
     @Test
@@ -57,7 +66,11 @@ public class HashtagDaoTest {
 
         // Insert new hashtag
         Hashtag mockHashtag = (Hashtag)MockFactory.createMocks(Hashtag.class, 1, "name", name).get(0);
-        mockHashtag = hashtagDao.create(mockHashtag);
+        try{
+        mockHashtag = hashtagDao.create(mockHashtag);}
+        catch (RollbackException e){
+            mockHashtag = hashtagDao.findByName(mockHashtag.getName());
+        }
 
         // Check fetched hashtag
         Hashtag fetchedHashtag = hashtagDao.findByName(name);
@@ -112,6 +125,6 @@ public class HashtagDaoTest {
         hashtagDao.remove(mockHashtag);
 
         // Check hashtag list contains new hashtag
-        Assert.assertFalse("New hashtag has been removed", hashtagDao.findAll().contains(mockHashtag));
+        Assert.assertFalse("New hashtag has not been removed", hashtagDao.findAll().contains(mockHashtag));
     }
 }

@@ -38,6 +38,4 @@ public class UserTotalsView {
     public void setkweets(int kweets) {
         this.kweets = kweets;
     }
-
-
 }

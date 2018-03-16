@@ -6,12 +6,11 @@ import Util.MockFactory;
 import Domain.User;
 import Util.MockService;
 
-import javax.enterprise.context.Dependent;
-import java.util.ArrayList;
+import javax.ejb.Stateless;
 import java.util.List;
 
 @Mock
-@Dependent
+@Stateless
 public class UserDaoMock implements IUserDao {
 
     private List<User> mockUsers;

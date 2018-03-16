@@ -13,7 +13,7 @@ import java.util.*;
 public class Hashtag implements Mockable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
@@ -24,7 +24,7 @@ public class Hashtag implements Mockable {
     private Date lastUsed;
 
     @ManyToMany(mappedBy = "hashtags")
-    private List<Kweet> kweets;
+    private List<Kweet> kweets = new ArrayList<>();
 
     @Column(name = "timesUsed")
     private int timesUsed;

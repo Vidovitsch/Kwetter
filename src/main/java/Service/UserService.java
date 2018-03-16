@@ -4,7 +4,6 @@ import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
-import Qualifier.Mock;
 import ViewModels.OtherUserView;
 
 import javax.ejb.Stateless;
@@ -18,65 +17,69 @@ import java.util.List;
 public class UserService {
 
     @Inject
-    @Mock
     private IUserDao userDao;
 
     @Inject
-    @Mock
     private IProfileDao profileDao;
 
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
     }
 
-    public void setProfileDao(IProfileDao profileDao) {
-        this.profileDao = profileDao;
-    }
+    public void setProfileDao(IProfileDao profileDao) { this.profileDao = profileDao; }
 
-    public Boolean addFollowing(Long userId, Long followingId) {
-        User followingUser = userDao.findById(userId);
-        User followedUser = userDao.findById(followingId);
+    /**
+     * Adds a user(follwoing) that this user will follow
+     *
+     * @param username of the user that follows
+     * @param following: the user that will get followed
+     * @return true if the user follows a user successfully, false if the user already follows the user
+     */
+    public Boolean addFollowing(String username, String following) {
+        User user = userDao.findByUsername(username);
+        User followingUser = userDao.findByUsername(following);
 
-        List<User> following = followingUser.getFollowing();
-        if (following.contains(followedUser)) {
+        List<User> followingUsers = user.getFollowing();
+        if (followingUsers.contains(followingUser)) {
             return false;
         } else {
-            following.add(followedUser);
-            followedUser.getFollowers().add(followingUser);
+            followingUsers.add(followingUser);
+            followingUser.getFollowers().add(user);
             return true;
         }
     }
 
+    /**
+     * Gets a list of the followers of the user with the given username.
+     * The list is in a view format and consists only of useful visual data.
+     *
+     * @param username of the user with the followers
+     * @return a list of follwers in a view format
+     */
     public List<OtherUserView> getFollowers(String username) {
         User user = userDao.findByUsername(username);
         return generateOtherUserViews(user.getFollowers());
     }
 
-    // For testing
-    public List<OtherUserView> getFollowers(Long userid) {
-        User user = userDao.findById(userid);
-        return generateOtherUserViews(user.getFollowers());
-    }
-
+    /**
+     * Gets a list of the following of the user with the given username.
+     * The list is in a view format and consists only of useful visual data.
+     *
+     * @param username of the user with the following
+     * @return a list of following in a view format
+     */
     public List<OtherUserView> getFollowing(String username) {
         User user = userDao.findByUsername(username);
         return generateOtherUserViews(user.getFollowing());
     }
 
-    // For testing
-    public List<OtherUserView> getFollowing(Long userid) {
-        User user = userDao.findById(userid);
-        return generateOtherUserViews(user.getFollowing());
-    }
-
-    // For mocking
     private List<OtherUserView> generateOtherUserViews(List<User> users) {
         ArrayList<OtherUserView> OtherUserViews = new ArrayList<>();
         for (User user : users) {
-            Profile profile = user.getProfile();
+            Profile p = profileDao.findByUser(user);
             String image;
-            if (profile != null) {
-                image = profile.getImage();
+            if (p != null) {
+                image = p.getImage();
             } else {
                 image = null;
             }

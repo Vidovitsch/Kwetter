@@ -1,10 +1,9 @@
-package DAO.Impl;
+package DAO.TestImpl;
 
 import DaoInterfaces.IUserDao;
 import Domain.User;
 
 import javax.ejb.Stateless;
-import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -13,16 +12,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-@Default
 @Stateless
-public class UserDaoImpl implements IUserDao {
+public class UserDaoImpl2 implements IUserDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public UserDaoImpl() { }
+    public UserDaoImpl2() { }
 
-    public UserDaoImpl(String persistencyUnit) {
+    public UserDaoImpl2(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
@@ -50,7 +48,10 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public User create(User user) {
+        em.getTransaction().begin();
         em.persist(user);
+        em.getTransaction().commit();
+
         return user;
     }
 
@@ -71,7 +72,9 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public boolean remove(User user) {
+        em.getTransaction().begin();
         em.remove(user);
+        em.getTransaction().commit();
         return true;
     }
 }
