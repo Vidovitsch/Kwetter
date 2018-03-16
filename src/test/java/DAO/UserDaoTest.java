@@ -54,7 +54,7 @@ public class UserDaoTest {
     @Test
     public void findByUsernameTest() {
         for (User u : userDao.findAll()) {
-            Assert.assertEquals(u, userDao.findByUsername(u.getUsername()));
+            Assert.assertEquals(u.getId(), userDao.findByUsername(u.getUsername()).getId());
         }
     }
 
