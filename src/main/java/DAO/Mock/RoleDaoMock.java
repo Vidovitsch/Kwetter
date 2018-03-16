@@ -6,11 +6,11 @@ import Util.MockFactory;
 import Domain.Role;
 import Util.MockService;
 
-import javax.enterprise.context.Dependent;
+import javax.ejb.Stateless;
 import java.util.List;
 
 @Mock
-@Dependent
+@Stateless
 public class RoleDaoMock implements IRoleDao {
 
     private List<Role> mockRoles;

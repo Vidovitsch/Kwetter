@@ -1,25 +1,26 @@
-package DAO.Impl;
+package DAO.TestImpl;
 
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 
 import javax.ejb.Stateless;
-import javax.enterprise.inject.Default;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-@Default
 @Stateless
-public class HastagDaoImpl implements IHashtagDao {
+public class HastagDaoImpl2 implements IHashtagDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public HastagDaoImpl() { }
+    public HastagDaoImpl2() { }
 
-    public HastagDaoImpl(String persistencyUnit) {
+    public HastagDaoImpl2(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
@@ -47,7 +48,9 @@ public class HastagDaoImpl implements IHashtagDao {
 
     @Override
     public Hashtag create(Hashtag hashtag) {
+        em.getTransaction().begin();
         em.persist(hashtag);
+        em.getTransaction().commit();
         return hashtag;
     }
 
@@ -68,7 +71,9 @@ public class HastagDaoImpl implements IHashtagDao {
 
     @Override
     public boolean remove(Hashtag hashtag) {
+        em.getTransaction().begin();
         em.remove(hashtag);
+        em.getTransaction().commit();
 
         return true;
     }

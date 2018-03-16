@@ -2,34 +2,33 @@ package Service;
 
 import Comparator.KweetComparator;
 import DaoInterfaces.IKweetDao;
+import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.Profile;
 import Domain.User;
-import Qualifier.Mock;
 import ViewModels.UserImageView;
 import ViewModels.KweeterData;
 import Exception.*;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Named(value = "kweeterDataService")
 @Stateless
 public class KweeterDataService {
 
-    @Inject @Mock
+    @Inject
     private IUserDao userDao;
 
-    @Inject @Mock
+    @Inject
     private IKweetDao kweetDao;
 
-    public KweeterDataService() { }
+    @Inject
+    private IProfileDao profileDao;
 
     public KweeterData getKweeterData(Long userId) throws UserNotFoundException {
         return getKweeterData(userDao.findById(userId).getUsername());
@@ -43,6 +42,14 @@ public class KweeterDataService {
         this.kweetDao = kweetDao;
     }
 
+    /**
+     * Gets the data of a user by username.
+     * This data consists of image view of the last kweet message, last kweet date, followers and following.
+     *
+     * @param username of the user with kweeter data
+     * @return kweeter data in a view format
+     * @throws UserNotFoundException when the user with the given username doesn't exist
+     */
     public KweeterData getKweeterData(String username) throws UserNotFoundException {
         User user = userDao.findByUsername(username);
         if (user == null) {
@@ -82,7 +89,7 @@ public class KweeterDataService {
         List<UserImageView> followers = new ArrayList<>();
         if (users != null) {
             for (User u : users) {
-                Profile profile = u.getProfile();
+                Profile profile = profileDao.findByUser(u);
                 if (profile != null) {
                     // Add user profile data
                     followers.add(new UserImageView(profile.getName(), profile.getImage()));

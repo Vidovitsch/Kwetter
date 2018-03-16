@@ -156,7 +156,6 @@ public class DummyData {
         for (User user : users) {
             Profile dummyProfile = new Profile((long)-1,user.getUsername() + " Test");
             dummyProfile.setUser(user);
-            user.setProfile(dummyProfile);
             profiles.add(dummyProfile);
         }
 

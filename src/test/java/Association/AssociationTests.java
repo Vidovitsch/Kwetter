@@ -46,7 +46,7 @@ public class AssociationTests {
 
     @AfterClass
     public static void tearDown() {
-        MockService.resetMockData();
+        MockService.renewMockData();
     }
 
     @Test
@@ -121,12 +121,6 @@ public class AssociationTests {
         Iterator<Profile> profileIterator = profiles.iterator();
         while(profileIterator.hasNext()){
             Assert.assertTrue(users.contains(profileIterator.next().getUser()));
-        }
-        Iterator<User> userIterator = users.iterator();
-        while(userIterator.hasNext()){
-            User u = userIterator.next();
-            Profile p = u.getProfile();
-            Assert.assertEquals(p.getUser(), u);
         }
     }
 }

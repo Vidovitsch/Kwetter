@@ -1,6 +1,7 @@
 package DAO;
 
-import DAO.Mock.*;
+import DAO.Impl.RoleDaoImpl;
+import DAO.TestImpl.RoleDaoImpl2;
 import DaoInterfaces.*;
 import Domain.Role;
 import Util.MockFactory;
@@ -18,12 +19,12 @@ public class RoleDaoTest {
 
     @BeforeClass
     public static void Init() {
-        roleDao = new RoleDaoMock();
+        roleDao = new RoleDaoImpl2("KwetterPU_test");
     }
 
     @AfterClass
     public static void tearDown() {
-        MockService.resetMockData();
+        MockService.renewMockData();
     }
 
     @Test
@@ -48,7 +49,8 @@ public class RoleDaoTest {
     @Test
     public void findByIdTest() {
         // Insert new role
-        Role mockRole = roleDao.create(new Role());
+        Role mockRole = (Role) MockFactory.createMocks(Role.class, 1).get(0);
+        mockRole = roleDao.create(mockRole);
 
         // Check fetched role
         Role fetchedRole = roleDao.findById(mockRole.getId());

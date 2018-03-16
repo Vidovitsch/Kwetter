@@ -23,15 +23,12 @@ import java.util.regex.Pattern;
 public class KweetService {
 
     @Inject
-    @Mock
     private IKweetDao kweetDao;
 
     @Inject
-    @Mock
     private IHashtagDao hashtagDao;
 
     @Inject
-    @Mock
     private IUserDao userDao;
 
     public void setKweetDao(IKweetDao kweetDao) {
@@ -44,12 +41,6 @@ public class KweetService {
 
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
-    }
-
-    // Method for REST testing!
-    public Kweet update(Long userId, Long kweetId, String message) throws KweetNotFoundException,
-            UserNotFoundException, InvalidKweetException {
-        return update(userDao.findById(userId).getUsername(), kweetId, message);
     }
 
     /**
@@ -77,15 +68,6 @@ public class KweetService {
             return kweetDao.update(kweet);
         } else {
             throw new KweetNotFoundException();
-        }
-    }
-
-    // Method for REST testing!
-    public Kweet create(Long userId, String message) {
-        try {
-            return create(userDao.findById(userId).getUsername(), message);
-        } catch (Exception e) {
-            throw (EJBException) new EJBException(e).initCause(e);
         }
     }
 
@@ -154,10 +136,6 @@ public class KweetService {
         User user = userDao.findByUsername(username);
         Kweet kweet = kweetDao.findById(kweetId);
         if (user != null && kweet != null) {
-            if (kweet.getHearts() == null) {
-                kweet.setHearts(new ArrayList<>());
-            }
-
             if (!kweet.getHearts().contains(user)) {
                 kweet.getHearts().add(user);
 
@@ -263,10 +241,6 @@ public class KweetService {
     }
 
     private void syncWithKweets(List<Kweet> userKweets, Kweet kweet) {
-        if (userKweets == null) {
-            // Prevents nullpointers
-            userKweets = new ArrayList<>();
-        }
         if (!userKweets.contains(kweet)) {
             userKweets.add(kweet);
         }

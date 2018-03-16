@@ -14,7 +14,7 @@ import java.util.*;
 @Stateless
 public class TrendService {
 
-    @Inject @Mock
+    @Inject
     private IHashtagDao hashtagDao;
 
     public void setHashtagDao(IHashtagDao hashtagDao) {
