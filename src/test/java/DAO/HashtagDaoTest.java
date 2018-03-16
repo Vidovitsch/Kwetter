@@ -50,11 +50,15 @@ public class HashtagDaoTest {
     public void findByIdTest() {
         // Insert new hashtag
         Hashtag mockHashtag = (Hashtag)MockFactory.createMocks(Hashtag.class, 1).get(0);
-        hashtagDao.create(mockHashtag);
-
+        mockHashtag.setId((long)1);
+        try{
+            mockHashtag = hashtagDao.create(mockHashtag);}
+        catch (RollbackException e){
+            mockHashtag = hashtagDao.update(mockHashtag);
+        }
         // Check fetched hashtag
-        Hashtag fetchedHashtag = hashtagDao.findById(mockHashtag.getId());
-        Assert.assertEquals("Fetched hashtag is the same as the mocked one", mockHashtag, fetchedHashtag);
+        Hashtag fetchedHashtag = hashtagDao.findById((long)1);
+        Assert.assertEquals("Fetched hashtag is not the same as the mocked one", mockHashtag, fetchedHashtag);
     }
 
     @Test

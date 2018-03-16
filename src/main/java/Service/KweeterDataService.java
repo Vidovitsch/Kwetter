@@ -2,6 +2,7 @@ package Service;
 
 import Comparator.KweetComparator;
 import DaoInterfaces.IKweetDao;
+import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Kweet;
 import Domain.Profile;
@@ -25,6 +26,9 @@ public class KweeterDataService {
 
     @Inject
     private IKweetDao kweetDao;
+
+    @Inject
+    private IProfileDao profileDao;
 
     public KweeterData getKweeterData(Long userId) throws UserNotFoundException {
         return getKweeterData(userDao.findById(userId).getUsername());
@@ -85,7 +89,7 @@ public class KweeterDataService {
         List<UserImageView> followers = new ArrayList<>();
         if (users != null) {
             for (User u : users) {
-                Profile profile = u.getProfile();
+                Profile profile = profileDao.findByUser(u);
                 if (profile != null) {
                     // Add user profile data
                     followers.add(new UserImageView(profile.getName(), profile.getImage()));

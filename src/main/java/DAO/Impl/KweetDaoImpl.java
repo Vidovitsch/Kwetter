@@ -43,7 +43,6 @@ public class KweetDaoImpl implements IKweetDao {
     public List<Kweet> findBySender(User sender) {
         Query q = em.createNamedQuery("Kweet.findBySender", Kweet.class);
         q.setParameter("sender", sender);
-
         return (List<Kweet>) q.getResultList();
     }
 
@@ -52,7 +51,6 @@ public class KweetDaoImpl implements IKweetDao {
         em.getTransaction().begin();
         em.persist(Kweet);
         em.getTransaction().commit();
-
         return Kweet;
     }
 

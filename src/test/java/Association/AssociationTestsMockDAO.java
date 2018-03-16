@@ -132,7 +132,7 @@ public class AssociationTestsMockDAO {
         Iterator<User> userIterator = users.iterator();
         while(userIterator.hasNext()){
             User u = userIterator.next();
-            Profile p = u.getProfile();
+            Profile p = profileDao.findByUser(u);
             Assert.assertEquals(p.getUser(), u);
         }
     }

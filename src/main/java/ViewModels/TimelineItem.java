@@ -19,7 +19,7 @@ public class TimelineItem implements Comparable {
         if(first == 0 && kweetID != ((TimelineItem) o).kweetID){
             return -1;
         }else {
-            return 0;
+            return first;
         }
     }
 }

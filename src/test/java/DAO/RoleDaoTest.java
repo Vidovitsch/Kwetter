@@ -48,7 +48,8 @@ public class RoleDaoTest {
     @Test
     public void findByIdTest() {
         // Insert new role
-        Role mockRole = roleDao.create(new Role());
+        Role mockRole = (Role) MockFactory.createMocks(Role.class, 1).get(0);
+        mockRole = roleDao.create(mockRole);
 
         // Check fetched role
         Role fetchedRole = roleDao.findById(mockRole.getId());

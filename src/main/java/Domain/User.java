@@ -17,9 +17,6 @@ public class User implements Mockable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
-    private Profile profile;
-
     @Column(name = "username", nullable = false)
     private String username;
 
@@ -66,14 +63,6 @@ public class User implements Mockable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
     }
 
     public String getUsername() {

@@ -45,7 +45,7 @@ public class UserDaoImpl implements IUserDao {
         Query q = em.createNamedQuery("User.findByUsername", User.class);
         q.setParameter("username", username);
 
-        return (User) q.getResultList();
+        return (User) q.getResultList().get(0);
     }
 
     @Override

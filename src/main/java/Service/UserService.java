@@ -1,5 +1,6 @@
 package Service;
 
+import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
@@ -17,6 +18,9 @@ public class UserService {
 
     @Inject
     private IUserDao userDao;
+
+    @Inject
+    private IProfileDao profileDao;
 
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
@@ -70,7 +74,7 @@ public class UserService {
     private List<OtherUserView> generateOtherUserViews(List<User> users) {
         ArrayList<OtherUserView> OtherUserViews = new ArrayList<>();
         for (User user : users) {
-            Profile profile = user.getProfile();
+            Profile profile = profileDao.findByUser(user);
             String image;
             if (profile != null) {
                 image = profile.getImage();

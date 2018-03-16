@@ -122,11 +122,5 @@ public class AssociationTests {
         while(profileIterator.hasNext()){
             Assert.assertTrue(users.contains(profileIterator.next().getUser()));
         }
-        Iterator<User> userIterator = users.iterator();
-        while(userIterator.hasNext()){
-            User u = userIterator.next();
-            Profile p = u.getProfile();
-            Assert.assertEquals(p.getUser(), u);
-        }
     }
 }

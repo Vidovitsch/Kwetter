@@ -21,7 +21,8 @@ public class ProfileDaoImpl implements IProfileDao {
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public ProfileDaoImpl() { }
+    public ProfileDaoImpl() {
+    }
 
     public ProfileDaoImpl(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
@@ -45,14 +46,14 @@ public class ProfileDaoImpl implements IProfileDao {
     public Profile findByUser(User user) {
         Query q = em.createNamedQuery("Profile.findByUser", Profile.class);
         q.setParameter("user", user);
-
-        return (Profile) q.getResultList();
+        return (Profile) q.getResultList().get(0);
     }
 
     @Override
     public Profile create(Profile profile) {
+        em.getTransaction().begin();
         em.persist(profile);
-
+        em.getTransaction().commit();
         return profile;
     }
 
@@ -73,8 +74,9 @@ public class ProfileDaoImpl implements IProfileDao {
 
     @Override
     public boolean remove(Profile profile) {
+        em.getTransaction().begin();
         em.remove(profile);
-
+        em.getTransaction().commit();
         return true;
     }
 }
