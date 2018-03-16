@@ -1,13 +1,12 @@
 package DAO.Impl;
 
-import DAO.EntityManager.EntityManagerProvider;
 import DaoInterfaces.IRoleDao;
 import Domain.Role;
-import Domain.User;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,10 +17,13 @@ import java.util.List;
 @Stateless
 public class RoleDaoImpl implements IRoleDao {
 
-    private static EntityManager em;
+    @PersistenceContext(name = "KwetterPU")
+    private EntityManager em;
 
-    public RoleDaoImpl() {
-        this.em = new EntityManagerProvider().GetEntityManager();
+    public RoleDaoImpl() { }
+
+    public RoleDaoImpl(String persistencyUnit) {
+        this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
     @Override

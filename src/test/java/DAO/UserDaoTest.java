@@ -21,7 +21,7 @@ public class UserDaoTest {
 
     @BeforeClass
     public static void Init() {
-        userDao = new UserDaoImpl();
+        userDao = new UserDaoImpl("KwetterPU_test");
     }
 
     @AfterClass

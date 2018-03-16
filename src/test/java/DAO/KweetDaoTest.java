@@ -20,8 +20,8 @@ public class KweetDaoTest {
 
     @BeforeClass
     public static void Init() {
-        kweetDao = new KweetDaoImpl();
-        userDao = new UserDaoImpl();
+        kweetDao = new KweetDaoImpl("KwetterPU_test");
+        userDao = new UserDaoImpl("KwetterPU_test");
     }
 
     @AfterClass

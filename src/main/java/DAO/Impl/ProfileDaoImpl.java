@@ -1,15 +1,13 @@
 package DAO.Impl;
 
-import DAO.EntityManager.EntityManagerProvider;
 import DaoInterfaces.IProfileDao;
 import Domain.Profile;
-import Domain.Profile;
 import Domain.User;
-import Qualifier.Mock;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,10 +17,14 @@ import java.util.List;
 @Default
 @Stateless
 public class ProfileDaoImpl implements IProfileDao {
-    private static EntityManager em;
 
-    public ProfileDaoImpl() {
-        this.em = new EntityManagerProvider().GetEntityManager();
+    @PersistenceContext(name = "KwetterPU")
+    private EntityManager em;
+
+    public ProfileDaoImpl() { }
+
+    public ProfileDaoImpl(String persistencyUnit) {
+        this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
     @Override

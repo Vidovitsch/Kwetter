@@ -18,7 +18,7 @@ public class RoleDaoTest {
 
     @BeforeClass
     public static void Init() {
-        roleDao = new RoleDaoImpl();
+        roleDao = new RoleDaoImpl("KwetterPU_test");
     }
 
     @AfterClass

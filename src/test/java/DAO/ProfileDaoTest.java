@@ -21,7 +21,7 @@ public class ProfileDaoTest {
 
     @BeforeClass
     public static void Init() {
-        profileDao = new ProfileDaoImpl();
+        profileDao = new ProfileDaoImpl("KwetterPU_test");
     }
 
     @AfterClass

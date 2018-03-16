@@ -1,13 +1,10 @@
 package DAO.Impl;
 
-import DAO.EntityManager.EntityManagerProvider;
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
-import javax.inject.Inject;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
@@ -17,11 +14,13 @@ import java.util.List;
 @Stateless
 public class HastagDaoImpl implements IHashtagDao {
 
-    private static EntityManager em;
+    @PersistenceContext(name = "KwetterPU")
+    private EntityManager em;
 
-    @PostConstruct
-    void init(){
-        this.em = new EntityManagerProvider().GetEntityManager();
+    public HastagDaoImpl() { }
+
+    public HastagDaoImpl(String persistencyUnit) {
+        this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
     @Override
@@ -46,8 +45,8 @@ public class HastagDaoImpl implements IHashtagDao {
         for (Object o : q.getResultList()) {
             return (Hashtag) o;
         }
+
         return null;
-        //return (Hashtag) q.getResultList();
     }
 
     @Override

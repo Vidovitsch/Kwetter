@@ -22,7 +22,7 @@ public class HashtagDaoTest {
 
     @BeforeClass
     public static void Init() {
-        hashtagDao = new HastagDaoImpl();
+        hashtagDao = new HastagDaoImpl("KwetterPU_test");
     }
 
     @AfterClass
