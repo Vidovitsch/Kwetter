@@ -52,7 +52,7 @@ public class ProfileService {
      * @return the profile of the user in view format
      */
     public ProfileData getProfileData(String username) {
-        Profile p = userDao.findByUsername(username).getProfile();
+        Profile p = profileDao.findByUser(userDao.findByUsername(username));
         return new ProfileData(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
     }
 

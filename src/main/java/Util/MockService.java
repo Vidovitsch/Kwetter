@@ -123,7 +123,6 @@ public class MockService {
         if (users.size() >= profiles.size()) {
             for (int i = 0; i < profiles.size(); i++) {
                 profiles.get(i).setUser(users.get(i));
-                users.get(i).setProfile(profiles.get(i));
             }
         }
     }

@@ -20,7 +20,6 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
-          <factory-entry name="KWETTERPUP" />
           <factory-entry name="KwetterPU" value="8394644f-012c-4a26-ad5b-014bb8cd1ab1" />
           <factory-entry name="KwetterPU_test" />
         </datasource-mapping>

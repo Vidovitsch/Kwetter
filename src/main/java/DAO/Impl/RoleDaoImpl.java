@@ -20,7 +20,8 @@ public class RoleDaoImpl implements IRoleDao {
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public RoleDaoImpl() { }
+    public RoleDaoImpl() {
+    }
 
     public RoleDaoImpl(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
@@ -45,13 +46,14 @@ public class RoleDaoImpl implements IRoleDao {
         Query q = em.createNamedQuery("Role.findByName", Role.class);
         q.setParameter("name", name);
 
-        return (Role) q.getResultList();
+        return (Role) q.getResultList().get(0);
     }
 
     @Override
     public Role create(Role role) {
+        em.getTransaction().begin();
         em.persist(role);
-
+        em.getTransaction().commit();
         return role;
     }
 
@@ -72,8 +74,9 @@ public class RoleDaoImpl implements IRoleDao {
 
     @Override
     public boolean remove(Role role) {
+        em.getTransaction().begin();
         em.remove(role);
-
+        em.getTransaction().commit();
         return true;
     }
 }

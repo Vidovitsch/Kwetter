@@ -42,11 +42,7 @@ public class HastagDaoImpl implements IHashtagDao {
     public Hashtag findByName(String name) {
         Query q = em.createNamedQuery("Hashtag.findByName", Hashtag.class);
         q.setParameter("name", name);
-        for (Object o : q.getResultList()) {
-            return (Hashtag) o;
-        }
-
-        return null;
+        return (Hashtag) q.getResultList().get(0);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package DAO;
 
+import DAO.Impl.ProfileDaoImpl;
 import DAO.Impl.UserDaoImpl;
+import DAO.Mock.ProfileDaoMock;
+import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
@@ -17,11 +20,15 @@ import java.util.List;
 
 public class UserDaoTest {
 
+
     private static IUserDao userDao;
+
+    private static IProfileDao profileDao;
 
     @BeforeClass
     public static void Init() {
         userDao = new UserDaoImpl("KwetterPU_test");
+        profileDao = new ProfileDaoImpl("KwetterPU_test");
     }
 
     @AfterClass
@@ -51,11 +58,10 @@ public class UserDaoTest {
 
     @Test
     public void insertUserTest() {
-        User u = new User();
-        u.setUsername("henk");
+        User u = (User) MockFactory.createMocks(User.class, 1).get(0);
+        String username = u.getUsername();
         userDao.create(u);
-        Assert.assertEquals(u, userDao.findByUsername(u.getUsername()));
-
+        Assert.assertEquals(u, userDao.findByUsername(username));
         // Cleanup
         userDao.remove(u);
     }
@@ -69,24 +75,6 @@ public class UserDaoTest {
 
         // Check Role list contains new role
         Assert.assertTrue("New users have been added", userDao.findAll().containsAll(mockUsers));;
-    }
-
-    @Test
-    public void updateUserTest() {
-        int i = 1;
-        List<User> users =new ArrayList<User>();
-        users.addAll(userDao.findAll());
-        Iterator<User> userIterator = users.iterator();
-        User u;
-        while(userIterator.hasNext()){
-            u = userIterator.next();
-            Profile p = new Profile();
-            p.setwebsite("test" + i);
-            u.setProfile(p);
-            userDao.update(u);
-            Assert.assertEquals("test" + i, userDao.findByUsername(u.getUsername()).getProfile().getwebsite());
-            i++;
-        }
     }
 
     @Test
