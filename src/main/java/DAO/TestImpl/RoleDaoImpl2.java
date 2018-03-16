@@ -1,7 +1,8 @@
-package DAO.Impl;
+package DAO.TestImpl;
 
 import DaoInterfaces.IRoleDao;
 import Domain.Role;
+import Qualifier.Testing;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
@@ -13,17 +14,17 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-@Default
+@Testing
 @Stateless
-public class RoleDaoImpl implements IRoleDao {
+public class RoleDaoImpl2 implements IRoleDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public RoleDaoImpl() {
+    public RoleDaoImpl2() {
     }
 
-    public RoleDaoImpl(String persistencyUnit) {
+    public RoleDaoImpl2(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
@@ -51,7 +52,9 @@ public class RoleDaoImpl implements IRoleDao {
 
     @Override
     public Role create(Role role) {
+        em.getTransaction().begin();
         em.persist(role);
+        em.getTransaction().commit();
         return role;
     }
 
@@ -72,7 +75,9 @@ public class RoleDaoImpl implements IRoleDao {
 
     @Override
     public boolean remove(Role role) {
+        em.getTransaction().begin();
         em.remove(role);
+        em.getTransaction().commit();
         return true;
     }
 }

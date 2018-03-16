@@ -3,6 +3,8 @@ package DAO;
 import DAO.Impl.ProfileDaoImpl;
 import DAO.Impl.UserDaoImpl;
 import DAO.Mock.ProfileDaoMock;
+import DAO.TestImpl.ProfileDaoImpl2;
+import DAO.TestImpl.UserDaoImpl2;
 import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
@@ -27,8 +29,8 @@ public class UserDaoTest {
 
     @BeforeClass
     public static void Init() {
-        userDao = new UserDaoImpl("KwetterPU_test");
-        profileDao = new ProfileDaoImpl("KwetterPU_test");
+        userDao = new UserDaoImpl2("KwetterPU_test");
+        profileDao = new ProfileDaoImpl2("KwetterPU_test");
     }
 
     @AfterClass

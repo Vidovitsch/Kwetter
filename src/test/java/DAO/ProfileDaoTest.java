@@ -1,6 +1,8 @@
 package DAO;
 
 import DAO.Impl.ProfileDaoImpl;
+import DAO.TestImpl.ProfileDaoImpl2;
+import DAO.TestImpl.UserDaoImpl2;
 import DaoInterfaces.*;
 import Domain.Profile;
 import Domain.User;
@@ -22,8 +24,8 @@ public class ProfileDaoTest {
 
     @BeforeClass
     public static void Init() {
-        userDao = new UserDaoImpl("KwetterPU_test");
-        profileDao = new ProfileDaoImpl("KwetterPU_test");
+        userDao = new UserDaoImpl2("KwetterPU_test");
+        profileDao = new ProfileDaoImpl2("KwetterPU_test");
     }
 
     @AfterClass

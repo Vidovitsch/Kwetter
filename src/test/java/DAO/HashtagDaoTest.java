@@ -2,6 +2,7 @@ package DAO;
 
 
 import DAO.Impl.HastagDaoImpl;
+import DAO.TestImpl.HastagDaoImpl2;
 import DaoInterfaces.*;
 import Domain.Hashtag;
 import Util.MockFactory;
@@ -20,7 +21,7 @@ public class HashtagDaoTest {
 
     @BeforeClass
     public static void Init() {
-        hashtagDao = new HastagDaoImpl("KwetterPU_test");
+        hashtagDao = new HastagDaoImpl2("KwetterPU_test");
     }
 
     @AfterClass

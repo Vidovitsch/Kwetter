@@ -1,6 +1,7 @@
 package DAO;
 
 import DAO.Impl.RoleDaoImpl;
+import DAO.TestImpl.RoleDaoImpl2;
 import DaoInterfaces.*;
 import Domain.Role;
 import Util.MockFactory;
@@ -18,7 +19,7 @@ public class RoleDaoTest {
 
     @BeforeClass
     public static void Init() {
-        roleDao = new RoleDaoImpl("KwetterPU_test");
+        roleDao = new RoleDaoImpl2("KwetterPU_test");
     }
 
     @AfterClass

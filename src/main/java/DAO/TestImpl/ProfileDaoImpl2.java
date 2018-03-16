@@ -1,8 +1,9 @@
-package DAO.Impl;
+package DAO.TestImpl;
 
 import DaoInterfaces.IProfileDao;
 import Domain.Profile;
 import Domain.User;
+import Qualifier.Testing;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
@@ -14,17 +15,17 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-@Default
+@Testing
 @Stateless
-public class ProfileDaoImpl implements IProfileDao {
+public class ProfileDaoImpl2 implements IProfileDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public ProfileDaoImpl() {
+    public ProfileDaoImpl2() {
     }
 
-    public ProfileDaoImpl(String persistencyUnit) {
+    public ProfileDaoImpl2(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
@@ -55,7 +56,9 @@ public class ProfileDaoImpl implements IProfileDao {
 
     @Override
     public Profile create(Profile profile) {
+        em.getTransaction().begin();
         em.persist(profile);
+        em.getTransaction().commit();
         return profile;
     }
 
@@ -76,7 +79,9 @@ public class ProfileDaoImpl implements IProfileDao {
 
     @Override
     public boolean remove(Profile profile) {
+        em.getTransaction().begin();
         em.remove(profile);
+        em.getTransaction().commit();
         return true;
     }
 }

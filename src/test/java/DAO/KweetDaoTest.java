@@ -2,6 +2,8 @@ package DAO;
 
 import DAO.Impl.KweetDaoImpl;
 import DAO.Impl.UserDaoImpl;
+import DAO.TestImpl.KweetDaoImpl2;
+import DAO.TestImpl.UserDaoImpl2;
 import DaoInterfaces.*;
 import Domain.Kweet;
 import Domain.User;
@@ -20,8 +22,8 @@ public class KweetDaoTest {
 
     @BeforeClass
     public static void Init() {
-        kweetDao = new KweetDaoImpl("KwetterPU_test");
-        userDao = new UserDaoImpl("KwetterPU_test");
+        kweetDao = new KweetDaoImpl2("KwetterPU_test");
+        userDao = new UserDaoImpl2("KwetterPU_test");
     }
 
     @AfterClass
