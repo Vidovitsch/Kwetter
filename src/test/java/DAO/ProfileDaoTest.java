@@ -1,12 +1,10 @@
 package DAO;
 
-import DAO.Impl.ProfileDaoImpl;
 import DAO.TestImpl.ProfileDaoImpl2;
 import DAO.TestImpl.UserDaoImpl2;
 import DaoInterfaces.*;
 import Domain.Profile;
 import Domain.User;
-import Qualifier.Production;
 import Util.MockFactory;
 import Util.MockService;
 import org.junit.AfterClass;

@@ -1,6 +1,8 @@
 package Service;
 
+import DAO.Mock.ProfileDaoMock;
 import DAO.Mock.UserDaoMock;
+import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
@@ -23,6 +25,7 @@ public class UserServiceTest {
 
         service = new UserService();
         service.setUserDao(userDao);
+        service.setProfileDao(new ProfileDaoMock());
     }
 
     @After

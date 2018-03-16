@@ -2,10 +2,8 @@ package DAO.TestImpl;
 
 import DaoInterfaces.IRoleDao;
 import Domain.Role;
-import Qualifier.Testing;
 
 import javax.ejb.Stateless;
-import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -14,7 +12,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-@Testing
 @Stateless
 public class RoleDaoImpl2 implements IRoleDao {
 

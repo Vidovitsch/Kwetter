@@ -23,6 +23,14 @@ public class ProfileService {
     @Inject
     private IProfileDao profileDao;
 
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setProfileDao(IProfileDao profileDao) {
+        this.profileDao = profileDao;
+    }
+
     /**
      * Sets a profile for a user by username
      * If the user has already a profile, his/her current profile will get updated.
@@ -34,10 +42,9 @@ public class ProfileService {
      */
     public void setProfile(String username, ProfileData profileData) throws InvalidProfileException {
         User owner = userDao.findByUsername(username);
-        if (profileDao.findByUser(owner) != null)
         if (profileData.getName() == null || profileData.getName().isEmpty()) {
             throw new InvalidProfileException("Profile name can't be empty");
-        } else if (profileData.getWebsite() != null && !validateUrl(profileData.getWebsite())) {
+        } else if (profileData.getWebsite() == null || !validateUrl(profileData.getWebsite())) {
             throw new InvalidProfileException("The given web address is invalid");
         }
 
@@ -52,8 +59,11 @@ public class ProfileService {
      * @return the profile of the user in view format
      */
     public ProfileData getProfileData(String username) {
-        Profile p = profileDao.findByUser(userDao.findByUsername(username));
-        return new ProfileData(p.getName(), p.getLocation(), p.getwebsite(), p.getBiography());
+        Profile profile = profileDao.findByUser(userDao.findByUsername(username));
+        if (profile != null) {
+            return new ProfileData(profile.getName(), profile.getLocation(), profile.getwebsite(), profile.getBiography());
+        }
+        return null;
     }
 
     /**
@@ -67,7 +77,7 @@ public class ProfileService {
     }
 
     private boolean validateUrl(String url) {
-        // Default schemes = "http", "https", "ftp"
+        // Default schemes = "http", "https"
         return new UrlValidator(new String[] { "http", "https" }).isValid(url);
     }
 
@@ -80,13 +90,30 @@ public class ProfileService {
     }
 
     private void createOrUpdateProfile(User owner, ProfileData profileData) {
-        if (profileDao.findByUser(owner) != null) {
-            Profile updatedProfile = convertToProfile(owner, profileData);
-            profileDao.update(updatedProfile);
+        Profile profile = profileDao.findByUser(owner);
+        if (profile != null) {
+            profileDao.update(convertToUpdatedProfile(profile, profileData));
         } else {
             Profile newProfile = convertToProfile(owner, profileData);
             profileDao.create(newProfile);
         }
+    }
+
+    private Profile convertToUpdatedProfile(Profile profile, ProfileData profileData) {
+        if (!profile.getName().equals(profileData.getName())) {
+            profile.setName(profileData.getName());
+        }
+        if (!profile.getBiography().equals(profileData.getBio())) {
+            profile.setBiography(profileData.getBio());
+        }
+        if (!profile.getLocation().equals(profileData.getLocation())) {
+            profile.setLocation(profileData.getLocation());
+        }
+        if (!profile.getwebsite().equals(profileData.getWebsite())) {
+            profile.setwebsite(profileData.getWebsite());
+        }
+
+        return profile;
     }
 
     private Profile convertToProfile(User owner, ProfileData profileData) {

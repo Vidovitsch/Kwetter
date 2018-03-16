@@ -26,6 +26,8 @@ public class UserService {
         this.userDao = userDao;
     }
 
+    public void setProfileDao(IProfileDao profileDao) { this.profileDao = profileDao; }
+
     /**
      * Adds a user(follwoing) that this user will follow
      *
