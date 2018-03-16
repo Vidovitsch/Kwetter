@@ -7,10 +7,7 @@ import Domain.User;
 import Util.MockFactory;
 import Util.MockService;
 import ViewModels.OtherUserView;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.List;
 
@@ -28,9 +25,9 @@ public class UserServiceTest {
         service.setUserDao(userDao);
     }
 
-    @AfterClass
-    public static void tearDown() {
-        MockService.resetMockData();
+    @After
+    public void tearDown() {
+        MockService.renewMockData();
     }
 
     @Test

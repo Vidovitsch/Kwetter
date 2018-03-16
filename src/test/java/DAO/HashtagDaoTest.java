@@ -2,10 +2,8 @@ package DAO;
 
 
 import DAO.Impl.HastagDaoImpl;
-import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Hashtag;
-import Qualifier.Mock;
 import Util.MockFactory;
 import Util.MockService;
 import org.junit.AfterClass;
@@ -27,7 +25,7 @@ public class HashtagDaoTest {
 
     @AfterClass
     public static void tearDown() {
-        MockService.resetMockData();
+        MockService.renewMockData();
     }
 
     @Test

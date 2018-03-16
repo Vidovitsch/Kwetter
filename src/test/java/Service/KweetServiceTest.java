@@ -37,9 +37,9 @@ public class KweetServiceTest {
         service.setHashtagDao(hashtagDao);
     }
 
-    @AfterClass
-    public static void tearDown() {
-        MockService.resetMockData();
+    @After
+    public void tearDown() {
+        MockService.renewMockData();
     }
 
     @Test
