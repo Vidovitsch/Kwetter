@@ -19,7 +19,7 @@ import java.util.List;
 @Default
 @Stateless
 public class ProfileDaoImpl implements IProfileDao {
-    private EntityManager em;
+    private static EntityManager em;
 
     public ProfileDaoImpl() {
         this.em = new EntityManagerProvider().GetEntityManager();

@@ -1,9 +1,7 @@
 package DAO;
 
+import DAO.Impl.KweetDaoImpl;
 import DAO.Impl.UserDaoImpl;
-import DAO.Impl2.KweetDaoImpl2;
-import DAO.Impl2.UserDaoImpl2;
-import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Kweet;
 import Domain.User;
@@ -18,10 +16,12 @@ import java.util.*;
 public class KweetDaoTest {
 
     private static IKweetDao kweetDao;
+    private static IUserDao userDao;
 
     @BeforeClass
     public static void Init() {
-        kweetDao = new KweetDaoImpl2();
+        kweetDao = new KweetDaoImpl();
+        userDao = new UserDaoImpl();
     }
 
     @AfterClass
@@ -37,7 +37,7 @@ public class KweetDaoTest {
         // Insert new kweet
         Kweet mockKweet = (Kweet)MockFactory.createMocks(Kweet.class, 1).get(0);
         User user = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
-        new UserDaoImpl2().create(user);
+        userDao.create(user);
         mockKweet.setSender(user);
         mockKweet = kweetDao.create(mockKweet);
 
@@ -53,7 +53,7 @@ public class KweetDaoTest {
         // Insert new kweet
         Kweet mockKweet = (Kweet)MockFactory.createMocks(Kweet.class, 1).get(0);
         User user = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
-        new UserDaoImpl2().create(user);
+        userDao.create(user);
         mockKweet.setSender(user);
         mockKweet = kweetDao.create(mockKweet);
 
@@ -68,7 +68,7 @@ public class KweetDaoTest {
         // Insert new kweets
         List<Kweet> kweets = (List<Kweet>)MockFactory.createMocks(Kweet.class, 2);
         User user = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
-        new UserDaoImpl2().create(user);
+        userDao.create(user);
         kweets.get(0).setSender(user);
         kweets.get(1).setSender(user);
         kweets = kweetDao.create(kweets);
@@ -84,7 +84,7 @@ public class KweetDaoTest {
         // Insert new hashtag
         Kweet mockKweet = (Kweet)MockFactory.createMocks(Kweet.class, 1).get(0);
         User user = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
-        new UserDaoImpl2().create(user);
+        userDao.create(user);
         mockKweet.setSender(user);
         kweetDao.create(mockKweet);
 
@@ -98,7 +98,7 @@ public class KweetDaoTest {
         // Insert new hashtag
         List<Kweet> mockKweets = (List<Kweet>)MockFactory.createMocks(Kweet.class, 3);
         for(Kweet k : mockKweets){
-            k.setSender(new UserDaoImpl2().findById((long)1));
+            k.setSender(userDao.findById((long)1));
         }
         kweetDao.create(mockKweets);
 
@@ -111,7 +111,7 @@ public class KweetDaoTest {
         // Insert new kweet
         Kweet mockKweet = (Kweet)MockFactory.createMocks(Kweet.class, 1).get(0);
         User user = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
-        new UserDaoImpl2().create(user);
+        userDao.create(user);
         mockKweet.setSender(user);
         kweetDao.create(mockKweet);
 
@@ -131,7 +131,7 @@ public class KweetDaoTest {
         // Insert new hashtag
         Kweet mockKweet = (Kweet)MockFactory.createMocks(Kweet.class, 1).get(0);
         User user = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
-        new UserDaoImpl2().create(user);
+        userDao.create(user);
         mockKweet.setSender(user);
         kweetDao.create(mockKweet);
 

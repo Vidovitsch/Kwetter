@@ -1,7 +1,6 @@
 package DAO;
 
-import DAO.Impl2.UserDaoImpl2;
-import DAO.Mock.UserDaoMock;
+import DAO.Impl.UserDaoImpl;
 import DaoInterfaces.IUserDao;
 import Domain.Profile;
 import Domain.User;
@@ -22,7 +21,7 @@ public class UserDaoTest {
 
     @BeforeClass
     public static void Init() {
-        userDao = new UserDaoImpl2();
+        userDao = new UserDaoImpl();
     }
 
     @AfterClass

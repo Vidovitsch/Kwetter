@@ -18,7 +18,7 @@ import java.util.List;
 @Stateless
 public class RoleDaoImpl implements IRoleDao {
 
-    private EntityManager em;
+    private static EntityManager em;
 
     public RoleDaoImpl() {
         this.em = new EntityManagerProvider().GetEntityManager();

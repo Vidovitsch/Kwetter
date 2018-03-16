@@ -1,16 +1,28 @@
 package DAO.EntityManager;
 
 import Qualifier.Testing;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+@Default
 public class EntityManagerProvider {
 
-    @Inject @Testing
-    private IEntityManagerImplementation emImplementation;
+    @Inject
+    private @Testing
+    IEntityManagerImplementation emImplementation;
 
-    public EntityManager GetEntityManager(){
-        return emImplementation.GetEntityManger();
+    private EntityManager em;
+
+    @PostConstruct
+    void init() {
+        this.em = emImplementation.GetEntityManger();
+    }
+
+    public EntityManager GetEntityManager() {
+        return em;
     }
 
 }

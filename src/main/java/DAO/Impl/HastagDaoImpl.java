@@ -4,8 +4,10 @@ import DAO.EntityManager.EntityManagerProvider;
 import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
+import javax.inject.Inject;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
@@ -17,7 +19,8 @@ public class HastagDaoImpl implements IHashtagDao {
 
     private static EntityManager em;
 
-    public HastagDaoImpl() {
+    @PostConstruct
+    void init(){
         this.em = new EntityManagerProvider().GetEntityManager();
     }
 

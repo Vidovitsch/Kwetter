@@ -17,7 +17,7 @@ import java.util.List;
 @Stateless
 public class UserDaoImpl implements IUserDao {
 
-    private EntityManager em;
+    private static EntityManager em;
 
     public UserDaoImpl() {
         this.em = new EntityManagerProvider().GetEntityManager();

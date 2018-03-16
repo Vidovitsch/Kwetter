@@ -1,6 +1,6 @@
 package DAO;
 
-import DAO.Impl2.ProfileDaoImpl2;
+import DAO.Impl.ProfileDaoImpl;
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Profile;
@@ -11,6 +11,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class ProfileDaoTest {
 
     @BeforeClass
     public static void Init() {
-        profileDao = new ProfileDaoImpl2();
+        profileDao = new ProfileDaoImpl();
     }
 
     @AfterClass
@@ -40,13 +41,14 @@ public class ProfileDaoTest {
         // Check status after
         List<Profile> profilesAfter = profileDao.findAll();
         Assert.assertEquals("Returns list with size + 1", profilesBefore.size() + 1, profilesAfter.size());
-        Assert.assertTrue("New Profile has been added", profilesAfter.contains(mockProfile));;
+        Assert.assertTrue("New Profile has been added", profilesAfter.contains(mockProfile));
+        ;
     }
 
     @Test
     public void findByIdTest() {
         // Insert new profile
-        Profile mockProfile =  profileDao.create(
+        Profile mockProfile = profileDao.create(
                 (Profile) MockFactory.createMocks(Profile.class, 1).get(0));
 
         // Check fetched profile

@@ -1,7 +1,7 @@
 package DAO;
 
+
 import DAO.Impl.HastagDaoImpl;
-import DAO.Impl2.HastagDaoImpl2;
 import DAO.Mock.*;
 import DaoInterfaces.*;
 import Domain.Hashtag;
@@ -18,12 +18,11 @@ import java.util.*;
 
 public class HashtagDaoTest {
 
-    @Mock
     private static IHashtagDao hashtagDao;
 
     @BeforeClass
     public static void Init() {
-        hashtagDao = new HastagDaoImpl2();
+        hashtagDao = new HastagDaoImpl();
     }
 
     @AfterClass

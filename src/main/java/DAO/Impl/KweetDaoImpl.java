@@ -20,7 +20,7 @@ import java.util.List;
 @Stateless
 public class KweetDaoImpl implements IKweetDao {
 
-    private EntityManager em;
+    private static EntityManager em;
 
     public KweetDaoImpl() {
         this.em = new EntityManagerProvider().GetEntityManager();
