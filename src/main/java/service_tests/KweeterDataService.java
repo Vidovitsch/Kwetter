@@ -1,14 +1,14 @@
-package service;
+package service_tests;
 
 import comparators.KweetComparator;
-import dao.interfaces.IKweetDao;
-import dao.interfaces.IProfileDao;
-import dao.interfaces.IUserDao;
+import dao_tests.interfaces.IKweetDao;
+import dao_tests.interfaces.IProfileDao;
+import dao_tests.interfaces.IUserDao;
 import domain.Kweet;
 import domain.Profile;
 import domain.User;
-import view_models.UserImageView;
-import view_models.KweeterData;
+import viewmodels.UserImageView;
+import viewmodels.KweeterData;
 import exceptions.*;
 
 import javax.ejb.Stateless;

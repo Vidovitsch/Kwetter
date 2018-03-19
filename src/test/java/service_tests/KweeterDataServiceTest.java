@@ -1,17 +1,17 @@
-package service;
+package service_tests;
 
 import exceptions.*;
-import dao.mocks.KweetDaoMock;
-import dao.mocks.ProfileDaoMock;
-import dao.mocks.UserDaoMock;
-import dao.interfaces.IKweetDao;
-import dao.interfaces.IProfileDao;
-import dao.interfaces.IUserDao;
+import dao_tests.mocks.KweetDaoMock;
+import dao_tests.mocks.ProfileDaoMock;
+import dao_tests.mocks.UserDaoMock;
+import dao_tests.interfaces.IKweetDao;
+import dao_tests.interfaces.IProfileDao;
+import dao_tests.interfaces.IUserDao;
 import domain.Kweet;
 import domain.User;
 import util.MockFactory;
 import util.MockService;
-import view_models.KweeterData;
+import viewmodels.KweeterData;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
