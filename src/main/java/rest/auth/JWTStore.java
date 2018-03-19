@@ -20,12 +20,7 @@ import java.security.SecureRandom;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import javax.enterprise.inject.Default;
 import javax.transaction.SystemException;
 
@@ -125,7 +120,8 @@ public class JWTStore {
     private void SetKey() throws NoSuchAlgorithmException {
         keyGenerator = KeyGenerator.getInstance("AES");
         SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
-        secureRandom.setSeed("kwetter".getBytes());
+        UUID uid = UUID.randomUUID();
+        secureRandom.setSeed(uid.toString().getBytes());
         keyGenerator.init(256, secureRandom);
         secretKey = keyGenerator.generateKey();
     }
