@@ -6,19 +6,19 @@
     <persistence-unit name="KwetterPU">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>jdbc/Kwetter</jta-data-source>
-        <class>Domain.User</class>
-        <class>Domain.Profile</class>
-        <class>Domain.Hashtag</class>
-        <class>Domain.Role</class>
-        <class>Domain.Kweet</class>
+        <class>domain.User</class>
+        <class>domain.Profile</class>
+        <class>domain.Hashtag</class>
+        <class>domain.Role</class>
+        <class>domain.Kweet</class>
     </persistence-unit>
 
     <persistence-unit name="KwetterPU_test">
-        <class>Domain.User</class>
-        <class>Domain.Profile</class>
-        <class>Domain.Hashtag</class>
-        <class>Domain.Role</class>
-        <class>Domain.Kweet</class>
+        <class>domain.User</class>
+        <class>domain.Profile</class>
+        <class>domain.Hashtag</class>
+        <class>domain.Role</class>
+        <class>domain.Kweet</class>
         <properties>
             <property name="javax.persistence.jdbc.password" value="SOPSOP164"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
