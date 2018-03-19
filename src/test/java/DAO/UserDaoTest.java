@@ -1,13 +1,8 @@
 package DAO;
 
-import DAO.Impl.ProfileDaoImpl;
 import DAO.Impl.UserDaoImpl;
-import DAO.Mock.ProfileDaoMock;
-import DAO.TestImpl.ProfileDaoImpl2;
 import DAO.TestImpl.UserDaoImpl2;
-import DaoInterfaces.IProfileDao;
 import DaoInterfaces.IUserDao;
-import Domain.Profile;
 import Domain.User;
 import Util.MockFactory;
 import Util.MockService;
@@ -15,9 +10,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 public class UserDaoTest {
@@ -25,12 +18,9 @@ public class UserDaoTest {
 
     private static IUserDao userDao;
 
-    private static IProfileDao profileDao;
-
     @BeforeClass
     public static void Init() {
         userDao = new UserDaoImpl2("KwetterPU_test");
-        profileDao = new ProfileDaoImpl2("KwetterPU_test");
     }
 
     @AfterClass

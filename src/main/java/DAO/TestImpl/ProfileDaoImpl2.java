@@ -5,6 +5,7 @@ import Domain.Profile;
 import Domain.User;
 
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
+@Alternative
 public class ProfileDaoImpl2 implements IProfileDao {
 
     @PersistenceContext(name = "KwetterPU")

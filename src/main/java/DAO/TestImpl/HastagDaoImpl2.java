@@ -4,6 +4,7 @@ import DaoInterfaces.IHashtagDao;
 import Domain.Hashtag;
 
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
+@Alternative
 public class HastagDaoImpl2 implements IHashtagDao {
 
     @PersistenceContext(name = "KwetterPU")

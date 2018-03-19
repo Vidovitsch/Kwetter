@@ -5,6 +5,7 @@ import Domain.Kweet;
 import Domain.User;
 
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
+@Alternative
 public class KweetDaoImpl2 implements IKweetDao {
 
     @PersistenceContext(name = "KwetterPU")

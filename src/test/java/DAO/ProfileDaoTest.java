@@ -1,5 +1,7 @@
 package DAO;
 
+import DAO.Impl.ProfileDaoImpl;
+import DAO.Impl.UserDaoImpl;
 import DAO.TestImpl.ProfileDaoImpl2;
 import DAO.TestImpl.UserDaoImpl2;
 import DaoInterfaces.*;
