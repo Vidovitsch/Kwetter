@@ -1,6 +1,6 @@
-package dao_tests.implementations_test;
+package dao.implementations_test;
 
-import dao_tests.interfaces.IRoleDao;
+import dao.interfaces.IRoleDao;
 import domain.Role;
 
 import javax.ejb.Stateless;

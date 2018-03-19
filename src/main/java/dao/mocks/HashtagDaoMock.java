@@ -1,6 +1,6 @@
-package dao_tests.mocks;
+package dao.mocks;
 
-import dao_tests.interfaces.IHashtagDao;
+import dao.interfaces.IHashtagDao;
 import domain.*;
 import qualifier.Mock;
 import util.MockFactory;

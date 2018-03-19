@@ -1,11 +1,11 @@
 package service_tests;
 
-import dao_tests.mocks.KweetDaoMock;
-import dao_tests.mocks.ProfileDaoMock;
-import dao_tests.mocks.UserDaoMock;
-import dao_tests.interfaces.IKweetDao;
-import dao_tests.interfaces.IProfileDao;
-import dao_tests.interfaces.IUserDao;
+import dao.mocks.KweetDaoMock;
+import dao.mocks.ProfileDaoMock;
+import dao.mocks.UserDaoMock;
+import dao.interfaces.IKweetDao;
+import dao.interfaces.IProfileDao;
+import dao.interfaces.IUserDao;
 import domain.Kweet;
 import domain.User;
 import util.MockFactory;

@@ -1,7 +1,7 @@
 package association_tests;
 
-import dao_tests.mocks.*;
-import dao_tests.interfaces.*;
+import dao.mocks.*;
+import dao.interfaces.*;
 import domain.*;
 import util.MockService;
 import org.junit.AfterClass;

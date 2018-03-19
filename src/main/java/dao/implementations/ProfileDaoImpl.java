@@ -1,11 +1,11 @@
-package dao_tests.implementations_test;
+package dao.implementations;
 
-import dao_tests.interfaces.IProfileDao;
+import dao.interfaces.IProfileDao;
 import domain.Profile;
 import domain.User;
 
 import javax.ejb.Stateless;
-import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -14,17 +14,17 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+@Default
 @Stateless
-@Alternative
-public class ProfileDaoImpl2 implements IProfileDao {
+public class ProfileDaoImpl implements IProfileDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public ProfileDaoImpl2() {
+    public ProfileDaoImpl() {
     }
 
-    public ProfileDaoImpl2(String persistencyUnit) {
+    public ProfileDaoImpl(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
@@ -55,9 +55,7 @@ public class ProfileDaoImpl2 implements IProfileDao {
 
     @Override
     public Profile create(Profile profile) {
-        em.getTransaction().begin();
         em.persist(profile);
-        em.getTransaction().commit();
         return profile;
     }
 
@@ -78,9 +76,7 @@ public class ProfileDaoImpl2 implements IProfileDao {
 
     @Override
     public boolean remove(Profile profile) {
-        em.getTransaction().begin();
         em.remove(profile);
-        em.getTransaction().commit();
         return true;
     }
 }

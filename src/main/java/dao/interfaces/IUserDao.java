@@ -1,4 +1,4 @@
-package dao_tests.interfaces;
+package dao.interfaces;
 
 import domain.User;
 import java.util.List;

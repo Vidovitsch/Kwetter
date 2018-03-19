@@ -1,4 +1,4 @@
-package dao_tests.interfaces;
+package dao.interfaces;
 
 import domain.Profile;
 import domain.User;

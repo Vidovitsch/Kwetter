@@ -1,8 +1,8 @@
-package dao_tests;
+package dao_test;
 
-import dao_tests.implementations_test.ProfileDaoImpl2;
-import dao_tests.implementations_test.UserDaoImpl2;
-import dao_tests.interfaces.*;
+import dao.implementations_test.ProfileDaoImpl2;
+import dao.implementations_test.UserDaoImpl2;
+import dao.interfaces.*;
 import domain.Profile;
 import domain.User;
 import util.MockFactory;

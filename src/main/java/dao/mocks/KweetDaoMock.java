@@ -1,6 +1,6 @@
-package dao_tests.mocks;
+package dao.mocks;
 
-import dao_tests.interfaces.IKweetDao;
+import dao.interfaces.IKweetDao;
 import domain.*;
 import qualifier.Mock;
 import util.MockFactory;

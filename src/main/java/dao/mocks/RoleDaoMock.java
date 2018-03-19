@@ -1,6 +1,6 @@
-package dao_tests.mocks;
+package dao.mocks;
 
-import dao_tests.interfaces.IRoleDao;
+import dao.interfaces.IRoleDao;
 import qualifier.Mock;
 import util.MockFactory;
 import domain.Role;

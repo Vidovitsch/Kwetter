@@ -1,8 +1,8 @@
 package service_tests;
 
-import dao_tests.mocks.ProfileDaoMock;
-import dao_tests.mocks.UserDaoMock;
-import dao_tests.interfaces.IUserDao;
+import dao.mocks.ProfileDaoMock;
+import dao.mocks.UserDaoMock;
+import dao.interfaces.IUserDao;
 import domain.Profile;
 import domain.User;
 import util.MockFactory;

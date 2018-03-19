@@ -1,7 +1,7 @@
 package service_tests;
 
 import comparators.TrendComparator;
-import dao_tests.interfaces.IHashtagDao;
+import dao.interfaces.IHashtagDao;
 import domain.Hashtag;
 
 import javax.ejb.Stateless;

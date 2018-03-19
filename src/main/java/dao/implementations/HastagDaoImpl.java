@@ -1,28 +1,25 @@
-package dao_tests.implementations_test;
+package dao.implementations;
 
-import dao_tests.interfaces.IHashtagDao;
+import dao.interfaces.IHashtagDao;
 import domain.Hashtag;
 
 import javax.ejb.Stateless;
-import javax.enterprise.inject.Alternative;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.enterprise.inject.Default;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+@Default
 @Stateless
-@Alternative
-public class HastagDaoImpl2 implements IHashtagDao {
+public class HastagDaoImpl implements IHashtagDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public HastagDaoImpl2() { }
+    public HastagDaoImpl() { }
 
-    public HastagDaoImpl2(String persistencyUnit) {
+    public HastagDaoImpl(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
@@ -50,9 +47,7 @@ public class HastagDaoImpl2 implements IHashtagDao {
 
     @Override
     public Hashtag create(Hashtag hashtag) {
-        em.getTransaction().begin();
         em.persist(hashtag);
-        em.getTransaction().commit();
         return hashtag;
     }
 
@@ -73,9 +68,7 @@ public class HastagDaoImpl2 implements IHashtagDao {
 
     @Override
     public boolean remove(Hashtag hashtag) {
-        em.getTransaction().begin();
         em.remove(hashtag);
-        em.getTransaction().commit();
 
         return true;
     }

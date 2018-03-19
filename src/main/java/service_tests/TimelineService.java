@@ -1,7 +1,7 @@
 package service_tests;
 
-import dao_tests.interfaces.IKweetDao;
-import dao_tests.interfaces.IUserDao;
+import dao.interfaces.IKweetDao;
+import dao.interfaces.IUserDao;
 import domain.Kweet;
 import domain.User;
 import viewmodels.TimelineItem;

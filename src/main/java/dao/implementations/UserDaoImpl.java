@@ -1,6 +1,6 @@
-package dao_tests.implementations;
+package dao.implementations;
 
-import dao_tests.interfaces.IUserDao;
+import dao.interfaces.IUserDao;
 import domain.User;
 
 import javax.ejb.Stateless;
