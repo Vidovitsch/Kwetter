@@ -24,6 +24,10 @@ public class KweetDaoImpl implements IKweetDao {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Kweet> findAll() {

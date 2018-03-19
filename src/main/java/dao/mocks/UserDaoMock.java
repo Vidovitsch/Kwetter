@@ -7,6 +7,7 @@ import domain.User;
 import util.MockService;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Mock
@@ -17,6 +18,11 @@ public class UserDaoMock implements IUserDao {
 
     public UserDaoMock() {
         mockUsers = MockService.getInstance().getUsers();
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return null;
     }
 
     @Override

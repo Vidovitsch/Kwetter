@@ -7,6 +7,7 @@ import domain.Role;
 import util.MockService;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Mock
@@ -17,6 +18,11 @@ public class RoleDaoMock implements IRoleDao {
 
     public RoleDaoMock() {
         mockRoles = MockService.getInstance().getRoles();
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return null;
     }
 
     @Override

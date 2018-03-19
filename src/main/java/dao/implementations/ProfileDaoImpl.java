@@ -28,6 +28,10 @@ public class ProfileDaoImpl implements IProfileDao {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Profile> findAll() {

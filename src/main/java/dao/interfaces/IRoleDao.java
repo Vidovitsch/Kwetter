@@ -1,9 +1,13 @@
 package dao.interfaces;
 
 import domain.Role;
+
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface IRoleDao {
+
+    EntityManager getEntityManager();
 
     /**
      * Find all persisted roles

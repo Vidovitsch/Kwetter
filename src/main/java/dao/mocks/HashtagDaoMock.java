@@ -7,6 +7,7 @@ import util.MockFactory;
 import util.MockService;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.*;
 
 @Mock
@@ -17,6 +18,11 @@ public class HashtagDaoMock implements IHashtagDao {
 
     public HashtagDaoMock() {
         mockHashtags = MockService.getInstance().getHashtags();
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return null;
     }
 
     @Override

@@ -1,9 +1,13 @@
 package dao.interfaces;
 
 import domain.Hashtag;
+
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface IHashtagDao {
+
+    EntityManager getEntityManager();
 
     /**
      * Find all persisted hashtags

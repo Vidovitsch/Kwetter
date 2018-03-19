@@ -8,6 +8,7 @@ import domain.User;
 import util.MockService;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Mock
@@ -18,6 +19,11 @@ public class ProfileDaoMock implements IProfileDao {
 
     public ProfileDaoMock() {
         mockProfiles = MockService.getInstance().getProfiles();
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return null;
     }
 
     @Override

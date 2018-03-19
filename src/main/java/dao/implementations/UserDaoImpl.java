@@ -26,6 +26,10 @@ public class UserDaoImpl implements IUserDao {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<User> findAll() {
