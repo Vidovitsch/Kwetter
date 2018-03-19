@@ -30,16 +30,16 @@ public class KweeterDataService {
     @Inject
     private IProfileDao profileDao;
 
-    public KweeterData getKweeterData(Long userId) throws UserNotFoundException {
-        return getKweeterData(userDao.findById(userId).getUsername());
-    }
-
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
     }
 
     public void setKweetDao(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
+    }
+
+    public void setProfileDao(IProfileDao profileDao) {
+        this.profileDao = profileDao;
     }
 
     /**
@@ -52,9 +52,7 @@ public class KweeterDataService {
      */
     public KweeterData getKweeterData(String username) throws UserNotFoundException {
         User user = userDao.findByUsername(username);
-        if (user == null) {
-            throw new UserNotFoundException();
-        } else {
+        if (user != null) {
             KweeterData data = new KweeterData();
 
             setKweetData(data, username);
@@ -65,6 +63,8 @@ public class KweeterDataService {
 
             return data;
         }
+
+        throw new UserNotFoundException();
     }
 
     private void setKweetData(KweeterData data, String username) {
