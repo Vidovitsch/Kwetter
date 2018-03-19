@@ -26,6 +26,7 @@ public class UserDaoImpl implements IUserDao {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
     }
 
+    @Override
     public EntityManager getEntityManager() {
         return em;
     }
