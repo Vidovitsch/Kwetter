@@ -97,6 +97,9 @@ public class KweetDaoTest {
     public void insertKweetsTest() {
         // Insert new hashtag
         List<Kweet> mockKweets = (List<Kweet>)MockFactory.createMocks(Kweet.class, 3);
+        User user = (User) MockFactory.createMocks(User.class, 1, "name", "Hank12").get(0);
+        userDao.create(user);
+
         for(Kweet k : mockKweets){
             k.setSender(userDao.findById((long)1));
         }
