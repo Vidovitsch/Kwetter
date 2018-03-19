@@ -1,12 +1,13 @@
-package dao_tests.mocks;
+package dao.mocks;
 
-import dao_tests.interfaces.IUserDao;
+import dao.interfaces.IUserDao;
 import qualifier.Mock;
 import util.MockFactory;
 import domain.User;
 import util.MockService;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Mock
@@ -17,6 +18,11 @@ public class UserDaoMock implements IUserDao {
 
     public UserDaoMock() {
         mockUsers = MockService.getInstance().getUsers();
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return null;
     }
 
     @Override

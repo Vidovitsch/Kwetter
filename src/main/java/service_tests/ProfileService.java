@@ -1,7 +1,7 @@
 package service_tests;
 
-import dao_tests.interfaces.IProfileDao;
-import dao_tests.interfaces.IUserDao;
+import dao.interfaces.IProfileDao;
+import dao.interfaces.IUserDao;
 import domain.Profile;
 import domain.User;
 import viewmodels.ProfileData;

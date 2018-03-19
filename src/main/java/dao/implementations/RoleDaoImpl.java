@@ -1,10 +1,10 @@
-package dao_tests.implementations_test;
+package dao.implementations;
 
-import dao_tests.interfaces.IRoleDao;
+import dao.interfaces.IRoleDao;
 import domain.Role;
 
 import javax.ejb.Stateless;
-import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -13,18 +13,22 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+@Default
 @Stateless
-@Alternative
-public class RoleDaoImpl2 implements IRoleDao {
+public class RoleDaoImpl implements IRoleDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public RoleDaoImpl2() {
+    public RoleDaoImpl() {
     }
 
-    public RoleDaoImpl2(String persistencyUnit) {
+    public RoleDaoImpl(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
+    }
+
+    public EntityManager getEntityManager() {
+        return em;
     }
 
     @Override
@@ -51,9 +55,7 @@ public class RoleDaoImpl2 implements IRoleDao {
 
     @Override
     public Role create(Role role) {
-        em.getTransaction().begin();
         em.persist(role);
-        em.getTransaction().commit();
         return role;
     }
 
@@ -74,9 +76,7 @@ public class RoleDaoImpl2 implements IRoleDao {
 
     @Override
     public boolean remove(Role role) {
-        em.getTransaction().begin();
         em.remove(role);
-        em.getTransaction().commit();
         return true;
     }
 }

@@ -1,11 +1,11 @@
 package service_tests;
 
-import dao_tests.mocks.KweetDaoMock;
-import dao_tests.mocks.ProfileDaoMock;
-import dao_tests.mocks.UserDaoMock;
-import dao_tests.interfaces.IKweetDao;
-import dao_tests.interfaces.IProfileDao;
-import dao_tests.interfaces.IUserDao;
+import dao.mocks.KweetDaoMock;
+import dao.mocks.ProfileDaoMock;
+import dao.mocks.UserDaoMock;
+import dao.interfaces.IKweetDao;
+import dao.interfaces.IProfileDao;
+import dao.interfaces.IUserDao;
 import domain.Kweet;
 import domain.User;
 import util.MockFactory;
@@ -68,10 +68,10 @@ public class TimelineServiceTest {
 
         // Asserts
         Assert.assertEquals("Timeline does not have a size of 4", 4, timeline.size());
-        Assert.assertEquals("This kweet isn't the most recent", timeline.get(0).kweetID, user.getFollowing().get(2).getKweets().get(0).getId());
-        Assert.assertEquals("This kweet isn't the second most recent", timeline.get(1).kweetID, user.getKweets().get(0).getId());
-        Assert.assertEquals("This kweet isn't the second most oldest", timeline.get(2).kweetID, user.getFollowing().get(1).getKweets().get(0).getId());
-        Assert.assertEquals("This kweet isn't the oldest", 4, timeline.get(3).kweetID, user.getFollowing().get(0).getKweets().get(0).getId());
+        Assert.assertEquals("This kweet isn't the most recent", timeline.get(0).getKweetId(), user.getFollowing().get(2).getKweets().get(0).getId());
+        Assert.assertEquals("This kweet isn't the second most recent", timeline.get(1).getKweetId(), user.getKweets().get(0).getId());
+        Assert.assertEquals("This kweet isn't the second most oldest", timeline.get(2).getKweetId(), user.getFollowing().get(1).getKweets().get(0).getId());
+        Assert.assertEquals("This kweet isn't the oldest", 4, timeline.get(3).getKweetId(), user.getFollowing().get(0).getKweets().get(0).getId());
     }
 
     @Test
@@ -101,10 +101,10 @@ public class TimelineServiceTest {
 
         // Asserts
         Assert.assertEquals("Timeline does not have a size of 4", 4, timeline.size());
-        Assert.assertEquals("This kweet isn't the most recent", timeline.get(0).kweetID, randomKweets.get(0).getId());
-        Assert.assertEquals("This kweet isn't the second most recent", timeline.get(1).kweetID, randomKweets.get(1).getId());
-        Assert.assertEquals("This kweet isn't the second most oldest", timeline.get(2).kweetID, randomKweets.get(2).getId());
-        Assert.assertEquals("This kweet isn't the oldest", timeline.get(3).kweetID, randomKweets.get(3).getId());
+        Assert.assertEquals("This kweet isn't the most recent", timeline.get(0).getKweetId(), randomKweets.get(0).getId());
+        Assert.assertEquals("This kweet isn't the second most recent", timeline.get(1).getKweetId(), randomKweets.get(1).getId());
+        Assert.assertEquals("This kweet isn't the second most oldest", timeline.get(2).getKweetId(), randomKweets.get(2).getId());
+        Assert.assertEquals("This kweet isn't the oldest", timeline.get(3).getKweetId(), randomKweets.get(3).getId());
     }
 
     @Test
@@ -130,10 +130,10 @@ public class TimelineServiceTest {
 
         // Asserts
         Assert.assertEquals("Timeline does not have a size of 4", 4, timeline.size());
-        Assert.assertEquals("This kweet isn't the most recent", timeline.get(0).kweetID, randomKweets.get(0).getId());
-        Assert.assertEquals("This kweet isn't the second most recent", timeline.get(1).kweetID, randomKweets.get(1).getId());
-        Assert.assertEquals("This kweet isn't the second most oldest", timeline.get(2).kweetID, randomKweets.get(2).getId());
-        Assert.assertEquals("This kweet isn't the oldest", timeline.get(3).kweetID, randomKweets.get(3).getId());
+        Assert.assertEquals("This kweet isn't the most recent", timeline.get(0).getKweetId(), randomKweets.get(0).getId());
+        Assert.assertEquals("This kweet isn't the second most recent", timeline.get(1).getKweetId(), randomKweets.get(1).getId());
+        Assert.assertEquals("This kweet isn't the second most oldest", timeline.get(2).getKweetId(), randomKweets.get(2).getId());
+        Assert.assertEquals("This kweet isn't the oldest", timeline.get(3).getKweetId(), randomKweets.get(3).getId());
     }
 
     @SuppressWarnings("unchecked")

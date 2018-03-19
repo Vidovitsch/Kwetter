@@ -1,6 +1,6 @@
-package dao_tests.implementations;
+package dao.implementations;
 
-import dao_tests.interfaces.IHashtagDao;
+import dao.interfaces.IHashtagDao;
 import domain.Hashtag;
 
 import javax.ejb.Stateless;
@@ -21,6 +21,10 @@ public class HastagDaoImpl implements IHashtagDao {
 
     public HastagDaoImpl(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
+    }
+
+    public EntityManager getEntityManager() {
+        return em;
     }
 
     @Override

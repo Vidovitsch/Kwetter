@@ -1,12 +1,13 @@
-package dao_tests.mocks;
+package dao.mocks;
 
-import dao_tests.interfaces.IKweetDao;
+import dao.interfaces.IKweetDao;
 import domain.*;
 import qualifier.Mock;
 import util.MockFactory;
 import util.MockService;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.*;
 
 @Mock
@@ -17,6 +18,11 @@ public class KweetDaoMock implements IKweetDao {
 
     public KweetDaoMock() {
         mockKweets = MockService.getInstance().getKweets();
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return null;
     }
 
     @Override

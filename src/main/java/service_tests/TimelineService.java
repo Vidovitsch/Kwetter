@@ -1,7 +1,7 @@
 package service_tests;
 
-import dao_tests.interfaces.IKweetDao;
-import dao_tests.interfaces.IUserDao;
+import dao.interfaces.IKweetDao;
+import dao.interfaces.IUserDao;
 import domain.Kweet;
 import domain.User;
 import viewmodels.TimelineItem;
@@ -108,13 +108,13 @@ public class TimelineService {
 
     private TimelineItem creatTimelineItem(Kweet kweet, boolean owner) {
         TimelineItem timelineItem = new TimelineItem();
-        timelineItem.kweetID = kweet.getId();
-        timelineItem.postDate = kweet.getPublicationDate();
-        timelineItem.message = kweet.getMessage();
-        timelineItem.username = kweet.getSender().getUsername();
-        timelineItem.ownKweet = owner;
-        timelineItem.hearts = getUserViewsByHearts(kweet);
-        timelineItem.mentions = getUserViewsByMentions(kweet);
+        timelineItem.setKweetId(kweet.getId());
+        timelineItem.setPostDate(kweet.getPublicationDate());
+        timelineItem.setMessage(kweet.getMessage());
+        timelineItem.setUsername(kweet.getSender().getUsername());
+        timelineItem.setOwnKweet(owner);
+        timelineItem.setHearts(getUserViewsByHearts(kweet));
+        timelineItem.setMentions(getUserViewsByMentions(kweet));
 
         return timelineItem;
     }

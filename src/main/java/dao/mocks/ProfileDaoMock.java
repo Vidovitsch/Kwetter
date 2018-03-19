@@ -1,6 +1,6 @@
-package dao_tests.mocks;
+package dao.mocks;
 
-import dao_tests.interfaces.IProfileDao;
+import dao.interfaces.IProfileDao;
 import qualifier.Mock;
 import util.MockFactory;
 import domain.Profile;
@@ -8,6 +8,7 @@ import domain.User;
 import util.MockService;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Mock
@@ -18,6 +19,11 @@ public class ProfileDaoMock implements IProfileDao {
 
     public ProfileDaoMock() {
         mockProfiles = MockService.getInstance().getProfiles();
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return null;
     }
 
     @Override

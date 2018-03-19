@@ -1,8 +1,8 @@
 package service_tests;
 
-import dao_tests.interfaces.IHashtagDao;
-import dao_tests.interfaces.IKweetDao;
-import dao_tests.interfaces.IUserDao;
+import dao.interfaces.IHashtagDao;
+import dao.interfaces.IKweetDao;
+import dao.interfaces.IUserDao;
 import domain.Hashtag;
 import domain.Kweet;
 import domain.User;

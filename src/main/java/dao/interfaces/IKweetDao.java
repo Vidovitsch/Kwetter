@@ -1,11 +1,14 @@
-package dao_tests.interfaces;
+package dao.interfaces;
 
 import domain.Kweet;
 import domain.User;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface IKweetDao {
+
+    EntityManager getEntityManager();
 
     /**
      * Find all persisted kweet

@@ -1,30 +1,31 @@
-package dao_tests.implementations_test;
+package dao.implementations;
 
-import dao_tests.interfaces.IKweetDao;
+import dao.interfaces.IKweetDao;
 import domain.Kweet;
 import domain.User;
 
 import javax.ejb.Stateless;
-import javax.enterprise.inject.Alternative;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.enterprise.inject.Default;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+@Default
 @Stateless
-@Alternative
-public class KweetDaoImpl2 implements IKweetDao {
+public class KweetDaoImpl implements IKweetDao {
 
     @PersistenceContext(name = "KwetterPU")
     private EntityManager em;
 
-    public KweetDaoImpl2() { }
+    public KweetDaoImpl() { }
 
-    public KweetDaoImpl2(String persistencyUnit) {
+    public KweetDaoImpl(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
+    }
+
+    public EntityManager getEntityManager() {
+        return em;
     }
 
     @Override
@@ -51,9 +52,7 @@ public class KweetDaoImpl2 implements IKweetDao {
 
     @Override
     public Kweet create(Kweet Kweet) {
-        em.getTransaction().begin();
         em.persist(Kweet);
-        em.getTransaction().commit();
         return Kweet;
     }
 
@@ -74,10 +73,8 @@ public class KweetDaoImpl2 implements IKweetDao {
 
     @Override
     public boolean remove(Kweet Kweet) {
-        em.getTransaction().begin();
 
         em.remove(Kweet);
-        em.getTransaction().commit();
         return true;
     }
 }

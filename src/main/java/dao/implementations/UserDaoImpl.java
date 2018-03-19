@@ -1,6 +1,6 @@
-package dao_tests.implementations;
+package dao.implementations;
 
-import dao_tests.interfaces.IUserDao;
+import dao.interfaces.IUserDao;
 import domain.User;
 
 import javax.ejb.Stateless;
@@ -24,6 +24,10 @@ public class UserDaoImpl implements IUserDao {
 
     public UserDaoImpl(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
+    }
+
+    public EntityManager getEntityManager() {
+        return em;
     }
 
     @Override

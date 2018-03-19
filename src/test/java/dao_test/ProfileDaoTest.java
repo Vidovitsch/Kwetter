@@ -1,8 +1,8 @@
-package dao_tests;
+package dao_test;
 
-import dao_tests.implementations_test.ProfileDaoImpl2;
-import dao_tests.implementations_test.UserDaoImpl2;
-import dao_tests.interfaces.*;
+import dao.implementations.ProfileDaoImpl;
+import dao.implementations.UserDaoImpl;
+import dao.interfaces.*;
 import domain.Profile;
 import domain.User;
 import util.MockFactory;
@@ -22,8 +22,8 @@ public class ProfileDaoTest {
 
     @BeforeClass
     public static void Init() {
-        userDao = new UserDaoImpl2("KwetterPU_test");
-        profileDao = new ProfileDaoImpl2("KwetterPU_test");
+        userDao = new UserDaoImpl("KwetterPU_test");
+        profileDao = new ProfileDaoImpl("KwetterPU_test");
     }
 
     @AfterClass
@@ -37,26 +37,39 @@ public class ProfileDaoTest {
         List<Profile> profilesBefore = new ArrayList<>(profileDao.findAll());
 
         User mockUser = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
+
+        beginUserTransaction();
         userDao.create(mockUser);
+        endUserTransaction();
+
         Profile mockProfile = (Profile) MockFactory.createMocks(Profile.class, 1).get(0);
         mockProfile.setUser(mockUser);
+
+        beginProfileTransaction();
         profileDao.create(mockProfile);
+        endProfileTransaction();
 
         // Check status after
         List<Profile> profilesAfter = profileDao.findAll();
         Assert.assertEquals("Returns list with size + 1", profilesBefore.size() + 1, profilesAfter.size());
         Assert.assertTrue("New Profile has been added", profilesAfter.contains(mockProfile));
-        ;
     }
 
     @Test
     public void findByIdTest() {
         // Insert new profile
         User mockUser = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
+
+        beginUserTransaction();
         userDao.create(mockUser);
+        endUserTransaction();
+
         Profile mockProfile = (Profile) MockFactory.createMocks(Profile.class, 1).get(0);
         mockProfile.setUser(mockUser);
+
+        beginProfileTransaction();
         mockProfile = profileDao.create(mockProfile);
+        endProfileTransaction();
 
         // Check fetched profile
         Profile fetchedProfile = profileDao.findById(mockProfile.getId());
@@ -66,13 +79,18 @@ public class ProfileDaoTest {
     @Test
     public void findByUserTest() {
         User mockUser = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
+
+        beginUserTransaction();
         userDao.create(mockUser);
+        endUserTransaction();
 
         // Insert new profile
         Profile mockProfile = (Profile) MockFactory.createMocks(Profile.class, 1, "user", mockUser).get(0);
         mockProfile.setUser(mockUser);
-        profileDao.create(mockProfile);
 
+        beginProfileTransaction();
+        profileDao.create(mockProfile);
+        endProfileTransaction();
 
         // Check fetched profile
         Profile fetchedProfile = profileDao.findByUser(mockUser);
@@ -83,11 +101,17 @@ public class ProfileDaoTest {
     public void insertProfileTest() {
         // Insert new profile
         User mockUser = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
+
+        beginUserTransaction();
         userDao.create(mockUser);
+        endUserTransaction();
+
         Profile mockProfile = (Profile) MockFactory.createMocks(Profile.class, 1).get(0);
         mockProfile.setUser(mockUser);
-        profileDao.create(mockProfile);
 
+        beginProfileTransaction();
+        profileDao.create(mockProfile);
+        endProfileTransaction();
 
         // Check Profile list contains new profile
         Assert.assertTrue("New profile has been added", profileDao.findAll().contains(mockProfile));
@@ -98,14 +122,20 @@ public class ProfileDaoTest {
     public void insertProfilesTest() {
         // Insert new profile
         List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 3, "name", "Hank");
+
+        beginUserTransaction();
         userDao.create(mockUsers);
+        endUserTransaction();
+
         List<Profile> mockProfiles = (List<Profile>) MockFactory.createMocks(Profile.class, 3);
         for(int  i = 0; i < 3;i++){
             mockProfiles.get(i).setUser(mockUsers.get(i));
         }
-        profileDao.create(mockProfiles);
 
-        //profileDao.findByUser(mockUser);
+        beginProfileTransaction();
+        profileDao.create(mockProfiles);
+        endProfileTransaction();
+
         // Check Profile list contains new profile
         Assert.assertTrue("New profiles have been added", profileDao.findAll().containsAll(mockProfiles));
     }
@@ -114,11 +144,18 @@ public class ProfileDaoTest {
     public void updateProfileTest() {
         String newName = "mockProfile123";
         User mockUser = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
+
+        beginUserTransaction();
         userDao.create(mockUser);
+        endUserTransaction();
+
         Profile mockProfile = (Profile) MockFactory.createMocks(Profile.class, 1).get(0);
         mockProfile.setUser(mockUser);
-        profileDao.create(mockProfile);
+
         // Insert new profile
+        beginProfileTransaction();
+        profileDao.create(mockProfile);
+        endProfileTransaction();
 
         // Update new profile
         mockProfile.setName(newName);
@@ -132,14 +169,50 @@ public class ProfileDaoTest {
     public void deleteProfileTest() {
         // Insert new profile
         User mockUser = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
+
+        beginUserTransaction();
         userDao.create(mockUser);
+        endUserTransaction();
+
         Profile mockProfile = (Profile) MockFactory.createMocks(Profile.class, 1).get(0);
         mockProfile.setUser(mockUser);
+
+        beginProfileTransaction();
         mockProfile = profileDao.create(mockProfile);
+        endProfileTransaction();
+
         Assert.assertTrue( "New profile not created, removal can not be teste" ,profileDao.findAll().contains(mockProfile));
+
         // Delete inserted Profile
+        beginProfileTransaction();
         profileDao.remove(mockProfile);
+        endProfileTransaction();
+
         // Check Profile list contains new Profile
         Assert.assertFalse("New Profile has not been removed", profileDao.findAll().contains(mockProfile));
+    }
+
+    private void beginUserTransaction() {
+        if (userDao.getEntityManager() != null) {
+            userDao.getEntityManager().getTransaction().begin();
+        }
+    }
+
+    private void endUserTransaction() {
+        if (userDao.getEntityManager() != null) {
+            userDao.getEntityManager().getTransaction().commit();
+        }
+    }
+
+    private void beginProfileTransaction() {
+        if (profileDao.getEntityManager() != null) {
+            profileDao.getEntityManager().getTransaction().begin();
+        }
+    }
+
+    private void endProfileTransaction() {
+        if (profileDao.getEntityManager() != null) {
+            profileDao.getEntityManager().getTransaction().commit();
+        }
     }
 }

@@ -1,12 +1,13 @@
-package dao_tests.mocks;
+package dao.mocks;
 
-import dao_tests.interfaces.IRoleDao;
+import dao.interfaces.IRoleDao;
 import qualifier.Mock;
 import util.MockFactory;
 import domain.Role;
 import util.MockService;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Mock
@@ -17,6 +18,11 @@ public class RoleDaoMock implements IRoleDao {
 
     public RoleDaoMock() {
         mockRoles = MockService.getInstance().getRoles();
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return null;
     }
 
     @Override

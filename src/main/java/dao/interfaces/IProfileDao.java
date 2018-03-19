@@ -1,10 +1,14 @@
-package dao_tests.interfaces;
+package dao.interfaces;
 
 import domain.Profile;
 import domain.User;
+
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface IProfileDao {
+
+    EntityManager getEntityManager();
 
     /**
      * Find all persisted profiles

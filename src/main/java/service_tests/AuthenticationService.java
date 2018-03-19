@@ -1,6 +1,6 @@
 package service_tests;
 
-import dao_tests.interfaces.IUserDao;
+import dao.interfaces.IUserDao;
 import domain.User;
 
 import javax.ejb.Stateless;

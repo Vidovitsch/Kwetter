@@ -1,9 +1,9 @@
 package service_tests;
 
 import comparators.KweetComparator;
-import dao_tests.interfaces.IKweetDao;
-import dao_tests.interfaces.IProfileDao;
-import dao_tests.interfaces.IUserDao;
+import dao.interfaces.IKweetDao;
+import dao.interfaces.IProfileDao;
+import dao.interfaces.IUserDao;
 import domain.Kweet;
 import domain.Profile;
 import domain.User;
