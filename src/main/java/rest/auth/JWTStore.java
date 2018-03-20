@@ -9,7 +9,6 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.JWSVerifier;
-import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
@@ -33,16 +32,12 @@ public class JWTStore {
     private static final Instant CURRENT_TIME = Instant.now();
     private static final Instant EXPIRED_TIME = CURRENT_TIME.plus(3, ChronoUnit.MINUTES);
 
-    //@Inject
-    private KeyGenerator keyGenerator;
-
     private SecretKey secretKey = null;
-
 
     public String generateToken(final String username, final List<String> groupNames) throws SystemException {
         try {
             if(secretKey == null){
-                SetKey();
+                setKey();
             }
 
             // Create HMAC signer
@@ -73,11 +68,7 @@ public class JWTStore {
             // serialize the compact form
             return signedJWT.serialize();
 
-        } catch (KeyLengthException ex) {
-            throw new SystemException(ex.getMessage());
-        } catch (JOSEException ex) {
-            throw new SystemException(ex.getMessage());
-        } catch (NoSuchAlgorithmException e) {
+        } catch (JOSEException | NoSuchAlgorithmException e) {
             throw new SystemException(e.getMessage());
         }
     }
@@ -85,7 +76,7 @@ public class JWTStore {
     public JWTCredential getCredential(String token) throws SystemException {
         try {
             if(secretKey == null){
-                SetKey();
+                setKey();
             }
             SignedJWT signedJWT = SignedJWT.parse(token);
 
@@ -110,15 +101,13 @@ public class JWTStore {
 
             return new JWTCredential(claimsSet.getSubject(), groups);
 
-        } catch (ParseException | JOSEException ex) {
-            throw new SystemException(ex.getMessage());
-        } catch (NoSuchAlgorithmException e) {
+        } catch (ParseException | JOSEException | NoSuchAlgorithmException e) {
             throw new SystemException(e.getMessage());
         }
     }
 
-    private void SetKey() throws NoSuchAlgorithmException {
-        keyGenerator = KeyGenerator.getInstance("AES");
+    private void setKey() throws NoSuchAlgorithmException {
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
         UUID uid = UUID.randomUUID();
         secureRandom.setSeed(uid.toString().getBytes());

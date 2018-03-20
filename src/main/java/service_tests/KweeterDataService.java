@@ -74,7 +74,7 @@ public class KweeterDataService {
         data.setTotalKweets(sentKweets.size());
 
         // Set laset kweet message and date
-        if (sentKweets.size() > 0) {
+        if (!sentKweets.isEmpty()) {
 
             // Sort to get the last kweet on first index
             sentKweets.sort(new KweetComparator());

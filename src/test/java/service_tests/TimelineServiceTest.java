@@ -22,7 +22,6 @@ public class TimelineServiceTest {
 
     private static IUserDao userDao;
     private static IKweetDao kweetDao;
-    private static IProfileDao profileDao;
 
     private static TimelineService service;
 
@@ -30,7 +29,6 @@ public class TimelineServiceTest {
     public static void setUp() {
         userDao = new UserDaoMock();
         kweetDao = new KweetDaoMock();
-        profileDao = new ProfileDaoMock();
 
         service = new TimelineService();
         service.setKweetDao(kweetDao);
@@ -64,14 +62,14 @@ public class TimelineServiceTest {
         user.getKweets().get(0).setPublicationDate(getDateDaysAgo(2));
 
         // Get timeline
-        List<TimelineItem> timeline = new ArrayList<>(service.generateTimeline(user.getUsername()));
+        List<TimelineItem> timeline = service.generateTimeline(user.getUsername());
 
         // Asserts
         Assert.assertEquals("Timeline does not have a size of 4", 4, timeline.size());
         Assert.assertEquals("This kweet isn't the most recent", timeline.get(0).getKweetId(), user.getFollowing().get(2).getKweets().get(0).getId());
         Assert.assertEquals("This kweet isn't the second most recent", timeline.get(1).getKweetId(), user.getKweets().get(0).getId());
         Assert.assertEquals("This kweet isn't the second most oldest", timeline.get(2).getKweetId(), user.getFollowing().get(1).getKweets().get(0).getId());
-        Assert.assertEquals("This kweet isn't the oldest", 4, timeline.get(3).getKweetId(), user.getFollowing().get(0).getKweets().get(0).getId());
+        Assert.assertEquals("This kweet isn't the oldest", timeline.get(3).getKweetId(), user.getFollowing().get(0).getKweets().get(0).getId());
     }
 
     @Test
@@ -86,7 +84,7 @@ public class TimelineServiceTest {
         userDao.create(user);
 
         // Setup random kweets
-        List<Kweet> randomKweets = (List<Kweet>) MockFactory.createMocks(Kweet.class, 4, "sender", randomUser);
+        List<Kweet> randomKweets =  MockService.toKweets(MockFactory.createMocks(Kweet.class, 4, "sender", randomUser));
         for (int i = 0; i < randomKweets.size(); i++) {
             Kweet randomKweet = randomKweets.get(i);
             randomKweet.setPublicationDate(getDateDaysAgo(i + 1));
@@ -97,7 +95,7 @@ public class TimelineServiceTest {
         user.setMentions(randomKweets);
 
         // Get timeline
-        List<TimelineItem> timeline = new ArrayList<>(service.generateMentionsTimeline(user.getUsername()));
+        List<TimelineItem> timeline = service.generateMentionsTimeline(user.getUsername());
 
         // Asserts
         Assert.assertEquals("Timeline does not have a size of 4", 4, timeline.size());
@@ -115,7 +113,7 @@ public class TimelineServiceTest {
         userDao.create(user);
 
         // Setup random kweets
-        List<Kweet> randomKweets = (List<Kweet>) MockFactory.createMocks(Kweet.class, 10, "sender", user);
+        List<Kweet> randomKweets =  MockService.toKweets(MockFactory.createMocks(Kweet.class, 10, "sender", user));
         for (int i = 0; i < randomKweets.size(); i++) {
             Kweet randomKweet = randomKweets.get(i);
             randomKweet.setPublicationDate(getDateDaysAgo(i + 1));
@@ -139,7 +137,7 @@ public class TimelineServiceTest {
     @SuppressWarnings("unchecked")
     private User getUserWithFollowing(String username, int numberOfFollowing) {
         User user = (User) MockFactory.createMocks(User.class, 1, "username", username).get(0);
-        List<User> followingUsers = (List<User>) MockFactory.createMocks(User.class, numberOfFollowing);
+        List<User> followingUsers =  MockService.toUsers(MockFactory.createMocks(User.class, numberOfFollowing));
         user.setFollowing(followingUsers);
 
         return user;
@@ -153,14 +151,13 @@ public class TimelineServiceTest {
 
     private void sendMockKweets(List<User> users, int numberOfKweets) {
         for (User user : users) {
-            for (int i = 0; i < numberOfKweets; i++) {
-                Kweet kweet = (Kweet) MockFactory.createMocks(Kweet.class, 1, "sender", user).get(0);
-                List<Kweet> kweets = new ArrayList<>();
-                kweets.add(kweet);
+            Kweet kweet = (Kweet) MockFactory.createMocks(Kweet.class, numberOfKweets, "sender", user).get(0);
+            List<Kweet> kweets = new ArrayList<>();
+            kweets.add(kweet);
 
-                user.setKweets(kweets);
-                kweetDao.create(kweets);
-            }
+            user.setKweets(kweets);
+            kweetDao.create(kweets);
+
         }
     }
 

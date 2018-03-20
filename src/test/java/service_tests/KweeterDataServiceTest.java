@@ -51,9 +51,9 @@ public class KweeterDataServiceTest {
     public void getKweeterData() throws UserNotFoundException {
         // Setup
         User hank = (User) MockFactory.createMocks(User.class, 1, "username", "henk1").get(0);
-        List<User> following = (List<User>) MockFactory.createMocks(User.class, 3);
-        List<User> follower = (List<User>) MockFactory.createMocks(User.class, 4);
-        List<Kweet> kweets = (List<Kweet>) MockFactory.createMocks(Kweet.class, 5, "sender", hank);
+        List<User> following = MockService.toUsers(MockFactory.createMocks(User.class, 3));
+        List<User> follower =  MockService.toUsers(MockFactory.createMocks(User.class, 4));
+        List<Kweet> kweets =  MockService.toKweets(MockFactory.createMocks(Kweet.class, 5, "sender", hank));
         for (int i = 0; i < kweets.size(); i++) {
             kweets.get(i).setPublicationDate(getDateDaysAgo(i + 1));
         }

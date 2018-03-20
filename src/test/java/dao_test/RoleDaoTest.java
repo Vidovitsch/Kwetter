@@ -113,7 +113,7 @@ public class RoleDaoTest {
     @SuppressWarnings("unchecked")
     public void insertRolesTest() {
         // Insert new role
-        List<Role> mockRoles = (List<Role>) MockFactory.createMocks(Role.class, 3);
+        List<Role> mockRoles = MockService.toRoles(MockFactory.createMocks(Role.class, 3));
 
         beginRoleTransaction();
         roleDao.create(mockRoles);

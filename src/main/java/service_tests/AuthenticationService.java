@@ -6,6 +6,8 @@ import domain.User;
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Stateless
 @Default
@@ -20,7 +22,7 @@ public class AuthenticationService {
         passwordAuthentication = new PasswordAuthentication();
     }
 
-    public boolean RegisterUser(String username, String password){
+    public boolean registerUser(String username, String password){
         String hashedPassword = passwordAuthentication.hash(password.toCharArray());
         User u = new User();
         u.setPasswordhash(hashedPassword);
@@ -31,7 +33,7 @@ public class AuthenticationService {
         try{
             if(createdUser.getId() != null) succes = true;
         } catch (Exception e){
-            succes = false;
+            Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
         }
         return succes;
     }
@@ -42,5 +44,4 @@ public class AuthenticationService {
         if(passwordAuthentication.authenticate(password.toCharArray(), reguestedUser.getPasswordhash())) return reguestedUser;
         return u;
     }
-
 }

@@ -172,9 +172,9 @@ public class ProfileServiceTest {
     public void getUserTotals() {
         // Setup
         User hank = (User) MockFactory.createMocks(User.class, 1, "username", "henk8").get(0);
-        List<User> following = (List<User>) MockFactory.createMocks(User.class, 3);
-        List<User> follower = (List<User>) MockFactory.createMocks(User.class, 4);
-        List<Kweet> kweets = (List<Kweet>) MockFactory.createMocks(Kweet.class, 5, "sender", hank);
+        List<User> following =  MockService.toUsers(MockFactory.createMocks(User.class, 3));
+        List<User> follower =  MockService.toUsers(MockFactory.createMocks(User.class, 4));
+        List<Kweet> kweets =  MockService.toKweets(MockFactory.createMocks(Kweet.class, 5, "sender", hank));
         userDao.create(hank);
         hank.setFollowing(userDao.create(following));
         hank.setFollowers(userDao.create(follower));

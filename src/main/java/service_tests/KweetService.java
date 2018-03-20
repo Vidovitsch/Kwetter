@@ -158,24 +158,14 @@ public class KweetService {
      * @return list of found kweets where the term equals parts the of hashtags or senders
      */
     public List<Kweet> search(String term) {
+        List<Kweet> searchResults = new ArrayList<>();
         if (term != null && !term.equals("")) {
-            List<Kweet> searchResults = new ArrayList<>();
             for (Kweet kweet : kweetDao.findAll()) {
-                if (kweet.getSender().getUsername().contains(term)) {
-                    searchResults.add(kweet);
-                } else {
-                    for (Hashtag hashtag : kweet.getHashtags()) {
-                        if (hashtag.getName().contains(term)) {
-                            searchResults.add(kweet);
-                            break;
-                        }
-                    }
-                }
+                addSearchResultsOfSender(term, kweet, searchResults);
+                addSearchResultsOfHashtag(term, kweet, searchResults);
             }
-            return searchResults;
-        } else {
-            return new ArrayList<>();
         }
+        return searchResults;
     }
 
     private List<String> parseNames(char prefix, String message) {
@@ -230,7 +220,7 @@ public class KweetService {
         kweet.setMentions(mentions);
     }
 
-    private void validateMessage(String message) throws InvalidKweetException, IllegalArgumentException {
+    private void validateMessage(String message) throws InvalidKweetException {
         if (message == null || message.equals("")) {
             throw new InvalidKweetException("Message required");
         } else if (message.length() > 140) {
@@ -241,6 +231,21 @@ public class KweetService {
     private void syncWithKweets(List<Kweet> userKweets, Kweet kweet) {
         if (!userKweets.contains(kweet)) {
             userKweets.add(kweet);
+        }
+    }
+
+    private void addSearchResultsOfSender(String term, Kweet kweet, List<Kweet> searchResults) {
+        if (kweet.getSender().getUsername().contains(term)) {
+            searchResults.add(kweet);
+        }
+    }
+
+    private void addSearchResultsOfHashtag(String term, Kweet kweet, List<Kweet> searchResults) {
+        for (Hashtag hashtag : kweet.getHashtags()) {
+            if (hashtag.getName().contains(term)) {
+                searchResults.add(kweet);
+                break;
+            }
         }
     }
 }
