@@ -22,7 +22,6 @@ public class TimelineServiceTest {
 
     private static IUserDao userDao;
     private static IKweetDao kweetDao;
-    private static IProfileDao profileDao;
 
     private static TimelineService service;
 
@@ -30,7 +29,6 @@ public class TimelineServiceTest {
     public static void setUp() {
         userDao = new UserDaoMock();
         kweetDao = new KweetDaoMock();
-        profileDao = new ProfileDaoMock();
 
         service = new TimelineService();
         service.setKweetDao(kweetDao);
@@ -64,7 +62,7 @@ public class TimelineServiceTest {
         user.getKweets().get(0).setPublicationDate(getDateDaysAgo(2));
 
         // Get timeline
-        List<TimelineItem> timeline = new ArrayList<>(service.generateTimeline(user.getUsername()));
+        List<TimelineItem> timeline = service.generateTimeline(user.getUsername());
 
         // Asserts
         Assert.assertEquals("Timeline does not have a size of 4", 4, timeline.size());
@@ -97,7 +95,7 @@ public class TimelineServiceTest {
         user.setMentions(randomKweets);
 
         // Get timeline
-        List<TimelineItem> timeline = new ArrayList<>(service.generateMentionsTimeline(user.getUsername()));
+        List<TimelineItem> timeline = service.generateMentionsTimeline(user.getUsername());
 
         // Asserts
         Assert.assertEquals("Timeline does not have a size of 4", 4, timeline.size());
