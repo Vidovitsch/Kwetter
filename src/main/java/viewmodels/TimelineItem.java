@@ -1,10 +1,9 @@
 package viewmodels;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
-public class TimelineItem implements Comparable<TimelineItem> {
+public class TimelineItem implements Comparable {
 
     private Long kweetId;
     private Date postDate;
@@ -70,11 +69,13 @@ public class TimelineItem implements Comparable<TimelineItem> {
         this.mentions = mentions;
     }
 
-    public int compareTo(TimelineItem o) {
-        int first = o.postDate.compareTo(this.postDate);
+    @Override
+    public int compareTo(Object object) {
+        TimelineItem timelineItem = (TimelineItem)object;
+        int first = timelineItem.postDate.compareTo(this.postDate);
 
-        first = first == 0 ? this.postDate.compareTo(o.postDate) : first;
-        if(first == 0 && kweetId.equals(o.kweetId)) {
+        first = first == 0 ? this.postDate.compareTo(timelineItem.postDate) : first;
+        if(first == 0 && kweetId.equals(timelineItem.kweetId)) {
             return -1;
         } else {
             return first;

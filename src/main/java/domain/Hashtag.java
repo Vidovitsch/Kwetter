@@ -44,20 +44,20 @@ public class Hashtag implements Mockable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Date getLastUsed() {
         return lastUsed;
     }
 
     public void setLastUsed(Date lastUsed) {
         this.lastUsed = lastUsed;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Kweet> getKweets() {

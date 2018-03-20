@@ -1,10 +1,10 @@
 package util;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import comparators.MockComparator;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MockFactory {
 
@@ -42,7 +42,7 @@ public class MockFactory {
             }
             return mocks;
         } catch (InstantiationException | IllegalAccessException e) {
-            Logger.logMsg(Level.SEVERE.intValue(), e.getMessage());
+            Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
         }
         return new ArrayList<>();
     }

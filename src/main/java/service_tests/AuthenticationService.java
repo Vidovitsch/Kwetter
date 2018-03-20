@@ -1,6 +1,5 @@
 package service_tests;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import dao.interfaces.IUserDao;
 import domain.User;
 
@@ -8,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Stateless
 @Default
@@ -33,7 +33,7 @@ public class AuthenticationService {
         try{
             if(createdUser.getId() != null) succes = true;
         } catch (Exception e){
-            Logger.logMsg(Level.SEVERE.intValue(), e.getMessage());
+            Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
         }
         return succes;
     }

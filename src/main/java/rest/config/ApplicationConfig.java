@@ -1,6 +1,5 @@
 package rest.config;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import rest.resources.*;
 import rest.auth.AuthResource;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
@@ -11,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.*;
 import java.util.logging.Level;
 
 
@@ -18,10 +18,9 @@ import java.util.logging.Level;
 public class ApplicationConfig extends Application {
     @Override
     public Set<Class<?>> getClasses() {
-
         Set<Class<?>> resources = new java.util.HashSet<>();
 
-        Logger.logMsg(Level.INFO.intValue(), "REST configuration starting: getClasses()");
+        Logger.getAnonymousLogger().log(Level.INFO, "REST configuration starting: getClasses()");
 
         resources.add(JacksonJaxbJsonProvider.class);
 
@@ -33,7 +32,7 @@ public class ApplicationConfig extends Application {
         resources.add(AuthResource.class);
         //==> we could also choose packages, see below getProperties()
 
-        Logger.logMsg(Level.INFO.intValue(), "REST configuration ended successfully.");
+        Logger.getAnonymousLogger().log(Level.INFO, "REST configuration ended successfully.");
 
         return resources;
     }
