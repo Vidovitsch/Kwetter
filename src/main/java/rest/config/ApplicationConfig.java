@@ -1,5 +1,6 @@
 package rest.config;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import rest.resources.*;
 import rest.auth.AuthResource;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
@@ -10,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 
 
 @javax.ws.rs.ApplicationPath("/rest")
@@ -19,7 +21,7 @@ public class ApplicationConfig extends Application {
 
         Set<Class<?>> resources = new java.util.HashSet<>();
 
-        System.out.println("REST configuration starting: getClasses()");
+        Logger.logMsg(Level.INFO.intValue(), "REST configuration starting: getClasses()");
 
         resources.add(JacksonJaxbJsonProvider.class);
 
@@ -31,7 +33,7 @@ public class ApplicationConfig extends Application {
         resources.add(AuthResource.class);
         //==> we could also choose packages, see below getProperties()
 
-        System.out.println("REST configuration ended successfully.");
+        Logger.logMsg(Level.INFO.intValue(), "REST configuration ended successfully.");
 
         return resources;
     }
@@ -53,8 +55,6 @@ public class ApplicationConfig extends Application {
 
         //we could also use something like this instead of adding each of our resources
         //explicitly in getClasses():
-        //properties.put("jersey.config.server.provider.packages", "com.nabisoft.tutorials.mavenstruts.service_tests");
-
 
         return properties;
     }

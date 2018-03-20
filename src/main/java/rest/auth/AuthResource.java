@@ -47,7 +47,7 @@ public class AuthResource {
     @POST
     @Path(value = "/register")
     public Response register(Credentials credential) {
-        boolean succes = authenticationService.RegisterUser(credential.getUsername(), credential.getPassword());
+        boolean succes = authenticationService.registerUser(credential.getUsername(), credential.getPassword());
         if (succes) return Response.status(202).build();
         else return Response.status(404).build();
     }

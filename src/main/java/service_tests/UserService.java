@@ -74,7 +74,7 @@ public class UserService {
     }
 
     private List<OtherUserView> generateOtherUserViews(List<User> users) {
-        ArrayList<OtherUserView> OtherUserViews = new ArrayList<>();
+        ArrayList<OtherUserView> otherUserViews = new ArrayList<>();
         for (User user : users) {
             Profile p = profileDao.findByUser(user);
             String image;
@@ -83,10 +83,10 @@ public class UserService {
             } else {
                 image = null;
             }
-            OtherUserViews.add(new OtherUserView(user.getUsername(), image));
+            otherUserViews.add(new OtherUserView(user.getUsername(), image));
         }
 
-        return OtherUserViews;
+        return otherUserViews;
     }
 }
 

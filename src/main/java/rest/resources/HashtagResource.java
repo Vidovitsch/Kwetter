@@ -25,8 +25,6 @@ public class HashtagResource {
     @EJB
     private TrendService trendService;
 
-    public HashtagResource() { }
-
     @GET
     @Path("/trends")
     @Produces(MediaType.APPLICATION_JSON)

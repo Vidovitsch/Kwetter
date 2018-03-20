@@ -58,7 +58,7 @@ public class MockService {
 
     @SuppressWarnings("unchecked")
     private void setMockHashtags() {
-        hashtags = (List<Hashtag>) MockFactory.createMocks(Hashtag.class, 2);
+        this.hashtags = toHashtags(MockFactory.createMocks(Hashtag.class, 2));
         MockFactory.setNewIds(hashtags);
 
         createDummyHashtags();
@@ -66,7 +66,7 @@ public class MockService {
 
     @SuppressWarnings("unchecked")
     private void setMockKweets() {
-        kweets = (List<Kweet>) MockFactory.createMocks(Kweet.class, 90);
+        this.kweets = toKweets(MockFactory.createMocks(Kweet.class, 90));
         MockFactory.setNewIds(kweets);
 
         createDummyKweets();
@@ -74,7 +74,7 @@ public class MockService {
 
     @SuppressWarnings("unchecked")
     private void setMockProfiles() {
-        profiles = (List<Profile>) MockFactory.createMocks(Profile.class, 10);
+        this.profiles = toProfiles(MockFactory.createMocks(Profile.class, 10));
         MockFactory.setNewIds(profiles);
 
         connectDummyProfiles();
@@ -82,7 +82,7 @@ public class MockService {
 
     @SuppressWarnings("unchecked")
     private void setMockRoles() {
-        roles = (List<Role>)MockFactory.createMocks(Role.class, 10);
+        this.roles = toRoles(MockFactory.createMocks(Role.class, 10));
         MockFactory.setNewIds(roles);
 
         connectDummyRoles();
@@ -90,7 +90,7 @@ public class MockService {
 
     @SuppressWarnings("unchecked")
     private void setMockUsers() {
-        users = (List<User>)MockFactory.createMocks(User.class, 10);
+        this.users = toUsers(MockFactory.createMocks(User.class, 10));
         MockFactory.setNewIds(users);
 
         connectDummyUsers();
@@ -143,5 +143,45 @@ public class MockService {
             dummyUser.setFollowers(others);
             dummyUser.setFollowing(others);
         }
+    }
+
+    public static List<User> toUsers(List<Mockable> mockables) {
+        List<User> users = new ArrayList<>();
+        for (Mockable mockable : mockables) {
+            users.add((User) mockable);
+        }
+        return users;
+    }
+
+    public static List<Profile> toProfiles(List<Mockable> mockables) {
+        List<Profile> profiles = new ArrayList<>();
+        for (Mockable mockable : mockables) {
+            profiles.add((Profile) mockable);
+        }
+        return profiles;
+    }
+
+    public static List<Hashtag> toHashtags(List<Mockable> mockables) {
+        List<Hashtag> hashtags = new ArrayList<>();
+        for (Mockable mockable : mockables) {
+            hashtags.add((Hashtag) mockable);
+        }
+        return hashtags;
+    }
+
+    public static List<Role> toRoles(List<Mockable> mockables) {
+        List<Role> roles = new ArrayList<>();
+        for (Mockable mockable : mockables) {
+            roles.add((Role) mockable);
+        }
+        return roles;
+    }
+
+    public static List<Kweet> toKweets(List<Mockable> mockables) {
+        List<Kweet> kweets = new ArrayList<>();
+        for (Mockable mockable : mockables) {
+            kweets.add((Kweet) mockable);
+        }
+        return kweets;
     }
 }

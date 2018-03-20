@@ -96,7 +96,7 @@ public class HashtagDaoTest {
     @SuppressWarnings("unchecked")
     public void insertHashtagsTest() {
         // Insert new hashtag
-        List<Hashtag> mockHashtags = (List<Hashtag>)MockFactory.createMocks(Hashtag.class, 3);
+        List<Hashtag> mockHashtags = MockService.toHashtags(MockFactory.createMocks(Hashtag.class, 3));
 
         beginHashtagTransaction();
         hashtagDao.create(mockHashtags);

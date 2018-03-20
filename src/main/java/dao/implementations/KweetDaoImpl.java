@@ -51,9 +51,9 @@ public class KweetDaoImpl implements IKweetDao {
     }
 
     @Override
-    public Kweet create(Kweet Kweet) {
-        em.persist(Kweet);
-        return Kweet;
+    public Kweet create(Kweet kweet) {
+        em.persist(kweet);
+        return kweet;
     }
 
     @Override
@@ -67,14 +67,14 @@ public class KweetDaoImpl implements IKweetDao {
     }
 
     @Override
-    public Kweet update(Kweet Kweet) {
-        return em.merge(Kweet);
+    public Kweet update(Kweet kweet) {
+        return em.merge(kweet);
     }
 
     @Override
-    public boolean remove(Kweet Kweet) {
+    public boolean remove(Kweet kweet) {
 
-        em.remove(Kweet);
+        em.remove(kweet);
         return true;
     }
 }

@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 @Named(value = "timelineService")
@@ -40,7 +41,7 @@ public class TimelineService {
      * @param username of the user of the timeline
      * @return a collection of timeline items (timeline)
      */
-    public TreeSet<TimelineItem> generateTimeline(String username) {
+    public Set<TimelineItem> generateTimeline(String username) {
         User user = userDao.findByUsername(username);
         TreeSet<TimelineItem> timeline = new TreeSet<>();
         timeline.addAll(getOwnKweets(user));
@@ -57,7 +58,7 @@ public class TimelineService {
      * @param username of the user of the timeline
      * @return a collection of timeline items (timeline)
      */
-    public TreeSet<TimelineItem> generateMentionsTimeline(String username) {
+    public Set<TimelineItem> generateMentionsTimeline(String username) {
         User user = userDao.findByUsername(username);
 
         return new TreeSet<>(getMentionedKweets(user));

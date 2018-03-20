@@ -1,12 +1,18 @@
 package util;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import comparators.MockComparator;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.logging.Level;
 
 public class MockFactory {
 
     private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+
+    private MockFactory() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * Generates a mocks of a given type with Mockable as super class.
@@ -16,11 +22,11 @@ public class MockFactory {
      * @param numberOfMocks
      * @return List of mocks
      */
-    public static List<? extends Mockable> createMocks(Class<? extends Mockable> mockable, int numberOfMocks) {
+    public static List<Mockable> createMocks(Class<? extends Mockable> mockable, int numberOfMocks) {
         return createMocks(mockable, numberOfMocks, null, null);
     }
 
-    public static List<? extends Mockable> createMocks(Class<? extends Mockable> mockable, int numberOfMocks, String fieldName, Object fieldValue) {
+    public static List<Mockable> createMocks(Class<? extends Mockable> mockable, int numberOfMocks, String fieldName, Object fieldValue) {
         try {
             List<Mockable> mocks = generateList(mockable, numberOfMocks);
             for (Mockable mock : mocks) {
@@ -35,14 +41,14 @@ public class MockFactory {
                 }
             }
             return mocks;
-        } catch (InstantiationException|IllegalAccessException ex) {
-            System.out.println(ex);
+        } catch (InstantiationException | IllegalAccessException e) {
+            Logger.logMsg(Level.SEVERE.intValue(), e.getMessage());
         }
         return new ArrayList<>();
     }
 
     public static void setNextId(Mockable newMock, List<? extends Mockable> existingMocks) {
-        if (existingMocks.size() == 0) {
+        if (existingMocks.isEmpty()) {
             newMock.setId((long)0);
         } else {
             existingMocks.sort(new MockComparator());
@@ -52,8 +58,8 @@ public class MockFactory {
 
     public static void setNextIds(List<? extends Mockable> newMocks, List<? extends Mockable> existingMocks) {
         Long startPoint = (long)0;
-        if (existingMocks != null && existingMocks.size() != 0) {
-            Collections.sort(existingMocks, new MockComparator());
+        if (existingMocks != null && existingMocks.isEmpty()) {
+            existingMocks.sort(new MockComparator());
             startPoint = existingMocks.get(0).getId() + 1;
         }
         for (int i = 0; i < newMocks.size(); i++) {
@@ -100,19 +106,18 @@ public class MockFactory {
     }
 
     private static String generateRandomString(int length) {
-        StringBuffer randStr = new StringBuffer();
+        StringBuilder strBuilder = new StringBuilder();
         for (int i = 0; i < length; i++) {
             int number = getRandomNumber(CHAR_LIST.length());
             char ch = CHAR_LIST.charAt(number);
-            randStr.append(ch);
+            strBuilder.append(ch);
         }
-        return randStr.toString();
+        return strBuilder.toString();
     }
 
     private static int getRandomNumber(int max) {
-        int randomInt = 0;
         Random randomGenerator = new Random();
-        randomInt = randomGenerator.nextInt(max);
+        int randomInt = randomGenerator.nextInt(max);
         if (randomInt - 1 == -1) {
             return randomInt;
         } else {

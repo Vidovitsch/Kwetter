@@ -36,7 +36,7 @@ public class UserServiceTest {
     @SuppressWarnings("unchecked")
     public void addFollowing() {
         // Setup
-        List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 2);
+        List<User> mockUsers =  MockService.toUsers(MockFactory.createMocks(User.class, 2));
         userDao.create(mockUsers);
 
         // Assert before
@@ -58,7 +58,7 @@ public class UserServiceTest {
     @SuppressWarnings("unchecked")
     public void addFollowing_AlreadyFollowing() {
         // Setup
-        List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 2);
+        List<User> mockUsers =  MockService.toUsers(MockFactory.createMocks(User.class, 2));
         userDao.create(mockUsers);
         service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(1).getUsername());
 
@@ -76,7 +76,7 @@ public class UserServiceTest {
     public void getFollowing_WithProfile() {
         // Setup
         Profile mockProfile = (Profile) MockFactory.createMocks(Profile.class, 1).get(0);
-        List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 3, "profile", mockProfile);
+        List<User> mockUsers = MockService.toUsers(MockFactory.createMocks(User.class, 3, "profile", mockProfile));
         userDao.create(mockUsers);
         service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(1).getUsername());
         service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(2).getUsername());
@@ -94,7 +94,7 @@ public class UserServiceTest {
     @SuppressWarnings("unchecked")
     public void getFollowing_NoProfile() {
         // Setup
-        List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 3);
+        List<User> mockUsers = MockService.toUsers(MockFactory.createMocks(User.class, 3));
         userDao.create(mockUsers);
         service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(1).getUsername());
         service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(2).getUsername());
@@ -112,7 +112,7 @@ public class UserServiceTest {
     @SuppressWarnings("unchecked")
     public void getFollowers() {
         // Setup
-        List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 3);
+        List<User> mockUsers = MockService.toUsers(MockFactory.createMocks(User.class, 3));
         userDao.create(mockUsers);
         service.addFollowing(mockUsers.get(0).getUsername(), mockUsers.get(2).getUsername());
         service.addFollowing(mockUsers.get(1).getUsername(), mockUsers.get(2).getUsername());

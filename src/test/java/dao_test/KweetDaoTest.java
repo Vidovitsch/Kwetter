@@ -80,7 +80,7 @@ public class KweetDaoTest {
     @SuppressWarnings("unchecked")
     public void findBySenderTest() {
         // Insert new kweets
-        List<Kweet> kweets = (List<Kweet>)MockFactory.createMocks(Kweet.class, 2);
+        List<Kweet> kweets = MockService.toKweets(MockFactory.createMocks(Kweet.class, 2));
         User user = (User) MockFactory.createMocks(User.class, 1, "name", "Hank").get(0);
 
         beginUserTransaction();
@@ -124,7 +124,7 @@ public class KweetDaoTest {
     @SuppressWarnings("unchecked")
     public void insertKweetsTest() {
         // Insert new hashtag
-        List<Kweet> mockKweets = (List<Kweet>)MockFactory.createMocks(Kweet.class, 3);
+        List<Kweet> mockKweets = MockService.toKweets(MockFactory.createMocks(Kweet.class, 3));
         User user = (User) MockFactory.createMocks(User.class, 1, "name", "Hank12").get(0);
 
         beginUserTransaction();

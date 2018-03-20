@@ -3,6 +3,7 @@ package rest.config;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.media.jfxmedia.logging.Logger;
 
 import javax.ejb.Singleton;
 import javax.ws.rs.Consumes;
@@ -10,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
+import java.util.logging.Level;
 
 /**
  * Jackson JSON processor could be controlled via providing a custom Jackson ObjectMapper instance.
@@ -30,16 +32,15 @@ public class JacksonShit implements ContextResolver<ObjectMapper> {
     static {
         MAPPER.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         MAPPER.disable(MapperFeature.USE_GETTERS_AS_SETTERS);
-        //MAPPER.disable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
     }
 
     public JacksonShit() {
-        System.out.println("Instantiate MyJacksonJsonProvider");
+        Logger.logMsg(Level.INFO.intValue(), "Instantiate MyJacksonJsonProvider");
     }
 
     @Override
     public ObjectMapper getContext(Class<?> type) {
-        System.out.println("MyJacksonProvider.getContext() called with type: " + type);
+        Logger.logMsg(Level.INFO.intValue(), "MyJacksonProvider.getContext() called with type: " + type);
         return MAPPER;
     }
 }

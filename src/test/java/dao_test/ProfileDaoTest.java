@@ -121,13 +121,13 @@ public class ProfileDaoTest {
     @SuppressWarnings("unchecked")
     public void insertProfilesTest() {
         // Insert new profile
-        List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 3, "name", "Hank");
+        List<User> mockUsers = MockService.toUsers(MockFactory.createMocks(User.class, 3, "name", "Hank"));
 
         beginUserTransaction();
         userDao.create(mockUsers);
         endUserTransaction();
 
-        List<Profile> mockProfiles = (List<Profile>) MockFactory.createMocks(Profile.class, 3);
+        List<Profile> mockProfiles = MockService.toProfiles(MockFactory.createMocks(Profile.class, 3));
         for(int  i = 0; i < 3;i++){
             mockProfiles.get(i).setUser(mockUsers.get(i));
         }

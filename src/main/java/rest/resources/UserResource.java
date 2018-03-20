@@ -32,8 +32,6 @@ public class UserResource {
     @EJB
     private ProfileService profileService;
 
-    public UserResource() { }
-
     @GET
     @Path("/{username}/following")
     @Produces(MediaType.APPLICATION_JSON)

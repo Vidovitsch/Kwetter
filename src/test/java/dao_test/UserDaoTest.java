@@ -68,7 +68,7 @@ public class UserDaoTest {
     @SuppressWarnings("unchecked")
     public void insertUsersTest() {
         // Insert new role
-        List<User> mockUsers = (List<User>) MockFactory.createMocks(User.class, 3);
+        List<User> mockUsers = MockService.toUsers(MockFactory.createMocks(User.class, 3));
 
         beginUserTransaction();
         userDao.create(mockUsers);
