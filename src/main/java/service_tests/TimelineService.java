@@ -1,5 +1,6 @@
 package service_tests;
 
+import comparators.TimelineItemComparator;
 import dao.interfaces.IKweetDao;
 import dao.interfaces.IUserDao;
 import domain.Kweet;
@@ -41,11 +42,12 @@ public class TimelineService {
      * @param username of the user of the timeline
      * @return a collection of timeline items (timeline)
      */
-    public Set<TimelineItem> generateTimeline(String username) {
+    public List<TimelineItem> generateTimeline(String username) {
         User user = userDao.findByUsername(username);
-        TreeSet<TimelineItem> timeline = new TreeSet<>();
+        List<TimelineItem> timeline = new ArrayList<>();
         timeline.addAll(getOwnKweets(user));
         timeline.addAll(getFollowingKweets(user));
+        timeline.sort(new TimelineItemComparator());
 
         return timeline;
     }
@@ -58,10 +60,12 @@ public class TimelineService {
      * @param username of the user of the timeline
      * @return a collection of timeline items (timeline)
      */
-    public Set<TimelineItem> generateMentionsTimeline(String username) {
+    public List<TimelineItem> generateMentionsTimeline(String username) {
         User user = userDao.findByUsername(username);
+        List<TimelineItem> mentionedKweets = getMentionedKweets(user);
+        mentionedKweets.sort(new TimelineItemComparator());
 
-        return new TreeSet<>(getMentionedKweets(user));
+        return mentionedKweets;
     }
 
     /**
@@ -73,9 +77,10 @@ public class TimelineService {
      */
     public List<TimelineItem> mostRecentKweets(String username, int amount) {
         User user = userDao.findByUsername(username);
-        TreeSet<TimelineItem> timeline = new TreeSet<>(getOwnKweets(user));
+        List<TimelineItem> ownKweets = getOwnKweets(user);
+        ownKweets.sort(new TimelineItemComparator());
 
-        return new ArrayList<>(timeline).subList(0, amount);
+        return ownKweets.subList(0, amount);
     }
 
     private List<TimelineItem> getOwnKweets(User owner) {

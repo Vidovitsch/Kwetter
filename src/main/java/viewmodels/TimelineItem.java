@@ -3,7 +3,7 @@ package viewmodels;
 import java.util.Date;
 import java.util.List;
 
-public class TimelineItem implements Comparable<TimelineItem> {
+public class TimelineItem {
 
     private Long kweetId;
     private Date postDate;
@@ -67,22 +67,5 @@ public class TimelineItem implements Comparable<TimelineItem> {
 
     public void setMentions(List<UserUsernameView> mentions) {
         this.mentions = mentions;
-    }
-
-    @Override
-    public int compareTo(TimelineItem timelineItem) {
-        int first = timelineItem.postDate.compareTo(this.postDate);
-        first = first == 0 ? this.postDate.compareTo(timelineItem.postDate) : first;
-        if (first == 0 && kweetId.equals(timelineItem.kweetId)) {
-            return -1;
-        } else {
-            return first;
-        }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        TimelineItem timelineItem = (TimelineItem) obj;
-        return kweetId.equals(timelineItem.getKweetId());
     }
 }

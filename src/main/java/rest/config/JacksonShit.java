@@ -40,7 +40,7 @@ public class JacksonShit implements ContextResolver<ObjectMapper> {
 
     @Override
     public ObjectMapper getContext(Class<?> type) {
-        Logger.getAnonymousLogger().log(Level.INFO, "MyJacksonProvider.getContext() called with type: {0]", type);
+        Logger.getAnonymousLogger().log(Level.INFO, "MyJacksonProvider.getContext() called with type: {0}", type);
         return MAPPER;
     }
 }
