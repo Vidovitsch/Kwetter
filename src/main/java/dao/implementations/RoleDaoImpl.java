@@ -17,7 +17,7 @@ import java.util.List;
 @Stateless
 public class RoleDaoImpl implements IRoleDao {
 
-    @PersistenceContext(name = "KwetterPU")
+    @PersistenceContext(unitName = "KwetterPU")
     private EntityManager em;
 
     public RoleDaoImpl() {

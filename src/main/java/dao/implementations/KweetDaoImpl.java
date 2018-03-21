@@ -15,7 +15,7 @@ import java.util.List;
 @Stateless
 public class KweetDaoImpl implements IKweetDao {
 
-    @PersistenceContext(name = "KwetterPU")
+    @PersistenceContext(unitName = "KwetterPU")
     private EntityManager em;
 
     public KweetDaoImpl() { }

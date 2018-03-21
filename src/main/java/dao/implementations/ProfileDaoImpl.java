@@ -18,7 +18,7 @@ import java.util.List;
 @Stateless
 public class ProfileDaoImpl implements IProfileDao {
 
-    @PersistenceContext(name = "KwetterPU")
+    @PersistenceContext(unitName = "KwetterPU")
     private EntityManager em;
 
     public ProfileDaoImpl() {
