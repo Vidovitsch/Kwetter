@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
     <security-role>
         <role-name>user</role-name>
     </security-role>
@@ -22,6 +23,7 @@
             <web-resource-name>Authorize user pages</web-resource-name>
             <url-pattern>/rest/tokens/*</url-pattern>
             <url-pattern>/rest/apiee/*</url-pattern>
+            <url-pattern>/rest/authentication/*</url-pattern>
         </web-resource-collection>
         <!-- OMIT auth-constraint -->
     </security-constraint>
@@ -31,9 +33,18 @@
             <web-resource-name>User pages</web-resource-name>
             <url-pattern>/rest/*</url-pattern>
         </web-resource-collection>
-        <!--<auth-constraint>-->
-            <!--<role-name>user</role-name>-->
-        <!--</auth-constraint>-->
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
     </security-constraint>
 
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
 </web-app>
