@@ -106,6 +106,7 @@
     <orderEntry type="library" name="Maven: xpp3:xpp3_min:1.1.4c" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.shared:maven-filtering:1.0-beta-2" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish:javax.faces:2.2.13" level="project" />
     <orderEntry type="library" name="Maven: com.sun.xml.security:xml-security-impl:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.github.phillip-kruger:apiee-core:1.0.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.webjars.bower:swagger-ui:2.2.10" level="project" />
