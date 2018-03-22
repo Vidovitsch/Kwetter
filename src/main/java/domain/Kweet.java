@@ -10,6 +10,7 @@ import java.util.*;
 @NamedQueries({
         @NamedQuery(name = "Kweet.findBySender", query = "SELECT a FROM Kweet AS a WHERE a.sender = :sender"),
 })
+//TEST
 public class Kweet implements Mockable {
 
     @Id
