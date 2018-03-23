@@ -38,6 +38,8 @@ public class AuthResource {
         if (u != null) {
             ArrayList<String> roles = new ArrayList<>();
             for (Role r : u.getRoles()) roles.add(r.getName());
+            if(credential.getUsername().equals("admin")){roles.add("admin");}
+
             String token = this.jwtStore.generateToken(u.getUsername(), roles);
             return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
         }
