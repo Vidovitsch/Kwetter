@@ -7,9 +7,9 @@ import domain.Hashtag;
 import domain.Kweet;
 import domain.User;
 import exceptions.*;
+import util.KweetConverter;
 import viewmodels.TimelineItem;
 
-import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -30,9 +30,6 @@ public class KweetService {
 
     @Inject
     private IUserDao userDao;
-
-    @EJB
-    private TimelineService timelineService;
 
     public void setKweetDao(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
@@ -171,8 +168,8 @@ public class KweetService {
             }
         }
         List<TimelineItem> searchResults = new ArrayList<>();
-        for(Kweet k : kweetResults){
-            searchResults.add(timelineService.creatTimelineItem(k, false));
+        for (Kweet kweet : kweetResults) {
+            searchResults.add(KweetConverter.toTimelineItem(kweet, false));
         }
         return searchResults;
     }
@@ -257,6 +254,4 @@ public class KweetService {
             }
         }
     }
-
-
 }
