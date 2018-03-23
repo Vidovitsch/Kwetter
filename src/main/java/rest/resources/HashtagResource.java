@@ -1,6 +1,6 @@
 package rest.resources;
 
-import service_tests.TrendService;
+import services.TrendService;
 import viewmodels.TrendView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

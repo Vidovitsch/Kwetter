@@ -2,7 +2,7 @@ package rest.auth;
 
 import domain.Role;
 import domain.User;
-import service_tests.AuthenticationService;
+import services.AuthenticationService;
 import io.swagger.annotations.Api;
 
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;

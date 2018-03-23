@@ -1,4 +1,4 @@
-package service_tests;
+package services;
 
 import comparators.TimelineItemComparator;
 import dao.interfaces.IKweetDao;
@@ -110,7 +110,7 @@ public class TimelineService {
         return timeline;
     }
 
-    private TimelineItem creatTimelineItem(Kweet kweet, boolean owner) {
+    public TimelineItem creatTimelineItem(Kweet kweet, boolean owner) {
         TimelineItem timelineItem = new TimelineItem();
         timelineItem.setKweetId(kweet.getId());
         timelineItem.setPostDate(kweet.getPublicationDate());

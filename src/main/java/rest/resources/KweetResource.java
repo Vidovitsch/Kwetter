@@ -1,8 +1,8 @@
 package rest.resources;
 
 import domain.Kweet;
-import service_tests.KweetService;
-import service_tests.TimelineService;
+import services.KweetService;
+import services.TimelineService;
 import util.BooleanResult;
 import viewmodels.NewKweetData;
 import viewmodels.TimelineItem;
@@ -38,6 +38,15 @@ public class KweetResource {
     public List<TimelineItem> getMostRecentKweetsByUsername(@PathParam("username") String username, @PathParam("amount") int amount) {
 
         return timelineService.mostRecentKweets(username, amount);
+    }
+
+    @GET
+    @Path("/search/{filter}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve kweets based on the given text")
+    public List<TimelineItem> searchKweets(@PathParam("filter") String filter) {
+        return kweetService.search(filter);
+
     }
 
     @GET

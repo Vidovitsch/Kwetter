@@ -1,4 +1,4 @@
-package service_tests;
+package services;
 
 import dao.interfaces.IHashtagDao;
 import dao.interfaces.IKweetDao;
@@ -7,7 +7,9 @@ import domain.Hashtag;
 import domain.Kweet;
 import domain.User;
 import exceptions.*;
+import viewmodels.TimelineItem;
 
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -28,6 +30,9 @@ public class KweetService {
 
     @Inject
     private IUserDao userDao;
+
+    @EJB
+    private TimelineService timelineService;
 
     public void setKweetDao(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
@@ -157,13 +162,17 @@ public class KweetService {
      *             It's a valid search result when a part of the hashtag or sender is equal to the given term.
      * @return list of found kweets where the term equals parts the of hashtags or senders
      */
-    public List<Kweet> search(String term) {
-        List<Kweet> searchResults = new ArrayList<>();
+    public List<TimelineItem> search(String term) {
+        List<Kweet> kweetResults = new ArrayList<>();
         if (term != null && !term.equals("")) {
             for (Kweet kweet : kweetDao.findAll()) {
-                addSearchResultsOfSender(term, kweet, searchResults);
-                addSearchResultsOfHashtag(term, kweet, searchResults);
+                addSearchResultsOfSender(term, kweet, kweetResults);
+                addSearchResultsOfHashtag(term, kweet, kweetResults);
             }
+        }
+        List<TimelineItem> searchResults = new ArrayList<>();
+        for(Kweet k : kweetResults){
+            searchResults.add(timelineService.creatTimelineItem(k, false));
         }
         return searchResults;
     }
@@ -248,4 +257,6 @@ public class KweetService {
             }
         }
     }
+
+
 }

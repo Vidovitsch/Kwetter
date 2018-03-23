@@ -1,13 +1,12 @@
 package service_tests;
 
 import dao.mocks.KweetDaoMock;
-import dao.mocks.ProfileDaoMock;
 import dao.mocks.UserDaoMock;
 import dao.interfaces.IKweetDao;
-import dao.interfaces.IProfileDao;
 import dao.interfaces.IUserDao;
 import domain.Kweet;
 import domain.User;
+import services.TimelineService;
 import util.MockFactory;
 import util.MockService;
 import viewmodels.TimelineItem;

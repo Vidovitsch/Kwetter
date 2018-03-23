@@ -9,6 +9,7 @@ import dao.interfaces.IUserDao;
 import domain.Kweet;
 import domain.User;
 import exceptions.*;
+import services.ProfileService;
 import util.MockFactory;
 import util.MockService;
 import viewmodels.ProfileData;

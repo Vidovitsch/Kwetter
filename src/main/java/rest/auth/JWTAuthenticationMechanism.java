@@ -11,6 +11,7 @@ import javax.security.enterprise.identitystore.IdentityStore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.SystemException;
+import javax.ws.rs.core.Response;
 
 @Stateless
 public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
@@ -42,6 +43,7 @@ public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
         if (credential != null) {
             return context.notifyContainerAboutLogin(this.identityStore.validate(credential));
         } else {
+            //res.setStatus(405);
             return context.doNothing();
         }
     }

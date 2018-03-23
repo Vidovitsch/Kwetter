@@ -1,8 +1,8 @@
 package rest.resources;
 
 import exceptions.InvalidProfileException;
-import service_tests.ProfileService;
-import service_tests.UserService;
+import services.ProfileService;
+import services.UserService;
 import util.BooleanResult;
 import viewmodels.OtherUserView;
 import viewmodels.ProfileData;

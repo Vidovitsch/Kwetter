@@ -9,6 +9,7 @@ import dao.interfaces.IProfileDao;
 import dao.interfaces.IUserDao;
 import domain.Kweet;
 import domain.User;
+import services.KweeterDataService;
 import util.MockFactory;
 import util.MockService;
 import viewmodels.KweeterData;

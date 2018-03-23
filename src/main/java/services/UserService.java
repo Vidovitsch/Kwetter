@@ -1,4 +1,4 @@
-package service_tests;
+package services;
 
 import dao.interfaces.IProfileDao;
 import dao.interfaces.IUserDao;
