@@ -36,7 +36,6 @@ public class JWTCredential implements Credential {
     }
 
     // TODO: consider Generic Type
-    // public <T> T getInfo(String key)
     public Serializable getInfo(String key) {
         return info.get(key);
     }
