@@ -1,12 +1,12 @@
-package service_tests;
+package services;
 
 import comparators.TimelineItemComparator;
 import dao.interfaces.IKweetDao;
 import dao.interfaces.IUserDao;
 import domain.Kweet;
 import domain.User;
+import util.KweetConverter;
 import viewmodels.TimelineItem;
-import viewmodels.UserUsernameView;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -84,7 +84,7 @@ public class TimelineService {
     private List<TimelineItem> getOwnKweets(User owner) {
         List<TimelineItem> timeline = new ArrayList<>();
         for (Kweet kweet : owner.getKweets()) {
-            timeline.add(creatTimelineItem(kweet, true));
+            timeline.add(KweetConverter.toTimelineItem(kweet, true));
         }
 
         return timeline;
@@ -94,7 +94,7 @@ public class TimelineService {
         List<TimelineItem> timeline = new ArrayList<>();
         for (User followingUser : user.getFollowing()) {
             for (Kweet kweet : kweetDao.findBySender(followingUser)) {
-                timeline.add(creatTimelineItem(kweet, false));
+                timeline.add(KweetConverter.toTimelineItem(kweet, false));
             }
         }
 
@@ -104,40 +104,9 @@ public class TimelineService {
     private List<TimelineItem> getMentionedKweets(User user) {
         List<TimelineItem> timeline = new ArrayList<>();
         for (Kweet kweet : user.getMentions()) {
-            timeline.add(creatTimelineItem(kweet, false));
+            timeline.add(KweetConverter.toTimelineItem(kweet, false));
         }
 
         return timeline;
-    }
-
-    private TimelineItem creatTimelineItem(Kweet kweet, boolean owner) {
-        TimelineItem timelineItem = new TimelineItem();
-        timelineItem.setKweetId(kweet.getId());
-        timelineItem.setPostDate(kweet.getPublicationDate());
-        timelineItem.setMessage(kweet.getMessage());
-        timelineItem.setUsername(kweet.getSender().getUsername());
-        timelineItem.setOwnKweet(owner);
-        timelineItem.setHearts(getUserViewsByHearts(kweet));
-        timelineItem.setMentions(getUserViewsByMentions(kweet));
-
-        return timelineItem;
-    }
-
-    private List<UserUsernameView> getUserViewsByHearts(Kweet kweet) {
-        List<UserUsernameView> hearts = new ArrayList<>();
-        for (User user : kweet.getHearts()) {
-            hearts.add(new UserUsernameView(user.getUsername(), user.getId()));
-        }
-
-        return hearts;
-    }
-
-    private List<UserUsernameView> getUserViewsByMentions(Kweet kweet) {
-        List<UserUsernameView> mentions = new ArrayList<>();
-        for (User user : kweet.getMentions()) {
-            mentions.add(new UserUsernameView(user.getUsername(), user.getId()));
-        }
-
-        return mentions;
     }
 }

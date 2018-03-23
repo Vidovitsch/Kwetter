@@ -5,6 +5,7 @@ import dao.mocks.UserDaoMock;
 import dao.interfaces.IUserDao;
 import domain.Profile;
 import domain.User;
+import services.UserService;
 import util.MockFactory;
 import util.MockService;
 import viewmodels.OtherUserView;

@@ -1,4 +1,4 @@
-package service_tests;
+package services;
 
 import comparators.TrendComparator;
 import dao.interfaces.IHashtagDao;

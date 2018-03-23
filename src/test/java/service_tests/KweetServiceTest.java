@@ -10,9 +10,12 @@ import domain.Hashtag;
 import domain.Kweet;
 import domain.User;
 import exceptions.*;
+import services.KweetService;
+import services.TimelineService;
 import util.MockFactory;
 import util.MockService;
 import org.junit.*;
+import viewmodels.TimelineItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -281,12 +284,12 @@ public class KweetServiceTest {
         service.create(rick.getUsername(), "Somemessage");
 
         // Search
-        List<Kweet> results = service.search("xcxc");
+        List<TimelineItem> results = service.search("xcxc");
 
         // Asserts
         Assert.assertEquals("Two kweets met the given term", 2, results.size());
-        Assert.assertTrue("The term 'et' was met by kweet1", results.contains(kweet1));
-        Assert.assertTrue("The term 'et' was met by kweet2", results.contains(kweet2));
+        Assert.assertEquals("The term 'et' was met by kweet1", kweet1.getSender().getUsername(), results.get(1).getUsername());
+        Assert.assertEquals("The term 'et' was met by kweet2", kweet2.getMessage(), results.get(0).getMessage());
     }
 
     @Test
@@ -303,7 +306,7 @@ public class KweetServiceTest {
         service.create(rick.getUsername(), "Somemessage");
 
         // Search
-        List<Kweet> results = service.search("xqxq");
+        List<TimelineItem> results = service.search("xqxq");
 
         // Asserts
         Assert.assertEquals("Two kweets met the given term", 0, results.size());

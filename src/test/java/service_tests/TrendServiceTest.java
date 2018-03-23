@@ -9,6 +9,8 @@ import dao.interfaces.IUserDao;
 import domain.Hashtag;
 import domain.Kweet;
 import domain.User;
+import services.KweetService;
+import services.TrendService;
 import util.MockFactory;
 import util.MockService;
 import org.junit.*;

@@ -1,4 +1,4 @@
-package service_tests;
+package services;
 
 import dao.interfaces.IHashtagDao;
 import dao.interfaces.IKweetDao;
@@ -7,12 +7,16 @@ import domain.Hashtag;
 import domain.Kweet;
 import domain.User;
 import exceptions.*;
+import util.KweetConverter;
+import viewmodels.TimelineItem;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -157,13 +161,17 @@ public class KweetService {
      *             It's a valid search result when a part of the hashtag or sender is equal to the given term.
      * @return list of found kweets where the term equals parts the of hashtags or senders
      */
-    public List<Kweet> search(String term) {
-        List<Kweet> searchResults = new ArrayList<>();
+    public List<TimelineItem> search(String term) {
+        List<Kweet> kweetResults = new ArrayList<>();
         if (term != null && !term.equals("")) {
             for (Kweet kweet : kweetDao.findAll()) {
-                addSearchResultsOfSender(term, kweet, searchResults);
-                addSearchResultsOfHashtag(term, kweet, searchResults);
+                addSearchResultsOfSender(term, kweet, kweetResults);
+                addSearchResultsOfHashtag(term, kweet, kweetResults);
             }
+        }
+        List<TimelineItem> searchResults = new ArrayList<>();
+        for (Kweet kweet : kweetResults) {
+            searchResults.add(KweetConverter.toTimelineItem(kweet, false));
         }
         return searchResults;
     }
@@ -246,6 +254,16 @@ public class KweetService {
                 searchResults.add(kweet);
                 break;
             }
+        }
+    }
+
+    public boolean deleteKweet(long kweetId){
+        try {
+            kweetDao.remove(kweetDao.findById(kweetId));
+            return true;
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
+            return false;
         }
     }
 }

@@ -1,4 +1,4 @@
-package service_tests;
+package services;
 
 import comparators.KweetComparator;
 import dao.interfaces.IKweetDao;
