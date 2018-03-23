@@ -254,4 +254,10 @@ public class KweetService {
             }
         }
     }
+
+    public boolean deleteKweet(long kweetId){
+        try{kweetDao.remove(kweetDao.findById(kweetId)); return true;}catch (Exception e){return false;}
+    }
+
+
 }

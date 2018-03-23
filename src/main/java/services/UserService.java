@@ -5,6 +5,7 @@ import dao.interfaces.IUserDao;
 import domain.Profile;
 import domain.User;
 import viewmodels.OtherUserView;
+import viewmodels.UserUsernameView;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -87,6 +88,21 @@ public class UserService {
         }
 
         return otherUserViews;
+    }
+
+    public boolean deleteUser(String username){
+        try{userDao.remove(userDao.findByUsername(username)); return true;}
+        catch (Exception e){
+            return false;
+        }
+    }
+
+    public List<UserUsernameView> getUsers(){
+        List<UserUsernameView> users = new ArrayList<>();
+        for(User u : userDao.findAll()){
+            users.add(new UserUsernameView(u.getUsername(), u.getId()));
+        }
+        return users;
     }
 }
 
