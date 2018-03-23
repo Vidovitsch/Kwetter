@@ -266,4 +266,12 @@ public class KweetService {
             return false;
         }
     }
+
+    public List<TimelineItem> allKweets(){
+        List<TimelineItem> searchResults = new ArrayList<>();
+        for (Kweet kweet : kweetDao.findAll()) {
+            searchResults.add(KweetConverter.toTimelineItem(kweet, false));
+        }
+        return searchResults;
+    }
 }

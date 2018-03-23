@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.SystemException;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 
 @Stateless
 public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
@@ -27,6 +28,7 @@ public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest req, HttpServletResponse res, HttpMessageContext context){
 
+        String s = req.getAuthType();
         String authorizationHeader = req.getHeader(AUTHORIZATION);
         Credential credential = null;
 
@@ -44,7 +46,9 @@ public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
             return context.notifyContainerAboutLogin(this.identityStore.validate(credential));
         } else {
             //res.setStatus(405);
-            return context.doNothing();
+            if(!req.getRequestURI().contains("login")){
+            return context.redirect("/Kwetter-1.0-SNAPSHOT/login.xhtml");}
+            else{return context.doNothing();}
         }
     }
 

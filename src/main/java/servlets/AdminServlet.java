@@ -42,6 +42,10 @@ public class AdminServlet {
     }
 
     public List<TimelineItem> kweets(String filtertext){
-        return kweetService.search(filtertext);
+        return kweetService.allKweets();
+    }
+
+    public String logintext(){
+        return "log in here";
     }
 }
