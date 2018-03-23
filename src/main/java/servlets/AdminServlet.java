@@ -1,7 +1,9 @@
 package servlets;
 
+import domain.Kweet;
 import services.KweetService;
 import services.UserService;
+import viewmodels.TimelineItem;
 import viewmodels.UserUsernameView;
 
 import javax.annotation.ManagedBean;
@@ -37,5 +39,9 @@ public class AdminServlet {
 
     public boolean DeleteKweet(long kweetid){
         return kweetService.delete(kweetid);
+    }
+
+    public List<TimelineItem> kweets(String filtertext){
+        return kweetService.search(filtertext);
     }
 }

@@ -11,15 +11,16 @@
 
 </h:head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
-
-<ui:repeat value="#{adminbean.users()}" var="user">
-        <span class="icon fa-diamond"></span>
-        <div class="content">
-            <p>#{user.username}</p></div>
-</ui:repeat>
-
+<p:dataList value="#{adminbean.users()}" var="user" type="ordered">
+    <f:facet name="header">
+        Users
+    </f:facet>
+    #{user.userName}
+</p:dataList>
+<p:dataList value="#{adminbean.kweets('')}" var="kweet" type="ordered">
+    <f:facet name="header">
+        Kweets
+    </f:facet>
+    #{kweet.username}#{kweet.message}#{kweet.postDate}
+</p:dataList>
 </html>
