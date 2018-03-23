@@ -7,14 +7,16 @@ import domain.Hashtag;
 import domain.Kweet;
 import domain.User;
 import exceptions.*;
+import util.KweetConverter;
 import viewmodels.TimelineItem;
 
-import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,9 +32,6 @@ public class KweetService {
 
     @Inject
     private IUserDao userDao;
-
-    @EJB
-    private TimelineService timelineService;
 
     public void setKweetDao(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
@@ -171,8 +170,8 @@ public class KweetService {
             }
         }
         List<TimelineItem> searchResults = new ArrayList<>();
-        for(Kweet k : kweetResults){
-            searchResults.add(timelineService.creatTimelineItem(k, false));
+        for (Kweet kweet : kweetResults) {
+            searchResults.add(KweetConverter.toTimelineItem(kweet, false));
         }
         return searchResults;
     }
@@ -259,8 +258,12 @@ public class KweetService {
     }
 
     public boolean deleteKweet(long kweetId){
-        try{kweetDao.remove(kweetDao.findById(kweetId)); return true;}catch (Exception e){return false;}
+        try {
+            kweetDao.remove(kweetDao.findById(kweetId));
+            return true;
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
+            return false;
+        }
     }
-
-
 }

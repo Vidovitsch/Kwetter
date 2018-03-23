@@ -288,8 +288,8 @@ public class KweetServiceTest {
 
         // Asserts
         Assert.assertEquals("Two kweets met the given term", 2, results.size());
-        Assert.assertTrue("The term 'et' was met by kweet1", results.contains(kweet1));
-        Assert.assertTrue("The term 'et' was met by kweet2", results.contains(kweet2));
+        Assert.assertEquals("The term 'et' was met by kweet1", kweet1.getSender().getUsername(), results.get(1).getUsername());
+        Assert.assertEquals("The term 'et' was met by kweet2", kweet2.getMessage(), results.get(0).getMessage());
     }
 
     @Test
