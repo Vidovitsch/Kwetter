@@ -120,6 +120,7 @@ public class KweetDaoTest {
         Assert.assertTrue("New kweet has been added", kweetDao.findAll().contains(mockKweet));
     }
 
+    //TEST
     @Test
     @SuppressWarnings("unchecked")
     public void insertKweetsTest() {
