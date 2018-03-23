@@ -119,8 +119,7 @@ public class KweetDaoTest {
         // Check hashtag list contains new hashtag
         Assert.assertTrue("New kweet has been added", kweetDao.findAll().contains(mockKweet));
     }
-
-    //TEST
+    
     @Test
     @SuppressWarnings("unchecked")
     public void insertKweetsTest() {
