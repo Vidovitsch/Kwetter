@@ -12,14 +12,14 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>Initialpage</servlet-name>
-        <servlet-class>servlets.InitialServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Initialpage</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+    <!--<servlet>-->
+        <!--<servlet-name>Initialpage</servlet-name>-->
+        <!--<servlet-class>servlets.InitialServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>Initialpage</servlet-name>-->
+        <!--<url-pattern>/index.xhtml</url-pattern>-->
+    <!--</servlet-mapping>-->
 
     <security-role>
         <role-name>user</role-name>
