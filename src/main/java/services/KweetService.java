@@ -15,6 +15,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -256,8 +258,12 @@ public class KweetService {
     }
 
     public boolean deleteKweet(long kweetId){
-        try{kweetDao.remove(kweetDao.findById(kweetId)); return true;}catch (Exception e){return false;}
+        try {
+            kweetDao.remove(kweetDao.findById(kweetId));
+            return true;
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
+            return false;
+        }
     }
-
-
 }
