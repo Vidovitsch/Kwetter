@@ -11,20 +11,30 @@
     <link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
 </h:head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<div id="kweetpart">=
+<div id="kweetpart">
+    <h3 style="margin-top: 0">Admin-panel</h3>
+    <p:inputText id="kweetfilter" value="#{AdminBean.kweetfilter}"></p:inputText><h:commandButton value = "Search Kweets">
+    <f:ajax execute = "kweetfilter" render = "kweetlist" />
+</h:commandButton>
     <h:form id="form">
-        <h3 style="margin-top: 0">Admin-panel</h3>
-        <p:inputText id="kweetfilter" value="#{AdminBean.kweetfilter}"></p:inputText><h:commandButton value = "Search Kweets">
-        <f:ajax execute = "kweetfilter" render = "kweetlist" />
-    </h:commandButton>
-
-
-        <p:dataList id="kweetlist" value="#{adminbean1.kweetsjsf(AdminBean.kweetfilter)}" var="kweet" type="ordered">
+        <p:growl id="msgs" showDetail="true" />
+        <p:dataTable id="kweetlist" var="kweet" value="#{adminbean1.kweetsjsf(AdminBean.kweetfilter)}" selectionMode="single" selection="#{AdminBean.selectedKweet}" rowKey="#{kweet.id}">
             <f:facet name="header">
                 Kweets
             </f:facet>
-            #{kweet.username},#{kweet.message},#{kweet.date}
-        </p:dataList>
+            <p:column headerText="Id">
+                <h:outputText value="#{kweet.id}" />
+            </p:column>
+            <p:column headerText="Username">
+                <h:outputText value="#{kweet.username}" />
+            </p:column>
+            <p:column headerText="Message">
+                <h:outputText value="#{kweet.message}" />
+            </p:column>
+            <p:column headerText="Date">
+                <h:outputText value="#{kweet.date}" />
+            </p:column>
+        </p:dataTable>
     </h:form>
 </div>
 <div id="userpart">
