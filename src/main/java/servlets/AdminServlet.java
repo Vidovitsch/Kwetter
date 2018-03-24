@@ -4,6 +4,7 @@ import domain.Kweet;
 import domain.User;
 import services.KweetService;
 import services.UserService;
+import viewmodels.JsfKweet;
 import viewmodels.TimelineItem;
 import viewmodels.UserUsernameView;
 
@@ -53,6 +54,15 @@ public class AdminServlet implements Serializable{
         return kweetService.delete(kweetid);
     }
 
+    public List<JsfKweet> kweetsjsf(){
+        return kweetService.JsfKweets();
+    }
+
+    public List<JsfKweet> kweetsjsf(String filter){
+        if(filter.equals(null) || filter.equals("")){
+        return kweetService.JsfKweets();}
+        return kweetService.JsfKweets(filter);
+    }
     public List<TimelineItem> kweets(){
         return kweetService.allKweets();
     }

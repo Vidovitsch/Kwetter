@@ -17,11 +17,13 @@
         <p:inputText id="kweetfilter" value="#{AdminBean.kweetfilter}"></p:inputText><h:commandButton value = "Search Kweets">
         <f:ajax execute = "kweetfilter" render = "kweetlist" />
     </h:commandButton>
-        <p:dataList id="kweetlist" value="#{adminbean1.kweets(AdminBean.kweetfilter)}" var="kweet" type="ordered">
+
+
+        <p:dataList id="kweetlist" value="#{adminbean1.kweetsjsf(AdminBean.kweetfilter)}" var="kweet" type="ordered">
             <f:facet name="header">
                 Kweets
             </f:facet>
-            #{kweet.username},#{kweet.message}
+            #{kweet.username},#{kweet.message},#{kweet.date}
         </p:dataList>
     </h:form>
 </div>

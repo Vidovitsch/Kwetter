@@ -8,6 +8,7 @@ import domain.Kweet;
 import domain.User;
 import exceptions.*;
 import util.KweetConverter;
+import viewmodels.JsfKweet;
 import viewmodels.TimelineItem;
 
 import javax.ejb.EJBException;
@@ -271,6 +272,23 @@ public class KweetService {
         List<TimelineItem> searchResults = new ArrayList<>();
         for (Kweet kweet : kweetDao.findAll()) {
             searchResults.add(KweetConverter.toTimelineItem(kweet, false));
+        }
+        return searchResults;
+    }
+
+    public List<JsfKweet> JsfKweets(){
+        List<JsfKweet> searchResults = new ArrayList<>();
+        for (Kweet kweet : kweetDao.findAll()) {
+            searchResults.add(new JsfKweet(kweet.getPublicationDate(), kweet.getSender().getUsername(), kweet.getMessage()));
+        }
+        return searchResults;
+    }
+
+    public List<JsfKweet> JsfKweets(String filter){
+        List<JsfKweet> searchResults = new ArrayList<>();
+        for (Kweet kweet : kweetDao.findAll()) {
+            if(kweet.getMessage().toLowerCase().contains(filter.toLowerCase())){
+            searchResults.add(new JsfKweet(kweet.getPublicationDate(), kweet.getSender().getUsername(), kweet.getMessage()));}
         }
         return searchResults;
     }
