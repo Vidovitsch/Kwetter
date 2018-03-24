@@ -104,5 +104,14 @@ public class UserService {
         }
         return users;
     }
+
+    public List<UserUsernameView> searchUsers(String filter){
+        List<UserUsernameView> users = new ArrayList<>();
+        for(User u : userDao.findAll()){
+            if(u.getUsername().toLowerCase().contains(filter.toLowerCase())){
+            users.add(new UserUsernameView(u.getUsername(), u.getId()));}
+        }
+        return users;
+    }
 }
 
