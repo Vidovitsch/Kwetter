@@ -4008,7 +4008,18 @@ button:disabled,
     }
 
 }
-
+.ui-datalist-data{
+    text-align: center;
+    margin-left: 30px;
+}
+.ui-widget{
+    width: 40%;
+margin: 5px;
+}
+.ui-widget-content{
+    height: 400px;
+    overflow: scroll;
+}
 /* Sidebar */
 
 #search form {
