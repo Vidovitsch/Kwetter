@@ -2,6 +2,7 @@ package servlets;
 
 import domain.Kweet;
 import domain.User;
+import viewmodels.JsfKweet;
 
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
@@ -21,13 +22,6 @@ public class AdminBean implements Serializable {
         this.kweetfilter = kweetfilter;
     }
 
-    public Kweet getSelectedKweet() {
-        return selectedKweet;
-    }
-
-    public void setSelectedKweet(Kweet selectedKweet) {
-        this.selectedKweet = selectedKweet;
-    }
 
     public User getSelectedUser() {
         return selectedUser;
@@ -57,6 +51,15 @@ public class AdminBean implements Serializable {
 
     private String userfilter;
     private String kweetfilter;
-    private Kweet selectedKweet;
+
+    public void setSelectedKweet(JsfKweet selectedKweet) {
+        this.selectedKweet = selectedKweet;
+    }
+
+    public JsfKweet getSelectedKweet() {
+        return selectedKweet;
+    }
+
+    private JsfKweet selectedKweet;
     private User selectedUser;
 }

@@ -279,7 +279,7 @@ public class KweetService {
     public List<JsfKweet> JsfKweets(){
         List<JsfKweet> searchResults = new ArrayList<>();
         for (Kweet kweet : kweetDao.findAll()) {
-            searchResults.add(new JsfKweet(kweet.getPublicationDate(), kweet.getSender().getUsername(), kweet.getMessage()));
+            searchResults.add(new JsfKweet( kweet.getId(),kweet.getPublicationDate(), kweet.getSender().getUsername(), kweet.getMessage()));
         }
         return searchResults;
     }
@@ -288,7 +288,7 @@ public class KweetService {
         List<JsfKweet> searchResults = new ArrayList<>();
         for (Kweet kweet : kweetDao.findAll()) {
             if(kweet.getMessage().toLowerCase().contains(filter.toLowerCase())){
-            searchResults.add(new JsfKweet(kweet.getPublicationDate(), kweet.getSender().getUsername(), kweet.getMessage()));}
+            searchResults.add(new JsfKweet(kweet.getId(), kweet.getPublicationDate(), kweet.getSender().getUsername(), kweet.getMessage()));}
         }
         return searchResults;
     }
