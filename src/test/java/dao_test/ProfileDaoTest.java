@@ -140,6 +140,7 @@ public class ProfileDaoTest {
         Assert.assertTrue("New profiles have been added", profileDao.findAll().containsAll(mockProfiles));
     }
 
+
     @Test
     public void updateProfileTest() {
         String newName = "mockProfile123";
