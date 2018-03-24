@@ -243,14 +243,14 @@ public class KweetService {
     }
 
     private void addSearchResultsOfSender(String term, Kweet kweet, List<Kweet> searchResults) {
-        if (kweet.getSender().getUsername().contains(term)) {
+        if (kweet.getSender().getUsername().toLowerCase().contains(term.toLowerCase())) {
             searchResults.add(kweet);
         }
     }
 
     private void addSearchResultsOfHashtag(String term, Kweet kweet, List<Kweet> searchResults) {
         for (Hashtag hashtag : kweet.getHashtags()) {
-            if (hashtag.getName().contains(term)) {
+            if (hashtag.getName().toLowerCase().contains(term.toLowerCase())) {
                 searchResults.add(kweet);
                 break;
             }
