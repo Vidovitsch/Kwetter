@@ -10,10 +10,11 @@
 <h:head>
     <link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
 </h:head>
-<h3 style="margin-top: 0">Admin-panel</h3>
+<h:panelGrid columns="2" style="margin: 0">
+<h3 style="margin-top: 0">Admin-panel</h3> <p:commandButton value="Logout" onclick="handleLogoutRequest()"/> </h:panelGrid>
 <div id="kweetpart">
     <h:form id="form1">
-    <p:inputText id="kweetfilter" value="#{AdminBean.kweetfilter}"><p:ajax event="keyup" update="kweetlist"/></p:inputText>
+    <p:inputText id="kweetfilter" placeholder="Search kweet" value="#{AdminBean.kweetfilter}"><p:ajax event="keyup" update="kweetlist"/></p:inputText>
         <p:growl id="msgs" showDetail="true" />
         <p:dataTable id="kweetlist" var="kweet" value="#{adminbean1.kweetsjsf(AdminBean.kweetfilter)}" selectionMode="single" selection="#{AdminBean.selectedKweet}" rowKey="#{kweet.id}">
             <p:ajax event="rowSelect" update=":form1:selectedkweetdata"/>
@@ -53,7 +54,7 @@
 </div>
 <div id="userpart">
     <h:form id="form2">
-        <p:inputText id="userfilter" value="#{AdminBean.userfilter}"><p:ajax event="keyup" update="userlist"/></p:inputText>
+        <p:inputText id="userfilter" placeholder="Search user" value="#{AdminBean.userfilter}"><p:ajax event="keyup" update="userlist"/></p:inputText>
         <p:dataTable id="userlist" var="user" value="#{adminbean1.users(AdminBean.userfilter)}" selectionMode="single" selection="#{AdminBean.selectedUser}" rowKey="#{user.username}">
             <p:ajax event="rowSelect" update=":form2:selecteduserdata"/>
             <f:facet name="header">
@@ -85,4 +86,12 @@
         </p:outputPanel>
     </h:form>
 </div>
+<script type="text/javascript">
+    function handleLogoutRequest() {
+        document.cookie = "authorization=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location = "/Kwetter-1.0-SNAPSHOT/login.xhtml"
+    }
+
+
+</script>
 </html>

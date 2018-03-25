@@ -18,6 +18,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     function handleLoginRequest() {
+        var username = document.getElementById("username").value ;
+        var password = document.getElementById("password").value ;
     $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -25,17 +27,19 @@
             },
             'type': 'POST',
             'url': '/Kwetter-1.0-SNAPSHOT/rest/authentication/login',
-            'data': JSON.stringify({"username": 'admin', "password": 'admin'}),
+            'data': JSON.stringify({"username": username, "password": password}),
             'dataType': 'json',
-            'success': function (data, status, request) {
-                handleLoginResponse(request.getResponseHeader('authorization'));
+            success: function (data, status, request) {
                 document.cookie = "authorization=" + request.getResponseHeader('authorization');
                 window.location = "/Kwetter-1.0-SNAPSHOT/admin.xhtml"
-            }
-        });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                document.cookie = "authorization=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                alert("Login failed");
+             }
+    });
     }
-    function handleLoginResponse(data){console.log(data);
-    }
+
 
 </script>
 </html>
