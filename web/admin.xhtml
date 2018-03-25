@@ -10,13 +10,10 @@
 <h:head>
     <link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
 </h:head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<h3 style="margin-top: 0">Admin-panel</h3>
 <div id="kweetpart">
-    <h3 style="margin-top: 0">Admin-panel</h3>
-    <p:inputText id="kweetfilter" value="#{AdminBean.kweetfilter}"></p:inputText><h:commandButton value = "Search Kweets">
-    <f:ajax execute = "kweetfilter" render = "kweetlist" />
-</h:commandButton>
     <h:form id="form">
+    <p:inputText id="kweetfilter" value="#{AdminBean.kweetfilter}"><p:ajax event="keyup" update="kweetlist"/></p:inputText>
         <p:growl id="msgs" showDetail="true" />
         <p:dataTable id="kweetlist" var="kweet" value="#{adminbean1.kweetsjsf(AdminBean.kweetfilter)}" selectionMode="single" selection="#{AdminBean.selectedKweet}" rowKey="#{kweet.id}">
             <f:facet name="header">
@@ -39,15 +36,21 @@
 </div>
 <div id="userpart">
     <h:form>
-        <p:inputText id="userfilter" value="#{AdminBean.userfilter}"></p:inputText><h:commandButton value = "Search Users">
-        <f:ajax execute = "userfilter" render = "userlist" />
-    </h:commandButton>
-        <p:dataList id="userlist" value="#{adminbean1.users(AdminBean.userfilter)}" var="user" type="ordered">
+        <p:inputText id="userfilter" value="#{AdminBean.userfilter}"><p:ajax event="keyup" update="userlist"/></p:inputText>
+        <p:dataTable id="userlist" var="user" value="#{adminbean1.users(AdminBean.userfilter)}" selectionMode="single" selection="#{AdminBean.selectedUser}" rowKey="#{user.id}">
             <f:facet name="header">
                 Users
             </f:facet>
-            #{user.userName}
-        </p:dataList>
+            <p:column headerText="Id">
+                <h:outputText value="#{user.id}" />
+            </p:column>
+            <p:column headerText="Username">
+                <h:outputText value="#{user.username}" />
+            </p:column>
+            <p:column headerText="Roles">
+                <h:outputText value="#{user.roles}" />
+            </p:column>
+        </p:dataTable>
         <h:outputText value="Admin " />
         <p:selectBooleanButton id="adminrole" value="#{AdminBean.adminrole}" onLabel="Yes" offLabel="No" style="width:60px" />
     </h:form>
