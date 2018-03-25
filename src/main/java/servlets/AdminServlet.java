@@ -19,7 +19,7 @@ import java.util.List;
 
 @Named(value = "adminbean1")
 @ManagedBean
-public class AdminServlet implements Serializable{
+public class AdminServlet implements Serializable {
 
     @Inject
     UserService userService;
@@ -31,50 +31,57 @@ public class AdminServlet implements Serializable{
     public AdminServlet() {
     }
 
-    public boolean DeleteUser(String username){
+    public boolean DeleteUser(String username) {
         return userService.deleteUser(username);
     }
 
-    public List<JsfUser> users(){
+    public boolean UpdateUserRoles(String username, String roles) {
+        return userService.UpdateUserRoles(username, roles);
+    }
+
+    public List<JsfUser> users() {
         return userService.searchJsfUsers();
     }
 
-    public List<JsfUser> users(String filter){
-        if(filter.equals(null) || filter.equals("")){
+    public List<JsfUser> users(String filter) {
+        if (filter.equals(null) || filter.equals("")) {
             return users();
         }
         return userService.searchJsfUsers(filter);
     }
 
 
-    public boolean setRole(String username, String role){
+    public boolean setRole(String username, String role) {
         return true;
     }
 
-    public boolean DeleteKweet(long kweetid){
+    public boolean DeleteKweet(long kweetid) {
         return kweetService.delete(kweetid);
     }
 
-    public List<JsfKweet> kweetsjsf(){
+    public List<JsfKweet> kweetsjsf() {
         return kweetService.JsfKweets();
     }
 
-    public List<JsfKweet> kweetsjsf(String filter){
-        if(filter.equals(null) || filter.equals("")){
-        return kweetService.JsfKweets();}
+    public List<JsfKweet> kweetsjsf(String filter) {
+        if (filter.equals(null) || filter.equals("")) {
+            return kweetService.JsfKweets();
+        }
         return kweetService.JsfKweets(filter);
     }
-    public List<TimelineItem> kweets(){
+
+    public List<TimelineItem> kweets() {
         return kweetService.allKweets();
     }
-    public List<TimelineItem> kweets(String filter){
-        if(filter.equals(null) || filter.equals("")){
+
+    public List<TimelineItem> kweets(String filter) {
+        if (filter.equals(null) || filter.equals("")) {
             return kweets();
         }
         return kweetService.search(filter);
     }
 
-    public String logintext(){
+    public String logintext() {
         return "log in here";
     }
 }

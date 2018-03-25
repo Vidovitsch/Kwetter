@@ -1,6 +1,8 @@
 package services;
 
+import dao.implementations.RoleDaoImpl;
 import dao.interfaces.IProfileDao;
+import dao.interfaces.IRoleDao;
 import dao.interfaces.IUserDao;
 import domain.Profile;
 import domain.Role;
@@ -12,6 +14,7 @@ import viewmodels.UserUsernameView;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +27,9 @@ public class UserService {
 
     @Inject
     private IProfileDao profileDao;
+
+    @Inject
+    private IRoleDao roleDao;
 
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
@@ -153,6 +159,29 @@ public class UserService {
             }
         }
         return roles;
+    }
+
+    public boolean UpdateUserRoles(String username, String roles) {
+        try {
+            User u = userDao.findByUsername(username);
+            roles = roles.replaceAll("\\s+", "");
+            List<Role> newRoles = new ArrayList<>();
+            String[] rolesArray = roles.split(",");
+            for (String role : rolesArray) {
+                Role r = roleDao.findByName(role);
+                if(r == null){
+                    Role newRole = new Role();
+                    newRole.setName(role);
+                    roleDao.create(newRole);
+                }
+                newRoles.add(r);
+            }
+            u.setRoles(newRoles);
+            userDao.update(u);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
 

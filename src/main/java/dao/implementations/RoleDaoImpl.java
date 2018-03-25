@@ -50,7 +50,11 @@ public class RoleDaoImpl implements IRoleDao {
         Query q = em.createNamedQuery("Role.findByName", Role.class);
         q.setParameter("name", name);
 
-        return (Role) q.getResultList().get(0);
+        try{
+        return (Role) q.getResultList().get(0);}
+        catch (Exception e){
+            return null;
+        }
     }
 
     @Override
