@@ -5,6 +5,7 @@ import domain.User;
 import services.KweetService;
 import services.UserService;
 import viewmodels.JsfKweet;
+import viewmodels.JsfUser;
 import viewmodels.TimelineItem;
 import viewmodels.UserUsernameView;
 
@@ -34,15 +35,15 @@ public class AdminServlet implements Serializable{
         return userService.deleteUser(username);
     }
 
-    public List<UserUsernameView> users(){
-        return userService.getUsers();
+    public List<JsfUser> users(){
+        return userService.searchJsfUsers();
     }
 
-    public List<UserUsernameView> users(String filter){
+    public List<JsfUser> users(String filter){
         if(filter.equals(null) || filter.equals("")){
             return users();
         }
-        return userService.searchUsers(filter);
+        return userService.searchJsfUsers(filter);
     }
 
 

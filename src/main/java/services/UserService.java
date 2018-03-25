@@ -3,7 +3,9 @@ package services;
 import dao.interfaces.IProfileDao;
 import dao.interfaces.IUserDao;
 import domain.Profile;
+import domain.Role;
 import domain.User;
+import viewmodels.JsfUser;
 import viewmodels.OtherUserView;
 import viewmodels.UserUsernameView;
 
@@ -27,12 +29,14 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public void setProfileDao(IProfileDao profileDao) { this.profileDao = profileDao; }
+    public void setProfileDao(IProfileDao profileDao) {
+        this.profileDao = profileDao;
+    }
 
     /**
      * Adds a user(follwoing) that this user will follow
      *
-     * @param username of the user that follows
+     * @param username   of the user that follows
      * @param following: the user that will get followed
      * @return true if the user follows a user successfully, false if the user already follows the user
      */
@@ -90,28 +94,65 @@ public class UserService {
         return otherUserViews;
     }
 
-    public boolean deleteUser(String username){
-        try{userDao.remove(userDao.findByUsername(username)); return true;}
-        catch (Exception e){
+    public boolean deleteUser(String username) {
+        try {
+            userDao.remove(userDao.findByUsername(username));
+            return true;
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public List<UserUsernameView> getUsers(){
+    public List<UserUsernameView> getUsers() {
         List<UserUsernameView> users = new ArrayList<>();
-        for(User u : userDao.findAll()){
+        for (User u : userDao.findAll()) {
             users.add(new UserUsernameView(u.getUsername(), u.getId()));
         }
         return users;
     }
 
-    public List<UserUsernameView> searchUsers(String filter){
+    public List<UserUsernameView> searchUsers(String filter) {
         List<UserUsernameView> users = new ArrayList<>();
-        for(User u : userDao.findAll()){
-            if(u.getUsername().toLowerCase().contains(filter.toLowerCase())){
-            users.add(new UserUsernameView(u.getUsername(), u.getId()));}
+        for (User u : userDao.findAll()) {
+            if (u.getUsername().toLowerCase().contains(filter.toLowerCase())) {
+                users.add(new UserUsernameView(u.getUsername(), u.getId()));
+            }
         }
         return users;
+    }
+
+    public List<JsfUser> searchJsfUsers(String filter) {
+        List<JsfUser> users = new ArrayList<>();
+        for (User u : userDao.findAll()) {
+            if (u.getUsername().toLowerCase().contains(filter.toLowerCase())) {
+                users.add(new JsfUser(u.getId(), u.getUsername(), rolesString(u)));
+            }
+        }
+        return users;
+    }
+
+    public List<JsfUser> searchJsfUsers() {
+        List<JsfUser> users = new ArrayList<>();
+        for (User u : userDao.findAll()) {
+            users.add(new JsfUser(u.getId(), u.getUsername(), rolesString(u)));
+        }
+        return users;
+    }
+
+    private String rolesString(User u) {
+        String roles = "";
+        boolean first = true;
+        if (u.getRoles() != null) {
+            for (Role r : u.getRoles()) {
+                if (first) {
+                    roles += r.getName();
+                    first = false;
+                } else {
+                    roles += ", " + r.getName();
+                }
+            }
+        }
+        return roles;
     }
 }
 

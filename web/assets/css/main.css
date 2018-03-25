@@ -4016,10 +4016,22 @@ button:disabled,
     /*width: 40%;*/
 /*margin: 5px;*/
 /*}*/
-.ui-widget{
-    height: 400px;
+
+
+.ui-datatable{
     overflow: scroll;
+    height: 400px;
 }
+#kweetpart{
+    width: 50%;
+    float: left;
+}
+
+#userpart{
+    float: right;
+    width: 50%;
+}
+
 /* Sidebar */
 
 #search form {
