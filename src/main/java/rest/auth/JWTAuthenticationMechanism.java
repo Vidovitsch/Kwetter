@@ -65,7 +65,7 @@ public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
             return context.notifyContainerAboutLogin(this.identityStore.validate(credential));
         } else {
             //res.setStatus(405);
-            if(!req.getRequestURI().contains("login") && !req.getRequestURI().contains("apiee") && !req.getRequestURI().contains("swagger" ) && !req.getRequestURI().contains("resource" )){
+            if(!req.getRequestURI().contains("login") && !req.getRequestURI().contains("apiee") && !req.getRequestURI().contains("swagger" ) && !req.getRequestURI().contains("authentication" )&& !req.getRequestURI().contains("resource" )){
             return context.redirect("/Kwetter-1.0-SNAPSHOT/login.xhtml");}
             else{return context.doNothing();}
         }

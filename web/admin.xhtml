@@ -12,17 +12,18 @@
 </h:head>
 <h3 style="margin-top: 0">Admin-panel</h3>
 <div id="kweetpart">
-    <h:form id="form">
+    <h:form id="form1">
     <p:inputText id="kweetfilter" value="#{AdminBean.kweetfilter}"><p:ajax event="keyup" update="kweetlist"/></p:inputText>
         <p:growl id="msgs" showDetail="true" />
         <p:dataTable id="kweetlist" var="kweet" value="#{adminbean1.kweetsjsf(AdminBean.kweetfilter)}" selectionMode="single" selection="#{AdminBean.selectedKweet}" rowKey="#{kweet.id}">
+            <p:ajax event="rowSelect" update=":form1:selectedkweetdata"/>
             <f:facet name="header">
                 Kweets
             </f:facet>
             <p:column headerText="Id">
                 <h:outputText value="#{kweet.id}" />
             </p:column>
-            <p:column headerText="Username">
+            <p:column headerText="Sender">
                 <h:outputText value="#{kweet.username}" />
             </p:column>
             <p:column headerText="Message">
@@ -32,12 +33,29 @@
                 <h:outputText value="#{kweet.date}" />
             </p:column>
         </p:dataTable>
+        <p:outputPanel id="selectedkweetdata">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputText value="Id:" />
+                <h:outputText value="#{AdminBean.selectedKweet.id}" style="font-weight: bold"/>
+
+                <h:outputText value="Sender:" />
+                <h:outputText value="#{AdminBean.selectedKweet.username}" style="font-weight: bold"/>
+
+                <h:outputText value="Message:" />
+                <h:outputText value="#{AdminBean.selectedKweet.message}" style="font-weight: bold"/>
+
+                <h:outputText value="Date:" />
+                <h:outputText value="#{AdminBean.selectedKweet.date}" style="font-weight: bold"/>
+                <p:commandButton value="Delete" id="deletekweet" update=":form1:kweetlist" action="#{adminbean1.DeleteKweet(AdminBean.selectedKweet.id)}" />
+            </h:panelGrid>
+        </p:outputPanel>
     </h:form>
 </div>
 <div id="userpart">
-    <h:form>
+    <h:form id="form2">
         <p:inputText id="userfilter" value="#{AdminBean.userfilter}"><p:ajax event="keyup" update="userlist"/></p:inputText>
-        <p:dataTable id="userlist" var="user" value="#{adminbean1.users(AdminBean.userfilter)}" selectionMode="single" selection="#{AdminBean.selectedUser}" rowKey="#{user.id}">
+        <p:dataTable id="userlist" var="user" value="#{adminbean1.users(AdminBean.userfilter)}" selectionMode="single" selection="#{AdminBean.selectedUser}" rowKey="#{user.username}">
+            <p:ajax event="rowSelect" update=":form2:selecteduserdata"/>
             <f:facet name="header">
                 Users
             </f:facet>
@@ -51,8 +69,20 @@
                 <h:outputText value="#{user.roles}" />
             </p:column>
         </p:dataTable>
-        <h:outputText value="Admin " />
-        <p:selectBooleanButton id="adminrole" value="#{AdminBean.adminrole}" onLabel="Yes" offLabel="No" style="width:60px" />
+        <p:outputPanel id="selecteduserdata">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputText value="Id:" />
+                <h:outputText value="#{AdminBean.selectedUser.id}" style="font-weight: bold"/>
+
+                <h:outputText value="Username:" />
+                <h:outputText value="#{AdminBean.selectedUser.username}" style="font-weight: bold"/>
+
+                <h:outputText value="Roles:" />
+                <h:inputText value="#{AdminBean.selectedUser.roles}" style="font-weight: bold"/>
+                <p:commandButton value="Delete" id="deleteUser" update=":form2:userlist" action="#{adminbean1.DeleteUser(AdminBean.selectedUser.username)}" />
+                <p:commandButton value="Update Roles" id="updateUser" update=":form2:userlist" action="#{adminbean1.UpdateUserRoles(AdminBean.selectedUser.username,AdminBean.selectedUser.roles)}" />
+            </h:panelGrid>
+        </p:outputPanel>
     </h:form>
 </div>
 </html>
