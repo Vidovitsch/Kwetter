@@ -48,9 +48,9 @@ public class JWTStore {
 
             claimSet.issuer("swhp");
             claimSet.subject(username);
-            claimSet.audience("JavaEE Soteria JWT"); // your application
+            claimSet.audience("Kwetter"); // your application
             claimSet.issueTime(Date.from(CURRENT_TIME));
-            claimSet.expirationTime(Date.from(EXPIRED_TIME));
+            claimSet.expirationTime(Date.from(Instant.now().plus(3, ChronoUnit.MINUTES)));
 
             JSONArray groupValues = new JSONArray();
             groupValues.addAll(groupNames);
