@@ -51,13 +51,16 @@ public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
             } catch (SystemException e) {
                 e.printStackTrace();
             }
-        } else if (bearerToken != null && bearerToken.startsWith(BEARER)) {
+        } else if (bearerToken != null && !bearerToken.equals("")&& bearerToken.startsWith(BEARER)) {
             String token = bearerToken.substring(BEARER.length());
             try {
                 credential = this.jwtStore.getCredential(token);
             } catch (SystemException e) {
-
+                res.setStatus(400);
                 e.printStackTrace();
+                if(req.getRequestURI().contains("authentication/login")){
+                    return context.responseUnauthorized();
+                }
             }
         }
 
