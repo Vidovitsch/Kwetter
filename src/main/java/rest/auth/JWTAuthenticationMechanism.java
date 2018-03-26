@@ -59,7 +59,7 @@ public class JWTAuthenticationMechanism implements HttpAuthenticationMechanism {
                 res.setStatus(400);
                 e.printStackTrace();
                 if(req.getRequestURI().contains("authentication/login")){
-                    return context.responseUnauthorized();
+                    return context.doNothing();
                 }
             }
         }
