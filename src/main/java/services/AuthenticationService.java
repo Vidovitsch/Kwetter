@@ -27,15 +27,13 @@ public class AuthenticationService {
         User u = new User();
         u.setPasswordhash(hashedPassword);
         u.setUsername(username);
-        userDao.create(u);
-        User createdUser = userDao.findByUsername(username);
-        boolean succes = false;
+        User createdUser = userDao.create(u);
         try{
-            if(createdUser.getId() != null) succes = true;
+            if(createdUser.getId()!= null)return true;
         } catch (Exception e){
             Logger.getAnonymousLogger().log(Level.SEVERE, e.getMessage());
         }
-        return succes;
+        return false;
     }
 
     public User login(String username, String password){
