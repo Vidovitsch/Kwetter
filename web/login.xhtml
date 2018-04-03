@@ -31,7 +31,8 @@
             'dataType': 'json',
             success: function (data, status, request) {
                 if (status !== 400) {
-                    document.cookie = "authorization=" + request.getResponseHeader('authorization');
+                    var authToken = request.getResponseHeader('authorization')
+                    document.cookie = "authorization=" + authToken;
                     window.location = "/Kwetter-1.0-SNAPSHOT/admin.xhtml";
                 }
                 else {
