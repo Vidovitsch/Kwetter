@@ -44,7 +44,7 @@ public class AdminServlet implements Serializable {
     }
 
     public List<JsfUser> users(String filter) {
-        if (filter.equals(null) || filter.equals("")) {
+        if (filter == null || filter.equals("")) {
             return users();
         }
         return userService.searchJsfUsers(filter);
@@ -64,7 +64,7 @@ public class AdminServlet implements Serializable {
     }
 
     public List<JsfKweet> kweetsjsf(String filter) {
-        if (filter.equals(null) || filter.equals("")) {
+        if (filter == null || filter.equals("")) {
             return kweetService.JsfKweets();
         }
         return kweetService.JsfKweets(filter);
@@ -75,7 +75,7 @@ public class AdminServlet implements Serializable {
     }
 
     public List<TimelineItem> kweets(String filter) {
-        if (filter.equals(null) || filter.equals("")) {
+        if (filter == null || filter.equals("")) {
             return kweets();
         }
         return kweetService.search(filter);
