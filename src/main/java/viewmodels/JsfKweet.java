@@ -18,8 +18,7 @@ public class JsfKweet {
     private String username;
     private String message;
 
-    public JsfKweet() {
-    }
+    public JsfKweet() { }
 
     public JsfKweet(long id, Date date, String username, String message) {
         this.id = id;
