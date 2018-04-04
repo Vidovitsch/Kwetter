@@ -11,8 +11,7 @@ public class JsfUser {
         this.roles = roles;
     }
 
-    public JsfUser() {
-    }
+    public JsfUser() { }
 
     public long getId() {
         return id;

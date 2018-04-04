@@ -8,6 +8,6 @@ import java.io.Serializable;
 @Named(value = "AccountBean")
 @ManagedBean
 @SessionScoped
-public class AccountBean implements Serializable{
+public class AccountBean implements Serializable {
 
 }
