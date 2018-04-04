@@ -77,7 +77,7 @@ public class TimelineService {
         User user = userDao.findByUsername(username);
         List<TimelineItem> ownKweets = getOwnKweets(user);
         ownKweets.sort(new TimelineItemComparator());
-
+        if(ownKweets.size()<amount){return ownKweets.subList(0, ownKweets.size());}
         return ownKweets.subList(0, amount);
     }
 
