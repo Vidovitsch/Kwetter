@@ -30,7 +30,6 @@ import net.minidev.json.JSONObject;
 public class JWTStore {
 
     private static final Instant CURRENT_TIME = Instant.now();
-    private static final Instant EXPIRED_TIME = CURRENT_TIME.plus(3, ChronoUnit.MINUTES);
 
     private SecretKey secretKey = null;
 
@@ -50,7 +49,7 @@ public class JWTStore {
             claimSet.subject(username);
             claimSet.audience("Kwetter"); // your application
             claimSet.issueTime(Date.from(CURRENT_TIME));
-            claimSet.expirationTime(Date.from(Instant.now().plus(3, ChronoUnit.MINUTES)));
+            claimSet.expirationTime(Date.from(Instant.now().plus(1440, ChronoUnit.MINUTES)));
 
             JSONArray groupValues = new JSONArray();
             groupValues.addAll(groupNames);
