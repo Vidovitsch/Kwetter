@@ -2,8 +2,10 @@ package rest.auth;
 
 import domain.Role;
 import domain.User;
+import org.json.JSONObject;
 import services.AuthenticationService;
 import io.swagger.annotations.Api;
+import util.BooleanResult;
 
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 
@@ -41,7 +43,8 @@ public class AuthResource {
             if(credential.getUsername().equals("admin")){roles.add("admin");}
 
             String token = this.jwtStore.generateToken(u.getUsername(), roles);
-            return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+
+            return Response.ok().entity(new BooleanResult("Bearer " + token, true)).header(AUTHORIZATION, "Bearer " + token).build();
         }
         return Response.status(404).build();
     }

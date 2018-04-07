@@ -31,7 +31,7 @@ public class ApplicationConfig extends Application {
         resources.add(ApieeService.class);
         resources.add(AuthResource.class);
         //==> we could also choose packages, see below getProperties()
-
+        resources.add(CorsFilter.class);
         Logger.getAnonymousLogger().log(Level.INFO, "REST configuration ended successfully.");
 
         return resources;
@@ -51,7 +51,7 @@ public class ApplicationConfig extends Application {
         //therefore we want to disable wadl (http://localhost:8080/service/application.wadl should return http 404)
         //see https://jersey.java.net/nonav/documentation/latest/user-guide.html#d0e9020 for details
         properties.put("jersey.config.server.wadl.disableWadl", true);
-
+        properties.put("rest.config.CorsFilter",true);
         //we could also use something like this instead of adding each of our resources
         //explicitly in getClasses():
 

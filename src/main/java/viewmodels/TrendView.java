@@ -1,21 +1,21 @@
 package viewmodels;
 
 public class TrendView {
-    String hashstagName;
+    String hashtagName;
 
     public TrendView() {
     }
 
-    public TrendView(String hashstagName) {
+    public TrendView(String hashtagName) {
 
-        this.hashstagName = hashstagName;
+        this.hashtagName = hashtagName;
     }
 
-    public String getHashstagName() {
-        return hashstagName;
+    public String getHashtagName() {
+        return hashtagName;
     }
 
-    public void setHashstagName(String hashstagName) {
-        this.hashstagName = hashstagName;
+    public void setHashtagName(String hashtagName) {
+        this.hashtagName = hashtagName;
     }
 }
