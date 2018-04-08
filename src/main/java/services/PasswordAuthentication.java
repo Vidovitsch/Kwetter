@@ -22,21 +22,18 @@ public final class PasswordAuthentication
     /**
      * Each token produced by this class uses this identifier as a prefix.
      */
-    public static final String ID = "$31$";
+    private static final String ID = "$31$";
 
     /**
      * The minimum recommended cost, used by default
      */
-    public static final int DEFAULT_COST = 16;
+    private static final int DEFAULT_COST = 16;
 
     private static final String ALGORITHM = "PBKDF2WithHmacSHA1";
-
     private static final int SIZE = 128;
-
     private static final Pattern layout = Pattern.compile("\\$31\\$(\\d\\d?)\\$(.{43})");
-
+    
     private final SecureRandom random;
-
     private final int cost;
 
     public PasswordAuthentication()
