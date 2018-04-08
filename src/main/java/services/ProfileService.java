@@ -1,5 +1,6 @@
 package services;
 
+import dao.interfaces.IKweetDao;
 import dao.interfaces.IProfileDao;
 import dao.interfaces.IUserDao;
 import domain.Profile;
@@ -22,6 +23,9 @@ public class ProfileService {
 
     @Inject
     private IProfileDao profileDao;
+
+    @Inject
+    private IKweetDao kweetDao;
 
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
@@ -84,7 +88,7 @@ public class ProfileService {
     private UserTotalsView getUserTotals(User user) {
         int following = user.getFollowing().size();
         int followers = user.getFollowers().size();
-        int kweets = user.getKweets().size();
+        int kweets = kweetDao.findBySender(user).size();
 
         return new UserTotalsView(following, followers, kweets);
     }
