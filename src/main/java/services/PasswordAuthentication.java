@@ -74,6 +74,7 @@ public final class PasswordAuthentication
         System.arraycopy(salt, 0, hash, 0, salt.length);
         System.arraycopy(dk, 0, hash, salt.length, dk.length);
         Base64.Encoder enc = Base64.getUrlEncoder().withoutPadding();
+
         return ID + cost + '$' + enc.encodeToString(hash);
     }
 

@@ -78,7 +78,7 @@ public class KweetResource {
         try {
             k = kweetService.create(username, newKweetData.getMessage());
         } catch (EJBException e) {
-            return new BooleanResult(e.getCausedByException().getMessage(), false);
+            return new BooleanResult(e.getCausedByException().getStackTrace(), false);
         }
 
         return new BooleanResult(k.getMessage(),true);
