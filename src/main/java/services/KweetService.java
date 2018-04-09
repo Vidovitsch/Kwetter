@@ -197,6 +197,7 @@ public class KweetService {
             if (hashtag == null) {
                 hashtag = new Hashtag();
                 hashtag.setName(name);
+                hashtagDao.create(hashtag);
             }
             hashtags.add(updateHashtag(kweet, hashtag));
 
