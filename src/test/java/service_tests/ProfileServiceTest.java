@@ -38,6 +38,7 @@ public class ProfileServiceTest {
         service = new ProfileService();
         service.setUserDao(userDao);
         service.setProfileDao(profileDao);
+        service.setKweetDao(kweetDao);
     }
 
     @After

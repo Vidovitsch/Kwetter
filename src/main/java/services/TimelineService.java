@@ -36,6 +36,8 @@ public class TimelineService {
         this.kweetDao = kweetDao;
     }
 
+    public void setProfileDao(IProfileDao profileDao) {this.profileDao = profileDao;}
+
     /**
      * Generates a timeline for a specific user by username.
      * The timeline consists of kweets sent by the user and kweets sent by the users this user follows.

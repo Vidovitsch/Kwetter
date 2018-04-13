@@ -35,6 +35,8 @@ public class ProfileService {
         this.profileDao = profileDao;
     }
 
+    public void setKweetDao(IKweetDao kweetDao) {this.kweetDao = kweetDao;}
+
     /**
      * Sets a profile for a user by username
      * If the user has already a profile, his/her current profile will get updated.

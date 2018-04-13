@@ -50,6 +50,8 @@ public class KweetService {
         this.userDao = userDao;
     }
 
+    public void setProfileDao(IProfileDao profileDao) {this.profileDao = profileDao;}
+
     /**
      * Updates an existing/persisted kweet.
      *

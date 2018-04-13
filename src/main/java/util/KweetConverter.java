@@ -2,6 +2,7 @@ package util;
 
 import dao.interfaces.IProfileDao;
 import domain.Kweet;
+import domain.Profile;
 import domain.User;
 import viewmodels.TimelineItem;
 import viewmodels.UserUsernameView;
@@ -17,12 +18,20 @@ public class KweetConverter {
         timelineItem.setPostDate(kweet.getPublicationDate());
         timelineItem.setMessage(kweet.getMessage());
         timelineItem.setUsername(kweet.getSender().getUsername());
-        timelineItem.setProfileName(profileDao.findByUser(kweet.getSender()).getName());
         timelineItem.setOwnKweet(owner);
         timelineItem.setHearts(getUserViewsByHearts(kweet));
         timelineItem.setMentions(getUserViewsByMentions(kweet));
 
+        addProfile(timelineItem, kweet.getSender(), profileDao);
+
         return timelineItem;
+    }
+
+    private static void addProfile(TimelineItem timelineItem, User user, IProfileDao profileDao) {
+        Profile profile = profileDao.findByUser(user);
+        if (profile != null) {
+            timelineItem.setProfileName(profile.getName());
+        }
     }
 
     private static List<UserUsernameView> getUserViewsByHearts(Kweet kweet) {
