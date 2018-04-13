@@ -2,6 +2,7 @@ package services;
 
 import dao.interfaces.IHashtagDao;
 import dao.interfaces.IKweetDao;
+import dao.interfaces.IProfileDao;
 import dao.interfaces.IUserDao;
 import domain.Hashtag;
 import domain.Kweet;
@@ -33,6 +34,9 @@ public class KweetService {
 
     @Inject
     private IUserDao userDao;
+
+    @Inject
+    private IProfileDao profileDao;
 
     public void setKweetDao(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
@@ -172,7 +176,7 @@ public class KweetService {
         }
         List<TimelineItem> searchResults = new ArrayList<>();
         for (Kweet kweet : kweetResults) {
-            searchResults.add(KweetConverter.toTimelineItem(kweet, false));
+            searchResults.add(KweetConverter.toTimelineItem(kweet, false, profileDao));
         }
         return searchResults;
     }
@@ -272,7 +276,7 @@ public class KweetService {
     public List<TimelineItem> allKweets(){
         List<TimelineItem> searchResults = new ArrayList<>();
         for (Kweet kweet : kweetDao.findAll()) {
-            searchResults.add(KweetConverter.toTimelineItem(kweet, false));
+            searchResults.add(KweetConverter.toTimelineItem(kweet, false, profileDao));
         }
         return searchResults;
     }
