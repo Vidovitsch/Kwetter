@@ -109,6 +109,9 @@ public class ProfileService {
         if (!profile.getName().equals(profileData.getName())) {
             profile.setName(profileData.getName());
         }
+        if (!profile.getImage().equals(profileData.getImage())) {
+            profile.setImage(profileData.getImage());
+        }
         if (!profile.getBiography().equals(profileData.getBio())) {
             profile.setBiography(profileData.getBio());
         }
@@ -126,6 +129,7 @@ public class ProfileService {
         Profile profile = new Profile();
         profile.setName(profileData.getName());
         profile.setUser(owner);
+        profile.setImage(profileData.getImage());
         profile.setwebsite(profileData.getWebsite());
         profile.setName(profileData.getName());
         profile.setBiography(profileData.getBio());
