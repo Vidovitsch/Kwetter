@@ -15,6 +15,8 @@ public class ProfileData {
         this.bio = bio;
     }
 
+    public ProfileData() { }
+
     public String getName() {
         return name;
     }
