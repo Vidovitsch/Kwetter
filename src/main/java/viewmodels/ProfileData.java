@@ -2,18 +2,17 @@ package viewmodels;
 
 public class ProfileData {
     private String name;
+    private String image;
     private String location;
     private String website;
     private String bio;
 
-    public ProfileData(String name, String location, String website, String bio) {
+    public ProfileData(String name, String image, String location, String website, String bio) {
         this.name = name;
+        this.image = image;
         this.location = location;
         this.website = website;
         this.bio = bio;
-    }
-
-    public ProfileData() {
     }
 
     public String getName() {
@@ -22,6 +21,12 @@ public class ProfileData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() { return image; }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getLocation() {

@@ -51,7 +51,7 @@ public class ProfileServiceTest {
         // Setup
         User hank = (User) MockFactory.createMocks(User.class, 1, "username", "henk1").get(0);
         userDao.create(hank);
-        ProfileData profileData = new ProfileData("dummyProfile", "Eindhoven", "https://www.google.nl", "somebody");
+        ProfileData profileData = new ProfileData("dummyProfile", null, "Eindhoven", "https://www.google.nl", "somebody");
 
         // Assert before
         Assert.assertNull(service.getProfileData(hank.getUsername()));
@@ -71,7 +71,7 @@ public class ProfileServiceTest {
         // Setup
         User hank = (User) MockFactory.createMocks(User.class, 1, "username", "henk2").get(0);
         userDao.create(hank);
-        ProfileData profileData = new ProfileData(null, "Eindhoven", "https://www.google.nl", "somebody");
+        ProfileData profileData = new ProfileData(null, "Eindhoven", null,"https://www.google.nl", "somebody");
 
         // Set profile
         service.setProfile(hank.getUsername(), profileData);
@@ -82,7 +82,7 @@ public class ProfileServiceTest {
         // Setup
         User hank = (User) MockFactory.createMocks(User.class, 1, "username", "henk3").get(0);
         userDao.create(hank);
-        ProfileData profileData = new ProfileData("", "Eindhoven", "https://www.google.nl", "somebody");
+        ProfileData profileData = new ProfileData("", null,"Eindhoven", "https://www.google.nl", "somebody");
 
         // Set profile
         service.setProfile(hank.getUsername(), profileData);
@@ -94,7 +94,7 @@ public class ProfileServiceTest {
         // Setup
         User hank = (User) MockFactory.createMocks(User.class, 1, "username", "henk4").get(0);
         userDao.create(hank);
-        ProfileData profileData = new ProfileData("dummyProfile", "Eindhoven", null, "somebody");
+        ProfileData profileData = new ProfileData("dummyProfile", null,"Eindhoven", null, "somebody");
 
         // Set profile
         service.setProfile(hank.getUsername(), profileData);
@@ -106,7 +106,7 @@ public class ProfileServiceTest {
         // Setup
         User hank = (User) MockFactory.createMocks(User.class, 1, "username", "henk5").get(0);
         userDao.create(hank);
-        ProfileData profileData = new ProfileData("dummyProfile", "Eindhoven", "https://g.com.oogle", "somebody");
+        ProfileData profileData = new ProfileData("dummyProfile", null,"Eindhoven", "https://g.com.oogle", "somebody");
 
         // Set profile
         service.setProfile(hank.getUsername(), profileData);
@@ -117,7 +117,7 @@ public class ProfileServiceTest {
         // Setup
         User hank = (User) MockFactory.createMocks(User.class, 1, "username", "henk6").get(0);
         userDao.create(hank);
-        ProfileData profileData = new ProfileData("dummyProfile", "Eindhoven", "https://www.google.nl", "somebody");
+        ProfileData profileData = new ProfileData("dummyProfile", null,"Eindhoven", "https://www.google.nl", "somebody");
 
         // Set profile
         service.setProfile(hank.getUsername(), profileData);
@@ -126,7 +126,7 @@ public class ProfileServiceTest {
         Assert.assertEquals("Profile name isn't 'dummyProfile'", "dummyProfile", service.getProfileData(hank.getUsername()).getName());
 
         // Create new profile
-        ProfileData profileData2 = new ProfileData("dummyProfile123123", "Eindhoven", "https://www.google.nl", "somebody");
+        ProfileData profileData2 = new ProfileData("dummyProfile123123", null,"Eindhoven", "https://www.google.nl", "somebody");
 
         // Set profile again
         service.setProfile(hank.getUsername(), profileData2);
@@ -140,7 +140,7 @@ public class ProfileServiceTest {
         // Setup
         User hank = (User) MockFactory.createMocks(User.class, 1, "username", "henk7").get(0);
         userDao.create(hank);
-        ProfileData profileData = new ProfileData("dummyProfile", "Eindhoven", "https://www.google.nl", "somebody");
+        ProfileData profileData = new ProfileData("dummyProfile", null,"Eindhoven", "https://www.google.nl", "somebody");
 
         // Assert before
         Assert.assertNull(service.getProfileData(hank.getUsername()));

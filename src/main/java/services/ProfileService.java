@@ -67,7 +67,7 @@ public class ProfileService {
     public ProfileData getProfileData(String username) {
         Profile profile = profileDao.findByUser(userDao.findByUsername(username));
         if (profile != null) {
-            return new ProfileData(profile.getName(), profile.getLocation(), profile.getwebsite(), profile.getBiography());
+            return new ProfileData(profile.getName(), profile.getImage(), profile.getLocation(), profile.getwebsite(), profile.getBiography());
         }
         return null;
     }
