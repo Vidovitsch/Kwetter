@@ -83,8 +83,8 @@ public class ProfileService {
     }
 
     private boolean validateUrl(String url) {
-        // Default schemes = "http", "https"
-        return new UrlValidator(new String[] { "http", "https" }).isValid(url);
+        // Empty url is always true because a website is not required
+        return url == null || url.equals("") || new UrlValidator(new String[] { "http", "https" }).isValid(url);
     }
 
     private UserTotalsView getUserTotals(User user) {
