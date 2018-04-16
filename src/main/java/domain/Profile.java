@@ -22,6 +22,7 @@ public class Profile implements Mockable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Lob
     @Column(name = "image")
     private String image;
 

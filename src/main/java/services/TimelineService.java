@@ -2,6 +2,7 @@ package services;
 
 import comparators.TimelineItemComparator;
 import dao.interfaces.IKweetDao;
+import dao.interfaces.IProfileDao;
 import dao.interfaces.IUserDao;
 import domain.Kweet;
 import domain.User;
@@ -24,6 +25,9 @@ public class TimelineService {
     @Inject
     private IKweetDao kweetDao;
 
+    @Inject
+    private IProfileDao profileDao;
+
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
     }
@@ -31,6 +35,8 @@ public class TimelineService {
     public void setKweetDao(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
     }
+
+    public void setProfileDao(IProfileDao profileDao) {this.profileDao = profileDao;}
 
     /**
      * Generates a timeline for a specific user by username.
@@ -91,14 +97,20 @@ public class TimelineService {
         User user = userDao.findByUsername(username);
         List<TimelineItem> ownKweets = getOwnKweets(user);
         ownKweets.sort(new TimelineItemComparator());
-        if(ownKweets.size()<amount){return ownKweets;}
+        if (ownKweets.size() < amount) {
+            return ownKweets;
+        }
+
+        if (user != null) {
+            profileDao.findByUser(user);
+        }
         return ownKweets.subList(0, amount);
     }
 
     private List<TimelineItem> getOwnKweets(User owner) {
         List<TimelineItem> timeline = new ArrayList<>();
         for (Kweet kweet : kweetDao.findBySender(owner)) {
-            timeline.add(KweetConverter.toTimelineItem(kweet, true));
+            timeline.add(KweetConverter.toTimelineItem(kweet, true, profileDao));
         }
 
         return timeline;
@@ -108,7 +120,7 @@ public class TimelineService {
         List<TimelineItem> timeline = new ArrayList<>();
         for (User followingUser : user.getFollowing()) {
             for (Kweet kweet : kweetDao.findBySender(followingUser)) {
-                timeline.add(KweetConverter.toTimelineItem(kweet, false));
+                timeline.add(KweetConverter.toTimelineItem(kweet, false, profileDao));
             }
         }
 
@@ -118,7 +130,7 @@ public class TimelineService {
     private List<TimelineItem> getMentionedKweets(User user) {
         List<TimelineItem> timeline = new ArrayList<>();
         for (Kweet kweet : user.getMentions()) {
-            timeline.add(KweetConverter.toTimelineItem(kweet, false));
+            timeline.add(KweetConverter.toTimelineItem(kweet, false, profileDao));
         }
 
         return timeline;

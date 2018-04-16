@@ -35,6 +35,8 @@ public class ProfileService {
         this.profileDao = profileDao;
     }
 
+    public void setKweetDao(IKweetDao kweetDao) {this.kweetDao = kweetDao;}
+
     /**
      * Sets a profile for a user by username
      * If the user has already a profile, his/her current profile will get updated.
@@ -65,7 +67,7 @@ public class ProfileService {
     public ProfileData getProfileData(String username) {
         Profile profile = profileDao.findByUser(userDao.findByUsername(username));
         if (profile != null) {
-            return new ProfileData(profile.getName(), profile.getLocation(), profile.getwebsite(), profile.getBiography());
+            return new ProfileData(profile.getName(), profile.getImage(), profile.getLocation(), profile.getwebsite(), profile.getBiography());
         }
         return null;
     }
@@ -81,8 +83,8 @@ public class ProfileService {
     }
 
     private boolean validateUrl(String url) {
-        // Default schemes = "http", "https"
-        return new UrlValidator(new String[] { "http", "https" }).isValid(url);
+        // Empty url is always true because a website is not required
+        return url == null || url.equals("") || new UrlValidator(new String[] { "http", "https" }).isValid(url);
     }
 
     private UserTotalsView getUserTotals(User user) {
@@ -107,6 +109,9 @@ public class ProfileService {
         if (!profile.getName().equals(profileData.getName())) {
             profile.setName(profileData.getName());
         }
+        if (!profile.getImage().equals(profileData.getImage())) {
+            profile.setImage(profileData.getImage());
+        }
         if (!profile.getBiography().equals(profileData.getBio())) {
             profile.setBiography(profileData.getBio());
         }
@@ -124,6 +129,7 @@ public class ProfileService {
         Profile profile = new Profile();
         profile.setName(profileData.getName());
         profile.setUser(owner);
+        profile.setImage(profileData.getImage());
         profile.setwebsite(profileData.getWebsite());
         profile.setName(profileData.getName());
         profile.setBiography(profileData.getBio());
