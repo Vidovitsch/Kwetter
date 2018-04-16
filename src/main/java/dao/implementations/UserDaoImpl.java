@@ -20,7 +20,8 @@ public class UserDaoImpl implements IUserDao {
     @PersistenceContext(unitName = "KwetterPU")
     private EntityManager em;
 
-    public UserDaoImpl() { }
+    public UserDaoImpl() {
+    }
 
     public UserDaoImpl(String persistencyUnit) {
         this.em = Persistence.createEntityManagerFactory(persistencyUnit).createEntityManager();
@@ -49,8 +50,11 @@ public class UserDaoImpl implements IUserDao {
     public User findByUsername(String username) {
         Query q = em.createNamedQuery("User.findByUsername", User.class);
         q.setParameter("username", username);
-
-        return (User) q.getResultList().get(0);
+        try {
+            return (User) q.getResultList().get(0);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

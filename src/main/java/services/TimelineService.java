@@ -50,6 +50,20 @@ public class TimelineService {
         return timeline;
     }
 
+    public List<TimelineItem> generateTimelineControlled(String username, int page, int amount) {
+        List<TimelineItem> timeLine = this.generateTimeline(username);
+        int endindex = page * amount;
+        int startindex =  endindex - amount;
+        int timeLineSize = timeLine.size();
+        if(startindex > timeLineSize){
+            return null;
+        }
+        if(endindex> timeLineSize){
+            endindex = timeLineSize;
+        }
+        return timeLine.subList(startindex, endindex);
+    }
+
     /**
      * Generates a timeline for a specific user by username.
      * The timeline consists of kweets that this user got mentioned in.

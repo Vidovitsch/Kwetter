@@ -59,6 +59,14 @@ public class KweetResource {
     }
 
     @GET
+    @Path("/timelinecontrolled/{username}/{page}/{amount}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "Username has to be valid and kweets have to be available")
+    public List<TimelineItem> getControlledTimelineByUsername(@PathParam("username") String username, @PathParam("page") int page, @PathParam("amount") int amount) {
+        return timelineService.generateTimelineControlled(username, page, amount);
+    }
+
+    @GET
     @Path("/mentions/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user with the Kweets he is mentioned in", notes = "Username has to be a valid user-id")
