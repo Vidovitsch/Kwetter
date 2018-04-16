@@ -100,8 +100,9 @@ public class KweetService {
                 kweet.setSender(sender);
 
                 // Filter message on hashtags '#' and mentions '@' and add to kweet
-                addHashtags(kweet, parseNames('#', kweet.getMessage()));
                 addMentions(kweet, parseNames('@', kweet.getMessage()));
+                addHashtags(kweet, parseNames('#', kweet.getMessage()));
+
 
                 Kweet k = kweetDao.create(kweet);
 
@@ -209,11 +210,9 @@ public class KweetService {
                 hashtagDao.create(hashtag);
             }
             hashtags.add(updateHashtag(kweet, hashtag));
-
-            // Make sure the hashtag knows of kweet
-            syncWithKweets(hashtag.getKweets(), kweet);
         }
         kweet.setHashtags(hashtags);
+        kweetDao.update(kweet);
     }
 
     private Hashtag updateHashtag(Kweet kweet, Hashtag hashtag) {
@@ -232,11 +231,9 @@ public class KweetService {
             } else {
                 mentions.add(user);
             }
-
-            // Make sure the mentioned user knows of kweet
-            syncWithKweets(user.getMentions(), kweet);
         }
         kweet.setMentions(mentions);
+        kweetDao.update(kweet);
     }
 
     private void validateMessage(String message) throws InvalidKweetException {
