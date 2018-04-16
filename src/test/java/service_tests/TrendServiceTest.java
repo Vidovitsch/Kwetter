@@ -81,18 +81,17 @@ public class TrendServiceTest {
         kweetService.create(rick.getUsername(), message3);
 
         // Get trend
-        List<String> names = service.get();
+        List<Hashtag> names = service.get();
 
         // Asserts
         Assert.assertEquals("Trend consists of 3 hashtags", 3, names.size());
         Assert.assertEquals("#snowball is most used", 3, h1.getTimesUsed());
-        Assert.assertEquals("#snowball is most used", h1.getName(), names.get(0));
+        Assert.assertEquals("#snowball is most used", h1.getName(), names.get(0).getName());
         Assert.assertEquals("#icecube is second most used", 2, h2.getTimesUsed());
-        Assert.assertEquals("#icecube is second most used", h2.getName(), names.get(1));
+        Assert.assertEquals("#icecube is second most used", h2.getName(), names.get(1).getName());
         Assert.assertEquals("#kitty is most used", 1, h3.getTimesUsed());
-        Assert.assertEquals("#kitty is most used", h3.getName(), names.get(2));
+        Assert.assertEquals("#kitty is most used", h3.getName(), names.get(2).getName());
         Assert.assertEquals("#coding is used ten times, but is too old", 10, oldTag.getTimesUsed());
-        Assert.assertFalse("#coding is used ten times, but is too old", names.contains(oldTag.getName()));
     }
 
     private Date getDateWeekAgo() {
