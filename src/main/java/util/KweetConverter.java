@@ -22,17 +22,15 @@ public class KweetConverter {
         timelineItem.setHearts(getUserViewsByHearts(kweet));
         timelineItem.setMentions(getUserViewsByMentions(kweet));
 
-        addProfile(timelineItem, kweet.getSender(), profileDao);
+        Profile profile = profileDao.findByUser(kweet.getSender());
+        if (profile != null) {
+            timelineItem.setProfileName(profile.getName());
+            timelineItem.setProfileImage(profile.getImage());
+        }
 
         return timelineItem;
     }
-
-    private static void addProfile(TimelineItem timelineItem, User user, IProfileDao profileDao) {
-        Profile profile = profileDao.findByUser(user);
-        if (profile != null) {
-            timelineItem.setProfileName(profile.getName());
-        }
-    }
+    
 
     private static List<UserUsernameView> getUserViewsByHearts(Kweet kweet) {
         List<UserUsernameView> hearts = new ArrayList<>();

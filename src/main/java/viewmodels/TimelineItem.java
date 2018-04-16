@@ -10,6 +10,7 @@ public class TimelineItem {
     private String message;
     private String username;
     private String profileName;
+    private String profileImage;
     private List<UserUsernameView> hearts;
     private boolean ownKweet;
     private List<UserUsernameView> mentions;
@@ -50,6 +51,14 @@ public class TimelineItem {
 
     public void setProfileName(String profileName) {
         this.profileName = profileName;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public List<UserUsernameView> getHearts() {
