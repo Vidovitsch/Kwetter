@@ -54,7 +54,6 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "Username has to be valid and kweets have to be available")
     public List<TimelineItem> getTimelineByUsername(@PathParam("username") String username) {
-
         return timelineService.generateTimeline(username);
     }
 
@@ -81,7 +80,7 @@ public class KweetResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Post a kweet for a user, identified by the username", notes = "Username has to be valid")
     public BooleanResult publishKweet(@PathParam("username") String username, NewKweetData newKweetData)
-            throws InvalidKweetException, UserNotFoundException{
+            throws InvalidKweetException, UserNotFoundException {
         Kweet k;
         try {
             k = kweetService.create(username, newKweetData.getMessage());
@@ -89,6 +88,26 @@ public class KweetResource {
             return new BooleanResult(e.getCausedByException().getStackTrace(), false);
         }
 
-        return new BooleanResult(k.getMessage(),true);
+        return new BooleanResult(k.getMessage(), true);
     }
+
+    @POST
+    @Path("/like/{kweetid}/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Like a kweet, identified by the username", notes = "Username and KweetID have to be valid")
+    public BooleanResult likeKweet(@PathParam("username") String username, @PathParam("kweetid") long kweetId, NewKweetData newKweetData) {
+        try {
+            kweetService.giveHeart(username, kweetId);
+        } catch (UserNotFoundException e) {
+            return new BooleanResult(e.getMessage(), false);
+        } catch (KweetNotFoundException e) {
+            return new BooleanResult(e.getMessage(), false);
+        } catch (AlreadyLikedException e) {
+            return new BooleanResult(e.getMessage(), false);
+        }
+
+        return new BooleanResult(username + " liked kweet " + kweetId, true);
+    }
+
 }

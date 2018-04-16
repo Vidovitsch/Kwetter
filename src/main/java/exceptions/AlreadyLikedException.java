@@ -1,4 +1,10 @@
 package exceptions;
 
-public class AlreadyLikedException {
+public class AlreadyLikedException extends Exception {
+    public AlreadyLikedException() { }
+
+    public AlreadyLikedException(String message) {
+        super(message);
+    }
+
 }

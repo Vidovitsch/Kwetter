@@ -141,7 +141,7 @@ public class KweetService {
      * @throws UserNotFoundException when the username isn't equal to any peristed usernames
      * @throws KweetNotFoundException when the kweetId isn't equal to any persisted kweets
      */
-    public Kweet giveHeart(String username, Long kweetId) throws UserNotFoundException, KweetNotFoundException {
+    public Kweet giveHeart(String username, Long kweetId) throws UserNotFoundException, KweetNotFoundException, AlreadyLikedException {
         User user = userDao.findByUsername(username);
         Kweet kweet = kweetDao.findById(kweetId);
         if (user != null && kweet != null) {
@@ -152,6 +152,9 @@ public class KweetService {
                 syncWithKweets(user.getHearts(), kweet);
 
                 kweetDao.update(kweet);
+            }
+            else{
+                throw new AlreadyLikedException("User already liked this kweet");
             }
         } else if (user == null) {
             throw new UserNotFoundException();

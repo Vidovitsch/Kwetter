@@ -242,7 +242,11 @@ public class KweetServiceTest {
         Kweet publishedKweet = service.create(user.getUsername(), "A message");
 
         // Give heart to kweet
-        publishedKweet = service.giveHeart(user.getUsername(), publishedKweet.getId());
+        try {
+            publishedKweet = service.giveHeart(user.getUsername(), publishedKweet.getId());
+        } catch (AlreadyLikedException e) {
+            e.printStackTrace();
+        }
 
         // Assert after
         Assert.assertEquals("Kweet has 1 heart", 1, publishedKweet.getHearts().size());
@@ -251,7 +255,7 @@ public class KweetServiceTest {
     }
 
     @Test(expected = KweetNotFoundException.class)
-    public void giveHeart_KweetNull() throws UserNotFoundException, KweetNotFoundException {
+    public void giveHeart_KweetNull() throws UserNotFoundException, KweetNotFoundException, AlreadyLikedException {
         // Setup
         User user = userDao.create(
                 (User) MockFactory.createMocks(User.class, 1).get(0));
@@ -272,7 +276,11 @@ public class KweetServiceTest {
         service.create(user.getUsername(), "A message");
 
         // Give heart to kweet
-        service.giveHeart("-1", kweet.getId());
+        try {
+            service.giveHeart("-1", kweet.getId());
+        } catch (AlreadyLikedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
