@@ -212,6 +212,7 @@ public class KweetService {
 
             // Make sure the hashtag knows of kweet
             syncWithKweets(hashtag.getKweets(), kweet);
+            hashtagDao.update(hashtag);
         }
         kweet.setHashtags(hashtags);
     }
