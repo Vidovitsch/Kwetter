@@ -17,12 +17,12 @@ public class TrendView {
         this.timesUsed = timesUsed;
     }
 
-    public String getHashtagName() {
+    public String getName() {
         return name;
     }
 
-    public void setHashtagName(String hashtagName) {
-        this.name = hashtagName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getLastUsed() { return this.lastUsed; }
