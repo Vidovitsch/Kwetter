@@ -12,6 +12,8 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Default
 @Stateless
@@ -47,12 +49,14 @@ public class UserDaoImpl implements IUserDao {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public User findByUsername(String username) {
         Query q = em.createNamedQuery("User.findByUsername", User.class);
         q.setParameter("username", username);
-        try {
-            return (User) q.getResultList().get(0);
-        } catch (Exception e) {
+        List<User> users = (List<User>) q.getResultList();
+        if (users != null && !users.isEmpty()) {
+            return users.get(0);
+        } else {
             return null;
         }
     }
