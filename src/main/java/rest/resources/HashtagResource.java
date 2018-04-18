@@ -1,5 +1,6 @@
 package rest.resources;
 
+import domain.Hashtag;
 import services.TrendService;
 import viewmodels.TrendView;
 import io.swagger.annotations.Api;
@@ -31,8 +32,8 @@ public class HashtagResource {
     @ApiOperation(value = "Retrieve the trends for the current week", notes = "")
     public List<TrendView> getTrends() {
         ArrayList<TrendView> trends = new ArrayList<>();
-        for (String trend : trendService.get()) {
-            trends.add(new TrendView(trend));
+        for (Hashtag trend : trendService.get()) {
+            trends.add(new TrendView(trend.getName(), trend.getLastUsed(), trend.getTimesUsed()));
         }
 
         return trends;
