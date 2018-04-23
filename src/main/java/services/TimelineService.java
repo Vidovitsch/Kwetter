@@ -107,6 +107,16 @@ public class TimelineService {
         return ownKweets.subList(0, amount);
     }
 
+    public List<TimelineItem> getOwnKweets(String username) {
+        User user = userDao.findByUsername(username);
+        List<TimelineItem> timeline = new ArrayList<>();
+        for (Kweet kweet : kweetDao.findBySender(user)) {
+            timeline.add(KweetConverter.toTimelineItem(kweet, true, profileDao));
+        }
+
+        return timeline;
+    }
+
     private List<TimelineItem> getOwnKweets(User owner) {
         List<TimelineItem> timeline = new ArrayList<>();
         for (Kweet kweet : kweetDao.findBySender(owner)) {
