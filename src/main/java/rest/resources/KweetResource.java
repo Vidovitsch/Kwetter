@@ -58,6 +58,14 @@ public class KweetResource {
     }
 
     @GET
+    @Path("/timeline/{username}/posts")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "Username has to be valid and kweets have to be available")
+    public List<TimelineItem> getTimelinePostsByUsername(@PathParam("username") String username) {
+        return timelineService.getOwnKweets(username);
+    }
+
+    @GET
     @Path("/timelinecontrolled/{username}/{page}/{amount}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "Username has to be valid and kweets have to be available")
