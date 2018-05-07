@@ -13,7 +13,6 @@ import websocket.SessionHandler;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.websocket.EncodeException;
 import javax.websocket.Session;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,18 +31,15 @@ public class KweetBroadcastService {
     private Gson gson = new Gson();
 
     public void broadcastKweet(Kweet kweet) {
+        Logger.getAnonymousLogger().log(Level.INFO, kweet.getPublicationDate().toString());
         User sender = kweet.getSender();
         List<Session> sessions =  getFollowerSessions(sender);
         Session ownSession = sessionHandler.getSession(sender.getUsername());
         if (ownSession != null) {
             sessions.add(ownSession);
         }
-        try {
-            for (Session session : sessions) {
-                session.getBasicRemote().sendText(gson.toJson(KweetConverter.toTimelineItem(kweet, false, profileDao)));
-            }
-        } catch (IOException ex) {
-            Logger.getAnonymousLogger().log(Level.SEVERE, ex.getMessage());
+        for (Session session : sessions) {
+            session.getAsyncRemote().sendText(gson.toJson(KweetConverter.toTimelineItem(kweet, false, profileDao)));
         }
     }
 

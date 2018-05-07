@@ -96,7 +96,9 @@ public class KweetResource {
         Kweet kweet;
         try {
             kweet = kweetService.create(username, newKweetData.getMessage());
-            kweetBroadcastService.broadcastKweet(kweet);
+            new Thread(() -> {
+                kweetBroadcastService.broadcastKweet(kweet);
+            }).start();
         } catch (EJBException e) {
             return new BooleanResult(e.getCausedByException().getStackTrace(), false);
         }
