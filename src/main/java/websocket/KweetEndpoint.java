@@ -2,34 +2,31 @@ package websocket;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.*;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ApplicationScoped
-@ServerEndpoint(value = "/websocket/kweet")
+@ServerEndpoint(value = "/websocket/kweet/{username}")
 public class KweetEndpoint {
 
-    private static Set<Session> clients = Collections.synchronizedSet(new HashSet<>());
-
-    @OnMessage
-    public String onMessage(String message, Session session) {
-        return null;
-    }
+    private SessionHandler sessionHandler = SessionHandler.getInstance();
 
     @OnOpen
-    public void onOpen (Session client) {
-        clients.add(client);
+    public void onOpen(Session session, @PathParam("username") String username) {
+        Logger.getAnonymousLogger().log(Level.INFO, username + " connected");
+        this.sessionHandler.addSession(session, username);
     }
 
     @OnClose
-    public void onClose (Session client) {
-        clients.remove(client);
+    public void onClose(Session session) {
+        Logger.getAnonymousLogger().log(Level.INFO, "client disconnected");
+        this.sessionHandler.removeSession(session);
     }
 
     @OnError
-    public void onError(Throwable e) {
-        e.printStackTrace();
+    public void onError(Throwable ex) {
+        Logger.getAnonymousLogger().log(Level.SEVERE, ex.getMessage());
     }
 }
