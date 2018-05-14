@@ -1,8 +1,17 @@
 package domain;
 
+import com.sun.org.apache.xml.internal.serializer.utils.SerializerMessages_zh_CN;
+import org.glassfish.jersey.linking.Binding;
+import org.glassfish.jersey.linking.InjectLink;
+import rest.resources.KweetResource;
+import rest.resources.UserResource;
 import util.Mockable;
 
 import javax.persistence.*;
+import javax.ws.rs.core.Link;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 
 @Entity(name = "Profile")
 @Table(name = "Profile")

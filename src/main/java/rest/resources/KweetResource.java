@@ -13,9 +13,7 @@ import exceptions.*;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 @Path("kweet")
@@ -38,6 +36,25 @@ public class KweetResource {
     public List<TimelineItem> getMostRecentKweetsByUsername(@PathParam("username") String username, @PathParam("amount") int amount) {
 
         return timelineService.mostRecentKweets(username, amount);
+    }
+
+    @GET
+    @Path("/{kweetId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve a kweet", notes = "this is a hateoas test")
+    public TimelineItem getKweet(@PathParam("kweetId") long  kweetId) {
+
+        return kweetService.search(String.valueOf(kweetId)).get(0);
+    }
+
+    @GET
+    @Path("/test")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve a users most recent kweets, based on the given amount", notes = "Username needs to be valid and kweets have to be present")
+    public Response getMostRecentKweetsByUsername(@Context UriInfo uriInfo) {
+        Link test = Link.fromUri(uriInfo.getAbsolutePath()).rel("test").type("GET").build();
+        BooleanResult result = new BooleanResult("testlink created", true);
+        return Response.ok(result).links(test).build();
     }
 
     @GET
