@@ -43,10 +43,16 @@ public class HastagDaoImpl implements IHashtagDao {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Hashtag findByName(String name) {
         Query q = em.createNamedQuery("Hashtag.findByName", Hashtag.class);
         q.setParameter("name", name);
-        return (Hashtag) q.getResultList().get(0);
+
+        List<Hashtag> hashtags = (List<Hashtag>) q.getResultList();
+        if (hashtags == null || hashtags.isEmpty()) {
+            return null;
+        }
+        return hashtags.get(0);
     }
 
     @Override

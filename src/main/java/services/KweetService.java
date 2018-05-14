@@ -2,6 +2,7 @@ package services;
 
 import dao.interfaces.IHashtagDao;
 import dao.interfaces.IKweetDao;
+import dao.interfaces.IProfileDao;
 import dao.interfaces.IUserDao;
 import domain.Hashtag;
 import domain.Kweet;
@@ -34,6 +35,9 @@ public class KweetService {
     @Inject
     private IUserDao userDao;
 
+    @Inject
+    private IProfileDao profileDao;
+
     public void setKweetDao(IKweetDao kweetDao) {
         this.kweetDao = kweetDao;
     }
@@ -45,6 +49,8 @@ public class KweetService {
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
     }
+
+    public void setProfileDao(IProfileDao profileDao) {this.profileDao = profileDao;}
 
     /**
      * Updates an existing/persisted kweet.
@@ -94,8 +100,9 @@ public class KweetService {
                 kweet.setSender(sender);
 
                 // Filter message on hashtags '#' and mentions '@' and add to kweet
-                addHashtags(kweet, parseNames('#', kweet.getMessage()));
                 addMentions(kweet, parseNames('@', kweet.getMessage()));
+                addHashtags(kweet, parseNames('#', kweet.getMessage()));
+
 
                 Kweet k = kweetDao.create(kweet);
 
@@ -135,7 +142,7 @@ public class KweetService {
      * @throws UserNotFoundException when the username isn't equal to any peristed usernames
      * @throws KweetNotFoundException when the kweetId isn't equal to any persisted kweets
      */
-    public Kweet giveHeart(String username, Long kweetId) throws UserNotFoundException, KweetNotFoundException {
+    public Kweet giveHeart(String username, Long kweetId) throws UserNotFoundException, KweetNotFoundException, AlreadyLikedException {
         User user = userDao.findByUsername(username);
         Kweet kweet = kweetDao.findById(kweetId);
         if (user != null && kweet != null) {
@@ -146,6 +153,9 @@ public class KweetService {
                 syncWithKweets(user.getHearts(), kweet);
 
                 kweetDao.update(kweet);
+            }
+            else{
+                throw new AlreadyLikedException("User already liked this kweet");
             }
         } else if (user == null) {
             throw new UserNotFoundException();
@@ -172,7 +182,7 @@ public class KweetService {
         }
         List<TimelineItem> searchResults = new ArrayList<>();
         for (Kweet kweet : kweetResults) {
-            searchResults.add(KweetConverter.toTimelineItem(kweet, false));
+            searchResults.add(KweetConverter.toTimelineItem(kweet, false, profileDao));
         }
         return searchResults;
     }
@@ -197,13 +207,12 @@ public class KweetService {
             if (hashtag == null) {
                 hashtag = new Hashtag();
                 hashtag.setName(name);
+                hashtagDao.create(hashtag);
             }
             hashtags.add(updateHashtag(kweet, hashtag));
-
-            // Make sure the hashtag knows of kweet
-            syncWithKweets(hashtag.getKweets(), kweet);
         }
         kweet.setHashtags(hashtags);
+        kweetDao.update(kweet);
     }
 
     private Hashtag updateHashtag(Kweet kweet, Hashtag hashtag) {
@@ -222,11 +231,9 @@ public class KweetService {
             } else {
                 mentions.add(user);
             }
-
-            // Make sure the mentioned user knows of kweet
-            syncWithKweets(user.getMentions(), kweet);
         }
         kweet.setMentions(mentions);
+        kweetDao.update(kweet);
     }
 
     private void validateMessage(String message) throws InvalidKweetException {
@@ -271,7 +278,7 @@ public class KweetService {
     public List<TimelineItem> allKweets(){
         List<TimelineItem> searchResults = new ArrayList<>();
         for (Kweet kweet : kweetDao.findAll()) {
-            searchResults.add(KweetConverter.toTimelineItem(kweet, false));
+            searchResults.add(KweetConverter.toTimelineItem(kweet, false, profileDao));
         }
         return searchResults;
     }

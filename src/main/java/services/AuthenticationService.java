@@ -27,7 +27,8 @@ public class AuthenticationService {
         User u = new User();
         u.setPasswordhash(hashedPassword);
         u.setUsername(username);
-        User createdUser = userDao.create(u);
+        userDao.create(u);
+        User createdUser = userDao.findByUsername(u.getUsername());
         try{
             if(createdUser.getId()!= null)return true;
         } catch (Exception e){

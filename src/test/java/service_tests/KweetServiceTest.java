@@ -1,7 +1,9 @@
 package service_tests;
 
+import dao.interfaces.IProfileDao;
 import dao.mocks.HashtagDaoMock;
 import dao.mocks.KweetDaoMock;
+import dao.mocks.ProfileDaoMock;
 import dao.mocks.UserDaoMock;
 import dao.interfaces.IHashtagDao;
 import dao.interfaces.IKweetDao;
@@ -11,7 +13,6 @@ import domain.Kweet;
 import domain.User;
 import exceptions.*;
 import services.KweetService;
-import services.TimelineService;
 import util.MockFactory;
 import util.MockService;
 import org.junit.*;
@@ -19,12 +20,14 @@ import viewmodels.TimelineItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class KweetServiceTest {
 
     private static IUserDao userDao;
     private static IKweetDao kweetDao;
     private static IHashtagDao hashtagDao;
+    private static IProfileDao profileDao;
 
     private static KweetService service;
 
@@ -33,11 +36,13 @@ public class KweetServiceTest {
         userDao = new UserDaoMock();
         kweetDao = new KweetDaoMock();
         hashtagDao = new HashtagDaoMock();
+        profileDao = new ProfileDaoMock();
 
         service = new KweetService();
         service.setUserDao(userDao);
         service.setKweetDao(kweetDao);
         service.setHashtagDao(hashtagDao);
+        service.setProfileDao(profileDao);
     }
 
     @After
@@ -237,7 +242,11 @@ public class KweetServiceTest {
         Kweet publishedKweet = service.create(user.getUsername(), "A message");
 
         // Give heart to kweet
-        publishedKweet = service.giveHeart(user.getUsername(), publishedKweet.getId());
+        try {
+            publishedKweet = service.giveHeart(user.getUsername(), publishedKweet.getId());
+        } catch (AlreadyLikedException e) {
+            e.printStackTrace();
+        }
 
         // Assert after
         Assert.assertEquals("Kweet has 1 heart", 1, publishedKweet.getHearts().size());
@@ -246,7 +255,7 @@ public class KweetServiceTest {
     }
 
     @Test(expected = KweetNotFoundException.class)
-    public void giveHeart_KweetNull() throws UserNotFoundException, KweetNotFoundException {
+    public void giveHeart_KweetNull() throws UserNotFoundException, KweetNotFoundException, AlreadyLikedException {
         // Setup
         User user = userDao.create(
                 (User) MockFactory.createMocks(User.class, 1).get(0));
@@ -267,29 +276,35 @@ public class KweetServiceTest {
         service.create(user.getUsername(), "A message");
 
         // Give heart to kweet
-        service.giveHeart("-1", kweet.getId());
+        try {
+            service.giveHeart("-1", kweet.getId());
+        } catch (AlreadyLikedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void search() throws UserNotFoundException, InvalidKweetException {
+        String uuid = UUID.randomUUID().toString();
+
         // Setup
         User kwet = userDao.create(
-                (User) MockFactory.createMocks(User.class, 1, "username", "Laxcxc").get(0));
+                (User) MockFactory.createMocks(User.class, 1, "username", uuid + "/user1").get(0));
         User rick = userDao.create(
-                (User) MockFactory.createMocks(User.class, 1, "username", "Rick").get(0));
+                (User) MockFactory.createMocks(User.class, 1, "username", uuid + "/user2").get(0));
 
         // Publish kweets
         Kweet kweet1 = service.create(kwet.getUsername(), "A message");
-        Kweet kweet2 = service.create(rick.getUsername(), "A message: #test1 #xcxc1");
+        Kweet kweet2 = service.create(rick.getUsername(), "A message: #test1 #" + uuid);
         service.create(rick.getUsername(), "Somemessage");
 
         // Search
-        List<TimelineItem> results = service.search("xcxc");
+        List<TimelineItem> results = service.search(uuid);
 
         // Asserts
-        Assert.assertEquals("Two kweets met the given term", 2, results.size());
-        Assert.assertEquals("The term 'et' was met by kweet1", kweet1.getSender().getUsername(), results.get(1).getUsername());
-        Assert.assertEquals("The term 'et' was met by kweet2", kweet2.getMessage(), results.get(0).getMessage());
+        Assert.assertEquals("Two kweets met the given term", 3, results.size());
+        Assert.assertEquals("The search term was met by kweet1", kweet1.getSender().getUsername(), results.get(1).getUsername());
+        Assert.assertEquals("The search term was met by kweet2", kweet2.getMessage(), results.get(0).getMessage());
     }
 
     @Test

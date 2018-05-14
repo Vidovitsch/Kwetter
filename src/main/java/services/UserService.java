@@ -35,6 +35,10 @@ public class UserService {
         this.userDao = userDao;
     }
 
+    public void setRoleDao(IRoleDao roleDao) {
+        this.roleDao = roleDao;
+    }
+
     public void setProfileDao(IProfileDao profileDao) {
         this.profileDao = profileDao;
     }
@@ -169,7 +173,7 @@ public class UserService {
             String[] rolesArray = roles.split(",");
             for (String role : rolesArray) {
                 Role r = roleDao.findByName(role);
-                if(r == null){
+                if (r == null) {
                     Role newRole = new Role();
                     newRole.setName(role);
                     roleDao.create(newRole);

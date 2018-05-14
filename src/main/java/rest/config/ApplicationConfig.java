@@ -1,5 +1,6 @@
 package rest.config;
 
+import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import rest.resources.*;
 import rest.auth.AuthResource;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
@@ -21,7 +22,6 @@ public class ApplicationConfig extends Application {
         Set<Class<?>> resources = new java.util.HashSet<>();
 
         Logger.getAnonymousLogger().log(Level.INFO, "REST configuration starting: getClasses()");
-
         resources.add(JacksonJaxbJsonProvider.class);
 
         //instead let's do it manually:
@@ -32,6 +32,7 @@ public class ApplicationConfig extends Application {
         resources.add(AuthResource.class);
         //==> we could also choose packages, see below getProperties()
         resources.add(CorsFilter.class);
+        resources.add(DeclarativeLinkingFeature.class);
         Logger.getAnonymousLogger().log(Level.INFO, "REST configuration ended successfully.");
 
         return resources;

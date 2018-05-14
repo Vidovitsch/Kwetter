@@ -29,11 +29,11 @@ public class TrendService {
      *          the hashtag can't be a trend anymore, despite the number of uses.
      * @return A list of hashtag names
      */
-    public List<String> get() {
+    public List<Hashtag> get() {
         List<Hashtag> trends = filterOnDates(hashtagDao.findAll());
         trends.sort(new TrendComparator());
 
-        return convertToNameList(trends);
+        return trends;
     }
 
     private List<Hashtag> filterOnDates(List<Hashtag> trends) {
@@ -54,14 +54,5 @@ public class TrendService {
         cal.add(Calendar.DATE, -7);
 
         return cal.getTime();
-    }
-
-    private List<String> convertToNameList(List<Hashtag> hashtags) {
-        List<String> names = new ArrayList<>();
-        for (Hashtag hashtag : hashtags) {
-            names.add(hashtag.getName());
-        }
-
-        return names;
     }
 }

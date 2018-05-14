@@ -1,6 +1,8 @@
 package util;
 
+import dao.interfaces.IProfileDao;
 import domain.Kweet;
+import domain.Profile;
 import domain.User;
 import viewmodels.TimelineItem;
 import viewmodels.UserUsernameView;
@@ -10,7 +12,7 @@ import java.util.List;
 
 public class KweetConverter {
 
-    public static TimelineItem toTimelineItem(Kweet kweet, boolean owner) {
+    public static TimelineItem toTimelineItem(Kweet kweet, boolean owner, IProfileDao profileDao) {
         TimelineItem timelineItem = new TimelineItem();
         timelineItem.setKweetId(kweet.getId());
         timelineItem.setPostDate(kweet.getPublicationDate());
@@ -20,8 +22,15 @@ public class KweetConverter {
         timelineItem.setHearts(getUserViewsByHearts(kweet));
         timelineItem.setMentions(getUserViewsByMentions(kweet));
 
+        Profile profile = profileDao.findByUser(kweet.getSender());
+        if (profile != null) {
+            timelineItem.setProfileName(profile.getName());
+            timelineItem.setProfileImage(profile.getImage());
+        }
+
         return timelineItem;
     }
+    
 
     private static List<UserUsernameView> getUserViewsByHearts(Kweet kweet) {
         List<UserUsernameView> hearts = new ArrayList<>();

@@ -1,6 +1,7 @@
 package rest.resources;
 
 import domain.Kweet;
+import services.KweetBroadcastService;
 import services.KweetService;
 import services.TimelineService;
 import util.BooleanResult;
@@ -13,9 +14,7 @@ import exceptions.*;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 @Path("kweet")
@@ -31,6 +30,9 @@ public class KweetResource {
     @EJB
     private KweetService kweetService;
 
+    @EJB
+    private KweetBroadcastService kweetBroadcastService;
+
     @GET
     @Path("/last/{amount}/{username}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,6 +40,25 @@ public class KweetResource {
     public List<TimelineItem> getMostRecentKweetsByUsername(@PathParam("username") String username, @PathParam("amount") int amount) {
 
         return timelineService.mostRecentKweets(username, amount);
+    }
+
+    @GET
+    @Path("/{kweetId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve a kweet", notes = "this is a hateoas test")
+    public TimelineItem getKweet(@PathParam("kweetId") long  kweetId) {
+
+        return kweetService.search(String.valueOf(kweetId)).get(0);
+    }
+
+    @GET
+    @Path("/test")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve a users most recent kweets, based on the given amount", notes = "Username needs to be valid and kweets have to be present")
+    public Response getMostRecentKweetsByUsername(@Context UriInfo uriInfo) {
+        Link test = Link.fromUri(uriInfo.getAbsolutePath()).rel("test").type("GET").build();
+        BooleanResult result = new BooleanResult("testlink created", true);
+        return Response.ok(result).links(test).build();
     }
 
     @GET
@@ -54,8 +75,23 @@ public class KweetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "Username has to be valid and kweets have to be available")
     public List<TimelineItem> getTimelineByUsername(@PathParam("username") String username) {
-
         return timelineService.generateTimeline(username);
+    }
+
+    @GET
+    @Path("/timeline/{username}/posts")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "Username has to be valid and kweets have to be available")
+    public List<TimelineItem> getTimelinePostsByUsername(@PathParam("username") String username) {
+        return timelineService.getOwnKweets(username);
+    }
+
+    @GET
+    @Path("/timelinecontrolled/{username}/{page}/{amount}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Retrieve the Timeline for a user including his own kweets and kweets from users he is following", notes = "Username has to be valid and kweets have to be available")
+    public List<TimelineItem> getControlledTimelineByUsername(@PathParam("username") String username, @PathParam("page") int page, @PathParam("amount") int amount) {
+        return timelineService.generateTimelineControlled(username, page, amount);
     }
 
     @GET
@@ -73,14 +109,37 @@ public class KweetResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Post a kweet for a user, identified by the username", notes = "Username has to be valid")
     public BooleanResult publishKweet(@PathParam("username") String username, NewKweetData newKweetData)
-            throws InvalidKweetException, UserNotFoundException{
-        Kweet k;
+            throws InvalidKweetException, UserNotFoundException {
+        Kweet kweet;
         try {
-            k = kweetService.create(username, newKweetData.getMessage());
+            kweet = kweetService.create(username, newKweetData.getMessage());
+            new Thread(() -> {
+                kweetBroadcastService.broadcastKweet(kweet);
+            }).start();
         } catch (EJBException e) {
-            return new BooleanResult(e.getCausedByException().getMessage(), false);
+            return new BooleanResult(e.getCausedByException().getStackTrace(), false);
         }
 
-        return new BooleanResult(k.getMessage(),true);
+        return new BooleanResult(kweet.getMessage(), true);
     }
+
+    @POST
+    @Path("/like/{kweetid}/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Like a kweet, identified by the username", notes = "Username and KweetID have to be valid")
+    public BooleanResult likeKweet(@PathParam("username") String username, @PathParam("kweetid") long kweetId, NewKweetData newKweetData) {
+        try {
+            kweetService.giveHeart(username, kweetId);
+        } catch (UserNotFoundException e) {
+            return new BooleanResult(e.getMessage(), false);
+        } catch (KweetNotFoundException e) {
+            return new BooleanResult(e.getMessage(), false);
+        } catch (AlreadyLikedException e) {
+            return new BooleanResult(e.getMessage(), false);
+        }
+
+        return new BooleanResult(username + " liked kweet " + kweetId, true);
+    }
+
 }
