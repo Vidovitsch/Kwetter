@@ -1,6 +1,7 @@
 package rest.resources;
 
 import domain.Kweet;
+import services.KweetBroadcastService;
 import services.KweetService;
 import services.TimelineService;
 import util.BooleanResult;
@@ -28,6 +29,9 @@ public class KweetResource {
 
     @EJB
     private KweetService kweetService;
+
+    @EJB
+    private KweetBroadcastService kweetBroadcastService;
 
     @GET
     @Path("/last/{amount}/{username}")
@@ -106,14 +110,17 @@ public class KweetResource {
     @ApiOperation(value = "Post a kweet for a user, identified by the username", notes = "Username has to be valid")
     public BooleanResult publishKweet(@PathParam("username") String username, NewKweetData newKweetData)
             throws InvalidKweetException, UserNotFoundException {
-        Kweet k;
+        Kweet kweet;
         try {
-            k = kweetService.create(username, newKweetData.getMessage());
+            kweet = kweetService.create(username, newKweetData.getMessage());
+            new Thread(() -> {
+                kweetBroadcastService.broadcastKweet(kweet);
+            }).start();
         } catch (EJBException e) {
             return new BooleanResult(e.getCausedByException().getStackTrace(), false);
         }
 
-        return new BooleanResult(k.getMessage(), true);
+        return new BooleanResult(kweet.getMessage(), true);
     }
 
     @POST
